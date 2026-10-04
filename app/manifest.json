@@ -1,0 +1,49 @@
+{
+  "name": "AEON: Fractal & Sacred Geometry",
+  "short_name": "AEON",
+  "description": "AEON: fractal explorer and sacred-geometry studio. 58 fractal types, 183 geometric patterns, 51 curated palettes. Flame Studio, Motion Studio, Layer Studio, Post-FX, 8K/16K tile render.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#0F0E0C",
+  "background_color": "#0F0E0C",
+  "lang": "en",
+  "categories": [
+    "graphics",
+    "art",
+    "entertainment",
+    "education",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Mandelbrot",
+      "short_name": "Mandelbrot",
+      "description": "Open AEON with Mandelbrot set at default zoom",
+      "url": "./?fractal=mandelbrot"
+    },
+    {
+      "name": "Flower of Life",
+      "short_name": "Flower",
+      "description": "Open AEON with the Flower of Life pattern",
+      "url": "./?mode=geometry&pattern=flower-of-life"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

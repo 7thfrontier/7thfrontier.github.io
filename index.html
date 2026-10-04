@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="author" content="© 2026 7th Frontier, Inc. All Rights Reserved.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AEON: A cosmographer's instrument</title>
+<meta name="description" content="AEON is a single-file fractal explorer and sacred-geometry studio. 58 fractal types, 183 patterns, zero dependencies. Open the file and create.">
+<meta name="theme-color" content="#0F0E0C">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AEON: A cosmographer's instrument">
+<meta property="og:description" content="AEON is a single-file fractal explorer and sacred-geometry studio. 58 fractal types, 183 patterns, zero dependencies. Open the file and create.">
+<meta property="og:image" content="./icons/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AEON: A cosmographer's instrument">
+<meta name="twitter:description" content="AEON is a single-file fractal explorer and sacred-geometry studio. 58 fractal types, 183 patterns, zero dependencies.">
+<meta name="twitter:image" content="./icons/og-card.png">
+<!-- AEON Seed-of-Life glyph as favicon. -->
+<link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<style>
+/* v5.2 mission-launch — brand fonts bundled offline (no external CDN).
+   Fraunces (display) + Inter Tight (UI) loaded from the same
+   assets/fonts/ directory the app uses. Latin-regular static cuts;
+   heavier weights synthesize via browser font-weight cascade. */
+@font-face {
+  font-family: 'Inter Tight';
+  src: url('./assets/fonts/inter-tight-v9-latin-regular.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fraunces';
+  src: url('./assets/fonts/fraunces-v38-latin-regular.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+</style>
+<style>
+/* ════════════════════════════════════════════════════════════════
+ * AEON · landing page (single file, zero deps).
+ * Cosmographer's-atelier identity — Fraunces italic display,
+ * Inter Tight UI, oxidized copper on warm charcoal.
+ *
+ * Layout: editorial — asymmetric hero, marginalia between sections,
+ * generous negative space, manuscript-like type treatments.
+ * Every spacing/color/font value comes from a CSS variable so the
+ * landing page can theme-switch alongside the app.
+ * ════════════════════════════════════════════════════════════════ */
+:root {
+  /* Primitives — pulled from the studio's token system. */
+  --color-copper-500:  #C68642;
+  --color-copper-700:  #9C5A28;
+  --color-charcoal-950:#0F0E0C;
+  --color-charcoal-900:#1A1814;
+  --color-charcoal-850:#221E18;
+  --color-parchment-50:#F2EBDC;
+  --color-parchment-25:#FAF5E8;
+  --color-cream-50:    #E8E0D2;
+  --color-cream-200:   #C2B59C;
+  --color-cream-400:   #B4A894;
+  --color-ink-950:     #1A1610;
+  --color-ink-700:     #3F3525;
+  --color-ink-500:     #5C4E36;
+  --color-verdigris-500:#7BA876;
+
+  /* Fonts. */
+  --font-ui:'Inter Tight', system-ui, sans-serif;
+  --font-display:'Fraunces', Georgia, serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,'Cascadia Code',Consolas,'Courier New',monospace;
+
+  /* Spacing scale. */
+  --sp-1:4px; --sp-2:6px; --sp-3:8px; --sp-4:10px; --sp-5:12px;
+  --sp-6:16px; --sp-7:20px; --sp-8:24px; --sp-9:32px; --sp-10:48px;
+  --r-1:3px; --r-2:5px; --r-3:8px; --r-4:12px;
+  --shadow-sm:0 2px 10px rgba(0,0,0,.35);
+  --shadow-md:0 4px 20px rgba(0,0,0,.45);
+
+  /* Default theme: dark. Values mirror the canonical [data-theme="dark"]
+     block in index.html, drift here would visually decouple the
+     landing page from the app. Audited 2026-04. */
+  --bg:        var(--color-charcoal-950);
+  --surface:   #1A1814;                               /* index.html canonical: opaque plate */
+  --surface2:  #201D17;                               /* index.html canonical: raised bed */
+  --text:      var(--color-cream-50);
+  --text-mid:  var(--color-cream-200);
+  --text-dim:  var(--color-cream-400);
+  --accent:    var(--color-copper-500);
+  --accent-dim:rgba(198,134,66,0.15);                /* index.html canonical */
+  --accent-glow:rgba(198,134,66,0.32);
+  --border:    rgba(232,224,210,0.07);               /* index.html canonical */
+  --border-mid:rgba(232,224,210,0.16);
+  --success:   var(--color-verdigris-500);
+}
+[data-theme="light"] {
+  --bg:        var(--color-parchment-50);
+  --surface:   #FAF5E8;                               /* index.html canonical: opaque plate */
+  --surface2:  #F0E7D6;                               /* index.html canonical: raised bed */
+  --text:      var(--color-ink-950);
+  --text-mid:  var(--color-ink-700);
+  --text-dim:  var(--color-ink-500);
+  --accent:    var(--color-copper-700);
+  --accent-dim:rgba(156,90,40,0.16);                 /* index.html canonical */
+  --accent-glow:rgba(156,90,40,0.28);
+  --border:    rgba(26,22,16,0.08);
+  --border-mid:rgba(26,22,16,0.14);
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ──────────────────────── Top bar ──────────────────────── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-7) var(--sp-10);
+  position: relative;
+  z-index: 10;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  color: var(--accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+.brand-glyph {
+  flex-shrink: 0;
+  transition: transform 700ms cubic-bezier(.4,0,.2,1);
+}
+.brand:hover .brand-glyph { transform: rotate(180deg); }
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  font-style: italic;
+  font-variation-settings: 'opsz' 144;
+  letter-spacing: -.02em;
+  color: var(--text);
+}
+.topbar nav {
+  display: flex;
+  gap: var(--sp-7);
+  font-size: 13px;
+  color: var(--text-mid);
+}
+.topbar nav a {
+  color: var(--text-mid);
+  letter-spacing: .02em;
+  position: relative;
+}
+.topbar nav a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s cubic-bezier(.4,0,.2,1);
+}
+.topbar nav a:hover { color: var(--accent); text-decoration: none; }
+.topbar nav a:hover::after { transform: scaleX(1); }
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border-mid);
+  color: var(--text-mid);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-2);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all .14s;
+  font-family: var(--font-mono);
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ──────────────────────── Hero ──────────────────────── */
+.hero {
+  position: relative;
+  padding: var(--sp-10) var(--sp-10) calc(var(--sp-10) * 2);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--sp-10);
+  align-items: center;
+  min-height: calc(100vh - 96px);
+  overflow: hidden;
+}
+.hero::before {
+  /* Subtle Maurer-rose ribbon background, fading from corners. */
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 85% 15%, var(--accent-dim), transparent 40%),
+                    radial-gradient(circle at 15% 85%, var(--accent-dim), transparent 40%);
+  z-index: 0;
+}
+.hero-text {
+  position: relative;
+  z-index: 1;
+  animation: rise .9s cubic-bezier(.2,.8,.3,1) both;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Scroll-driven hero parallax — the hero gently recedes (rises + fades) as you
+   read into the page, echoing the Foreword/References/Showcase parallax in the
+   studio. Applied to the .hero PARENT (which has no entrance animation) so it
+   composes cleanly with the children's `rise` intros, no transform conflict —
+   and it is a pure compositor transform of the canvas's *container*, so the
+   live #hero-canvas render is never touched. Gated behind @supports (browsers
+   without scroll-driven animations are simply unaffected) and, explicitly,
+   prefers-reduced-motion:no-preference, the global reduced-motion block only
+   neutralises animation-DURATION, which a scroll-progress timeline ignores, so
+   the effect would otherwise still run for reduced-motion visitors. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero {
+      animation: hero-recede linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 80vh;
+      will-change: transform, opacity;
+    }
+    @keyframes hero-recede { to { transform: translateY(-44px); opacity: .5; } }
+  }
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  margin-bottom: var(--sp-6);
+  opacity: 0;
+  animation: rise .9s cubic-bezier(.2,.8,.3,1) .1s both;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: 'opsz' 144;
+  font-size: clamp(72px, 11vw, 156px);
+  line-height: .92;
+  letter-spacing: -.04em;
+  margin: 0 0 var(--sp-6);
+  color: var(--text);
+}
+.hero h1 .ampersand {
+  /* AEON-211: `transform` here (even a 0.06em translateY) forces a
+     compositing layer on a `-webkit-background-clip: text` descendant that
+     never redeclares background-clip:text on itself. Chromium then paints
+     that layer's glyph at the wrong screen offset — visually landing near
+     the gradient text's origin instead of this span's actual layout box,
+     producing a superimposed-glyph blot over "Forms". `position: relative`
+     + `top` gives the identical baseline nudge without promoting a layer,
+     so it doesn't trip the bug. Verified this is the ONLY instance of the
+     pattern (background-clip:text parent + transformed inline descendant)
+     across aeon.html/aeon-poster.html; scripts/lint-gradient-text-transform-trap.mjs
+     guards against a new one. */
+  display: inline-block;
+  position: relative;
+  top: .06em;
+  margin: 0 .04em;
+  opacity: .8;
+  font-style: italic;
+}
+.hero-tag {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(20px, 2.4vw, 28px);
+  color: var(--text-mid);
+  font-variation-settings: 'opsz' 36;
+  letter-spacing: -.005em;
+  margin: 0 0 var(--sp-9);
+  max-width: 22ch;
+  line-height: 1.35;
+  opacity: 0;
+  animation: rise .9s cubic-bezier(.2,.8,.3,1) .2s both;
+}
+.hero-cta-row {
+  display: flex;
+  gap: var(--sp-5);
+  align-items: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: rise .9s cubic-bezier(.2,.8,.3,1) .3s both;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 14px var(--sp-8);
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: .02em;
+  border-radius: var(--r-2);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .14s, box-shadow .14s, filter .14s;
+}
+[data-theme="light"] .cta { color: var(--bg); }
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+  filter: brightness(1.1);
+  text-decoration: none;
+}
+.cta-arrow {
+  display: inline-block;
+  transition: transform .25s cubic-bezier(.4,0,.2,1);
+}
+.cta:hover .cta-arrow { transform: translateX(4px); }
+.cta-secondary {
+  color: var(--text-mid);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-mid);
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+.cta-secondary:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+/* ──────────────────────── Hero canvas ──────────────────────── */
+.hero-canvas-wrap {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 540px;
+  margin-left: auto;
+  border: 1px solid var(--border-mid);
+  border-radius: var(--r-3);
+  overflow: hidden;
+  background: #080706;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  animation: rise 1.2s cubic-bezier(.2,.8,.3,1) .4s both;
+}
+.hero-canvas-wrap::before {
+  /* Faux observatory crosshairs for the cosmographer's-instrument feel. */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, transparent 49.9%, rgba(232,224,210,.05) 49.9%, rgba(232,224,210,.05) 50.1%, transparent 50.1%),
+    linear-gradient(to bottom, transparent 49.9%, rgba(232,224,210,.05) 49.9%, rgba(232,224,210,.05) 50.1%, transparent 50.1%);
+  pointer-events: none;
+  z-index: 2;
+}
+#hero-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.hero-canvas-caption {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(232,224,210,.55);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  z-index: 3;
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(0,0,0,.8);
+}
+
+/* ──────────────────────── Numbers ──────────────────────── */
+.numbers {
+  padding: calc(var(--sp-10) * 2) var(--sp-10);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.numbers-inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: calc(var(--sp-10) - var(--sp-3));
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.number-cell {
+  text-align: center;
+  border-left: 1px solid var(--border);
+  padding: 0 var(--sp-7);
+}
+.number-cell:first-child { border-left: none; padding-left: 0; }
+.number-val {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: 'opsz' 144;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -.03em;
+  display: block;
+  margin-bottom: var(--sp-3);
+}
+.number-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  display: block;
+  line-height: 1.5;
+}
+@media (max-width: 720px) {
+  .number-cell { border-left: none; border-top: 1px solid var(--border); padding: var(--sp-7) 0; }
+  .number-cell:first-child { border-top: none; padding-top: 0; }
+}
+
+/* ──────────────────────── Section base ──────────────────────── */
+.section {
+  padding: calc(var(--sp-10) * 2) var(--sp-10);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--sp-8);
+  align-items: baseline;
+  margin-bottom: calc(var(--sp-10) + var(--sp-6));
+}
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: 'opsz' 72;
+  font-size: clamp(36px, 5vw, 64px);
+  letter-spacing: -.02em;
+  line-height: 1.05;
+  margin: 0;
+  color: var(--text);
+}
+.section-lede {
+  grid-column: 2;
+  font-size: 17px;
+  color: var(--text-mid);
+  max-width: 60ch;
+  margin-top: var(--sp-6);
+  line-height: 1.55;
+}
+
+/* ──────────────────────── Gallery strip ──────────────────────── */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--sp-7);
+}
+.tile {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--r-3);
+  overflow: hidden;
+  transition: transform .35s cubic-bezier(.2,.8,.3,1), border-color .14s, box-shadow .14s;
+}
+.tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+.tile-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--accent);
+  opacity: .85;
+  transition: opacity .14s, transform 12s linear;
+}
+.tile:hover .tile-svg { opacity: 1; transform: rotate(360deg); }
+.tile-cap {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: var(--sp-5) var(--sp-6);
+  background: linear-gradient(to top, rgba(15,14,12,.85), transparent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.tile-cap em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 2px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+[data-theme="light"] .tile-cap { background: linear-gradient(to top, rgba(242,235,220,.92), transparent); }
+
+/* ──────────────────────── Lineage timeline ──────────────────────── */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-9);
+  position: relative;
+  padding-left: var(--sp-10);
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent) 0%, var(--border-mid) 50%, transparent 100%);
+}
+.timeline-entry {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: var(--sp-7);
+  align-items: baseline;
+  position: relative;
+}
+.timeline-entry::before {
+  content: '';
+  position: absolute;
+  left: -42px;
+  top: 12px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--bg);
+  z-index: 1;
+}
+.timeline-year {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: .08em;
+}
+.timeline-body h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: 'opsz' 36;
+  font-size: 22px;
+  margin: 0 0 var(--sp-2);
+  color: var(--text);
+  letter-spacing: -.005em;
+}
+.timeline-body p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-mid);
+  line-height: 1.55;
+}
+.timeline-body cite {
+  display: block;
+  margin-top: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  font-style: normal;
+  letter-spacing: .04em;
+}
+
+/* ──────────────────────── Mathematics card ──────────────────────── */
+.math-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-9);
+  position: relative;
+}
+.math-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) 1fr minmax(140px, 200px);
+  gap: var(--sp-9);
+  align-items: baseline;
+  padding-bottom: var(--sp-7);
+  border-bottom: 1px dashed var(--border);
+}
+.math-row:last-child { border-bottom: none; }
+.math-domain {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: 'opsz' 36;
+  font-size: 19px;
+  color: var(--text);
+  letter-spacing: -.005em;
+  line-height: 1.25;
+}
+.math-domain small {
+  display: block;
+  font-family: var(--font-ui);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--text-dim);
+  margin-top: var(--sp-1);
+}
+.math-body {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.55;
+}
+.math-formula {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: var(--sp-4) var(--sp-6);
+  border-radius: var(--r-1);
+  margin-bottom: var(--sp-5);
+  letter-spacing: .01em;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  border-left: 2px solid var(--accent);
+}
+.math-cite {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: .04em;
+  text-align: right;
+  font-style: normal;
+}
+@media (max-width: 760px) {
+  .math-row { grid-template-columns: 1fr; gap: var(--sp-3); }
+  .math-cite { text-align: left; margin-top: var(--sp-2); }
+}
+
+/* ──────────────────────── Spec card ──────────────────────── */
+.spec-card {
+  border: 1px solid var(--border-mid);
+  border-radius: var(--r-3);
+  padding: var(--sp-10);
+  background: var(--surface);
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text);
+  letter-spacing: .02em;
+}
+.spec-card h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 32px;
+  font-weight: 500;
+  font-variation-settings: 'opsz' 72;
+  margin: 0 0 var(--sp-7);
+  color: var(--accent);
+  letter-spacing: -.01em;
+}
+.spec-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--sp-3) var(--sp-7);
+}
+.spec-grid dt {
+  color: var(--text-dim);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: .12em;
+  padding-top: 2px;
+}
+.spec-grid dd {
+  margin: 0;
+  color: var(--text);
+}
+.spec-grid dd em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* ──────────────────────── Footer ──────────────────────── */
+.footer {
+  padding: calc(var(--sp-10) * 2) var(--sp-10) var(--sp-10);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.footer-mark {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 28px;
+  color: var(--accent);
+  margin: 0 0 var(--sp-7);
+  letter-spacing: .5em;
+  opacity: .7;
+}
+.footer-coda {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin: 0 0 var(--sp-4);
+}
+.footer-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: .08em;
+  /* AEON-240: no opacity here — --text-dim alone is ~6:1; opacity:.7
+     dragged it to 3.5:1, below AA. .footer-coda proves the token is fine. */
+}
+
+/* ──────────────────────── Responsive ──────────────────────── */
+@media (max-width: 960px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: var(--sp-9) var(--sp-7) calc(var(--sp-10) + var(--sp-7));
+    gap: var(--sp-9);
+  }
+  .hero-canvas-wrap { max-width: 480px; margin: 0 auto; }
+  .topbar { padding: var(--sp-6) var(--sp-7); }
+  .topbar nav { display: none; }
+  .section { padding: calc(var(--sp-10) + var(--sp-6)) var(--sp-7); }
+  .section-header { grid-template-columns: 1fr; gap: var(--sp-3); }
+  .section-lede { grid-column: 1; }
+  .timeline-entry { grid-template-columns: 1fr; gap: var(--sp-2); }
+  .timeline-entry::before { left: -42px; }
+  .spec-grid { grid-template-columns: 1fr; gap: var(--sp-2); }
+  .spec-grid dt { padding-top: var(--sp-3); }
+}
+</style>
+<style>
+.render-hero { margin: 0; padding: 0 var(--sp-10); max-width: 1600px; margin-inline: auto; }
+.render-hero img { display: block; width: 100%; height: auto; border-radius: var(--r-3); border: 1px solid var(--border-mid); }
+.renders { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--sp-7); }
+.render { margin: 0; }
+.render a { display: block; border-radius: var(--r-3); overflow: hidden; border: 1px solid var(--border-mid); }
+.render a:hover, .render a:focus-visible { border-color: var(--accent); }
+.render img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.render figcaption { margin-top: var(--sp-3); font-size: 14px; color: var(--text-mid); }
+.prose { max-width: 70ch; color: var(--text-mid); font-size: 17px; line-height: 1.6; }
+.prose a { color: var(--accent); }
+.changes li { margin-bottom: var(--sp-5); }
+@media (max-width: 700px) { .render-hero { padding: 0 16px; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#" aria-label="AEON home">
+    <svg class="brand-glyph" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round">
+        <circle cx="12" cy="12" r="3.5"/>
+        <circle cx="12" cy="5"  r="3.5"/>
+        <circle cx="12" cy="19" r="3.5"/>
+        <circle cx="6.06"  cy="8.5"  r="3.5"/>
+        <circle cx="17.94" cy="8.5"  r="3.5"/>
+        <circle cx="6.06"  cy="15.5" r="3.5"/>
+        <circle cx="17.94" cy="15.5" r="3.5"/>
+      </g>
+    </svg>
+    <span class="brand-name">AEON</span>
+  </a>
+  <nav>
+    <a href="#instrument">The instrument</a>
+    <a href="#gallery">Forms</a>
+    <a href="#lineage">Lineage</a>
+    <a href="#spec">Spec</a>
+    <a href="#renders">Renders</a>
+    <a href="#download">Download</a>
+    <a href="#changes">What's new</a>
+  </nav>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+</header>
+
+<main>
+<!-- ═════════════════ HERO ═════════════════ -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">A cosmographer's instrument · v7.0.0</p>
+    <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
+    <p class="hero-tag">This studio invented none of these figures. It only brings them into view, in mathematics and in glass.</p>
+    <div class="hero-cta-row">
+      <a class="cta" href="./app/">
+        Open the studio
+        <span class="cta-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta-secondary" href="./app/?manifesto=1">Read the manifesto</a>
+    </div>
+  </div>
+  <div class="hero-canvas-wrap">
+    <canvas id="hero-canvas" width="540" height="540" aria-label="Live Mandelbrot set rendering"></canvas>
+    <div class="hero-canvas-caption">
+      <span id="hero-cap-name">Mandelbrot</span>
+      <span id="hero-cap-zoom">z = 1.0×</span>
+    </div>
+  </div>
+</section>
+
+<figure class="render-hero"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoianVsaWEiLCJjeCI6MCwiY3kiOjAsInoiOjEsImpyIjotMC43LCJqaSI6MC4yNzAxNSwicGFsIjoiaW5mZXJubyIsImNjIjoxLCJjbyI6MCwibWkiOjI1NiwiZXIiOjQsInRtIjowLCJwYXQiOiJmbG93ZXItb2YtbGlmZSIsImx5IjozLCJzeSI6OCwiZ3IiOjAsImdzIjoxLCJzZWVkIjoyMDEwNjQxNjY1LCJmaWwiOjAsImdsdyI6MSwic2dkIjowLCJ1NHMiOjAsImxhIjozLCJsYiI6MCwibHBoIjowLCJzZm0iOjYsInNmbjEiOjEsInNmbjIiOjEsInNmbjMiOjEsImhkYyI6MC4wMDMsInBmeGIiOjAsInBmeGJzIjowLjQ1LCJwZnhiciI6MTAsInBmeHYiOjAsInBmeHZzIjowLjY1LCJwZnh2ciI6MC41NSwicGZ4ZyI6MCwicGZ4Z3MiOjAuMDQsInBmeGMiOjAsInBmeGNvIjozLCJwZnhsIjowLCJwZnhsbiI6IiIsImZwIjoyLCJ2bXQiOiJldWNsaWRlYW4iLCJjaGxuIjowLCJjaHJzIjoxNjAsImx5cyI6IkFCIiwidHdnIjowLjUsImlzayI6MCwibW9wIjowLjUsIm1oeCI6MSwibWVsIjowLCJjeGYiOiJ6MiIsImN4cmUiOjAsImN4aW0iOjAsImN4em0iOjIsImN4biI6NSwiY3hydCI6MCwiY3h0dSI6WzAuNSwwLjg2Nl0sImN4YmYiOjEsImN4YnMiOjAuNSwiY3hzcyI6MSwiY3hhciI6MCwiY3hhcyI6MC40LCJjeGwzIjowLCJjeGNiIjoicmV0dXJuIGNtdWwoeiwgeikgKyB2ZWMyKDAuMCwgMC41KTsiLCJyc3MiOjQwMCwiaGVwIjowLjAwMDgsInN0ayI6MC41LCJhb2YiOjAuMywiZm9nIjoxLCJyM3giOjAsInIzeSI6MCwicWoiOlstMC4yLDAuNiwwLjIsMF0sImdyeCI6MC40LCJncnkiOjAuNiwibHciOjEuNSwiaWZzaSI6MTAwMDAwMCwicGZsIjowLCJsc2NhIjo2MCwiY3BqIjoieHoiLCJseGEiOiJGIiwibHhyIjoiRj1GK0YtRi1GK0YiLCJscHIiOiJrb2NoIiwiY3BpIjoic3RlbGxhLW9jdGFuZ3VsYSIsImNwbyI6ImN1Ym9jdGFoZWRyb24iLCJzcnIiOjAsInZzYyI6MSwiY2lzIjowLjUsInRrcSI6MywicXNtIjo1LCJjbmUiOjAuNSwiY3NyIjoxLCJtYnQiOjEsImt0YiI6MSwicGF4Ijo0LCJqaWwiOjUsInJjbiI6MjUwLCJwY2YiOjQsIm9zbSI6MCwib2ZtIjowfQ"><img src="./gallery/hero.webp" alt="Julia Set, rendered at 3840 by 2160" width="3840" height="2160"></a></figure>
+
+<!-- ═════════════════ NUMBERS ═════════════════ -->
+<section class="numbers" aria-label="Catalog numbers">
+  <div class="numbers-inner">
+    <div class="number-cell">
+      <span class="number-val">58</span>
+      <span class="number-label">Fractal types</span>
+    </div>
+    <div class="number-cell">
+      <span class="number-val">183</span>
+      <span class="number-label">Sacred patterns</span>
+    </div>
+    <div class="number-cell">
+      <span class="number-val">51</span>
+      <span class="number-label">Curated palettes</span>
+    </div>
+    <div class="number-cell">
+      <span class="number-val">10⁶⁰⁺</span>
+      <span class="number-label">Deep-zoom</span>
+    </div>
+    <div class="number-cell">
+      <span class="number-val">0</span>
+      <span class="number-label">Dependencies</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ THE INSTRUMENT ═════════════════ -->
+<section class="section" id="instrument">
+  <header class="section-header">
+    <span class="section-num">§ I</span>
+    <h2 class="section-title">The instrument</h2>
+    <p class="section-lede">A telescope makes the night sky legible. This instrument does the same for the mathematics of form, rendered at the precision its proofs demand. It disappears into what it shows: the canvas takes most of the screen, and every control waits at the edge until you reach for it.</p>
+  </header>
+</section>
+
+<!-- ═════════════════ FORMS GALLERY ═════════════════ -->
+<section class="section" id="gallery">
+  <header class="section-header">
+    <span class="section-num">§ II</span>
+    <h2 class="section-title">Forms shipped<br>in this box.</h2>
+    <p class="section-lede">A taste of the catalog. The studio carries 241 named forms in total (58 fractal types and 183 sacred-geometry patterns): the Mandelbrot at degree-3 perturbation deep zoom, all 13 Catalan solids, both 2023 aperiodic monotiles, the Klein quartic, Mathieu group Cayley graphs, the Sri Yantra at canonical Kulaichev concurrence. These are six.</p>
+  </header>
+  <div class="gallery">
+    <article class="tile">
+      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1.2">
+          <circle cx="50" cy="50" r="14"/>
+          <circle cx="50" cy="32" r="14"/><circle cx="50" cy="68" r="14"/>
+          <circle cx="34.4" cy="41" r="14"/><circle cx="65.6" cy="41" r="14"/>
+          <circle cx="34.4" cy="59" r="14"/><circle cx="65.6" cy="59" r="14"/>
+        </g>
+      </svg>
+      <div class="tile-cap"><em>Seed of Life</em>Seven circles, hex symmetry</div>
+    </article>
+    <article class="tile">
+      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <polygon points="50,15 85,75 15,75"/>
+          <polygon points="50,85 15,25 85,25"/>
+          <polygon points="50,28 73,68 27,68"/>
+          <polygon points="50,72 27,32 73,32"/>
+          <polygon points="50,40 64,62 36,62"/>
+          <polygon points="50,60 36,38 64,38"/>
+          <circle cx="50" cy="50" r="2" fill="currentColor"/>
+        </g>
+      </svg>
+      <div class="tile-cap"><em>Sri Yantra</em>Nine triangles, central bindu</div>
+    </article>
+    <article class="tile">
+      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M20,50 Q35,20 50,50 T80,50 M20,50 Q35,80 50,50 T80,50"/>
+          <path d="M50,20 Q20,35 50,50 T50,80 M50,20 Q80,35 50,50 T50,80"/>
+          <circle cx="50" cy="50" r="22"/>
+        </g>
+      </svg>
+      <div class="tile-cap"><em>Maurer Rose</em>n=6 d=71</div>
+    </article>
+    <article class="tile">
+      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1.2">
+          <polygon points="50,15 85,40 72,80 28,80 15,40"/>
+          <polygon points="50,15 72,80 15,40"/>
+          <polygon points="85,40 28,80 50,15"/>
+          <polygon points="50,15 28,80 85,40"/>
+          <polygon points="15,40 72,80 50,15"/>
+        </g>
+      </svg>
+      <div class="tile-cap"><em>Pentagram</em>Compound of 5 inscribed</div>
+    </article>
+    <article class="tile">
+      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M50,50 m-30,0 a30,30 0 1,1 60,0 a30,30 0 1,1 -60,0" stroke-dasharray="2 3"/>
+          <path d="M50,50 Q60,30 80,50 T50,50 Q40,70 20,50 T50,50 Q70,40 50,20 T50,50 Q30,60 50,80 T50,50"/>
+          <circle cx="50" cy="50" r="3"/>
+        </g>
+      </svg>
+      <div class="tile-cap"><em>Mandelbrot</em>z² + c, |z| ≤ 2</div>
+    </article>
+    <article class="tile">
+      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <polygon points="50,12 80,28 80,72 50,88 20,72 20,28"/>
+          <polygon points="50,28 70,40 70,60 50,72 30,60 30,40"/>
+          <line x1="50" y1="12" x2="50" y2="28"/>
+          <line x1="80" y1="28" x2="70" y2="40"/>
+          <line x1="80" y1="72" x2="70" y2="60"/>
+          <line x1="50" y1="88" x2="50" y2="72"/>
+          <line x1="20" y1="72" x2="30" y2="60"/>
+          <line x1="20" y1="28" x2="30" y2="40"/>
+        </g>
+      </svg>
+      <div class="tile-cap"><em>Tesseract</em>4-cube, 3D-projected</div>
+    </article>
+  </div>
+</section>
+
+<!-- ═════════════════ LINEAGE ═════════════════ -->
+<section class="section" id="lineage">
+  <header class="section-header">
+    <span class="section-num">§ III</span>
+    <h2 class="section-title">Lineage.</h2>
+    <p class="section-lede">The figures in this studio are not invented. They are inherited. Six of the people we owe.</p>
+  </header>
+  <div class="timeline">
+    <article class="timeline-entry">
+      <span class="timeline-year">1611</span>
+      <div class="timeline-body">
+        <h3>Johannes Kepler</h3>
+        <p>Discovers the rhombic dodecahedron and sets out the harmonic geometry of the Platonic solids. The Mysterium Cosmographicum maps the inner planets onto the dodecahedron-icosahedron pair.</p>
+        <cite>Harmonices Mundi · 1619</cite>
+      </div>
+    </article>
+    <article class="timeline-entry">
+      <span class="timeline-year">1879</span>
+      <div class="timeline-body">
+        <h3>Felix Klein</h3>
+        <p>Defines the Klein quartic and its automorphism group PSL₂(7), achieving the Hurwitz upper bound of 84(g − 1) = 168 symmetries on a genus-3 Riemann surface.</p>
+        <cite>Über die Transformation siebenter Ordnung · Math. Ann. 14</cite>
+      </div>
+    </article>
+    <article class="timeline-entry">
+      <span class="timeline-year">1931</span>
+      <div class="timeline-body">
+        <h3>Heinz Hopf</h3>
+        <p>Constructs the fibration S¹ → S³ → S². Each point of the base S² lifts to a great circle of S³; in stereographic projection, the great circles become linked rings, the Hopf invariant.</p>
+        <cite>Über die Abbildungen der dreidimensionalen Sphäre · Math. Ann. 104</cite>
+      </div>
+    </article>
+    <article class="timeline-entry">
+      <span class="timeline-year">1974</span>
+      <div class="timeline-body">
+        <h3>Roger Penrose</h3>
+        <p>Constructs the kite-and-dart aperiodic tiling, proving that fivefold symmetry can tile the plane without translational periodicity. The kitchen-floor problem solved fifty years before quasicrystals were discovered.</p>
+        <cite>The Role of Aesthetics in Pure and Applied Mathematical Research</cite>
+      </div>
+    </article>
+    <article class="timeline-entry">
+      <span class="timeline-year">1980</span>
+      <div class="timeline-body">
+        <h3>Benoît Mandelbrot</h3>
+        <p>Iterates z² + c on an IBM mainframe and prints the boundary of what would become the most famous mathematical object of the late 20th century. The fractal nomenclature follows.</p>
+        <cite>Fractal Aspects of the Iteration of z → λz(1 − z) for Complex λ and z</cite>
+      </div>
+    </article>
+    <article class="timeline-entry">
+      <span class="timeline-year">2023</span>
+      <div class="timeline-body">
+        <h3>Smith, Myers, Kaplan, Goodman-Strauss</h3>
+        <p>Identify the Hat, a single tile that aperiodically tiles the plane. Three months later, the Spectre, a chiral aperiodic monotile. The decades-long search for an einstein, ended in a year.</p>
+        <cite>An Aperiodic Monotile · arXiv:2303.10798</cite>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ═════════════════ THE MATHEMATICS ═════════════════ -->
+<section class="section" id="mathematics">
+  <header class="section-header">
+    <span class="section-num">§ IV</span>
+    <h2 class="section-title">The mathematics.</h2>
+    <p class="section-lede">The studio is, structurally, a small library of theorems being evaluated against the canvas. Eleven of the methods being computed, by domain: the equations the kernel actually iterates, with the canonical citations. Calibration cards, not a textbook.</p>
+  </header>
+  <div class="math-grid">
+
+    <article class="math-row">
+      <h3 class="math-domain">Escape-time iteration<small>Mandelbrot family · 2D escape time</small></h3>
+      <div class="math-body">
+        <code class="math-formula">z<sub>n+1</sub> = z<sub>n</sub>² + c   ;   escape at |z| &gt; 2</code>
+        Each pixel is a point <em>c ∈ ℂ</em>; the GPU kernel iterates until escape or until <em>maxIter</em>. Burning Ship folds <em>|Im(z)|</em> on the imaginary axis; Tricorn conjugates; M3 / M4 raise the exponent to 3 and 4; Phoenix adds a second-order memory term <em>p · z<sub>n−1</sub></em>; Celtic folds <em>|Re(z² )|</em>; Lambda iterates <em>z(1−z)</em>; Buffalo and Newton complete the family.
+      </div>
+      <cite class="math-cite">Mandelbrot 1980<br>Ann. NY Acad. Sci. 357</cite>
+    </article>
+
+    <article class="math-row">
+      <h3 class="math-domain">Deep-zoom perturbation<small>10⁶⁰-zoom interior renders</small></h3>
+      <div class="math-body">
+        <code class="math-formula">Δ<sub>n+1</sub> = 2·Z<sub>n</sub>·Δ<sub>n</sub> + Δ<sub>n</sub>² + δ</code>
+        A reference orbit is iterated in 256-bit fixed-point on the CPU; every other pixel is rendered as a perturbation <em>Δ</em> against it. Past 10²⁵ the kernel switches to a degree-2 Taylor series approximation; past 10⁶⁰, degree-3. Glitch detection rebases the reference when cancellation collapses |Z + Δ| toward zero (Pauldelbrot's criterion). Burning Ship, Celtic and Phoenix carry their own δ-recurrences past 10¹³ (fold-exact |·| arithmetic; Phoenix's memory term tracked exactly), and every integer power 2–8 of the z-family gets the generalized binomial recurrence.
+      </div>
+      <cite class="math-cite">Pauldelbrot 2014<br>fractalforums.com</cite>
+    </article>
+
+    <article class="math-row">
+      <h3 class="math-domain">Newton iteration<small>roots of unity, 5 fractals</small></h3>
+      <div class="math-body">
+        <code class="math-formula">z<sub>n+1</sub> = z<sub>n</sub> − f(z<sub>n</sub>) / f'(z<sub>n</sub>)</code>
+        For <em>f(z) = z<sup>n</sup> − 1</em> the iteration converges to one of <em>n</em> roots of unity; each pixel colored by which root it lands on, lightness encoded as iteration count. The Cayley variant uses a non-rational <em>f</em> with three real fixed points and a basin-of-attraction structure first studied by Hubbard & Schleicher.
+      </div>
+      <cite class="math-cite">Hubbard–Schleicher 1986<br>Compl. Var. Theory Appl. 8</cite>
+    </article>
+
+    <article class="math-row">
+      <h3 class="math-domain">Descartes circle theorem<small>Apollonian gasket</small></h3>
+      <div class="math-body">
+        <code class="math-formula">k<sub>4</sub> = k<sub>1</sub>+k<sub>2</sub>+k<sub>3</sub> ± 2√(k<sub>1</sub>k<sub>2</sub> + k<sub>2</sub>k<sub>3</sub> + k<sub>3</sub>k<sub>1</sub>)</code>
+        Curvature <em>k = 1/r</em>; outer container has <em>k &lt; 0</em>. The complex-valued Descartes formula recovers the new circle's center <em>z<sub>4</sub></em>; the recursion is depth-capped and produces a residual set of Hausdorff dimension <em>1.30568673…</em>, the Apollonian dimension computed by McMullen via thermodynamic formalism.
+      </div>
+      <cite class="math-cite">Soddy 1936<br>McMullen 1998</cite>
+    </article>
+
+    <article class="math-row">
+      <h3 class="math-domain">Schläfli regular polytopes<small>3D + 4D, 46 patterns</small></h3>
+      <div class="math-body">
+        <code class="math-formula">Schläfli symbols: {3,3} … {3,3,3,3}
+600-cell  {3,3,5} :  120 V, 720 E, 1200 F, 600 C
+120-cell  {5,3,3} :  600 V, 1200 E, 720 F, 120 C</code>
+        The five Platonic solids extend through the thirteen Archimedean and thirteen Catalan duals to the six convex regular 4-polytopes (5-cell, 8-cell, 16-cell, 24-cell, 120-cell, 600-cell), then to nine of the ten Schläfli–Hess regular star polytopes. Vertex sets from Coxeter Table I; stereographic <em>S³ → ℝ³</em>, orthographic <em>ℝ³ → ℝ²</em>.
+      </div>
+      <cite class="math-cite">Schläfli 1852/1901<br>Coxeter 1947</cite>
+    </article>
+
+    <article class="math-row">
+      <h3 class="math-domain">Golden-angle phyllotaxis<small>spiral lattices</small></h3>
+      <div class="math-body">
+        <code class="math-formula">θ<sub>i</sub> = i · π(3 − √5)   ≈   137.50776° · i
+r<sub>i</sub> = R · √(i / N)</code>
+        The divergence angle is the irrational angle most resistant to rational approximation, the inverse of the golden ratio in radians per turn. Vogel's parametrisation distributes <em>N</em> seeds on a disc with the densest packing achievable without translational symmetry; Fibonacci spiral arms emerge spontaneously from the parastichy bands.
+      </div>
+      <cite class="math-cite">Vogel 1979<br>Math. Biosciences 44</cite>
+    </article>
+
+    <article class="math-row">
+      <h3 class="math-domain">Robinson triangle deflation<small>Penrose tilings · Hat · Spectre</small></h3>
+      <div class="math-body">
+        <code class="math-formula">acute  → 1 acute  + 1 obtuse
+obtuse → 1 obtuse + 1 acute
+ratio  : φ = (1+√5)/2</code>
+        The Penrose P2 (kite-and-dart) and P3 (rhombi) tilings emerge from <em>φ</em>-self-similar substitution on the two Robinson half-triangles, generating five-fold-symmetric aperiodic tilings of the plane. The Hat (March 2023) and Spectre (May 2023) closed the einstein problem: a single tile that tiles the plane only aperiodically.
+      </div>
+      <cite class="math-cite">Penrose 1974 · Smith,<br>Myers, Kaplan,<br>Goodman-Strauss 2023</cite>
+    </article>
+
+    <article class="math-row">
+      <h3 class="math-domain">Möbius dynamics<small>Indra's Pearls · Kleinian groups</small></h3>
+      <div class="math-body">
+        <code class="math-formula">z' = (μz + 1) / (z + μ̄)
+μ ∈ ℂ  on the Maskit slice</code>
+        The two-generator Kleinian group acts on the Riemann sphere via Möbius transformations; the fixed-point pair orbit closes onto the limit set, a self-similar Cantor-set fractal. Maskit's slice <em>μ</em> parameterises the discrete-faithful representations; pearls render as iterated images of seed circles.
+      </div>
+      <cite class="math-cite">Mumford, Series,<br>Wright 2002</cite>
+    </article>
+
+    <article class="math-row">
+      <h3 class="math-domain">Reaction-diffusion<small>Gray-Scott · Gierer-Meinhardt</small></h3>
+      <div class="math-body">
+        <code class="math-formula">u<sub>t</sub> = D<sub>u</sub>∇²u − uv² + F(1 − u)
+v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
+        Two-species reaction-diffusion on a torus. The control plane <em>(F, k)</em> partitions into Pearson's empirical regions: spots, stripes, mitosis, solitons, chaos. Iterated through finite-difference Laplacian on a workqueue grid; the fixed initial seed evolves toward Turing-pattern attractors.
+      </div>
+      <cite class="math-cite">Pearson 1993<br>Science 261</cite>
+    </article>
+
+    <article class="math-row">
+      <h3 class="math-domain">Lenia continuous CA<small>solitons in continuum</small></h3>
+      <div class="math-body">
+        <code class="math-formula">A<sub>t+Δt</sub> = clip( A<sub>t</sub> + Δt · G(K * A<sub>t</sub>) )</code>
+        Conway's Game of Life with three discrete axes (space, time, state) replaced by their continuous limits. Smooth growth function <em>G</em> applied to a smooth-kernel convolution <em>K * A</em>. The expanded state space hosts hundreds of named solitons (orbiums, gliders, spinners) that emerge spontaneously from rule space.
+      </div>
+      <cite class="math-cite">Bert Chan 2018<br>arXiv:1812.05433</cite>
+    </article>
+
+    <article class="math-row">
+      <h3 class="math-domain">Strange-attractor flows<small>Lorenz · Hénon · Rössler · Clifford · de Jong · Dadras</small></h3>
+      <div class="math-body">
+        <code class="math-formula">ẋ = σ(y − x)
+ẏ = x(ρ − z) − y
+ż = xy − βz</code>
+        Strange attractors, continuous 3D flows integrated via Runge–Kutta 4 (the Lorenz butterfly's twin lobes, the Rössler band's single fold) and discrete iterated maps (the Hénon quadratic crescent). The orbit never closes; long integration draws each attractor's characteristic geometry. Eighteen ship, each one's parameter space exposed as sliders.
+      </div>
+      <cite class="math-cite">Lorenz 1963<br>J. Atmos. Sci. 20</cite>
+    </article>
+
+  </div>
+</section>
+
+<!-- ═════════════════ SPEC ═════════════════ -->
+<section class="section" id="spec">
+  <header class="section-header">
+    <span class="section-num">§ V</span>
+    <h2 class="section-title">Specimen card.</h2>
+    <p class="section-lede">The technical envelope. Read it like a card from a Voyager probe: what we sent, in what container, with what guarantees.</p>
+  </header>
+  <article class="spec-card">
+    <h2>AEON · v7.0.0</h2>
+    <dl class="spec-grid">
+      <dt>Form factor</dt>
+      <dd><em>One HTML file</em> · ~3.8 MB · ~62 KB bundled fonts · service worker for offline · © 7th Frontier, Inc.</dd>
+      <dt>Renderers</dt>
+      <dd>WebGL2 (escape-time + 3D raymarched) · Canvas 2D (geometry, IFS, attractors) · two web workers (geometry off-thread + CPU fractal off-thread)</dd>
+      <dt>Deep zoom</dt>
+      <dd>Degree-3 Series Approximation past <em>10⁶⁰</em> · multi-pass GPU glitch correction · Pauldelbrot rebase · whole-catalog 64-bit sharp zoom to 10¹³, per-type perturbation past it (Burning Ship, Celtic, Phoenix, Multibrots, integer powers 2–8)</dd>
+      <dt>Catalog</dt>
+      <dd>58 fractals · 183 sacred-geometry patterns · 51 palettes · 102 fractal-flame variations · 4D polytopes · Mathieu groups · Catalan solids</dd>
+      <dt>Interop</dt>
+      <dd>Apophysis 7X <em>.flame</em> round-trip (with motion keyframes, HSV palettes, finalxforms) · Adobe Cube <em>.cube</em> LUT import · UGR / MAP / Adobe <em>.ase</em> / GIMP <em>.gpl</em> palette interchange · PNG metadata · frame-exact video export (MP4/WebM)</dd>
+      <dt>Accessibility</dt>
+      <dd>WCAG 2.1 AA (axe-verified) · keyboard-rebindable · reduced-motion respected · 44×44 touch targets · high-contrast mode · screen-reader friendly</dd>
+      <dt>Build envelope</dt>
+      <dd>Zero npm dependencies at runtime · zero external HTTP origins · single-file deliverable · CSP <em>script-src</em> SHA-256 hash hardening · 150+ test suites across 4 tiers + 33 static lint gates (unit / consistency / math / mutation / fuzz / parity / smoke / ui / integration / render-audit / worker-parity / visual / a11y / WebGPU / deep-zoom / user-journeys)</dd>
+      <dt>Contract</dt>
+      <dd>Open the HTML. The application runs. As long as a browser exists, this artifact exists.</dd>
+    </dl>
+  </article>
+</section>
+</main>
+
+<!-- ═════════════════ FOOTER ═════════════════ -->
+
+<section class="section" id="renders">
+  <header class="section-header">
+    <span class="section-num">§ VI</span>
+    <h2 class="section-title">Rendered<br>in the studio.</h2>
+    <p class="section-lede">Each image is a catalog entry at its opening view. Select one to open the same view live.</p>
+  </header>
+  <div class="renders">
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoianVsaWEiLCJjeCI6MCwiY3kiOjAsInoiOjEsImpyIjotMC43LCJqaSI6MC4yNzAxNSwicGFsIjoicHN5Y2hlIiwiY2MiOjEsImNvIjowLCJtaSI6MjU2LCJlciI6NCwidG0iOjAsInBhdCI6ImZsb3dlci1vZi1saWZlIiwibHkiOjMsInN5Ijo4LCJnciI6MCwiZ3MiOjEsInNlZWQiOjI4NzAxMjg3NDMsImZpbCI6MCwiZ2x3IjoxLCJzZ2QiOjAsInU0cyI6MCwibGEiOjMsImxiIjowLCJscGgiOjAsInNmbSI6Niwic2ZuMSI6MSwic2ZuMiI6MSwic2ZuMyI6MSwiaGRjIjowLjAwMywicGZ4YiI6MCwicGZ4YnMiOjAuNDUsInBmeGJyIjoxMCwicGZ4diI6MCwicGZ4dnMiOjAuNjUsInBmeHZyIjowLjU1LCJwZnhnIjowLCJwZnhncyI6MC4wNCwicGZ4YyI6MCwicGZ4Y28iOjMsInBmeGwiOjAsInBmeGxuIjoiIiwiZnAiOjIsInZtdCI6ImV1Y2xpZGVhbiIsImNobG4iOjAsImNocnMiOjE2MCwibHlzIjoiQUIiLCJ0d2ciOjAuNSwiaXNrIjowLCJtb3AiOjAuNSwibWh4IjoxLCJtZWwiOjAsImN4ZiI6InoyIiwiY3hyZSI6MCwiY3hpbSI6MCwiY3h6bSI6MiwiY3huIjo1LCJjeHJ0IjowLCJjeHR1IjpbMC41LDAuODY2XSwiY3hiZiI6MSwiY3hicyI6MC41LCJjeHNzIjoxLCJjeGFyIjowLCJjeGFzIjowLjQsImN4bDMiOjAsImN4Y2IiOiJyZXR1cm4gY211bCh6LCB6KSArIHZlYzIoMC4wLCAwLjUpOyIsInJzcyI6NDAwLCJoZXAiOjAuMDAwOCwic3RrIjowLjUsImFvZiI6MC4zLCJmb2ciOjEsInIzeCI6MCwicjN5IjowLCJxaiI6Wy0wLjIsMC42LDAuMiwwXSwiZ3J4IjowLjQsImdyeSI6MC42LCJsdyI6MS41LCJpZnNpIjoxMDAwMDAwLCJwZmwiOjAsImxzY2EiOjYwLCJjcGoiOiJ4eiIsImx4YSI6IkYiLCJseHIiOiJGPUYrRi1GLUYrRiIsImxwciI6ImtvY2giLCJjcGkiOiJzdGVsbGEtb2N0YW5ndWxhIiwiY3BvIjoiY3Vib2N0YWhlZHJvbiIsInNyciI6MCwidnNjIjoxLCJjaXMiOjAuNSwidGtxIjozLCJxc20iOjUsImNuZSI6MC41LCJjc3IiOjEsIm1idCI6MSwia3RiIjoxLCJwYXgiOjQsImppbCI6NSwicmNuIjoyNTAsInBjZiI6NCwib3NtIjowLCJvZm0iOjB9"><img src="./gallery/julia.webp" alt="Julia Set" width="1600" height="900" loading="lazy"></a><figcaption>Julia Set</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoibWFuZGVsYnJvdCIsImN4IjotMC43NSwiY3kiOjAsInoiOjAuNDUsImpyIjotMC43LCJqaSI6MC4yNzAxNSwicGFsIjoiZHVzayIsImNjIjoxLCJjbyI6MCwibWkiOjI1NiwiZXIiOjQsInRtIjowLCJwYXQiOiJmbG93ZXItb2YtbGlmZSIsImx5IjozLCJzeSI6OCwiZ3IiOjAsImdzIjoxLCJzZWVkIjo2ODUxMTkxODU4LCJmaWwiOjAsImdsdyI6MSwic2dkIjowLCJ1NHMiOjAsImxhIjozLCJsYiI6MCwibHBoIjowLCJzZm0iOjYsInNmbjEiOjEsInNmbjIiOjEsInNmbjMiOjEsImhkYyI6MC4wMDMsInBmeGIiOjAsInBmeGJzIjowLjQ1LCJwZnhiciI6MTAsInBmeHYiOjAsInBmeHZzIjowLjY1LCJwZnh2ciI6MC41NSwicGZ4ZyI6MCwicGZ4Z3MiOjAuMDQsInBmeGMiOjAsInBmeGNvIjozLCJwZnhsIjowLCJwZnhsbiI6IiIsImZwIjoyLCJ2bXQiOiJldWNsaWRlYW4iLCJjaGxuIjowLCJjaHJzIjoxNjAsImx5cyI6IkFCIiwidHdnIjowLjUsImlzayI6MCwibW9wIjowLjUsIm1oeCI6MSwibWVsIjowLCJjeGYiOiJ6MiIsImN4cmUiOjAsImN4aW0iOjAsImN4em0iOjIsImN4biI6NSwiY3hydCI6MCwiY3h0dSI6WzAuNSwwLjg2Nl0sImN4YmYiOjEsImN4YnMiOjAuNSwiY3hzcyI6MSwiY3hhciI6MCwiY3hhcyI6MC40LCJjeGwzIjowLCJjeGNiIjoicmV0dXJuIGNtdWwoeiwgeikgKyB2ZWMyKDAuMCwgMC41KTsiLCJyc3MiOjQwMCwiaGVwIjowLjAwMDgsInN0ayI6MC41LCJhb2YiOjAuMywiZm9nIjoxLCJyM3giOjAsInIzeSI6MCwicWoiOlstMC4yLDAuNiwwLjIsMF0sImdyeCI6MC40LCJncnkiOjAuNiwibHciOjEuNSwiaWZzaSI6MTAwMDAwMCwicGZsIjowLCJsc2NhIjo2MCwiY3BqIjoieHoiLCJseGEiOiJGIiwibHhyIjoiRj1GK0YtRi1GK0YiLCJscHIiOiJrb2NoIiwiY3BpIjoic3RlbGxhLW9jdGFuZ3VsYSIsImNwbyI6ImN1Ym9jdGFoZWRyb24iLCJzcnIiOjAsInZzYyI6MSwiY2lzIjowLjUsInRrcSI6MywicXNtIjo1LCJjbmUiOjAuNSwiY3NyIjoxLCJtYnQiOjEsImt0YiI6MSwicGF4Ijo0LCJqaWwiOjUsInJjbiI6MjUwLCJwY2YiOjQsIm9zbSI6MCwib2ZtIjowfQ"><img src="./gallery/mandelbrot.webp" alt="Mandelbrot Set" width="1600" height="900" loading="lazy"></a><figcaption>Mandelbrot Set</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoiYnVybmluZ3NoaXAiLCJjeCI6LTAuNSwiY3kiOi0wLjUsInoiOjAuNywianIiOi0wLjcsImppIjowLjI3MDE1LCJwYWwiOiJwbGFzbWEiLCJjYyI6MSwiY28iOjAsIm1pIjoyNTYsImVyIjo0LCJ0bSI6MCwicGF0IjoiZmxvd2VyLW9mLWxpZmUiLCJseSI6Mywic3kiOjgsImdyIjowLCJncyI6MSwic2VlZCI6NTg5OTU3NzU1NSwiZmlsIjowLCJnbHciOjEsInNnZCI6MCwidTRzIjowLCJsYSI6MywibGIiOjAsImxwaCI6MCwic2ZtIjo2LCJzZm4xIjoxLCJzZm4yIjoxLCJzZm4zIjoxLCJoZGMiOjAuMDAzLCJwZnhiIjowLCJwZnhicyI6MC40NSwicGZ4YnIiOjEwLCJwZnh2IjowLCJwZnh2cyI6MC42NSwicGZ4dnIiOjAuNTUsInBmeGciOjAsInBmeGdzIjowLjA0LCJwZnhjIjowLCJwZnhjbyI6MywicGZ4bCI6MCwicGZ4bG4iOiIiLCJmcCI6Miwidm10IjoiZXVjbGlkZWFuIiwiY2hsbiI6MCwiY2hycyI6MTYwLCJseXMiOiJBQiIsInR3ZyI6MC41LCJpc2siOjAsIm1vcCI6MC41LCJtaHgiOjEsIm1lbCI6MCwiY3hmIjoiejIiLCJjeHJlIjowLCJjeGltIjowLCJjeHptIjoyLCJjeG4iOjUsImN4cnQiOjAsImN4dHUiOlswLjUsMC44NjZdLCJjeGJmIjoxLCJjeGJzIjowLjUsImN4c3MiOjEsImN4YXIiOjAsImN4YXMiOjAuNCwiY3hsMyI6MCwiY3hjYiI6InJldHVybiBjbXVsKHosIHopICsgdmVjMigwLjAsIDAuNSk7IiwicnNzIjo0MDAsImhlcCI6MC4wMDA4LCJzdGsiOjAuNSwiYW9mIjowLjMsImZvZyI6MSwicjN4IjowLCJyM3kiOjAsInFqIjpbLTAuMiwwLjYsMC4yLDBdLCJncngiOjAuNCwiZ3J5IjowLjYsImx3IjoxLjUsImlmc2kiOjEwMDAwMDAsInBmbCI6MCwibHNjYSI6NjAsImNwaiI6Inh6IiwibHhhIjoiRiIsImx4ciI6IkY9RitGLUYtRitGIiwibHByIjoia29jaCIsImNwaSI6InN0ZWxsYS1vY3Rhbmd1bGEiLCJjcG8iOiJjdWJvY3RhaGVkcm9uIiwic3JyIjowLCJ2c2MiOjEsImNpcyI6MC41LCJ0a3EiOjMsInFzbSI6NSwiY25lIjowLjUsImNzciI6MSwibWJ0IjoxLCJrdGIiOjEsInBheCI6NCwiamlsIjo1LCJyY24iOjI1MCwicGNmIjo0LCJvc20iOjAsIm9mbSI6MH0"><img src="./gallery/burningship.webp" alt="Burning Ship" width="1600" height="900" loading="lazy"></a><figcaption>Burning Ship</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoibmV3dG9uMyIsImN4IjowLCJjeSI6MCwieiI6MSwianIiOi0wLjcsImppIjowLjI3MDE1LCJwYWwiOiJuZW9uIiwiY2MiOjEsImNvIjowLCJtaSI6MjU2LCJlciI6NCwidG0iOjAsInBhdCI6ImZsb3dlci1vZi1saWZlIiwibHkiOjMsInN5Ijo4LCJnciI6MCwiZ3MiOjEsInNlZWQiOjIxMTgxOTA1NTYsImZpbCI6MCwiZ2x3IjoxLCJzZ2QiOjAsInU0cyI6MCwibGEiOjMsImxiIjowLCJscGgiOjAsInNmbSI6Niwic2ZuMSI6MSwic2ZuMiI6MSwic2ZuMyI6MSwiaGRjIjowLjAwMywicGZ4YiI6MCwicGZ4YnMiOjAuNDUsInBmeGJyIjoxMCwicGZ4diI6MCwicGZ4dnMiOjAuNjUsInBmeHZyIjowLjU1LCJwZnhnIjowLCJwZnhncyI6MC4wNCwicGZ4YyI6MCwicGZ4Y28iOjMsInBmeGwiOjAsInBmeGxuIjoiIiwiZnAiOjMsInZtdCI6ImV1Y2xpZGVhbiIsImNobG4iOjAsImNocnMiOjE2MCwibHlzIjoiQUIiLCJ0d2ciOjAuNSwiaXNrIjowLCJtb3AiOjAuNSwibWh4IjoxLCJtZWwiOjAsImN4ZiI6InoyIiwiY3hyZSI6MCwiY3hpbSI6MCwiY3h6bSI6MiwiY3huIjo1LCJjeHJ0IjowLCJjeHR1IjpbMC41LDAuODY2XSwiY3hiZiI6MSwiY3hicyI6MC41LCJjeHNzIjoxLCJjeGFyIjowLCJjeGFzIjowLjQsImN4bDMiOjAsImN4Y2IiOiJyZXR1cm4gY211bCh6LCB6KSArIHZlYzIoMC4wLCAwLjUpOyIsInJzcyI6NDAwLCJoZXAiOjAuMDAwOCwic3RrIjowLjUsImFvZiI6MC4zLCJmb2ciOjEsInIzeCI6MCwicjN5IjowLCJxaiI6Wy0wLjIsMC42LDAuMiwwXSwiZ3J4IjowLjQsImdyeSI6MC42LCJsdyI6MS41LCJpZnNpIjoxMDAwMDAwLCJwZmwiOjAsImxzY2EiOjYwLCJjcGoiOiJ4eiIsImx4YSI6IkYiLCJseHIiOiJGPUYrRi1GLUYrRiIsImxwciI6ImtvY2giLCJjcGkiOiJzdGVsbGEtb2N0YW5ndWxhIiwiY3BvIjoiY3Vib2N0YWhlZHJvbiIsInNyciI6MCwidnNjIjoxLCJjaXMiOjAuNSwidGtxIjozLCJxc20iOjUsImNuZSI6MC41LCJjc3IiOjEsIm1idCI6MSwia3RiIjoxLCJwYXgiOjQsImppbCI6NSwicmNuIjoyNTAsInBjZiI6NCwib3NtIjowLCJvZm0iOjB9"><img src="./gallery/newton3.webp" alt="Newton zⁿ−1" width="1600" height="900" loading="lazy"></a><figcaption>Newton zⁿ−1</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoibWFuZGVsYm94IiwiY3giOjAsImN5IjowLCJ6IjoxLCJqciI6LTAuNywiamkiOjAuMjcwMTUsInBhbCI6ImFyY3RpYyIsImNjIjoxLCJjbyI6MCwibWkiOjI1NiwiZXIiOjQsInRtIjowLCJwYXQiOiJmbG93ZXItb2YtbGlmZSIsImx5IjozLCJzeSI6OCwiZ3IiOjAsImdzIjoxLCJzZWVkIjo0MjI4NjQwMDAzLCJmaWwiOjAsImdsdyI6MSwic2dkIjowLCJ1NHMiOjAsImxhIjozLCJsYiI6MCwibHBoIjowLCJzZm0iOjYsInNmbjEiOjEsInNmbjIiOjEsInNmbjMiOjEsImhkYyI6MC4wMDMsInBmeGIiOjAsInBmeGJzIjowLjQ1LCJwZnhiciI6MTAsInBmeHYiOjAsInBmeHZzIjowLjY1LCJwZnh2ciI6MC41NSwicGZ4ZyI6MCwicGZ4Z3MiOjAuMDQsInBmeGMiOjAsInBmeGNvIjozLCJwZnhsIjowLCJwZnhsbiI6IiIsImZwIjoyLCJ2bXQiOiJldWNsaWRlYW4iLCJjaGxuIjowLCJjaHJzIjoxNjAsImx5cyI6IkFCIiwidHdnIjowLjUsImlzayI6MCwibW9wIjowLjUsIm1oeCI6MSwibWVsIjowLCJjeGYiOiJ6MiIsImN4cmUiOjAsImN4aW0iOjAsImN4em0iOjIsImN4biI6NSwiY3hydCI6MCwiY3h0dSI6WzAuNSwwLjg2Nl0sImN4YmYiOjEsImN4YnMiOjAuNSwiY3hzcyI6MSwiY3hhciI6MCwiY3hhcyI6MC40LCJjeGwzIjowLCJjeGNiIjoicmV0dXJuIGNtdWwoeiwgeikgKyB2ZWMyKDAuMCwgMC41KTsiLCJyc3MiOjQwMCwiaGVwIjowLjAwMDgsInN0ayI6MC41LCJhb2YiOjAuMywiZm9nIjoxLCJyM3giOjAsInIzeSI6MCwicWoiOlstMC4yLDAuNiwwLjIsMF0sImdyeCI6MC40LCJncnkiOjAuNiwibHciOjEuNSwiaWZzaSI6MTAwMDAwMCwicGZsIjowLCJsc2NhIjo2MCwiY3BqIjoieHoiLCJseGEiOiJGIiwibHhyIjoiRj1GK0YtRi1GK0YiLCJscHIiOiJrb2NoIiwiY3BpIjoic3RlbGxhLW9jdGFuZ3VsYSIsImNwbyI6ImN1Ym9jdGFoZWRyb24iLCJzcnIiOjAsInZzYyI6MSwiY2lzIjowLjUsInRrcSI6MywicXNtIjo1LCJjbmUiOjAuNSwiY3NyIjoxLCJtYnQiOjEsImt0YiI6MSwicGF4Ijo0LCJqaWwiOjUsInJjbiI6MjUwLCJwY2YiOjQsIm9zbSI6MCwib2ZtIjowfQ"><img src="./gallery/mandelbox.webp" alt="Mandelbox 3D" width="1600" height="900" loading="lazy"></a><figcaption>Mandelbox 3D</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoicWp1bGlhIiwiY3giOjAsImN5IjowLCJ6IjowLjgsImpyIjotMC43LCJqaSI6MC4yNzAxNSwicGFsIjoiY29wcGVyIiwiY2MiOjEsImNvIjowLCJtaSI6MjU2LCJlciI6NCwidG0iOjAsInBhdCI6ImZsb3dlci1vZi1saWZlIiwibHkiOjMsInN5Ijo4LCJnciI6MCwiZ3MiOjEsInNlZWQiOjUzNjAwNzg5MDIsImZpbCI6MCwiZ2x3IjoxLCJzZ2QiOjAsInU0cyI6MCwibGEiOjMsImxiIjowLCJscGgiOjAsInNmbSI6Niwic2ZuMSI6MSwic2ZuMiI6MSwic2ZuMyI6MSwiaGRjIjowLjAwMywicGZ4YiI6MCwicGZ4YnMiOjAuNDUsInBmeGJyIjoxMCwicGZ4diI6MCwicGZ4dnMiOjAuNjUsInBmeHZyIjowLjU1LCJwZnhnIjowLCJwZnhncyI6MC4wNCwicGZ4YyI6MCwicGZ4Y28iOjMsInBmeGwiOjAsInBmeGxuIjoiIiwiZnAiOjIsInZtdCI6ImV1Y2xpZGVhbiIsImNobG4iOjAsImNocnMiOjE2MCwibHlzIjoiQUIiLCJ0d2ciOjAuNSwiaXNrIjowLCJtb3AiOjAuNSwibWh4IjoxLCJtZWwiOjAsImN4ZiI6InoyIiwiY3hyZSI6MCwiY3hpbSI6MCwiY3h6bSI6MiwiY3huIjo1LCJjeHJ0IjowLCJjeHR1IjpbMC41LDAuODY2XSwiY3hiZiI6MSwiY3hicyI6MC41LCJjeHNzIjoxLCJjeGFyIjowLCJjeGFzIjowLjQsImN4bDMiOjAsImN4Y2IiOiJyZXR1cm4gY211bCh6LCB6KSArIHZlYzIoMC4wLCAwLjUpOyIsInJzcyI6NDAwLCJoZXAiOjAuMDAwOCwic3RrIjowLjUsImFvZiI6MC4zLCJmb2ciOjEsInIzeCI6MCwicjN5IjowLCJxaiI6Wy0wLjIsMC42LDAuMiwwXSwiZ3J4IjowLjQsImdyeSI6MC42LCJsdyI6MS41LCJpZnNpIjoxMDAwMDAwLCJwZmwiOjAsImxzY2EiOjYwLCJjcGoiOiJ4eiIsImx4YSI6IkYiLCJseHIiOiJGPUYrRi1GLUYrRiIsImxwciI6ImtvY2giLCJjcGkiOiJzdGVsbGEtb2N0YW5ndWxhIiwiY3BvIjoiY3Vib2N0YWhlZHJvbiIsInNyciI6MCwidnNjIjoxLCJjaXMiOjAuNSwidGtxIjozLCJxc20iOjUsImNuZSI6MC41LCJjc3IiOjEsIm1idCI6MSwia3RiIjoxLCJwYXgiOjQsImppbCI6NSwicmNuIjoyNTAsInBjZiI6NCwib3NtIjowLCJvZm0iOjB9"><img src="./gallery/qjulia.webp" alt="Quaternion Julia" width="1600" height="900" loading="lazy"></a><figcaption>Quaternion Julia</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoiYXR0cmFjdG9yX2Rlam9uZyIsImN4IjowLCJjeSI6MCwieiI6MC43NSwianIiOi0wLjcsImppIjowLjI3MDE1LCJwYWwiOiJpbmZlcm5vIiwiY2MiOjEsImNvIjowLCJtaSI6MjU2LCJlciI6NCwidG0iOjAsInBhdCI6ImZsb3dlci1vZi1saWZlIiwibHkiOjMsInN5Ijo4LCJnciI6MCwiZ3MiOjEsInNlZWQiOjcyOTgwOTU3MDQsImZpbCI6MCwiZ2x3IjoxLCJzZ2QiOjAsInU0cyI6MCwibGEiOjMsImxiIjowLCJscGgiOjAsInNmbSI6Niwic2ZuMSI6MSwic2ZuMiI6MSwic2ZuMyI6MSwiaGRjIjowLjAwMywicGZ4YiI6MCwicGZ4YnMiOjAuNDUsInBmeGJyIjoxMCwicGZ4diI6MCwicGZ4dnMiOjAuNjUsInBmeHZyIjowLjU1LCJwZnhnIjowLCJwZnhncyI6MC4wNCwicGZ4YyI6MCwicGZ4Y28iOjMsInBmeGwiOjAsInBmeGxuIjoiIiwiZnAiOjIsInZtdCI6ImV1Y2xpZGVhbiIsImNobG4iOjAsImNocnMiOjE2MCwibHlzIjoiQUIiLCJ0d2ciOjAuNSwiaXNrIjowLCJtb3AiOjAuNSwibWh4IjoxLCJtZWwiOjAsImN4ZiI6InoyIiwiY3hyZSI6MCwiY3hpbSI6MCwiY3h6bSI6MiwiY3huIjo1LCJjeHJ0IjowLCJjeHR1IjpbMC41LDAuODY2XSwiY3hiZiI6MSwiY3hicyI6MC41LCJjeHNzIjoxLCJjeGFyIjowLCJjeGFzIjowLjQsImN4bDMiOjAsImN4Y2IiOiJyZXR1cm4gY211bCh6LCB6KSArIHZlYzIoMC4wLCAwLjUpOyIsInJzcyI6NDAwLCJoZXAiOjAuMDAwOCwic3RrIjowLjUsImFvZiI6MC4zLCJmb2ciOjEsInIzeCI6MCwicjN5IjowLCJxaiI6Wy0wLjIsMC42LDAuMiwwXSwiZ3J4IjowLjQsImdyeSI6MC42LCJsdyI6MS41LCJpZnNpIjoxMDAwMDAwLCJwZmwiOjAsImxzY2EiOjYwLCJjcGoiOiJ4eiIsImx4YSI6IkYiLCJseHIiOiJGPUYrRi1GLUYrRiIsImxwciI6ImtvY2giLCJjcGkiOiJzdGVsbGEtb2N0YW5ndWxhIiwiY3BvIjoiY3Vib2N0YWhlZHJvbiIsInNyciI6MCwidnNjIjoxLCJjaXMiOjAuNSwidGtxIjozLCJxc20iOjUsImNuZSI6MC41LCJjc3IiOjEsIm1idCI6MSwia3RiIjoxLCJwYXgiOjQsImppbCI6NSwicmNuIjoyNTAsInBjZiI6NCwib3NtIjowLCJvZm0iOjAsInhhIjoxLjQxLCJ4YiI6LTIuMzUsInhjIjoxLjQzLCJ4ZCI6LTIuMzcsImN4MCI6MC4xLCJjeTAiOjAsImN6MCI6MH0"><img src="./gallery/attractor_dejong.webp" alt="De Jong Attractor" width="1600" height="900" loading="lazy"></a><figcaption>De Jong Attractor</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoiYXR0cmFjdG9yX2NsaWZmb3JkIiwiY3giOjAsImN5IjowLCJ6IjowLjYyLCJqciI6LTAuNywiamkiOjAuMjcwMTUsInBhbCI6Im9jZWFuIiwiY2MiOjEsImNvIjowLCJtaSI6MjU2LCJlciI6NCwidG0iOjAsInBhdCI6ImZsb3dlci1vZi1saWZlIiwibHkiOjMsInN5Ijo4LCJnciI6MCwiZ3MiOjEsInNlZWQiOjc1NDc0NzYwMzAsImZpbCI6MCwiZ2x3IjoxLCJzZ2QiOjAsInU0cyI6MCwibGEiOjMsImxiIjowLCJscGgiOjAsInNmbSI6Niwic2ZuMSI6MSwic2ZuMiI6MSwic2ZuMyI6MSwiaGRjIjowLjAwMywicGZ4YiI6MCwicGZ4YnMiOjAuNDUsInBmeGJyIjoxMCwicGZ4diI6MCwicGZ4dnMiOjAuNjUsInBmeHZyIjowLjU1LCJwZnhnIjowLCJwZnhncyI6MC4wNCwicGZ4YyI6MCwicGZ4Y28iOjMsInBmeGwiOjAsInBmeGxuIjoiIiwiZnAiOjIsInZtdCI6ImV1Y2xpZGVhbiIsImNobG4iOjAsImNocnMiOjE2MCwibHlzIjoiQUIiLCJ0d2ciOjAuNSwiaXNrIjowLCJtb3AiOjAuNSwibWh4IjoxLCJtZWwiOjAsImN4ZiI6InoyIiwiY3hyZSI6MCwiY3hpbSI6MCwiY3h6bSI6MiwiY3huIjo1LCJjeHJ0IjowLCJjeHR1IjpbMC41LDAuODY2XSwiY3hiZiI6MSwiY3hicyI6MC41LCJjeHNzIjoxLCJjeGFyIjowLCJjeGFzIjowLjQsImN4bDMiOjAsImN4Y2IiOiJyZXR1cm4gY211bCh6LCB6KSArIHZlYzIoMC4wLCAwLjUpOyIsInJzcyI6NDAwLCJoZXAiOjAuMDAwOCwic3RrIjowLjUsImFvZiI6MC4zLCJmb2ciOjEsInIzeCI6MCwicjN5IjowLCJxaiI6Wy0wLjIsMC42LDAuMiwwXSwiZ3J4IjowLjQsImdyeSI6MC42LCJsdyI6MS41LCJpZnNpIjoxMDAwMDAwLCJwZmwiOjAsImxzY2EiOjYwLCJjcGoiOiJ4eiIsImx4YSI6IkYiLCJseHIiOiJGPUYrRi1GLUYrRiIsImxwciI6ImtvY2giLCJjcGkiOiJzdGVsbGEtb2N0YW5ndWxhIiwiY3BvIjoiY3Vib2N0YWhlZHJvbiIsInNyciI6MCwidnNjIjoxLCJjaXMiOjAuNSwidGtxIjozLCJxc20iOjUsImNuZSI6MC41LCJjc3IiOjEsIm1idCI6MSwia3RiIjoxLCJwYXgiOjQsImppbCI6NSwicmNuIjoyNTAsInBjZiI6NCwib3NtIjowLCJvZm0iOjAsInhhIjotMS40LCJ4YiI6MS42LCJ4YyI6MSwieGQiOjAuNywiY3gwIjowLjEsImN5MCI6MCwiY3owIjowfQ"><img src="./gallery/attractor_clifford.webp" alt="Clifford Attractor" width="1600" height="900" loading="lazy"></a><figcaption>Clifford Attractor</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoiaWZzX2Zlcm4iLCJjeCI6MC4xLCJjeSI6LTUsInoiOjAuMzUsImpyIjotMC43LCJqaSI6MC4yNzAxNSwicGFsIjoic29sYXIiLCJjYyI6MSwiY28iOjAsIm1pIjoyNTYsImVyIjo0LCJ0bSI6MCwicGF0IjoiZmxvd2VyLW9mLWxpZmUiLCJseSI6Mywic3kiOjgsImdyIjowLCJncyI6MSwic2VlZCI6OTEwNjEwOTY4MiwiZmlsIjowLCJnbHciOjEsInNnZCI6MCwidTRzIjowLCJsYSI6MywibGIiOjAsImxwaCI6MCwic2ZtIjo2LCJzZm4xIjoxLCJzZm4yIjoxLCJzZm4zIjoxLCJoZGMiOjAuMDAzLCJwZnhiIjowLCJwZnhicyI6MC40NSwicGZ4YnIiOjEwLCJwZnh2IjowLCJwZnh2cyI6MC42NSwicGZ4dnIiOjAuNTUsInBmeGciOjAsInBmeGdzIjowLjA0LCJwZnhjIjowLCJwZnhjbyI6MywicGZ4bCI6MCwicGZ4bG4iOiIiLCJmcCI6Miwidm10IjoiZXVjbGlkZWFuIiwiY2hsbiI6MCwiY2hycyI6MTYwLCJseXMiOiJBQiIsInR3ZyI6MC41LCJpc2siOjAsIm1vcCI6MC41LCJtaHgiOjEsIm1lbCI6MCwiY3hmIjoiejIiLCJjeHJlIjowLCJjeGltIjowLCJjeHptIjoyLCJjeG4iOjUsImN4cnQiOjAsImN4dHUiOlswLjUsMC44NjZdLCJjeGJmIjoxLCJjeGJzIjowLjUsImN4c3MiOjEsImN4YXIiOjAsImN4YXMiOjAuNCwiY3hsMyI6MCwiY3hjYiI6InJldHVybiBjbXVsKHosIHopICsgdmVjMigwLjAsIDAuNSk7IiwicnNzIjo0MDAsImhlcCI6MC4wMDA4LCJzdGsiOjAuNSwiYW9mIjowLjMsImZvZyI6MSwicjN4IjowLCJyM3kiOjAsInFqIjpbLTAuMiwwLjYsMC4yLDBdLCJncngiOjAuNCwiZ3J5IjowLjYsImx3IjoxLjUsImlmc2kiOjEwMDAwMDAsInBmbCI6MCwibHNjYSI6NjAsImNwaiI6Inh6IiwiaWZ3IjpbMC4wMSwwLjg1LDAuMDcsMC4wN10sImx4YSI6IkYiLCJseHIiOiJGPUYrRi1GLUYrRiIsImxwciI6ImtvY2giLCJjcGkiOiJzdGVsbGEtb2N0YW5ndWxhIiwiY3BvIjoiY3Vib2N0YWhlZHJvbiIsInNyciI6MCwidnNjIjoxLCJjaXMiOjAuNSwidGtxIjozLCJxc20iOjUsImNuZSI6MC41LCJjc3IiOjEsIm1idCI6MSwia3RiIjoxLCJwYXgiOjQsImppbCI6NSwicmNuIjoyNTAsInBjZiI6NCwib3NtIjowLCJvZm0iOjB9"><img src="./gallery/ifs_fern.webp" alt="Barnsley Fern" width="1600" height="900" loading="lazy"></a><figcaption>Barnsley Fern</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZ2VvbWV0cnkiLCJmdCI6Im1hbmRlbGJyb3QiLCJjeCI6LTAuNzUsImN5IjowLCJ6IjowLjQ1LCJqciI6LTAuNywiamkiOjAuMjcwMTUsInBhbCI6InVsdHJhdmlvbGV0IiwiY2MiOjEsImNvIjowLCJtaSI6MjU2LCJlciI6NCwidG0iOjAsInBhdCI6ImZsb3dlci1vZi1saWZlIiwibHkiOjMsInN5Ijo4LCJnciI6MCwiZ3MiOjEsInNlZWQiOjU0ODcxNDAxMzAsImZpbCI6MCwiZ2x3IjoxLCJzZ2QiOjAsInU0cyI6MCwibGEiOjMsImxiIjowLCJscGgiOjAsInNmbSI6Niwic2ZuMSI6MSwic2ZuMiI6MSwic2ZuMyI6MSwiaGRjIjowLjAwMywicGZ4YiI6MCwicGZ4YnMiOjAuNDUsInBmeGJyIjoxMCwicGZ4diI6MCwicGZ4dnMiOjAuNjUsInBmeHZyIjowLjU1LCJwZnhnIjowLCJwZnhncyI6MC4wNCwicGZ4YyI6MCwicGZ4Y28iOjMsInBmeGwiOjAsInBmeGxuIjoiIiwiZnAiOjIsInZtdCI6ImV1Y2xpZGVhbiIsImNobG4iOjAsImNocnMiOjE2MCwibHlzIjoiQUIiLCJ0d2ciOjAuNSwiaXNrIjowLCJtb3AiOjAuNSwibWh4IjoxLCJtZWwiOjAsImN4ZiI6InoyIiwiY3hyZSI6MCwiY3hpbSI6MCwiY3h6bSI6MiwiY3huIjo1LCJjeHJ0IjowLCJjeHR1IjpbMC41LDAuODY2XSwiY3hiZiI6MSwiY3hicyI6MC41LCJjeHNzIjoxLCJjeGFyIjowLCJjeGFzIjowLjQsImN4bDMiOjAsImN4Y2IiOiJyZXR1cm4gY211bCh6LCB6KSArIHZlYzIoMC4wLCAwLjUpOyIsInJzcyI6NDAwLCJoZXAiOjAuMDAwOCwic3RrIjowLjUsImFvZiI6MC4zLCJmb2ciOjEsInIzeCI6MCwicjN5IjowLCJxaiI6Wy0wLjIsMC42LDAuMiwwXSwiZ3J4IjowLjQsImdyeSI6MC42LCJsdyI6MS41LCJpZnNpIjoxMDAwMDAwLCJwZmwiOjAsImxzY2EiOjYwLCJjcGoiOiJ4eiIsImx4YSI6IkYiLCJseHIiOiJGPUYrRi1GLUYrRiIsImxwciI6ImtvY2giLCJjcGkiOiJzdGVsbGEtb2N0YW5ndWxhIiwiY3BvIjoiY3Vib2N0YWhlZHJvbiIsInNyciI6MCwidnNjIjoxLCJjaXMiOjAuNSwidGtxIjozLCJxc20iOjUsImNuZSI6MC41LCJjc3IiOjEsIm1idCI6MSwia3RiIjoxLCJwYXgiOjQsImppbCI6NSwicmNuIjoyNTAsInBjZiI6NCwib3NtIjowLCJvZm0iOjB9"><img src="./gallery/flower-of-life.webp" alt="Flower of Life" width="1600" height="900" loading="lazy"></a><figcaption>Flower of Life</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZ2VvbWV0cnkiLCJmdCI6Im1hbmRlbGJyb3QiLCJjeCI6LTAuNzUsImN5IjowLCJ6IjowLjQ1LCJqciI6LTAuNywiamkiOjAuMjcwMTUsInBhbCI6ImVhcnRoIiwiY2MiOjEsImNvIjowLCJtaSI6MjU2LCJlciI6NCwidG0iOjAsInBhdCI6InBlbnJvc2UiLCJseSI6Mywic3kiOjgsImdyIjowLCJncyI6MSwic2VlZCI6NDA1MDk3MDM3MCwiZmlsIjowLCJnbHciOjEsInNnZCI6MCwidTRzIjowLCJsYSI6MywibGIiOjAsImxwaCI6MCwic2ZtIjo2LCJzZm4xIjoxLCJzZm4yIjoxLCJzZm4zIjoxLCJoZGMiOjAuMDAzLCJwZnhiIjowLCJwZnhicyI6MC40NSwicGZ4YnIiOjEwLCJwZnh2IjowLCJwZnh2cyI6MC42NSwicGZ4dnIiOjAuNTUsInBmeGciOjAsInBmeGdzIjowLjA0LCJwZnhjIjowLCJwZnhjbyI6MywicGZ4bCI6MCwicGZ4bG4iOiIiLCJmcCI6Miwidm10IjoiZXVjbGlkZWFuIiwiY2hsbiI6MCwiY2hycyI6MTYwLCJseXMiOiJBQiIsInR3ZyI6MC41LCJpc2siOjAsIm1vcCI6MC41LCJtaHgiOjEsIm1lbCI6MCwiY3hmIjoiejIiLCJjeHJlIjowLCJjeGltIjowLCJjeHptIjoyLCJjeG4iOjUsImN4cnQiOjAsImN4dHUiOlswLjUsMC44NjZdLCJjeGJmIjoxLCJjeGJzIjowLjUsImN4c3MiOjEsImN4YXIiOjAsImN4YXMiOjAuNCwiY3hsMyI6MCwiY3hjYiI6InJldHVybiBjbXVsKHosIHopICsgdmVjMigwLjAsIDAuNSk7IiwicnNzIjo0MDAsImhlcCI6MC4wMDA4LCJzdGsiOjAuNSwiYW9mIjowLjMsImZvZyI6MSwicjN4IjowLCJyM3kiOjAsInFqIjpbLTAuMiwwLjYsMC4yLDBdLCJncngiOjAuNCwiZ3J5IjowLjYsImx3IjoxLjUsImlmc2kiOjEwMDAwMDAsInBmbCI6MCwibHNjYSI6NjAsImNwaiI6Inh6IiwibHhhIjoiRiIsImx4ciI6IkY9RitGLUYtRitGIiwibHByIjoia29jaCIsImNwaSI6InN0ZWxsYS1vY3Rhbmd1bGEiLCJjcG8iOiJjdWJvY3RhaGVkcm9uIiwic3JyIjowLCJ2c2MiOjEsImNpcyI6MC41LCJ0a3EiOjMsInFzbSI6NSwiY25lIjowLjUsImNzciI6MSwibWJ0IjoxLCJrdGIiOjEsInBheCI6NCwiamlsIjo1LCJyY24iOjI1MCwicGNmIjo0LCJvc20iOjAsIm9mbSI6MH0"><img src="./gallery/penrose.webp" alt="Penrose Tiling" width="1600" height="900" loading="lazy"></a><figcaption>Penrose Tiling</figcaption></figure>
+    <figure class="render"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZ2VvbWV0cnkiLCJmdCI6Im1hbmRlbGJyb3QiLCJjeCI6LTAuNzUsImN5IjowLCJ6IjowLjQ1LCJqciI6LTAuNywiamkiOjAuMjcwMTUsInBhbCI6ImdvbGQiLCJjYyI6MSwiY28iOjAsIm1pIjoyNTYsImVyIjo0LCJ0bSI6MCwicGF0Ijoic3JpLXlhbnRyYSIsImx5IjozLCJzeSI6OCwiZ3IiOjAsImdzIjoxLCJzZWVkIjo4MzIyMTk5MTA0LCJmaWwiOjAsImdsdyI6MSwic2dkIjowLCJ1NHMiOjAsImxhIjozLCJsYiI6MCwibHBoIjowLCJzZm0iOjYsInNmbjEiOjEsInNmbjIiOjEsInNmbjMiOjEsImhkYyI6MC4wMDMsInBmeGIiOjAsInBmeGJzIjowLjQ1LCJwZnhiciI6MTAsInBmeHYiOjAsInBmeHZzIjowLjY1LCJwZnh2ciI6MC41NSwicGZ4ZyI6MCwicGZ4Z3MiOjAuMDQsInBmeGMiOjAsInBmeGNvIjozLCJwZnhsIjowLCJwZnhsbiI6IiIsImZwIjoyLCJ2bXQiOiJldWNsaWRlYW4iLCJjaGxuIjowLCJjaHJzIjoxNjAsImx5cyI6IkFCIiwidHdnIjowLjUsImlzayI6MCwibW9wIjowLjUsIm1oeCI6MSwibWVsIjowLCJjeGYiOiJ6MiIsImN4cmUiOjAsImN4aW0iOjAsImN4em0iOjIsImN4biI6NSwiY3hydCI6MCwiY3h0dSI6WzAuNSwwLjg2Nl0sImN4YmYiOjEsImN4YnMiOjAuNSwiY3hzcyI6MSwiY3hhciI6MCwiY3hhcyI6MC40LCJjeGwzIjowLCJjeGNiIjoicmV0dXJuIGNtdWwoeiwgeikgKyB2ZWMyKDAuMCwgMC41KTsiLCJyc3MiOjQwMCwiaGVwIjowLjAwMDgsInN0ayI6MC41LCJhb2YiOjAuMywiZm9nIjoxLCJyM3giOjAsInIzeSI6MCwicWoiOlstMC4yLDAuNiwwLjIsMF0sImdyeCI6MC40LCJncnkiOjAuNiwibHciOjEuNSwiaWZzaSI6MTAwMDAwMCwicGZsIjowLCJsc2NhIjo2MCwiY3BqIjoieHoiLCJseGEiOiJGIiwibHhyIjoiRj1GK0YtRi1GK0YiLCJscHIiOiJrb2NoIiwiY3BpIjoic3RlbGxhLW9jdGFuZ3VsYSIsImNwbyI6ImN1Ym9jdGFoZWRyb24iLCJzcnIiOjAsInZzYyI6MSwiY2lzIjowLjUsInRrcSI6MywicXNtIjo1LCJjbmUiOjAuNSwiY3NyIjoxLCJtYnQiOjEsImt0YiI6MSwicGF4Ijo0LCJqaWwiOjUsInJjbiI6MjUwLCJwY2YiOjQsIm9zbSI6MCwib2ZtIjowfQ"><img src="./gallery/sri-yantra.webp" alt="Sri Yantra" width="1600" height="900" loading="lazy"></a><figcaption>Sri Yantra</figcaption></figure>
+  </div>
+</section>
+
+<section class="section" id="download">
+  <header class="section-header">
+    <span class="section-num">§ VII</span>
+    <h2 class="section-title">Keep it<br>with you.</h2>
+  </header>
+  <div class="prose">
+    <p>AEON runs in your browser with nothing to install. <a href="./app/">Open the studio</a>, then choose Install in the address bar (Chrome, Edge) or File, Add to Dock (Safari). The installed app opens in its own window and works offline.</p>
+    <p>Packaged downloads will be listed on the <a href="https://github.com/7thfrontier/AEON-public/releases">releases page</a>.</p>
+  </div>
+</section>
+
+<section class="section" id="changes">
+  <header class="section-header">
+    <span class="section-num">§ VIII</span>
+    <h2 class="section-title">What's new<br>in 7.0.0.</h2>
+    <p class="section-lede">The Eyepiece · 2026-10-03</p>
+  </header>
+  <ul class="prose changes">
+    <li><strong>Every type renders full-window (AEON-1876, Eyepiece phase 4).</strong> Each renderer anchors the view to the short side of the window instead of drawing into a centered square, so the picture runs to every edge on any aspect. Exports, the explore tools and Post-FX follow the full-window canvas, and the strip copies an inspector edit at once. The ten unbounded tilings fill the frame (nine keep their old patch exactly; AEON-1908), the side bands of a full-window render carry the image (AEON-1929), and the square render branch is gone (AEON-1909).</li>
+    <li><strong>The catalog: every type as a card, and Cmd-K finds anything (AEON-1896, Eyepiece phase 3).</strong> The left rail is gone. A small catalog corner in the top left holds the wordmark (which opens the Guide), Fractals or Geometry, a search button, Catalog, tours and the app menu, and the picture now runs to the left edge. Catalog, the strip's type, or / opens the catalog sheet: every type and pattern as a card with a rendered thumbnail, in the rail's groups, with chips for favorites, recents, Showcase and each group, a search that also matches concepts (&quot;sponge&quot;, &quot;quaternion&quot;), Curated random and a star on each card. Thumbnails render the first time a card scrolls into view and are kept for the next visit. Cmd-K now also finds every type and pattern, the Showcase pieces, the tours and each inspector section, ranked with the closest match first. Theme, High contrast and Focus moved into the app menu. On a phone the corner is a slim top bar and the strip returns as two rows above the Inspector handle, and &quot;Change type / pattern&quot; opens the catalog. The saved-work gallery and the save-name and confirm dialogs use the same plate styling, and the interface tour points at the new controls.</li>
+    <li><strong>Overlays clear the corner and the strip (AEON-1895, AEON-1927, AEON-1922).</strong> Dialogs, toasts and the coordinate readout sit clear of the catalog corner and the strip. The catalog opens at once during a layer swap and marks no card until the swap ends; a double-click on a card lands on the type unzoomed, like a single pick.</li>
+    <li><strong>One plate style everywhere (AEON-1937, AEON-1965).</strong> Every dialog, toast, menu and both tour cards use the Eyepiece plate. A toast rises over a visible GL banner, and on a phone the banner clears the strip. The rail's last dead CSS is gone, and strip values without a badge keep the true minus sign.</li>
+    <li><strong>The interface tour follows the new layout (AEON-1936).</strong> The spotlight tracks its target as it moves, and on a phone the tour skips the inspector steps.</li>
+    <li><strong>The landing page, poster and social card use the Eyepiece look (AEON-1938, AEON-1982).</strong> The social card is an icon plus wordmark card and is much smaller. The print snapshot and the poster print on one sheet at their stated size, and the GL banner warning uses an icon.</li>
+    <li><strong>Catalog thumbnails match what a pick shows (AEON-1983).</strong> A card's thumbnail renders with the settings that picking the card applies.</li>
+    <li><strong>Eyepiece fixes from the live review (AEON-1986 to AEON-1995, AEON-2000).</strong> to the page behind it. Enter could reach the canvas. to render (AEON-2011).</li>
+  </ul>
+</section>
+
+<footer class="footer">
+  <p class="footer-mark">✦</p>
+  <p class="footer-coda">© 2026 7th Frontier, Inc. All Rights Reserved.</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.0</p>
+</footer>
+
+<script>
+'use strict';
+/* ════════════════════════════════════════════════════════════════
+ * Hero Mandelbrot — small, fast, self-contained CPU renderer that
+ * cycles through 4 zoom targets to give the page a quiet sense of
+ * mathematical motion. Renders at 540×540 internally; stays under
+ * 60ms per frame on a modern laptop, ~120ms on phones.
+ * ════════════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+  const cv = document.getElementById('hero-canvas');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const img = ctx.createImageData(W, H);
+  const data = img.data;
+
+  // 4 zoom targets — a tour of the Mandelbrot's most-photographed neighbourhoods.
+  const TARGETS = [
+    { name: 'Mandelbrot',     cx: -0.5,    cy:  0,      zoom: 1,    iters: 100 },
+    { name: 'Seahorse Valley',cx: -0.745,  cy:  0.113,  zoom: 80,   iters: 360 },
+    { name: 'Spiral',         cx: -0.755,  cy:  0.0535, zoom: 220,  iters: 480 },
+    { name: 'Minibrot',       cx: -1.7691, cy:  0,      zoom: 800,  iters: 700 },
+  ];
+  let cur = 0;
+
+  // Cache caption nodes once — saved per-render lookups in _renderRow.
+  const capName = document.getElementById('hero-cap-name');
+  const capZoom = document.getElementById('hero-cap-zoom');
+
+  /* Row-batched render. Splits the 540-row pass across animation frames
+     (60 rows/frame ≈ 9 frames at deepest target) so the main thread is
+     never blocked >~22ms. Returns when the whole frame is committed.
+     Caller chains the next target only after `done` resolves, so a
+     slow render can't cause queue-up. */
+  function render(target) {
+    return new Promise(done => {
+      const cx = target.cx, cy = target.cy, zoom = target.zoom;
+      const maxIter = target.iters;
+      const scale = 3.0 / (W * zoom);
+      const ox = -W / 2, oy = -H / 2;
+      const ROWS_PER_FRAME = 60;
+      let py = 0;
+
+      function step() {
+        const yEnd = Math.min(py + ROWS_PER_FRAME, H);
+        for (; py < yEnd; py++) {
+          const cIm = (py + oy) * scale + cy;
+          for (let px = 0; px < W; px++) {
+            const cRe = (px + ox) * scale + cx;
+            let zRe = 0, zIm = 0, i = 0;
+            let zRe2 = 0, zIm2 = 0;
+            while (zRe2 + zIm2 < 4 && i < maxIter) {
+              zIm = 2 * zRe * zIm + cIm;
+              zRe = zRe2 - zIm2 + cRe;
+              zRe2 = zRe * zRe;
+              zIm2 = zIm * zIm;
+              i++;
+            }
+            const idx = (py * W + px) * 4;
+            if (i === maxIter) {
+              data[idx] = 15; data[idx+1] = 14; data[idx+2] = 12; data[idx+3] = 255;
+            } else {
+              const smooth = i + 1 - Math.log2(Math.log2(zRe2 + zIm2) / 2);
+              const t = Math.max(0, Math.min(1, smooth / maxIter * 4));
+              const p = Math.pow(t, .6);   // hoisted, was 3× per pixel
+              data[idx]   = (15 + 183 * p) | 0;   // copper R: 15 → 198
+              data[idx+1] = (14 + 120 * p) | 0;   // copper G: 14 → 134
+              data[idx+2] = (12 +  54 * p) | 0;   // copper B: 12 →  66
+              data[idx+3] = 255;
+            }
+          }
+        }
+        if (py < H) {
+          requestAnimationFrame(step);
+        } else {
+          ctx.putImageData(img, 0, 0);
+          capName.textContent = target.name;
+          capZoom.textContent = 'z = ' + (zoom < 10 ? zoom.toFixed(1) : zoom) + '×';
+          done();
+        }
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  /* Visibility-gated chained scheduler. setInterval fires while the tab
+     is backgrounded (browsers throttle but don't kill it) and queues
+     up renders that thrash on refocus. setTimeout-after-render means
+     at most one render is in flight, and visibilityState gates the
+     next dispatch so background tabs cost nothing. */
+  // `cur` is already declared once above (with TARGETS). A second
+  // `let cur = 0;` here was a duplicate-declaration SyntaxError under
+  // 'use strict' that aborted this entire <script> at parse time — leaving the
+  // hero canvas blank AND the theme toggle dead for every visitor.
+  let rendered = false;
+  let timer = 0;
+  async function next() {
+    timer = 0;
+    if (document.visibilityState !== 'visible') return; // re-armed by visibilitychange
+    await render(TARGETS[cur]);
+    rendered = true;
+    cur = (cur + 1) % TARGETS.length;
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      timer = setTimeout(next, 7000);
+    }
+  }
+  document.addEventListener('visibilitychange', () => {
+    // Re-arm on first visibility regardless of motion preference, so a
+    // reduced-motion visitor who opened us in a background tab still gets the
+    // one static render (its first next() bailed while hidden). Only RESUME
+    // the auto-cycle for no-preference visitors.
+    if (document.visibilityState === 'visible' && !timer &&
+        (!rendered || !matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      timer = setTimeout(next, 0);
+    }
+  });
+  // First paint immediately, then enter the chained schedule.
+  next();
+})();
+
+/* ════════════════════════════════════════════════════════════════
+ * Theme toggle — flips data-theme between dark/light and persists
+ * the choice. Honors prefers-color-scheme on first visit.
+ * ════════════════════════════════════════════════════════════════ */
+(function(){
+  const KEY = 'aeon-landing-theme';
+  const root = document.documentElement;
+  // Initial theme: stored choice, else system preference, else dark.
+  let theme;
+  try { theme = localStorage.getItem(KEY); } catch (_e) {}
+  if (!theme) {
+    theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+  if (theme === 'light') root.setAttribute('data-theme', 'light');
+  else root.removeAttribute('data-theme');
+
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const isLight = root.getAttribute('data-theme') === 'light';
+    if (isLight) root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', 'light');
+    try { localStorage.setItem(KEY, isLight ? 'dark' : 'light'); } catch (_e) {}
+  });
+})();
+</script>
+</body>
+</html>

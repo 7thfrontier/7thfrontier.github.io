@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="AEON">
+  <!--
+    AEON PWA icon — the canonical brand glyph (Seed of Life, 7 overlapping
+    circles in copper) on the project dark background.
+
+    Composition matches the brand-glyph in aeon.html:
+      <circle cx="12" cy="12" r="3.5"/>   center
+      + 6 outer circles at hexagonal positions (radius 7 from center).
+    Scaled here so the full glyph (center ± 10.5 units) fits inside the
+    maskable PWA safe zone (80 % of the 512-px canvas), leaving 10 % bleed
+    on every side for OS-level adaptive masking.
+
+    Colors:
+      background  #0F0E0C  — bg-charcoal (manifest theme_color and background_color)
+      glyph       #C68642  — AEON copper accent (matches --color-copper-500)
+  -->
+  <rect width="512" height="512" rx="80" fill="#0F0E0C"/>
+
+  <!-- Subtle inner ring for icon-platform balance (sits inside the safe zone,
+       echoes the hex symmetry without competing with the glyph). -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#C68642"
+          stroke-width="2" opacity="0.12"/>
+
+  <!-- Seed of Life (7 circles in hexagonal arrangement).
+       Geometry: each outer circle's center is at distance 2·r from the
+       central circle's center, so each pair of adjacent circles is
+       tangent at the midpoint. Stroke-linecap=round mirrors aeon.html. -->
+  <g fill="none" stroke="#C68642" stroke-width="18" stroke-linecap="round"
+     opacity="0.92">
+    <!-- Center -->
+    <circle cx="256" cy="256" r="64"/>
+    <!-- Top + bottom (vertical axis) -->
+    <circle cx="256" cy="128" r="64"/>
+    <circle cx="256" cy="384" r="64"/>
+    <!-- Top-left + top-right (60° off vertical) -->
+    <circle cx="145.13" cy="192" r="64"/>
+    <circle cx="366.87" cy="192" r="64"/>
+    <!-- Bottom-left + bottom-right -->
+    <circle cx="145.13" cy="320" r="64"/>
+    <circle cx="366.87" cy="320" r="64"/>
+  </g>
+</svg>

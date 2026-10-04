@@ -1,0 +1,45 @@
+# Published from the private AEON repository (site/public/). Edits here are overwritten.
+name: site
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  attribution:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Only 7th Frontier, Inc. is credited, in files and in history
+        run: |
+          # Pattern is split so this file does not match itself.
+          PAT='Cla''ude|Anthro''pic|Luunch''b0xxx|Co-Authored''-By|Harness''Agents'
+          rc=0
+          if git grep -nIiE "$PAT"; then echo "::error::attribution strings in the tree"; rc=1; fi
+          if git log --format='%H %an <%ae> | %cn <%ce>%n%B' | grep -iE "$PAT"; then echo "::error::attribution strings in commit messages or identities"; rc=1; fi
+          others=$(git log --format='%an' | sort -u | grep -vxF '7th Frontier, Inc.' || true)
+          if [ -n "$others" ]; then echo "::error::commits authored by someone other than 7th Frontier, Inc.: $others"; rc=1; fi
+          exit $rc
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: attribution
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
