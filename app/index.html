@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-JREIQlOjo+C0Ih3o5D7uFJz4936QyH6u8twjF1BiwfY='; font-src 'self'; script-src 'self' 'sha256-33T+PcYiDtD1ucp3EWUV6DXbH7ES+X5coyonKrs5Pew='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-I6gu+PQ2hm5dVhfMeJfYed0W57lSHoJmt1EcP7pYM8M='; font-src 'self'; script-src 'self' 'sha256-WFvSNevjZyqK+ZgGml+SUHQyOHCNuot+2NCIG7qxLkg='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -778,11 +778,9 @@
         @media(min-width:861px){.right-panel.rp-collapsed #pal-strip{display:none}}
         
         @media(min-width:861px){.right-panel.rp-collapsed .rp-header-btns > :not([data-action="toggleRightPanel"]){display:none!important}}
-        @media(min-width:861px){.right-panel.rp-collapsed .rp-header-btns{flex-basis:auto}}
         @media(min-width:861px){.right-panel.rp-collapsed .rp-header{padding:var(--sp-3) var(--sp-3) var(--sp-3) var(--sp-7);flex-wrap:nowrap;align-items:center}}
-        @media(min-width:861px){.right-panel.rp-collapsed .rp-type-info{flex:1 1 auto}}
 
-        .rp-header{padding:var(--sp-5) var(--sp-7) var(--sp-3);position:relative;border-bottom:none;flex-shrink:0;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--sp-3);min-height:44px}
+        .rp-header{padding:var(--sp-5) var(--sp-7) var(--sp-3);position:relative;border-bottom:none;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);min-height:44px}
         .rp-header::after{content:'';position:absolute;left:var(--sp-7);right:var(--sp-7);bottom:0;height:1px;background:var(--border);pointer-events:none}
         @media(min-width:861px){.right-panel.rp-collapsed .rp-header::after{display:none}}
         
@@ -790,7 +788,7 @@
           .rp-header{padding:var(--sp-5) var(--sp-5) var(--sp-3)}
           .rp-header::after{left:var(--sp-5);right:var(--sp-5)}
         }
-        .rp-type-info{min-width:0;flex:1 1 100%}
+        .rp-type-info{min-width:0;flex:1 1 auto}
         
         .rp-type-eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin:0 0 4px;line-height:1;display:block}
         @media(min-width:861px){.right-panel.rp-collapsed .rp-type-eyebrow{display:none}}
@@ -798,11 +796,11 @@
         .rp-type-row{display:flex;align-items:center;gap:var(--sp-2);min-width:0}
         .rp-type-row .rp-type-name{flex:0 1 auto;width:auto;min-width:0}
 
-        .rp-type-name{font-family:var(--font-display);font-style:italic;font-weight:600;font-variation-settings:'opsz' 36;font-size:18px;letter-spacing:-.015em;color:var(--text);white-space:normal;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-clamp:2;margin-bottom:0;background:none;border:none;padding:0;cursor:pointer;text-align:left;width:100%;text-decoration:none;transition:color var(--dur-snappy);line-height:1.15;overflow-wrap:anywhere;word-break:normal}
+        .rp-type-name{font-family:var(--font-display);font-style:italic;font-weight:600;font-variation-settings:'opsz' 36;font-size:18px;letter-spacing:-.015em;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-bottom:0;background:none;border:none;padding:0;cursor:pointer;text-align:left;width:100%;text-decoration:none;transition:color var(--dur-snappy);line-height:1.15;overflow-wrap:anywhere;word-break:normal}
         .rp-type-name:hover{color:var(--accent);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
         .rp-type-name:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-1)}
 
-        .rp-info-btn{margin-left:var(--sp-2);border:1px solid var(--surface4);
+        .rp-info-btn{border:1px solid var(--surface4);
             background:transparent;color:var(--text-mid);
             height:22px;border-radius:11px;font-size:12px;line-height:1;cursor:pointer;
             padding:0 10px 0 7px;vertical-align:middle;transition:all var(--dur-snappy);
@@ -819,7 +817,7 @@
         }
         [data-theme="dark"] .rp-type-name{color:var(--accent)}
         
-        .rp-header-btns{display:flex;gap:var(--sp-1);flex-shrink:0;flex-basis:100%;justify-content:flex-end}
+        .rp-header-btns{display:flex;gap:var(--sp-1);flex-shrink:0}
         .rp-body{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--border-mid) transparent}
         .rp-body::-webkit-scrollbar{width:3px}.rp-body::-webkit-scrollbar-thumb{background:var(--border-mid);border-radius:2px}
         
@@ -1210,6 +1208,9 @@
         .man-footer{margin-top:calc(var(--sp-10) * 2);text-align:center;padding-top:var(--sp-10);border-top:1px solid var(--border)}
         .man-mark{font-family:var(--font-display);font-style:italic;font-size:24px;color:var(--accent);margin:0 0 12px;letter-spacing:.5em;opacity:.7}
         .man-coda{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.14em;margin:0}
+.man-coda-link{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.man-coda-link:hover{color:var(--accent)}
+@media(pointer:coarse){.man-coda-link{display:inline-flex;align-items:center;min-height:44px}}
         .man-coda kbd{font-family:var(--font-mono);background:var(--surface3);border:1px solid var(--border);border-radius:var(--r-1);padding:2px 6px;color:var(--text-mid);font-size:11px;letter-spacing:0;text-transform:none}
         
         .man-begin{display:inline-block;margin-top:var(--sp-7);padding:var(--sp-3) var(--sp-9);font-family:var(--font-display);font-style:italic;font-weight:500;font-variation-settings:'opsz' 24;font-size:14px;letter-spacing:.06em;color:var(--accent);background:transparent;border:1px solid var(--accent);border-radius:0;cursor:pointer;transition:all var(--dur-medium) var(--ease-standard)}
@@ -4214,7 +4215,7 @@
 
 
 
-<!-- build: 2e3840293d57 -->
+<!-- build: 23041d77f539 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7478,8 +7479,8 @@ const APP_VERSION='7.0.1';
 
 
 
-const MISSION_BUILD_HASH='2e3840293d57';
-const MISSION_GIT_SHA='8c1aeaa00dc126c0d83ef3d9e7febee9123fea2b';
+const MISSION_BUILD_HASH='23041d77f539';
+const MISSION_GIT_SHA='44d44ee12e9c6f48d9fb70d430941756fe138118';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11696,6 +11697,15 @@ let _degenerateRestoreSelfHealed=false;
 
 
 let _pendingFormulaToast=false;
+
+
+
+
+function _armDegenerateRestoreHeal(){
+const ft=S.fractalType||'';
+if(ft.startsWith('attractor_')||ft.startsWith('ifs_')||ft==='buddhabrot'||ft==='buddhabrot_anti'||ft==='fractal_flame') return;
+setTimeout(_recoverFromDegenerateRestore, 250);
+}
 function _recoverFromDegenerateRestore(){
 if(_degenerateRestoreSelfHealed) return;
 if(S.mode!=='fractal') return; 
@@ -23471,42 +23481,6 @@ const bootState = (S.mode === 'fractal')
 history.replaceState(bootState, '');
 }
 }catch(_){  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-if (_restoredFromPersisted) {
-
-
-
-
-
-
-
-
-
-
-
-
-const ft=S.fractalType||'';
-const isAsyncCompute = ft.startsWith('attractor_') || ft.startsWith('ifs_')
-|| ft==='buddhabrot' || ft==='buddhabrot_anti' || ft==='fractal_flame';
-const isShareLink = (location.hash||'').startsWith('#state=');
-const hasUrlParams = !!location.search && /[?&](fractal|mode|pattern)=/.test(location.search);
-if(!isAsyncCompute && !isShareLink && !hasUrlParams){
-setTimeout(_recoverFromDegenerateRestore, 250);
-}
-}
 renderBookmarks();
 
 setupJuliaPad();
@@ -31185,7 +31159,7 @@ return edges;
 function _computeEdgesMultiShell(verts, expectedE){
 const hull=_hullEdges(verts);
 if(!expectedE || hull.length===expectedE) return hull;
-throw new Error(`_computeEdgesMultiShell: hull has ${hull.length} edges, expected ${expectedE} — Catalan dual vertex construction regressed (AEON-1208)`);
+throw new Error(`_computeEdgesMultiShell: hull has ${hull.length} edges, expected ${expectedE} — Catalan dual vertex construction regressed`);
 }
 
 
@@ -50041,7 +50015,7 @@ m.innerHTML=html.raw`<button type="button" class="man-close" data-action="closeF
             <button class="man-begin man-begin--ghost" type="button" data-action="openCitations" aria-haspopup="dialog" aria-controls="citations-overlay">References</button>
             <button class="man-begin" type="button" data-action="closeForeword">Begin</button>
           </div>
-          <p class="man-coda">© 2026 7th Frontier, Inc. All Rights Reserved.</p>
+          <p class="man-coda">© 2026 <a class="man-coda-link" href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
         </footer>
       </article>`;
 document.body.appendChild(m);
@@ -56455,7 +56429,7 @@ let _motionBusy='';
 
 function _flushAutosaveBeforeMotionExport(){
 if((typeof _userHasInteracted==='undefined'||_userHasInteracted) && typeof _autoSaveSession==='function'){
-try{ _autoSaveSession(); }catch(e){ console.warn('AEON-715 pre-export autosave skipped:', e&&e.name); }
+try{ _autoSaveSession(); }catch(e){ console.warn('pre-export autosave skipped:', e&&e.name); }
 }
 }
 
@@ -60305,7 +60279,7 @@ el.onclick = () => {
 
 
 
-try { _loadProject(snap); }
+try { _loadProject(snap); if (typeof _armDegenerateRestoreHeal === 'function') _armDegenerateRestoreHeal(); }
 catch (e) {
 console.warn('Autosave restore failed:', (e && e.name) || e);
 
@@ -61858,7 +61832,11 @@ ctx.fillStyle='#ff00ff';
 ctx.fillRect(W-2,H-2,1,1);
 try{
 const px=ctx.getImageData(W-2,H-2,1,1).data;
-return px[0]===255&&px[1]===0&&px[2]===255;
+
+
+
+
+return px[3]>=240&&px[0]>=240&&px[1]<=15&&px[2]>=240;
 }catch(_e){
 return false; 
 }
