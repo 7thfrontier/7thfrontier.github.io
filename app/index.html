@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-I6gu+PQ2hm5dVhfMeJfYed0W57lSHoJmt1EcP7pYM8M='; font-src 'self'; script-src 'self' 'sha256-WFvSNevjZyqK+ZgGml+SUHQyOHCNuot+2NCIG7qxLkg='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-I6gu+PQ2hm5dVhfMeJfYed0W57lSHoJmt1EcP7pYM8M='; font-src 'self'; script-src 'self' 'sha256-Mk3rcPCZ/JEfMG6Y2YLDD0OeBa4qXiFuMCtODuuVhg0='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4215,12 +4215,12 @@
 
 
 
-<!-- build: 23041d77f539 -->
+<!-- build: 29dc8fdb660c -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.1
+ * AEON -- Universal Dynamics Reactor v7.0.2
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7470,7 +7470,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.1';
+const APP_VERSION='7.0.2';
 
 
 
@@ -7479,8 +7479,8 @@ const APP_VERSION='7.0.1';
 
 
 
-const MISSION_BUILD_HASH='23041d77f539';
-const MISSION_GIT_SHA='44d44ee12e9c6f48d9fb70d430941756fe138118';
+const MISSION_BUILD_HASH='29dc8fdb660c';
+const MISSION_GIT_SHA='0481d2f0e40f76f2bfd8f872e481f924cffdac65';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -50072,6 +50072,17 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.2',
+date:'2026-10-05',
+headline:'Exports work in Brave, and seeded links keep their framing.',
+items:[
+'Exports work in Brave again. Its canvas privacy protection made the size check refuse every export.',
+'A link that opens a seeded view keeps its framing, with no false "uniform color" notice.',
+'The inspector header fits on one row, and a long type name ends in an ellipsis.',
+'Shared links to the site show its picture and title, and "7th Frontier, Inc." links to the company site.',
+],
+},
+{
 version:'7.0.1',
 date:'2026-10-05',
 headline:'Smooth color climbs from the background to the set.',
@@ -50149,15 +50160,6 @@ items:[
 'EXR export, GPU post-effects like Tonemap, and PNG-sequence frame export can now actually be cancelled partway through, instead of running to completion regardless.',
 'Attractor, IFS, and fractal-flame renders no longer repaint the whole canvas on every step of a live render. A performance cleanup; the finished image is unchanged.',
 'A few other silent-corruption fixes: overlapping exports (including SVG) are now consistently blocked, and undo/redo, drag-panning, and the recent-files menu can no longer clobber in-flight work.',
-],
-},
-{
-version:'6.67.9',
-date:'2026-08-24',
-headline:'The last remaining hardcoded status messages are now translatable, and a rebase mistake that could silently drop static markup is fixed and backstopped.',
-items:[
-'A handful of toast and status messages (a shared-link rollback notice, a dropped data-seed auto-refresh, a few others) were still hardcoded English rather than routed through the translation layer. They now translate the same way the rest of the app does; English wording is unchanged.',
-'The documented recipe for resolving an index.html conflict during a rebase had \'ours\' and \'theirs\' backwards, which could silently keep a stale copy of the file and lose unrelated fixes. The recipe is corrected, and a git hook now catches the same mistake mechanically if it happens again.',
 ],
 },
 ];

@@ -18,7 +18,7 @@
 // Bump this string on every release — it must change for the browser to
 // activate the new service worker and evict stale cached assets.
 // Convention: 'reactor-v{major}.{minor}.{patch}' mirrors package.json version.
-const CACHE_VERSION = 'reactor-v7.0.1';
+const CACHE_VERSION = 'reactor-v7.0.2';
 // AEON-1349: the shared prefix of every CACHE_VERSION this app has ever used or will use.
 // activate() below deletes cache keys by this prefix, not "everything except CACHE_VERSION" —
 // on a shared origin (e.g. a GitHub Pages project path) that used to evict sibling apps' caches too.

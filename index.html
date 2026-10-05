@@ -824,7 +824,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 <!-- ═════════════════ HERO ═════════════════ -->
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.1</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.2</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">This studio invented none of these figures. It only brings them into view, in mathematics and in glass.</p>
     <div class="hero-cta-row">
@@ -1151,7 +1151,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical envelope. Read it like a card from a Voyager probe: what we sent, in what container, with what guarantees.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.0.1</h2>
+    <h2>AEON · v7.0.2</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~3.8 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1212,24 +1212,25 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.0.1.</h2>
-    <p class="section-lede">Smooth color climbs to the set · 2026-10-05</p>
+    <h2 class="section-title">What's new<br>in 7.0.2.</h2>
+    <p class="section-lede">Exports work in Brave · 2026-10-05</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Smooth coloring now climbs from the palette's first color out to the set.</strong> The color spread of every smooth-colored fractal changes. The old curve used up the whole palette in the first few escape steps, so the background filled with rings of every color, then it jumped back to an early color near the set, leaving the palette's last color hard against a dark band. With Repeat above 1 that jump showed as thin black arcs. Now the colors climb smoothly from the first color in the far background to the last color at the edge of the set, with no jump. Ultraviolet on the whole Mandelbrot set shows it most: before, violet and white rings filled the whole frame; now the background is a deep violet that brightens into a glow around the set. The GPU, CPU, deep-zoom and WebGPU paths all match. Collatz opens closer in, where its color spread now shows. Known issue: where the browser refuses a preserved drawing buffer, the first Copy Image after a view change copies the view the app opened with.</li>
-    <li><strong>The canvas no longer starts as a square.</strong> Until the first fit ran, the picture's frame used the old square boot layout, so a slow start or a screenshot taken at boot showed one square picture before it widened to fill the window. The frame is full-window from the first paint.</li>
-    <li><strong>Growth patterns show their finished state in thumbnails and layers.</strong> DLA and the cellular automata that finish in a background worker (elementary CA, Life, Brian's Brain, Day and Night, Gray-Scott) used to be captured from their quick first preview, so a catalog card, a layer thumbnail or a layer in a composite showed partial growth. Those captures now wait for the finished pattern.</li>
-    <li><strong>AEON is credited to <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> alone.</strong> The Foreword now ends with &quot;© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.&quot; The landing page, the catalog poster and the design records credit the company instead of individuals, and a new <code>lint:attribution</code> check fails if a personal or AI credit returns. The two home-screen shortcuts say &quot;Open AEON&quot; instead of the old name.</li>
-    <li><strong>The Log Map formula preset draws again.</strong> It started every point at z = 0, where log is undefined, then settled on one value, so the frame was a single flat color. It now starts at z = c and is colored by the angle of the point it settles on, which shows how that point turns with c and the cut where log jumps.</li>
-    <li><strong>Two catalog entries no longer open nearly blank.</strong> The Domain-coloring log formula preset painted the whole frame one color, because log(z²+c) settles instead of escaping. It is now colored by the angle of the point it settles on, which shows the branch cut and the bulbs. The Pickover attractor opened as a small speck in the middle of the window; its default view now frames it.</li>
-    <li><strong>Biomorph draws Pickover's creature instead of the Julia set.</strong> The type iterated z²+c with a square bailout and never applied Pickover's coloring test, so it rendered as the Julia set for the same c. It now iterates z³+c and paints a point as part of the organism when, at escape, its real or imaginary part is still inside the bailout radius, which grows the body's spines. The default bailout is 10, Pickover's own value. Saved views of Biomorph change look.</li>
+    <li><strong>The landing page names its first section &quot;The Instrument&quot;.</strong> The top menu link and the section heading are capitalized; running text keeps the lowercase. Its second button reads &quot;Read the Foreword&quot;, the in-app name, and opens the Foreword.</li>
+    <li><strong>Shared links to the site show its picture and title.</strong> The landing page and the app give an absolute address for their preview image and page, which link previews need, and the landing's title reads &quot;AEON: Universal Dynamics Reactor&quot;.</li>
+    <li><strong>&quot;7th Frontier, Inc.&quot; links to the company site.</strong> The Foreword, the landing page, the poster and the release notes link the name to https://www.7thfrontier.com/.</li>
+    <li><strong>The public site and release notes read without engineering references.</strong> Ticket numbers and test and tooling notes stay out of the landing page's changelog, the published release notes and the app's own messages.</li>
+    <li><strong>The landing page gallery is captured again.</strong> Its pictures come from the current renderer, each subject on a fixed seed so a recapture repeats, and the Mandelbrot frames seahorse valley in the Dusk palette.</li>
+    <li><strong>A link that opens a seeded view keeps its framing.</strong> On some browsers the app checked the picture before it was drawn, decided the view had come out a flat color, reset it to the type's default and said so. It now draws before it checks, and does not judge a picture that is not the one on screen.</li>
+    <li><strong>Exports work in Brave.</strong> Before an export the app checks that the browser can hold a canvas of that size by painting a test color and reading it back. Brave alters canvas readback slightly to resist fingerprinting, so the check refused every size and no file was written. It now accepts a near match and still refuses a canvas the browser could not allocate.</li>
+    <li><strong>The inspector header is one row.</strong> The type name and About sit on the left, play and fold on the right, with the small Inspector label above. A long name ends in an ellipsis instead of pushing the buttons onto a row of their own.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.1</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.2</p>
 </footer>
 
 <script>
