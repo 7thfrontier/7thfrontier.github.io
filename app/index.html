@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-JREIQlOjo+C0Ih3o5D7uFJz4936QyH6u8twjF1BiwfY='; font-src 'self'; script-src 'self' 'sha256-7AtmX7j1aEuHPtADJYZKFXWjxugDeuIAL54vu2jw2ug='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-JREIQlOjo+C0Ih3o5D7uFJz4936QyH6u8twjF1BiwfY='; font-src 'self'; script-src 'self' 'sha256-ZQ6ID8Lyo5HfMCmyZmvCKP02SCvSBBDgZp6DtTx+1D0='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4213,12 +4213,12 @@
 
 
 
-<!-- build: 2c2ade7b77e2 -->
+<!-- build: fd139e0cafc4 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.0
+ * AEON -- Universal Dynamics Reactor v7.0.1
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7468,7 +7468,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.0';
+const APP_VERSION='7.0.1';
 
 
 
@@ -7477,8 +7477,8 @@ const APP_VERSION='7.0.0';
 
 
 
-const MISSION_BUILD_HASH='2c2ade7b77e2';
-const MISSION_GIT_SHA='537d5aeb1c024be5d8194a125801afc0e6ffbfe2';
+const MISSION_BUILD_HASH='fd139e0cafc4';
+const MISSION_GIT_SHA='da70aa379bc5b28be8ca1037abd6582be375081d';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -50087,6 +50087,18 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.1',
+date:'2026-10-05',
+headline:'Smooth color climbs from the background to the set.',
+items:[
+'Every smooth-colored fractal climbs from the palette\'s first color in the far background to its last at the edge of the set, with no rings and no jump back.',
+'Biomorph draws Pickover\'s creature, and the Log Map and Domain-coloring log presets draw again.',
+'Collatz and the Pickover attractor open where their structure shows.',
+'The canvas is full-window from the first paint, and growth patterns show their finished state in thumbnails and layers.',
+'Known issue: where the browser refuses a preserved drawing buffer, the first Copy Image after a view change copies the opening view.',
+],
+},
+{
 version:'7.0.0',
 date:'2026-10-03',
 headline:'The Eyepiece: the picture fills the window.',
@@ -50161,14 +50173,6 @@ headline:'The last remaining hardcoded status messages are now translatable, and
 items:[
 'A handful of toast and status messages (a shared-link rollback notice, a dropped data-seed auto-refresh, a few others) were still hardcoded English rather than routed through the translation layer. They now translate the same way the rest of the app does; English wording is unchanged.',
 'The documented recipe for resolving an index.html conflict during a rebase had \'ours\' and \'theirs\' backwards, which could silently keep a stale copy of the file and lose unrelated fixes. The recipe is corrected, and a git hook now catches the same mistake mechanically if it happens again.',
-],
-},
-{
-version:'6.67.8',
-date:'2026-08-24',
-headline:'Behind the scenes: merge tooling now catches a rebase that silently drops static markup.',
-items:[
-'A rebase conflict resolution could, in rare cases, keep a branch\'s own stale copy of index.html and silently drop unrelated fixes main had gained in the meantime. The merge tooling now checks for that specifically and refuses the merge if it would happen. No user-visible change.',
 ],
 },
 ];

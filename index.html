@@ -822,7 +822,7 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; }
 <!-- ═════════════════ HERO ═════════════════ -->
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">A cosmographer's instrument · v7.0.0</p>
+    <p class="hero-eyebrow">A cosmographer's instrument · v7.0.1</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">This studio invented none of these figures. It only brings them into view, in mathematics and in glass.</p>
     <div class="hero-cta-row">
@@ -1149,7 +1149,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical envelope. Read it like a card from a Voyager probe: what we sent, in what container, with what guarantees.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.0.0</h2>
+    <h2>AEON · v7.0.1</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~3.8 MB · ~62 KB bundled fonts · service worker for offline · © 7th Frontier, Inc.</dd>
@@ -1210,25 +1210,25 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.0.0.</h2>
-    <p class="section-lede">The Eyepiece · 2026-10-03</p>
+    <h2 class="section-title">What's new<br>in 7.0.1.</h2>
+    <p class="section-lede">Smooth color climbs to the set · 2026-10-05</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Every type renders full-window (AEON-1876, Eyepiece phase 4).</strong> Each renderer anchors the view to the short side of the window instead of drawing into a centered square, so the picture runs to every edge on any aspect. Exports, the explore tools and Post-FX follow the full-window canvas, and the strip copies an inspector edit at once. The ten unbounded tilings fill the frame (nine keep their old patch exactly; AEON-1908), the side bands of a full-window render carry the image (AEON-1929), and the square render branch is gone (AEON-1909).</li>
-    <li><strong>The catalog: every type as a card, and Cmd-K finds anything (AEON-1896, Eyepiece phase 3).</strong> The left rail is gone. A small catalog corner in the top left holds the wordmark (which opens the Guide), Fractals or Geometry, a search button, Catalog, tours and the app menu, and the picture now runs to the left edge. Catalog, the strip's type, or / opens the catalog sheet: every type and pattern as a card with a rendered thumbnail, in the rail's groups, with chips for favorites, recents, Showcase and each group, a search that also matches concepts (&quot;sponge&quot;, &quot;quaternion&quot;), Curated random and a star on each card. Thumbnails render the first time a card scrolls into view and are kept for the next visit. Cmd-K now also finds every type and pattern, the Showcase pieces, the tours and each inspector section, ranked with the closest match first. Theme, High contrast and Focus moved into the app menu. On a phone the corner is a slim top bar and the strip returns as two rows above the Inspector handle, and &quot;Change type / pattern&quot; opens the catalog. The saved-work gallery and the save-name and confirm dialogs use the same plate styling, and the interface tour points at the new controls.</li>
-    <li><strong>Overlays clear the corner and the strip (AEON-1895, AEON-1927, AEON-1922).</strong> Dialogs, toasts and the coordinate readout sit clear of the catalog corner and the strip. The catalog opens at once during a layer swap and marks no card until the swap ends; a double-click on a card lands on the type unzoomed, like a single pick.</li>
-    <li><strong>One plate style everywhere (AEON-1937, AEON-1965).</strong> Every dialog, toast, menu and both tour cards use the Eyepiece plate. A toast rises over a visible GL banner, and on a phone the banner clears the strip. The rail's last dead CSS is gone, and strip values without a badge keep the true minus sign.</li>
-    <li><strong>The interface tour follows the new layout (AEON-1936).</strong> The spotlight tracks its target as it moves, and on a phone the tour skips the inspector steps.</li>
-    <li><strong>The landing page, poster and social card use the Eyepiece look (AEON-1938, AEON-1982).</strong> The social card is an icon plus wordmark card and is much smaller. The print snapshot and the poster print on one sheet at their stated size, and the GL banner warning uses an icon.</li>
-    <li><strong>Catalog thumbnails match what a pick shows (AEON-1983).</strong> A card's thumbnail renders with the settings that picking the card applies.</li>
-    <li><strong>Eyepiece fixes from the live review (AEON-1986 to AEON-1995, AEON-2000).</strong> to the page behind it. Enter could reach the canvas. to render (AEON-2011).</li>
+    <li><strong>Smooth coloring now climbs from the palette's first color out to the set (AEON-2013, AEON-1993).</strong> The color spread of every smooth-colored fractal changes. The old curve used up the whole palette in the first few escape steps, so the background filled with rings of every color, then it jumped back to an early color near the set, leaving the palette's last color hard against a dark band. With Repeat above 1 that jump showed as thin black arcs. Now the colors climb smoothly from the first color in the far background to the last color at the edge of the set, with no jump. Ultraviolet on the whole Mandelbrot set shows it most: before, violet and white rings filled the whole frame; now the background is a deep violet that brightens into a glow around the set. The GPU, CPU, deep-zoom and WebGPU paths all match. Collatz opens closer in, where its color spread now shows. Known issue: where the browser refuses a preserved drawing buffer, the first Copy Image after a view change copies the view the app opened with (AEON-2036).</li>
+    <li><strong>The canvas no longer starts as a square (AEON-1934).</strong> Until the first fit ran, the picture's frame used the old square boot layout, so a slow start or a screenshot taken at boot showed one square picture before it widened to fill the window. The frame is full-window from the first paint.</li>
+    <li><strong>Growth patterns show their finished state in thumbnails and layers (AEON-1998).</strong> DLA and the cellular automata that finish in a background worker (elementary CA, Life, Brian's Brain, Day and Night, Gray-Scott) used to be captured from their quick first preview, so a catalog card, a layer thumbnail or a layer in a composite showed partial growth. Those captures now wait for the finished pattern.</li>
+    <li><strong>AEON is credited to 7th Frontier, Inc. alone (AEON-2028, AEON-2029, AEON-2030).</strong> The Foreword now ends with &quot;© 2026 7th Frontier, Inc. All Rights Reserved.&quot; The landing page, the catalog poster and the design records credit the company instead of individuals, and a new <code>lint:attribution</code> check fails if a personal or AI credit returns. The two home-screen shortcuts say &quot;Open AEON&quot; instead of the old name.</li>
+    <li><strong>The Log Map formula preset draws again (AEON-2025).</strong> It started every point at z = 0, where log is undefined, then settled on one value, so the frame was a single flat color. It now starts at z = c and is colored by the angle of the point it settles on, which shows how that point turns with c and the cut where log jumps.</li>
+    <li><strong>Two catalog entries no longer open nearly blank (AEON-2023).</strong> The Domain-coloring log formula preset painted the whole frame one color, because log(z²+c) settles instead of escaping. It is now colored by the angle of the point it settles on, which shows the branch cut and the bulbs. The Pickover attractor opened as a small speck in the middle of the window; its default view now frames it.</li>
+    <li><strong>Biomorph draws Pickover's creature instead of the Julia set (AEON-2022).</strong> The type iterated z²+c with a square bailout and never applied Pickover's coloring test, so it rendered as the Julia set for the same c. It now iterates z³+c and paints a point as part of the organism when, at escape, its real or imaginary part is still inside the bailout radius, which grows the body's spines. The default bailout is 10, Pickover's own value. Saved views of Biomorph change look.</li>
+    <li>AEON-1656 and AEON-1876: the clipboard-copy and export-framing checks frame a content view, boot on a fixed seed, and declare the stale fallback copy against AEON-2036.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 7th Frontier, Inc. All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.0</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.1</p>
 </footer>
 
 <script>
