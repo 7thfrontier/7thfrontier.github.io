@@ -18,16 +18,13 @@
 <meta name="twitter:title" content="AEON: Universal Dynamics Reactor">
 <meta name="twitter:description" content="AEON is a single-file fractal explorer and sacred-geometry studio. 58 fractal types, 183 patterns, zero dependencies.">
 <meta name="twitter:image" content="https://7thfrontier.github.io/icons/og-card.png">
-<!-- AEON Seed-of-Life glyph as favicon. -->
+
 <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <style>
-/* v5.2 mission-launch — brand fonts bundled offline (no external CDN).
-   Fraunces (display) + Inter Tight (UI) loaded from the same
-   assets/fonts/ directory the app uses. Latin-regular static cuts;
-   heavier weights synthesize via browser font-weight cascade. */
+
 @font-face {
   font-family: 'Inter Tight';
   src: url('./assets/fonts/inter-tight-v9-latin-regular.woff2') format('woff2');
@@ -44,18 +41,9 @@
 }
 </style>
 <style>
-/* ════════════════════════════════════════════════════════════════
- * AEON · landing page (single file, zero deps).
- * Cosmographer's-atelier identity — Fraunces italic display,
- * Inter Tight UI, oxidized copper on warm charcoal.
- *
- * Layout: editorial — asymmetric hero, marginalia between sections,
- * generous negative space, manuscript-like type treatments.
- * Every spacing/color/font value comes from a CSS variable so the
- * landing page can theme-switch alongside the app.
- * ════════════════════════════════════════════════════════════════ */
+
 :root {
-  /* Primitives — pulled from the studio's token system. */
+  
   --color-copper-500:  #C68642;
   --color-copper-700:  #9C5A28;
   --color-charcoal-950:#0F0E0C;
@@ -71,43 +59,41 @@
   --color-ink-500:     #5C4E36;
   --color-verdigris-500:#7BA876;
 
-  /* Fonts. */
+  
   --font-ui:'Inter Tight', system-ui, sans-serif;
   --font-display:'Fraunces', Georgia, serif;
   --font-mono:ui-monospace,SFMono-Regular,Menlo,'Cascadia Code',Consolas,'Courier New',monospace;
 
-  /* Spacing scale. */
+  
   --sp-1:4px; --sp-2:6px; --sp-3:8px; --sp-4:10px; --sp-5:12px;
   --sp-6:16px; --sp-7:20px; --sp-8:24px; --sp-9:32px; --sp-10:48px;
   --r-1:3px; --r-2:5px; --r-3:8px; --r-4:12px;
   --shadow-sm:0 2px 10px rgba(0,0,0,.35);
   --shadow-md:0 4px 20px rgba(0,0,0,.45);
 
-  /* Default theme: dark. Values mirror the canonical [data-theme="dark"]
-     block in index.html, drift here would visually decouple the
-     landing page from the app. Audited 2026-04. */
+  
   --bg:        var(--color-charcoal-950);
-  --surface:   #1A1814;                               /* index.html canonical: opaque plate */
-  --surface2:  #201D17;                               /* index.html canonical: raised bed */
+  --surface:   #1A1814;                               
+  --surface2:  #201D17;                               
   --text:      var(--color-cream-50);
   --text-mid:  var(--color-cream-200);
   --text-dim:  var(--color-cream-400);
   --accent:    var(--color-copper-500);
-  --accent-dim:rgba(198,134,66,0.15);                /* index.html canonical */
+  --accent-dim:rgba(198,134,66,0.15);                
   --accent-glow:rgba(198,134,66,0.32);
-  --border:    rgba(232,224,210,0.07);               /* index.html canonical */
+  --border:    rgba(232,224,210,0.07);               
   --border-mid:rgba(232,224,210,0.16);
   --success:   var(--color-verdigris-500);
 }
 [data-theme="light"] {
   --bg:        var(--color-parchment-50);
-  --surface:   #FAF5E8;                               /* index.html canonical: opaque plate */
-  --surface2:  #F0E7D6;                               /* index.html canonical: raised bed */
+  --surface:   #FAF5E8;                               
+  --surface2:  #F0E7D6;                               
   --text:      var(--color-ink-950);
   --text-mid:  var(--color-ink-700);
   --text-dim:  var(--color-ink-500);
   --accent:    var(--color-copper-700);
-  --accent-dim:rgba(156,90,40,0.16);                 /* index.html canonical */
+  --accent-dim:rgba(156,90,40,0.16);                 
   --accent-glow:rgba(156,90,40,0.28);
   --border:    rgba(26,22,16,0.08);
   --border-mid:rgba(26,22,16,0.14);
@@ -135,7 +121,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   }
 }
 
-/* ──────────────────────── Top bar ──────────────────────── */
+
 .topbar {
   display: flex;
   align-items: center;
@@ -203,7 +189,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 }
 .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
-/* ──────────────────────── Hero ──────────────────────── */
+
 .hero {
   position: relative;
   padding: var(--sp-10) var(--sp-10) calc(var(--sp-10) * 2);
@@ -215,7 +201,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   overflow: hidden;
 }
 .hero::before {
-  /* Subtle Maurer-rose ribbon background, fading from corners. */
+  
   content: '';
   position: absolute;
   inset: 0;
@@ -231,16 +217,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 }
 @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Scroll-driven hero parallax — the hero gently recedes (rises + fades) as you
-   read into the page, echoing the Foreword/References/Showcase parallax in the
-   studio. Applied to the .hero PARENT (which has no entrance animation) so it
-   composes cleanly with the children's `rise` intros, no transform conflict —
-   and it is a pure compositor transform of the canvas's *container*, so the
-   live #hero-canvas render is never touched. Gated behind @supports (browsers
-   without scroll-driven animations are simply unaffected) and, explicitly,
-   prefers-reduced-motion:no-preference, the global reduced-motion block only
-   neutralises animation-DURATION, which a scroll-progress timeline ignores, so
-   the effect would otherwise still run for reduced-motion visitors. */
+
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
     .hero {
@@ -274,17 +251,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   color: var(--text);
 }
 .hero h1 .ampersand {
-  /* AEON-211: `transform` here (even a 0.06em translateY) forces a
-     compositing layer on a `-webkit-background-clip: text` descendant that
-     never redeclares background-clip:text on itself. Chromium then paints
-     that layer's glyph at the wrong screen offset — visually landing near
-     the gradient text's origin instead of this span's actual layout box,
-     producing a superimposed-glyph blot over "Forms". `position: relative`
-     + `top` gives the identical baseline nudge without promoting a layer,
-     so it doesn't trip the bug. Verified this is the ONLY instance of the
-     pattern (background-clip:text parent + transformed inline descendant)
-     across aeon.html/aeon-poster.html; scripts/lint-gradient-text-transform-trap.mjs
-     guards against a new one. */
+  
   display: inline-block;
   position: relative;
   top: .06em;
@@ -358,7 +325,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   text-decoration: none;
 }
 
-/* ──────────────────────── Hero canvas ──────────────────────── */
+
 .hero-canvas-wrap {
   position: relative;
   z-index: 1;
@@ -375,7 +342,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   animation: rise 1.2s cubic-bezier(.2,.8,.3,1) .4s both;
 }
 .hero-canvas-wrap::before {
-  /* Faux observatory crosshairs for the cosmographer's-instrument feel. */
+  
   content: '';
   position: absolute;
   inset: 0;
@@ -407,7 +374,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   text-shadow: 0 1px 2px rgba(0,0,0,.8);
 }
 
-/* ──────────────────────── Numbers ──────────────────────── */
+
 .numbers {
   padding: calc(var(--sp-10) * 2) var(--sp-10);
   border-top: 1px solid var(--border);
@@ -453,7 +420,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   .number-cell:first-child { border-top: none; padding-top: 0; }
 }
 
-/* ──────────────────────── Section base ──────────────────────── */
+
 .section {
   padding: calc(var(--sp-10) * 2) var(--sp-10);
   max-width: 1200px;
@@ -493,7 +460,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   line-height: 1.55;
 }
 
-/* ──────────────────────── Gallery strip ──────────────────────── */
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -547,7 +514,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 }
 [data-theme="light"] .tile-cap { background: linear-gradient(to top, rgba(242,235,220,.92), transparent); }
 
-/* ──────────────────────── Lineage timeline ──────────────────────── */
+
 .timeline {
   display: flex;
   flex-direction: column;
@@ -615,7 +582,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   letter-spacing: .04em;
 }
 
-/* ──────────────────────── Mathematics card ──────────────────────── */
+
 .math-grid {
   display: flex;
   flex-direction: column;
@@ -683,7 +650,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   .math-cite { text-align: left; margin-top: var(--sp-2); }
 }
 
-/* ──────────────────────── Spec card ──────────────────────── */
+
 .spec-card {
   border: 1px solid var(--border-mid);
   border-radius: var(--r-3);
@@ -726,7 +693,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   font-style: normal;
 }
 
-/* ──────────────────────── Footer ──────────────────────── */
+
 .footer {
   padding: calc(var(--sp-10) * 2) var(--sp-10) var(--sp-10);
   border-top: 1px solid var(--border);
@@ -754,11 +721,10 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   font-size: 10px;
   color: var(--text-dim);
   letter-spacing: .08em;
-  /* AEON-240: no opacity here — --text-dim alone is ~6:1; opacity:.7
-     dragged it to 3.5:1, below AA. .footer-coda proves the token is fine. */
+  
 }
 
-/* ──────────────────────── Responsive ──────────────────────── */
+
 @media (max-width: 960px) {
   .hero {
     grid-template-columns: 1fr;
@@ -821,7 +787,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 </header>
 
 <main>
-<!-- ═════════════════ HERO ═════════════════ -->
+
 <section class="hero">
   <div class="hero-text">
     <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.2</p>
@@ -846,7 +812,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <figure class="render-hero"><a href="./app/#state=eyJ2Ijo0LCJtb2RlIjoiZnJhY3RhbCIsImZ0IjoianVsaWEiLCJjeCI6MCwiY3kiOjAsInoiOjEsImpyIjotMC43LCJqaSI6MC4yNzAxNSwicGFsIjoiaW5mZXJubyIsImNjIjoxLCJjbyI6MCwibWkiOjI1NiwiZXIiOjQsInRtIjowLCJwYXQiOiJmbG93ZXItb2YtbGlmZSIsImx5IjozLCJzeSI6OCwiZ3IiOjAsImdzIjoxLCJzZWVkIjo0MiwiZmlsIjowLCJnbHciOjEsInNnZCI6MCwidTRzIjowLCJsYSI6MywibGIiOjAsImxwaCI6MCwic2ZtIjo2LCJzZm4xIjoxLCJzZm4yIjoxLCJzZm4zIjoxLCJoZGMiOjAuMDAzLCJwZnhiIjowLCJwZnhicyI6MC40NSwicGZ4YnIiOjEwLCJwZnh2IjowLCJwZnh2cyI6MC42NSwicGZ4dnIiOjAuNTUsInBmeGciOjAsInBmeGdzIjowLjA0LCJwZnhjIjowLCJwZnhjbyI6MywicGZ4bCI6MCwicGZ4bG4iOiIiLCJmcCI6Miwidm10IjoiZXVjbGlkZWFuIiwiY2hsbiI6MCwiY2hycyI6MTYwLCJseXMiOiJBQiIsInR3ZyI6MC41LCJpc2siOjAsIm1vcCI6MC41LCJtaHgiOjEsIm1lbCI6MCwiY3hmIjoiejIiLCJjeHJlIjowLCJjeGltIjowLCJjeHptIjoyLCJjeG4iOjUsImN4cnQiOjAsImN4dHUiOlswLjUsMC44NjZdLCJjeGJmIjoxLCJjeGJzIjowLjUsImN4c3MiOjEsImN4YXIiOjAsImN4YXMiOjAuNCwiY3hsMyI6MCwiY3hjYiI6InJldHVybiBjbXVsKHosIHopICsgdmVjMigwLjAsIDAuNSk7IiwicnNzIjo0MDAsImhlcCI6MC4wMDA4LCJzdGsiOjAuNSwiYW9mIjowLjMsImZvZyI6MSwicjN4IjowLCJyM3kiOjAsInFqIjpbLTAuMiwwLjYsMC4yLDBdLCJncngiOjAuNCwiZ3J5IjowLjYsImx3IjoxLjUsImlmc2kiOjEwMDAwMDAsInBmbCI6MCwibHNjYSI6NjAsImNwaiI6Inh6IiwibHhhIjoiRiIsImx4ciI6IkY9RitGLUYtRitGIiwibHByIjoia29jaCIsImNwaSI6InN0ZWxsYS1vY3Rhbmd1bGEiLCJjcG8iOiJjdWJvY3RhaGVkcm9uIiwic3JyIjowLCJ2c2MiOjEsImNpcyI6MC41LCJ0a3EiOjMsInFzbSI6NSwiY25lIjowLjUsImNzciI6MSwibWJ0IjoxLCJrdGIiOjEsInBheCI6NCwiamlsIjo1LCJyY24iOjI1MCwicGNmIjo0LCJvc20iOjAsIm9mbSI6MH0"><img src="./gallery/hero.webp" alt="Julia Set, rendered at 3840 by 2160" width="3840" height="2160"></a></figure>
 
-<!-- ═════════════════ NUMBERS ═════════════════ -->
+
 <section class="numbers" aria-label="Catalog numbers">
   <div class="numbers-inner">
     <div class="number-cell">
@@ -872,7 +838,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   </div>
 </section>
 
-<!-- ═════════════════ THE INSTRUMENT ═════════════════ -->
+
 <section class="section" id="instrument">
   <header class="section-header">
     <span class="section-num">§ I</span>
@@ -881,7 +847,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   </header>
 </section>
 
-<!-- ═════════════════ FORMS GALLERY ═════════════════ -->
+
 <section class="section" id="gallery">
   <header class="section-header">
     <span class="section-num">§ II</span>
@@ -964,7 +930,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   </div>
 </section>
 
-<!-- ═════════════════ LINEAGE ═════════════════ -->
+
 <section class="section" id="lineage">
   <header class="section-header">
     <span class="section-num">§ III</span>
@@ -1023,7 +989,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   </div>
 </section>
 
-<!-- ═════════════════ THE MATHEMATICS ═════════════════ -->
+
 <section class="section" id="mathematics">
   <header class="section-header">
     <span class="section-num">§ IV</span>
@@ -1143,7 +1109,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
   </div>
 </section>
 
-<!-- ═════════════════ SPEC ═════════════════ -->
+
 <section class="section" id="spec">
   <header class="section-header">
     <span class="section-num">§ V</span>
@@ -1174,7 +1140,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 </section>
 </main>
 
-<!-- ═════════════════ FOOTER ═════════════════ -->
+
 
 <section class="section" id="renders">
   <header class="section-header">
@@ -1235,12 +1201,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 
 <script>
 'use strict';
-/* ════════════════════════════════════════════════════════════════
- * Hero Mandelbrot — small, fast, self-contained CPU renderer that
- * cycles through 4 zoom targets to give the page a quiet sense of
- * mathematical motion. Renders at 540×540 internally; stays under
- * 60ms per frame on a modern laptop, ~120ms on phones.
- * ════════════════════════════════════════════════════════════════ */
+
 (function(){
   'use strict';
   const cv = document.getElementById('hero-canvas');
@@ -1250,7 +1211,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
   const img = ctx.createImageData(W, H);
   const data = img.data;
 
-  // 4 zoom targets — a tour of the Mandelbrot's most-photographed neighbourhoods.
+  
   const TARGETS = [
     { name: 'Mandelbrot',     cx: -0.5,    cy:  0,      zoom: 1,    iters: 100 },
     { name: 'Seahorse Valley',cx: -0.745,  cy:  0.113,  zoom: 80,   iters: 360 },
@@ -1259,15 +1220,11 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
   ];
   let cur = 0;
 
-  // Cache caption nodes once — saved per-render lookups in _renderRow.
+  
   const capName = document.getElementById('hero-cap-name');
   const capZoom = document.getElementById('hero-cap-zoom');
 
-  /* Row-batched render. Splits the 540-row pass across animation frames
-     (60 rows/frame ≈ 9 frames at deepest target) so the main thread is
-     never blocked >~22ms. Returns when the whole frame is committed.
-     Caller chains the next target only after `done` resolves, so a
-     slow render can't cause queue-up. */
+  
   function render(target) {
     return new Promise(done => {
       const cx = target.cx, cy = target.cy, zoom = target.zoom;
@@ -1298,10 +1255,10 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
             } else {
               const smooth = i + 1 - Math.log2(Math.log2(zRe2 + zIm2) / 2);
               const t = Math.max(0, Math.min(1, smooth / maxIter * 4));
-              const p = Math.pow(t, .6);   // hoisted, was 3× per pixel
-              data[idx]   = (15 + 183 * p) | 0;   // copper R: 15 → 198
-              data[idx+1] = (14 + 120 * p) | 0;   // copper G: 14 → 134
-              data[idx+2] = (12 +  54 * p) | 0;   // copper B: 12 →  66
+              const p = Math.pow(t, .6);   
+              data[idx]   = (15 + 183 * p) | 0;   
+              data[idx+1] = (14 + 120 * p) | 0;   
+              data[idx+2] = (12 +  54 * p) | 0;   
               data[idx+3] = 255;
             }
           }
@@ -1319,20 +1276,16 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     });
   }
 
-  /* Visibility-gated chained scheduler. setInterval fires while the tab
-     is backgrounded (browsers throttle but don't kill it) and queues
-     up renders that thrash on refocus. setTimeout-after-render means
-     at most one render is in flight, and visibilityState gates the
-     next dispatch so background tabs cost nothing. */
-  // `cur` is already declared once above (with TARGETS). A second
-  // `let cur = 0;` here was a duplicate-declaration SyntaxError under
-  // 'use strict' that aborted this entire <script> at parse time — leaving the
-  // hero canvas blank AND the theme toggle dead for every visitor.
+  
+  
+  
+  
+  
   let rendered = false;
   let timer = 0;
   async function next() {
     timer = 0;
-    if (document.visibilityState !== 'visible') return; // re-armed by visibilitychange
+    if (document.visibilityState !== 'visible') return; 
     await render(TARGETS[cur]);
     rendered = true;
     cur = (cur + 1) % TARGETS.length;
@@ -1341,27 +1294,24 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     }
   }
   document.addEventListener('visibilitychange', () => {
-    // Re-arm on first visibility regardless of motion preference, so a
-    // reduced-motion visitor who opened us in a background tab still gets the
-    // one static render (its first next() bailed while hidden). Only RESUME
-    // the auto-cycle for no-preference visitors.
+    
+    
+    
+    
     if (document.visibilityState === 'visible' && !timer &&
         (!rendered || !matchMedia('(prefers-reduced-motion: reduce)').matches)) {
       timer = setTimeout(next, 0);
     }
   });
-  // First paint immediately, then enter the chained schedule.
+  
   next();
 })();
 
-/* ════════════════════════════════════════════════════════════════
- * Theme toggle — flips data-theme between dark/light and persists
- * the choice. Honors prefers-color-scheme on first visit.
- * ════════════════════════════════════════════════════════════════ */
+
 (function(){
   const KEY = 'aeon-landing-theme';
   const root = document.documentElement;
-  // Initial theme: stored choice, else system preference, else dark.
+  
   let theme;
   try { theme = localStorage.getItem(KEY); } catch (_e) {}
   if (!theme) {

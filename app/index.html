@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-I6gu+PQ2hm5dVhfMeJfYed0W57lSHoJmt1EcP7pYM8M='; font-src 'self'; script-src 'self' 'sha256-Mk3rcPCZ/JEfMG6Y2YLDD0OeBa4qXiFuMCtODuuVhg0='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-I6gu+PQ2hm5dVhfMeJfYed0W57lSHoJmt1EcP7pYM8M='; font-src 'self'; script-src 'self' 'sha256-1hqCqnhh3hLfkJH+CTD2UG2XbEvNL+sCMSRradgagRc='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4215,7 +4215,7 @@
 
 
 
-<!-- build: 29dc8fdb660c -->
+<!-- build: 5ab8a9403e49 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -4285,7 +4285,12 @@ desc:{f:'Newton on z³−2z+2',d:"The canonical Cayley basin: Newton iteration o
 
 
 
-nova:{glType:13,family:'escape',juliaMode:false,label:'Nova',fd:{cx:0,cy:0,zoom:0.04},escR:32,
+
+
+
+
+
+nova:{glType:13,family:'escape',juliaMode:false,label:'Nova',fd:{cx:-0.15,cy:0,zoom:2.2},escR:32,mi:64,
 info:{name:'Nova Fractal',formula:'f(z) = z − (z³−1)/(3z²) + c'},
 desc:{f:'z → z − p·f(z)/f′(z) + c',d:'Newton-relaxed iteration. Smooth basins of attraction separated by a fine-grained fractal boundary.'}},
 
@@ -4655,7 +4660,8 @@ function itTricornJulia(zx,zy,cx,cy,mi,er2){for(let i=0;i<mi;i++){const n=zx*zx-
 
 function itExpMap(cx,cy,mi,er2){let zx=0,zy=0;for(let i=0;i<mi;i++){const ex=Math.exp(zx);const n=ex*Math.cos(zy)+cx;zy=ex*Math.sin(zy)+cy;zx=n;if(zx*zx+zy*zy>er2)return[i,zx,zy]}return[mi,zx,zy]}
 
-function itNova(cx,cy,mi,er2){let zx=1,zy=0;for(let i=0;i<mi;i++){const z2x=zx*zx-zy*zy,z2y=2*zx*zy;const z3x=z2x*zx-z2y*zy,z3y=z2x*zy+z2y*zx;if(z2x*z2x+z2y*z2y<1e-10)return[mi,zx,zy];const[qx,qy]=cdiv(z3x-1,z3y,3*z2x,3*z2y);zx=zx-qx+cx;zy=zy-qy+cy;if(zx*zx+zy*zy>er2)return[i,zx,zy]}return[mi,zx,zy]}
+
+function itNova(cx,cy,mi,er2){let zx=1,zy=0;for(let i=0;i<mi;i++){const z2x=zx*zx-zy*zy,z2y=2*zx*zy;const z3x=z2x*zx-z2y*zy,z3y=z2x*zy+z2y*zx;if(z2x*z2x+z2y*z2y<1e-10)return[mi,zx,zy];const[qx,qy]=cdiv(z3x-1,z3y,3*z2x,3*z2y);const px=zx,py=zy;zx=zx-qx+cx;zy=zy-qy+cy;if(zx*zx+zy*zy>er2)return[i,zx,zy];const dd=(zx-px)*(zx-px)+(zy-py)*(zy-py);if(dd<1e-10){const q=Math.min(64,Math.max(1.0001,Math.log(Math.max(dd,1e-30))/Math.log(1e-10))),L=Math.hypot(zx,zy),r=Math.sqrt(Math.pow(2,q)),ux=L>1e-20?zx/L:1,uy=L>1e-20?zy/L:0;return[i,ux*r,uy*r]}}return[mi,zx,zy]}
 
 function itMagnet1(cx,cy,mi,er2){let zx=0,zy=0;for(let i=0;i<mi;i++){const numX=zx*zx-zy*zy+cx-1,numY=2*zx*zy+cy;const denX=2*zx+cx-2,denY=2*zy+cy;if(denX*denX+denY*denY<1e-10)return[mi,zx,zy];const[fx,fy]=cdiv(numX,numY,denX,denY);zx=fx*fx-fy*fy;zy=2*fx*fy;if(zx*zx+zy*zy>er2)return[i,zx,zy]}return[mi,zx,zy]}
 
@@ -6500,24 +6506,7 @@ data[off]=rgba[0]; data[off+1]=rgba[1]; data[off+2]=rgba[2]; data[off+3]=rgba[3]
 
 
 
-if(S.colorAlgo==='histogram'){
-const hist=new Int32Array(256);
-const total=w*h;
-for(let i=0;i<total;i++){
-const lum=Math.round(.2126*data[i*4]+.7152*data[i*4+1]+.0722*data[i*4+2]);
-hist[lum]++;
-}
-let cumul=0;
-const lut=new Uint8Array(256);
-for(let i=0;i<256;i++){cumul+=hist[i];lut[i]=Math.round(cumul/total*255);}
-for(let i=0;i<total;i++){
-const lum=Math.round(.2126*data[i*4]+.7152*data[i*4+1]+.0722*data[i*4+2]);
-const sc=lum>0?lut[lum]/lum:0;
-data[i*4  ]=Math.min(255,data[i*4  ]*sc)|0;
-data[i*4+1]=Math.min(255,data[i*4+1]*sc)|0;
-data[i*4+2]=Math.min(255,data[i*4+2]*sc)|0;
-}
-}
+if(S.colorAlgo==='histogram'){ _histEqInPlace(data,w*h); }
 ctxLocal.putImageData(img, 0, 0);
 _setPillProgress(null,null);
 if(_pillEl) _pillEl.classList.remove('show');
@@ -7479,8 +7468,8 @@ const APP_VERSION='7.0.2';
 
 
 
-const MISSION_BUILD_HASH='29dc8fdb660c';
-const MISSION_GIT_SHA='0481d2f0e40f76f2bfd8f872e481f924cffdac65';
+const MISSION_BUILD_HASH='5ab8a9403e49';
+const MISSION_GIT_SHA='f2941439b5d7e32727b5490cf767dcf39bed35a2';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11060,7 +11049,7 @@ if(!isCPUOnly&&!GL_3D_TYPES.has(S.fractalType)&&glReady&&!_f64NeedsCpu()){
 
 
 try { if(typeof cv!=='undefined' && cv){const _2d=cv.getContext('2d');if(_2d&&_2d.clearRect)_2d.clearRect(0,0,cv.width,cv.height);cv.classList.remove('is-hidden');} } catch(_e){_swallowed('renderFractal', _e);}
-glcv.classList.add('is-shown');renderFractalGL();
+glcv.classList.add('is-shown');renderFractalGL(..._glGestureSize());
 
 if(S.colorAlgo==='histogram') applyHistogramEQ();
 updateCoordBar();drawMandelbrotFeatures();if(typeof drawOrbitOverlay==='function')drawOrbitOverlay();return
@@ -11399,20 +11388,11 @@ if(t===tok){
 
 
 
+
+
+
 if(S.colorAlgo==='histogram'){
-
-
-
-const _ed=img.data,_tot=W*H;
-const _hist=new Int32Array(256);
-for(let i=0;i<_tot;i++){const lum=Math.round(.2126*_ed[i*4]+.7152*_ed[i*4+1]+.0722*_ed[i*4+2]);_hist[lum]++;}
-let _cum=0;const _lut=new Uint8Array(256);
-for(let i=0;i<256;i++){_cum+=_hist[i];_lut[i]=Math.round(_cum/_tot*255);}
-for(let i=0;i<_tot;i++){
-const lum=Math.round(.2126*_ed[i*4]+.7152*_ed[i*4+1]+.0722*_ed[i*4+2]);
-const sc=lum>0?_lut[lum]/lum:0;
-_ed[i*4]=Math.min(255,_ed[i*4]*sc)|0;_ed[i*4+1]=Math.min(255,_ed[i*4+1]*sc)|0;_ed[i*4+2]=Math.min(255,_ed[i*4+2]*sc)|0;
-}
+_histEqInPlace(img.data,W*H);
 ctx.putImageData(img,0,0);
 }
 _setPillProgress('CPU RENDER',null);_pill().classList.remove('show');if(typeof _announceRenderDone==='function')_announceRenderDone();updateCoordBar();_applyPostFXOnScreen();drawMandelbrotFeatures();if(typeof drawOrbitOverlay==='function')drawOrbitOverlay();_bumpRenderSeq();}
@@ -11986,6 +11966,55 @@ _buddhaSettleTimer = 0;
 if (Date.now() - _buddhaInteractTs >= 240) scheduleRender();
 }, 260);
 }
+
+
+
+
+
+
+let _glInteractTs=0,_glInteractTimer=0,_glGestureScale=1,_glScaleForced=0,_glRafDt=0,_glRafLast=0,_glRafOn=false,_glReducedShown=false;
+function _glGestureLive(){ return _glInteractTs>0 && performance.now()-_glInteractTs<150; }
+function _touchGlInteract(){
+_glInteractTs=performance.now();
+if(_glInteractTimer)clearTimeout(_glInteractTimer);
+
+_glInteractTimer=setTimeout(()=>{ _glInteractTimer=0; _glInteractTs=0; if(_glReducedShown) scheduleRender(); },160);
+if(!_glRafOn){
+_glRafOn=true; _glRafLast=0;
+const sampleCadence=(t)=>{
+if(_glRafLast){ const dt=t-_glRafLast; _glRafDt=_glRafDt?_glRafDt*0.6+dt*0.4:dt; }
+_glRafLast=t;
+if(_glGestureLive()) requestAnimationFrame(sampleCadence); else { _glRafOn=false; _glRafDt=0; }
+};
+requestAnimationFrame(sampleCadence);
+}
+}
+
+function _endGlInteract(){ _glInteractTs=0; if(_glInteractTimer){ clearTimeout(_glInteractTimer); _glInteractTimer=0; } }
+function _glGestureSize(){
+_glReducedShown=false;
+if(!_glGestureLive() || S.colorAlgo==='histogram' || (typeof _compareModeActive!=='undefined'&&_compareModeActive)
+|| (typeof _exportInFlight==='function'&&_exportInFlight())) return [W,H];
+if(_glScaleForced) _glGestureScale=_glScaleForced;
+else if(_glRafDt>0){
+
+const next=Math.max(0.35,Math.min(1,Math.round(_glGestureScale*Math.sqrt(16/_glRafDt)/0.05)*0.05));
+if(Math.abs(next-_glGestureScale)>=0.1 || next===1) _glGestureScale=next;
+}
+if(_glGestureScale>=1) return [W,H];
+_glReducedShown=true;
+return [Math.max(1,Math.round(W*_glGestureScale)),Math.max(1,Math.round(H*_glGestureScale))];
+}
+
+
+
+
+document.addEventListener('input',e=>{
+const el=e.target; if(!el||el.type!=='range'||S.mode!=='fractal') return;
+const row=(typeof INPUT_DISPATCH!=='undefined')&&INPUT_DISPATCH[el.id];
+if(row&&row.regrade) return;
+_touchGlInteract();
+},true);
 
 
 
@@ -17910,7 +17939,10 @@ return _layerSeedStateHash() + ':' + muRe.toFixed(4) + ':' + muIm.toFixed(4);
 
 function _glcvSnapshot(){
 const attrs = (typeof gl !== 'undefined' && gl && gl.getContextAttributes) ? gl.getContextAttributes() : null;
-if (!(attrs && attrs.preserveDrawingBuffer) && typeof render === 'function') render();
+
+const _gest = typeof _glGestureLive === 'function' && _glGestureLive();
+if (_gest) _endGlInteract();
+if ((_gest || !(attrs && attrs.preserveDrawingBuffer)) && typeof render === 'function') render();
 const snap = document.createElement('canvas');
 snap.width = glcv.width; snap.height = glcv.height;
 snap.getContext('2d').drawImage(glcv, 0, 0);
@@ -17952,6 +17984,7 @@ const isGL=glcv.classList.contains('is-shown');
 
 let src=cv;
 if(isGL){
+if(typeof _endGlInteract==='function')_endGlInteract();   
 render();
 const snap=document.createElement('canvas');
 snap.width=glcv.width;snap.height=glcv.height;
@@ -18121,6 +18154,30 @@ setTimeout(()=>{ veil.classList.remove('is-held','is-fading'); },220);
 
 let _histImgData=null;   
 let _buddhaImgData=null; 
+
+
+
+
+
+
+
+function _histEqInPlace(d,n){
+const hist=new Float64Array(256);
+for(let i=0;i<n;i++){const o=i*4;hist[Math.round(.2126*d[o]+.7152*d[o+1]+.0722*d[o+2])]++;}
+let nonEmpty=0;for(let i=0;i<256;i++)if(hist[i])nonEmpty++;
+if(nonEmpty<=2)return false;
+const limit=3*n/256;let excess=0;
+for(let i=0;i<256;i++)if(hist[i]>limit){excess+=hist[i]-limit;hist[i]=limit;}
+const add=excess/256,lut=new Float64Array(256);let cum=0;
+for(let i=0;i<256;i++){cum+=hist[i]+add;lut[i]=cum/n*255;}
+for(let i=0;i<n;i++){
+const o=i*4,l=Math.round(.2126*d[o]+.7152*d[o+1]+.0722*d[o+2]);
+if(!l)continue;
+const sc=Math.min(lut[l]/l,255/Math.max(d[o],d[o+1],d[o+2]));
+d[o]=(d[o]*sc)|0;d[o+1]=(d[o+1]*sc)|0;d[o+2]=(d[o+2]*sc)|0;
+}
+return true;
+}
 function applyHistogramEQ(){
 if(!glReady) return;
 const w=glcv.width,h=glcv.height;
@@ -18133,38 +18190,7 @@ const _pixBuf=_u8cAcquire(_n);
 const pixels=new Uint8Array(_pixBuf.buffer);
 gl.readPixels(0,0,w,h,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
 
-
-const hist=new Int32Array(256);
-for(let i=0;i<w*h;i++){
-const lum=Math.round(.2126*pixels[i*4]+.7152*pixels[i*4+1]+.0722*pixels[i*4+2]);
-hist[lum]++;
-}
-
-
-const cdf=new Float32Array(256);
-let cumul=0;
-const total=w*h;
-for(let i=0;i<256;i++){cumul+=hist[i];cdf[i]=cumul/total;}
-const lut=new Uint8Array(256);
-for(let i=0;i<256;i++) lut[i]=Math.round(cdf[i]*255);
-
-
-
-
-
-let _nonEmpty=0,_maxBucket=0;
-for(let i=0;i<256;i++){ if(hist[i]){ _nonEmpty++; if(hist[i]>_maxBucket)_maxBucket=hist[i]; } }
-const _degenerate = _nonEmpty<=2 || _maxBucket/total>0.7;
-
-
-if(!_degenerate) for(let i=0;i<w*h;i++){
-const lum=Math.round(.2126*pixels[i*4]+.7152*pixels[i*4+1]+.0722*pixels[i*4+2]);
-const eqLum=lut[lum];
-const scale=lum>0?eqLum/lum:0;
-pixels[i*4  ]=Math.min(255,pixels[i*4  ]*scale)|0;
-pixels[i*4+1]=Math.min(255,pixels[i*4+1]*scale)|0;
-pixels[i*4+2]=Math.min(255,pixels[i*4+2]*scale)|0;
-}
+_histEqInPlace(pixels,w*h);
 
 
 
@@ -18904,6 +18930,7 @@ if(typeof pushHist==='function')pushHist();
 
 
 if(!_opts.suppressDefaultView && typeof _captureAttractorParams==='function')_captureAttractorParams();
+const _prevType=S.fractalType;
 
 S.fractalType=type;
 
@@ -18951,6 +18978,17 @@ S.escRad=(_reg&&_reg.escR!=null)?_reg.escR:4;
 const _erEl=document.getElementById('escRad'),_erVEl=document.getElementById('escRad-v');
 if(_erEl)_erEl.value=S.escRad;
 if(_erVEl)_erVEl.textContent=S.escRad;
+
+
+
+const _prevReg=(typeof FRACTAL_REGISTRY!=='undefined')&&FRACTAL_REGISTRY[_prevType];
+const _mi=(_reg&&_reg.mi!=null)?_reg.mi:((_prevReg&&_prevReg.mi!=null&&_prevType!==type)?DS.maxIter:null);
+if(_mi!=null){
+S.maxIter=_mi;
+const _miEl=document.getElementById('maxIter'),_miVEl=document.getElementById('maxIter-v');
+if(_miEl)_miEl.value=S.maxIter;
+if(_miVEl)_miVEl.textContent=S.maxIter;
+}
 }
 if(is3D||isChaos&&(typeof IS_3D_ATTRACTORS!=='undefined'&&IS_3D_ATTRACTORS.has(type))){cv.dataset.cursor='grab';}else{cv.dataset.cursor='crosshair';}
 
@@ -20297,7 +20335,7 @@ if(_hasLocs && typeof _populateFamousLocations==='function'){_populateFamousLoca
 
 
 
-show('sec-julia-pad', ft==='julia' || ft==='biomorph' || ft==='burningship_julia' || ft==='tricorn_julia');
+show('sec-julia-pad', JULIA_PAD_TYPES.has(ft));
 if(typeof _exploreToolsSync==='function')_exploreToolsSync();   
 
 
@@ -20475,7 +20513,7 @@ const _z0c=document.getElementById('chaos-z0-ctrl');if(_z0c)_z0c.classList.toggl
 
 if(ft.startsWith('ifs_')&&ft!=='ifs_polygon')buildIFSWeightSliders(ft);
 else if(ft==='ifs_polygon'){const _wc=document.getElementById('ifs-weights-container');if(_wc)_wc.innerHTML='';}
-if(ft==='julia'||ft==='biomorph')renderJuliaPad();   
+if(JULIA_PAD_TYPES.has(ft))renderJuliaPad();   
 
 
 
@@ -21344,14 +21382,21 @@ pad.addEventListener('touchcancel',()=>{drag=false;});
 renderJuliaPad();
 }
 
+
+const JULIA_PAD_TYPES=new Set(['julia','biomorph','burningship_julia','tricorn_julia']);
+
 function renderJuliaPad(){
 const pad=document.getElementById('julia-pad');if(!pad||!_jpCtx)return;
 const W=pad.width,H=pad.height;
 const img=_jpCtx.createImageData(W,H);
 const rc=S.juliaReal??-0.7,ic=S.juliaImag??0.27;
+const fn=(JULIA_PAD_TYPES.has(S.fractalType)&&typeof IT_DISPATCH!=='undefined')?IT_DISPATCH.get(S.fractalType):null;
 for(let py=0;py<H;py++){for(let px=0;px<W;px++){
 let zr=(px/W)*3.5-1.75,zi=(py/H)*2.0-1.0,n=0;
-while(n<80&&zr*zr+zi*zi<4){const t=zr*zr-zi*zi+rc;zi=2*zr*zi+ic;zr=t;n++;}
+
+
+if(fn)n=fn(zr,zi,80,4)[0];
+else while(n<80&&zr*zr+zi*zi<4){const t=zr*zr-zi*zi+rc;zi=2*zr*zi+ic;zr=t;n++;}
 const idx=(py*W+px)*4;
 if(n===80){img.data[idx]=img.data[idx+1]=img.data[idx+2]=8;}
 else{const t=n/80;img.data[idx]=Math.round(9*(1-t)*t*t*t*255);img.data[idx+1]=Math.round(15*(1-t)*(1-t)*t*t*255);img.data[idx+2]=Math.round(8.5*(1-t)*(1-t)*(1-t)*t*255);}
@@ -21764,6 +21809,7 @@ itMandelbrot, itJulia, itBurning, itTricorn, itM3, itM4, itPhoenix, itCeltic,
 itNewton, itNewtonCayley, itPerpMandel, itPerpBurning, itBuffalo, itLambda,
 itCollatz, itBiomorph, itBurningJulia, itTricornJulia, itExpMap, itNova,
 itMagnet1, itMagnet2, itNewtonSin, itPowerMandel, itPowerJulia,
+_histEqInPlace,   
 
 
 
@@ -23295,7 +23341,10 @@ try{window.__boot.loadHandlerStart=performance.now();window.__boot.initGLstart=p
 initGL();
 try{window.__boot.initGLend=performance.now();}catch(_){}
 cv.style.setProperty('--cv-bg',S.bgColor);
-S.seed=Math.floor(Math.random()*9999999999)+1;
+
+
+const _testSeed=(()=>{try{return parseInt(localStorage.getItem('aeon-test-seed'),10);}catch(_){return NaN;}})();
+S.seed=_testSeed>0?_testSeed:Math.floor(Math.random()*9999999999)+1;
 
 rebuildFractalTypeSelect();
 rebuildPatternTypeSelect();
@@ -25931,6 +25980,18 @@ fn escapeTime(pixel: vec2<f32>) -> vec3<f32> {
       if (p.formulaId == 11u && (abs(z.x) < er || abs(z.y) < er)) { return vec3<f32>(-1.0, z.x, z.y); }
       return vec3<f32>(f32(i), z.x, z.y);
     }
+    
+    if (p.formulaId == 19u) {
+      let dz = z - prevZ;
+      let dd = dot(dz, dz);
+      if (dd < 1e-10) {
+        let q = clamp(log(max(dd, 1e-30)) / log(1e-10), 1.0001, 64.0);
+        let L = length(z);
+        let u = select(vec2<f32>(1.0, 0.0), z / L, L > 1e-20);
+        let w = u * sqrt(exp2(q));
+        return vec3<f32>(f32(i), w.x, w.y);
+      }
+    }
   }
   return vec3<f32>(-1.0, z.x, z.y); 
 }
@@ -28235,9 +28296,16 @@ vec4 novaIter(vec2 c){
     if(i>=u_maxIter)return vec4(float(u_maxIter),z,trapMin);
     vec2 z2=cmul(z,z),z3=cmul(z2,z);
     float d2=dot(z2,z2);if(d2<1e-10)break;
+    vec2 zp=z;
     z=z-cdiv(z3-vec2(1,0),3.*z2)+c;
     trapMin=updateTrap(trapMin,z);
     if(dot(z,z)>er2)return vec4(float(i),z,trapMin);
+    
+    
+    
+    
+    
+    {float dd=dot(z-zp,z-zp);if(dd<1e-10){float q=clamp(log(max(dd,1e-30))/log(1e-10),1.0001,64.);float L=length(z);return vec4(float(i),(L>1e-20?z/L:vec2(1.,0.))*sqrt(exp2(q)),trapMin);}}
   }
   return vec4(float(u_maxIter),z,trapMin);
 }
@@ -44990,11 +45058,11 @@ side:()=>{ if(typeof _syncOpacityFieldRelevance==='function')_syncOpacityFieldRe
 
 
 
-'pfxBloomThresh':        { s:'pfxBloomThresh', parse:'int',   badge:'pfxBloomThresh-v', fmt:'raw',
+'pfxBloomThresh':        { s:'pfxBloomThresh', regrade:true, parse:'int',   badge:'pfxBloomThresh-v', fmt:'raw',
 side:()=>{ if(typeof _syncPfxRelevance==='function')_syncPfxRelevance(); if(typeof pfxReapplyLive==='function')pfxReapplyLive(); } },
-'pfxExposure':           { s:'pfxExposure',    parse:'float', badge:'pfxExposure-v',    fmt:'fixed2x',
+'pfxExposure':           { s:'pfxExposure', regrade:true,    parse:'float', badge:'pfxExposure-v',    fmt:'fixed2x',
 side:()=>{ if(typeof pfxDrawToneCurve==='function')pfxDrawToneCurve(); if(typeof pfxReapplyLive==='function')pfxReapplyLive(); } },
-'pfxWhitePoint':         { s:'pfxWhitePoint',  parse:'float', badge:'pfxWhitePoint-v',  fmt:'fixed1',
+'pfxWhitePoint':         { s:'pfxWhitePoint', regrade:true,  parse:'float', badge:'pfxWhitePoint-v',  fmt:'fixed1',
 side:()=>{ if(typeof pfxDrawToneCurve==='function')pfxDrawToneCurve(); if(typeof pfxReapplyLive==='function')pfxReapplyLive(); } },
 'opacityBands':          { s:'opacityBands',      parse:'int',   badge:'opacityBands-v',      fmt:'raw',    render:true },
 'opacityNoiseScale':     { s:'opacityNoiseScale', parse:'float', badge:'opacityNoiseScale-v', fmt:'fixed2', render:true },
@@ -45117,12 +45185,12 @@ side:()=>{ if(typeof _syncCgRestrictOptions==='function')_syncCgRestrictOptions(
 'layer-scale-n':   { handler:(_,v)=>setLayerTransform('scale', v) },
 'layer-rot-n':     { handler:(_,v)=>setLayerTransform('rot', v) },
 
-'pfxBloomStr':     { s:'pfxBloomStr', parse:'float',badge:'pfxBloomStr-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
-'pfxBloomR':       { s:'pfxBloomR',   parse:'intLoose',badge:'pfxBloomR-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
-'pfxVigStr':       { s:'pfxVigStr',   parse:'float',badge:'pfxVigStr-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
-'pfxVigR':         { s:'pfxVigR',     parse:'float',badge:'pfxVigR-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
-'pfxGrainStr':     { s:'pfxGrainStr', parse:'float',badge:'pfxGrainStr-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
-'pfxCAOff':        { s:'pfxCAOff',    parse:'intLoose',badge:'pfxCAOff-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
+'pfxBloomStr':     { s:'pfxBloomStr', regrade:true, parse:'float',badge:'pfxBloomStr-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
+'pfxBloomR':       { s:'pfxBloomR', regrade:true,   parse:'intLoose',badge:'pfxBloomR-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
+'pfxVigStr':       { s:'pfxVigStr', regrade:true,   parse:'float',badge:'pfxVigStr-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
+'pfxVigR':         { s:'pfxVigR', regrade:true,     parse:'float',badge:'pfxVigR-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
+'pfxGrainStr':     { s:'pfxGrainStr', regrade:true, parse:'float',badge:'pfxGrainStr-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
+'pfxCAOff':        { s:'pfxCAOff', regrade:true,    parse:'intLoose',badge:'pfxCAOff-v',fmt:'raw',side:()=>{pfxPreviewUpdate();pfxReapplyLive();} },
 
 'jpeg-quality':    { handler:(_,v)=>_INP_setBadge('jpeg-q-v',v) },
 'gallery-search':  { handler:()=>renderGalleryGridDebounced() },
@@ -46113,6 +46181,7 @@ clearTimeout(_zoomPreviewSettleTimer);
 _zoomPreviewSettleTimer=setTimeout(()=>{ _zoomPreviewActive=false; _zoomPreviewAnchor=null; scheduleRender(); },200);
 }else{
 if (typeof _touchBuddhaInteract === 'function') _touchBuddhaInteract();
+if (typeof _touchGlInteract === 'function') _touchGlInteract();
 scheduleRender();
 }
 clearTimeout(wheelTimer);wheelTimer=setTimeout(pushView,400);
@@ -46327,6 +46396,7 @@ _drawZoomPreview();
 clearTimeout(_zoomPreviewSettleTimer);
 _zoomPreviewSettleTimer=setTimeout(()=>{ _zoomPreviewActive=false; _zoomPreviewAnchor=null; scheduleRender(); },200);
 } else {
+if (typeof _touchGlInteract === 'function') _touchGlInteract();
 scheduleRender();
 }
 }
@@ -48383,6 +48453,7 @@ const reg = (typeof FRACTAL_REGISTRY !== 'undefined' && FRACTAL_REGISTRY[type]) 
 return Object.assign(p, { mode: 'fractal', fractalType: type, centerX: d.cx, centerY: d.cy, zoom: d.zoom,
 centerXStr: String(d.cx), centerYStr: String(d.cy), _3dRotX: 0, _3dRotY: 0,
 fractalPower: reg.power != null ? reg.power : 2.0, escRad: reg.escR != null ? reg.escR : 4, ifsWeights: null, ifsCustomTf: null },
+reg.mi != null ? { maxIter: reg.mi } : {},
 type.startsWith('attractor_') ? _attractorPickDefaults(type) : {});
 }
 

@@ -17,7 +17,7 @@ let _warpT, _fieldNoise01, _pixelAlphaField, mulberry32;
 
 
 
-let colorT, newtonRGB, interiorRGB, _interiorOpacT, _newtonOpacT;
+let colorT, newtonRGB, interiorRGB, _interiorOpacT, _newtonOpacT, _histEqInPlace;
 let _IT_DISPATCH = {};
 
 
@@ -480,22 +480,7 @@ function _renderEscapeTime(oc, seq){
   }
   
   
-  if (S.colorAlgo === 'histogram') {
-    var tot = W * H, hist = new Int32Array(256);
-    for (var i = 0; i < tot; i++) {
-      var lum = Math.round(.2126 * data[i * 4] + .7152 * data[i * 4 + 1] + .0722 * data[i * 4 + 2]);
-      hist[lum]++;
-    }
-    var cum = 0, lut = new Uint8Array(256);
-    for (var li = 0; li < 256; li++) { cum += hist[li]; lut[li] = Math.round(cum / tot * 255); }
-    for (var pi = 0; pi < tot; pi++) {
-      var lum2 = Math.round(.2126 * data[pi * 4] + .7152 * data[pi * 4 + 1] + .0722 * data[pi * 4 + 2]);
-      var scl = lum2 > 0 ? lut[lum2] / lum2 : 0;
-      data[pi * 4]     = Math.min(255, data[pi * 4] * scl) | 0;
-      data[pi * 4 + 1] = Math.min(255, data[pi * 4 + 1] * scl) | 0;
-      data[pi * 4 + 2] = Math.min(255, data[pi * 4 + 2] * scl) | 0;
-    }
-  }
+  if (S.colorAlgo === 'histogram') _histEqInPlace(data, W * H);
   c2d.putImageData(img, 0, 0);
 }
 
@@ -527,6 +512,7 @@ self.onmessage = function(e){
     interiorRGB = self.interiorRGB;
     _interiorOpacT = self._interiorOpacT;
     _newtonOpacT = self._newtonOpacT;
+    _histEqInPlace = self._histEqInPlace;
     
     _IT_DISPATCH = {};
     if (d.itDispatchSrc) {
