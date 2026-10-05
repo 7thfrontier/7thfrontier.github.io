@@ -790,7 +790,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.2</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.3</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">This studio invented none of these figures. It only brings them into view, in mathematics and in glass.</p>
     <div class="hero-cta-row">
@@ -1117,7 +1117,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical envelope. Read it like a card from a Voyager probe: what we sent, in what container, with what guarantees.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.0.2</h2>
+    <h2>AEON · v7.0.3</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~3.8 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1178,25 +1178,22 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.0.2.</h2>
-    <p class="section-lede">Exports work in Brave · 2026-10-05</p>
+    <h2 class="section-title">What's new<br>in 7.0.3.</h2>
+    <p class="section-lede">Nova shows its structure · 2026-10-05</p>
   </header>
   <ul class="prose changes">
-    <li><strong>The landing page names its first section &quot;The Instrument&quot;.</strong> The top menu link and the section heading are capitalized; running text keeps the lowercase. Its second button reads &quot;Read the Foreword&quot;, the in-app name, and opens the Foreword.</li>
-    <li><strong>Shared links to the site show its picture and title.</strong> The landing page and the app give an absolute address for their preview image and page, which link previews need, and the landing's title reads &quot;AEON: Universal Dynamics Reactor&quot;.</li>
-    <li><strong>&quot;7th Frontier, Inc.&quot; links to the company site.</strong> The Foreword, the landing page, the poster and the release notes link the name to https://www.7thfrontier.com/.</li>
-    <li><strong>The public site and release notes read without engineering references.</strong> Ticket numbers and test and tooling notes stay out of the landing page's changelog, the published release notes and the app's own messages.</li>
-    <li><strong>The landing page gallery is captured again.</strong> Its pictures come from the current renderer, each subject on a fixed seed so a recapture repeats, and the Mandelbrot frames seahorse valley in the Dusk palette.</li>
-    <li><strong>A link that opens a seeded view keeps its framing.</strong> On some browsers the app checked the picture before it was drawn, decided the view had come out a flat color, reset it to the type's default and said so. It now draws before it checks, and does not judge a picture that is not the one on screen.</li>
-    <li><strong>Exports work in Brave.</strong> Before an export the app checks that the browser can hold a canvas of that size by painting a test color and reading it back. Brave alters canvas readback slightly to resist fingerprinting, so the check refused every size and no file was written. It now accepts a near match and still refuses a canvas the browser could not allocate.</li>
-    <li><strong>The inspector header is one row.</strong> The type name and About sit on the left, play and fold on the right, with the small Inspector label above. A long name ends in an ellipsis instead of pushing the buttons onto a row of their own.</li>
+    <li><strong>Histogram EQ keeps each color's hue.</strong> On a frame where one dark band filled most of the picture, such as the default Julia and Burning Ship views, it spread that band to mid-range and two color channels clipped, so the background turned saturated magenta. On the default Mandelbrot view it did nothing at all. Histogram EQ now limits how far one band can stretch and brightens each pixel without changing its hue, the same on the GPU, CPU, deep-zoom and worker paths.</li>
+    <li><strong>The site no longer ships its source comments.</strong> The landing page's style and script comments, and the service worker's, cited ticket numbers anyone could read with View Source. Assembly and packaging now strip them, and the check reads the served files byte for byte.</li>
+    <li><strong>The Julia pad previews the set you are picking.</strong> The small c-picker in the Inspector drew the plain Julia set for every type, so Burning Ship Julia, Tricorn Julia and Biomorph showed a set other than the one the picked point renders. Each type now previews with its own formula and power. The Julia pad's outer field comes out darker than before: it now counts escape steps the way the main picture does.</li>
+    <li><strong>Wheel, pinch and sliders keep up on 4K views.</strong> On a large GL view, frames drawn while you scroll, pinch or drag a slider render at a reduced scale, and the picture settles to full resolution, identical to a fresh render, when you stop. Copy Image always takes a full frame.</li>
+    <li><strong>Nova shows its structure.</strong> Nova sends almost every point to a root instead of letting it escape, so it was colored as one dark interior with a glow at every catalog view. It is now colored by how many steps a point takes to settle, which shows the boundary between the basins and the bulbs along it. It opens at -0.15 + 0i, zoom 2.2, with 64 iterations; leaving it for another type restores the usual 256. Saved views of Nova change look.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.2</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.3</p>
 </footer>
 
 <script>

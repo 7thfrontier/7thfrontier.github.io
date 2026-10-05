@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-I6gu+PQ2hm5dVhfMeJfYed0W57lSHoJmt1EcP7pYM8M='; font-src 'self'; script-src 'self' 'sha256-1hqCqnhh3hLfkJH+CTD2UG2XbEvNL+sCMSRradgagRc='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-I6gu+PQ2hm5dVhfMeJfYed0W57lSHoJmt1EcP7pYM8M='; font-src 'self'; script-src 'self' 'sha256-ZzOpmyducdzGlc3sz+E0Z8Qu/pN4jNTFmOL8Ui8hsZw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4215,12 +4215,12 @@
 
 
 
-<!-- build: 5ab8a9403e49 -->
+<!-- build: 4760e1e7b8ed -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.2
+ * AEON -- Universal Dynamics Reactor v7.0.3
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7459,7 +7459,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.2';
+const APP_VERSION='7.0.3';
 
 
 
@@ -7468,8 +7468,8 @@ const APP_VERSION='7.0.2';
 
 
 
-const MISSION_BUILD_HASH='5ab8a9403e49';
-const MISSION_GIT_SHA='f2941439b5d7e32727b5490cf767dcf39bed35a2';
+const MISSION_BUILD_HASH='4760e1e7b8ed';
+const MISSION_GIT_SHA='7a508d6f6a033577fd409dc9e6c7b14902da9c22';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -50143,6 +50143,18 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.3',
+date:'2026-10-05',
+headline:"Nova shows its structure, and Histogram EQ keeps each color's hue.",
+items:[
+'Nova is now colored by how many steps a point takes to settle, so its basins and bulbs show. It opens on a new default view.',
+'Histogram EQ no longer turns the Julia and Burning Ship backgrounds magenta; it brightens the picture without changing hues.',
+"The Julia pad in the Inspector previews the set you are picking, with each type's own formula.",
+'Scrolling, pinching and dragging sliders keep up on 4K views, and the picture settles to full resolution when you stop.',
+'The landing page and service worker no longer ship their internal source comments.',
+],
+},
+{
 version:'7.0.2',
 date:'2026-10-05',
 headline:'Exports work in Brave, and seeded links keep their framing.',
@@ -50220,17 +50232,6 @@ items:[
 'Project files and the browser autosave now carry a checksum written on every save. If a saved file has been corrupted or tampered with, loading it is rejected with a clear message instead of silently loading a broken composition. Older files still load normally.',
 'Importing a .flame file with no usable transforms no longer changes your current view or colors before it is rejected. Your work is left exactly as it was.',
 'Behind the scenes: several process and tooling fixes to how releases are gated and version-checked, with no other user-visible change.',
-],
-},
-{
-version:'6.67.10',
-date:'2026-08-25',
-headline:'Fixed a case where starting a new document mid-save could silently mark it as already saved, plus exports that can now actually be cancelled.',
-items:[
-'Starting File > New while a save was still writing could, rarely, complete against the new document, toasting the wrong filename and marking it saved when nothing had been written. Save now always applies its result to the document it started saving.',
-'EXR export, GPU post-effects like Tonemap, and PNG-sequence frame export can now actually be cancelled partway through, instead of running to completion regardless.',
-'Attractor, IFS, and fractal-flame renders no longer repaint the whole canvas on every step of a live render. A performance cleanup; the finished image is unchanged.',
-'A few other silent-corruption fixes: overlapping exports (including SVG) are now consistently blocked, and undo/redo, drag-panning, and the recent-files menu can no longer clobber in-flight work.',
 ],
 },
 ];
