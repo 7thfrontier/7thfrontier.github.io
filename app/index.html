@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-Gf4R/ZqxGAGh7sWF1kRBfRs0aYJXDjXS+YGx3cj6nmE='; font-src 'self'; script-src 'self' 'sha256-pd1QcfMqRsXi/bQz7BQPdthKstVEK6HjscCwMcAz8/w='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-Gf4R/ZqxGAGh7sWF1kRBfRs0aYJXDjXS+YGx3cj6nmE='; font-src 'self'; script-src 'self' 'sha256-7Qha8jJEtDYVO1J1H7BHqlmtcXBqtnenqPyO5tiw2KM='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4218,12 +4218,12 @@
 
 
 
-<!-- build: 948cbca56606 -->
+<!-- build: 344e3fa34616 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.3
+ * AEON -- Universal Dynamics Reactor v7.0.4
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7462,7 +7462,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.3';
+const APP_VERSION='7.0.4';
 
 
 
@@ -7471,8 +7471,8 @@ const APP_VERSION='7.0.3';
 
 
 
-const MISSION_BUILD_HASH='948cbca56606';
-const MISSION_GIT_SHA='fa086839512467c3efbd66e18d71ab07df7f3a5f';
+const MISSION_BUILD_HASH='344e3fa34616';
+const MISSION_GIT_SHA='2cf9c346cfc446848e9898648a4453c0dcdaea52';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -50178,6 +50178,17 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.4',
+date:'2026-10-06',
+headline:'Quick export keeps the whole view, and the 3D types draw only what you see.',
+items:[
+'A Quick export whose shape differs from the canvas now shows the whole view on bars, as Print does, instead of cropping it. Choose Extend to fill the frame instead.',
+'With the Inspector open, the six 3D types render the window alone, 4 to 25% faster per frame, and the picture does not move.',
+'The landing page and the poster now run only their own scripts and styles, and load nothing from other sites.',
+'No page can submit a form, so content slipped into a page cannot post anywhere.',
+],
+},
+{
 version:'7.0.3',
 date:'2026-10-05',
 headline:"Nova shows its structure, and Histogram EQ keeps each color's hue.",
@@ -50257,16 +50268,6 @@ items:[
 'A malformed bookmark write arriving from another open tab could crash the Bookmarks panel in the current tab, leaving it showing fewer bookmarks than actually existed until reload. Cross-tab bookmark writes are now filtered the same way local ones already are.',
 'An export repeatedly interrupted by a concurrent render could silently save a blank or background-only file while reporting success. Every export density render now checks it actually finished before saving; a genuine failure now shows a visible error and writes nothing, instead of an incomplete file that looked fine.',
 'Behind the scenes: a destructive-before-validate sweep across keybindings, attractors, and safe storage, the gradient editor\'s cross-tab sync, and several process/tooling fixes, with no other user-visible change.',
-],
-},
-{
-version:'6.67.11',
-date:'2026-09-01',
-headline:'Corrupt project files are now rejected on load, and an interrupted flame import can no longer clobber your current view.',
-items:[
-'Project files and the browser autosave now carry a checksum written on every save. If a saved file has been corrupted or tampered with, loading it is rejected with a clear message instead of silently loading a broken composition. Older files still load normally.',
-'Importing a .flame file with no usable transforms no longer changes your current view or colors before it is rejected. Your work is left exactly as it was.',
-'Behind the scenes: several process and tooling fixes to how releases are gated and version-checked, with no other user-visible change.',
 ],
 },
 ];
