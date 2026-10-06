@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-Gf4R/ZqxGAGh7sWF1kRBfRs0aYJXDjXS+YGx3cj6nmE='; font-src 'self'; script-src 'self' 'sha256-7Qha8jJEtDYVO1J1H7BHqlmtcXBqtnenqPyO5tiw2KM='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-03mSB2LTWXxh6jzJcOLbgzZTK0tvYwJFMLjSK3Tm6yw='; font-src 'self'; script-src 'self' 'sha256-Sz6bxgedVJEO/xmm4W9RGt0jmk6dZ7UiibE0nXqs198='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -546,7 +546,7 @@
         
         @media (prefers-reduced-motion: reduce){#act-tooltip{transition:none}}
 
-        .canvas-area{position:absolute;left:0;right:0;overflow:hidden;top:0;bottom:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--canvas-bg);transition:left var(--dur-slow) ease,right var(--dur-slow) ease}
+        .canvas-area{position:absolute;left:0;right:0;overflow:clip;top:0;bottom:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--canvas-bg);transition:left var(--dur-slow) ease,right var(--dur-slow) ease}
         
         .app{--lp-cur:0px;--rp-cur:calc(var(--insp-w) + var(--sp-6) * 2)}
         .catalog-corner{position:absolute;left:var(--sp-6);top:var(--sp-6);z-index:var(--z-panel);height:50px;display:flex;align-items:center;gap:var(--sp-3);padding:0 var(--sp-3) 0 var(--sp-5);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);max-width:calc(100% - var(--rp-cur) - var(--sp-6) * 2)}
@@ -772,7 +772,7 @@
         .nh kbd{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--text-mid);background:var(--surface2);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-1);padding:1px 5px;line-height:1.3;}
         [data-theme="light"] .nh kbd{color:var(--text-mid);background:var(--surface2);border-color:var(--border-mid)}
 
-        .right-panel{width:var(--insp-w);position:absolute;right:var(--sp-6);top:var(--sp-6);bottom:calc(20px + 76px + var(--sp-6));z-index:var(--z-panel);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);overflow:hidden;transition:bottom var(--dur-slow) ease,background var(--dur-langorous)}
+        .right-panel{width:var(--insp-w);position:absolute;right:var(--sp-6);top:var(--sp-6);bottom:calc(20px + 76px + var(--sp-6));z-index:var(--z-panel);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);overflow:clip;transition:bottom var(--dur-slow) ease,background var(--dur-langorous)}
         
         .right-panel::before{content:'';position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none}
         @media(min-width:861px){.right-panel.rp-collapsed{bottom:auto}}
@@ -1877,7 +1877,7 @@
         .catalog-sheet{position:fixed;inset:0;z-index:var(--z-overlay-high)}
         .catalog-sheet[hidden]{display:none}
         .cat-scrim{position:absolute;inset:0;background:rgba(0,0,0,.45)}
-        .cat-panel{position:absolute;left:var(--sp-6);right:var(--sp-6);bottom:var(--sp-6);height:min(620px,calc(100vh - 2 * var(--sp-6)));display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);overflow:hidden}
+        .cat-panel{position:absolute;left:var(--sp-6);right:var(--sp-6);bottom:var(--sp-6);height:min(620px,calc(100vh - 2 * var(--sp-6)));display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);overflow:clip}
         .cat-head{display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-5) var(--sp-5) var(--sp-4) var(--sp-7);flex-wrap:wrap}
         .cat-title{margin:0 var(--sp-2) 0 0;font:italic 400 26px/1 var(--font-display);color:var(--text)}
         .cat-seg{display:flex;gap:2px;padding:2px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-2)}
@@ -2964,7 +2964,7 @@
       <div id="chladni-panel" class="is-hidden">
         <div class="rp-sub-head">Chladni</div>
         <div class="ctrl"><label for="chladniN">n mode (0 = auto) <span class="badge" id="chladniN-v">0</span></label><div class="slider-row"><input type="range" id="chladniN" min="0" max="32" step="1" value="0" aria-describedby="slider-keys-hint"></div></div>
-        <div class="ctrl-hint mtn2-mb6">0 derives n from m+1; explicit n unlocks asymmetric (m,n) pairs</div>
+        <div class="ctrl-hint mtn2-mb6">0 derives n from m+1; set n yourself for an asymmetric (m,n) pair</div>
         <div class="ctrl"><label for="chladniRes">Grid resolution <span class="badge" id="chladniRes-v">160</span></label><div class="slider-row"><input type="range" id="chladniRes" min="60" max="320" step="20" value="160" aria-describedby="slider-keys-hint"></div></div>
       </div>
       <div id="truchet-panel" class="is-hidden">
@@ -3125,7 +3125,7 @@
             <button type="button" id="cxCustomApply" class="btn-tiny">Apply</button>
             <span id="cxCustomStatus" class="cx-custom-status" role="status" aria-live="polite" aria-atomic="true"></span>
           </div>
-          <details class="ctrl-hint-toggle mt-4"><summary>A custom shader formula controls this pattern's shape.</summary><div class="ctrl-hint">GLSL ES 3.00 · return a <code>vec2</code>. Available: <code>z</code> (vec2 input), <code>cmul(a,b)</code>, <code>cdiv(a,b)</code>, <code>u_N</code> (int), <code>u_rot</code>, <code>u_tau</code> (vec2). Pre-validated for shader injection. Requires WebGL2 (no CPU fallback).</div></details>
+          <details class="ctrl-hint-toggle mt-4"><summary>A custom shader formula controls this pattern's shape.</summary><div class="ctrl-hint">GLSL ES 3.00 · return a <code>vec2</code>. Available: <code>z</code> (vec2 input), <code>cmul(a,b)</code>, <code>cdiv(a,b)</code>, <code>u_N</code> (int), <code>u_rot</code>, <code>u_tau</code> (vec2). The formula is checked before it reaches the shader, and it needs WebGL2 (there is no CPU fallback).</div></details>
         </div>
         <div class="ctrl"><label for="cxZoom">Window half-width <span class="badge" id="cxZoom-v">2.00</span></label><div class="slider-row"><input type="range" id="cxZoom" min="0.01" max="50" step="0.01" value="2.00" aria-describedby="slider-keys-hint"></div></div>
         <div class="ctrl"><label for="cxRe">Center Re <span class="badge" id="cxRe-v">0.00</span></label><div class="slider-row"><input type="range" id="cxRe" min="-20" max="20" step="0.05" value="0" aria-describedby="slider-keys-hint"></div></div>
@@ -3404,7 +3404,7 @@
     
     <div class="rp-sec" id="sec-color-tuning" data-quick>
       <h2 class="rp-sec-head">Color Tuning</h2>
-      <div class="ctrl-hint mb-4">Step 2 of the color chain (Palette, Palette Repeats and Offset, Warp, Repeat, Phase). Warp, Repeat and Phase are in Color Mapping.</div>
+      <div class="ctrl-hint mb-4">Step 2 of the color chain. This panel holds Palette, Palette Repeats and Offset; the step's Warp, Repeat and Phase controls are in Color Mapping.</div>
       <div class="ctrl"><label for="colorOffset">Offset <span class="badge" id="colorOffset-v">0.00</span></label><div class="slider-row"><input type="range" id="colorOffset" min="0" max="1" step=".005" value="0" aria-describedby="slider-keys-hint"></div></div>
       <div class="ctrl"><label for="colorCycle">Palette Repeats <span class="badge" id="colorCycle-v">1.00</span></label><div class="slider-row"><input type="range" id="colorCycle" min=".05" max="20" step=".05" value="1.0" aria-describedby="slider-keys-hint"></div></div>
       <div class="ctrl mb-4"><label>Color Flow <span class="badge" id="flow-badge">OFF</span></label><div class="btn-row mt-4"><button type="button" class="btn ghost inline-24" id="flow-btn" data-action="toggleColorFlow" aria-pressed="false">▶ Auto-Cycle</button><div class="ctrl inline-13"><input type="range" id="flowSpeed" min="0.02" max="2" step="0.01" value="0.12" title="Flow speed" aria-label="Color flow speed" aria-describedby="slider-keys-hint"></div></div><div class="inline-18">Cycles color offset automatically</div></div>
@@ -4103,7 +4103,7 @@
               <div class="export-lbl">3D Projection</div>
               <div class="size-chips mb-8" id="prnt-proj-chips">
                 <div class="size-chip active" data-proj="perspective" title="Default camera ray. Use for stills.">Perspective</div>
-                <div class="size-chip" data-proj="equirect" title="Equirectangular 2:1 sphere unwrap. VR-ready / 360° viewer compatible. Forces 2:1 aspect at export.">Equirectangular (2:1)</div>
+                <div class="size-chip" data-proj="equirect" title="Unwraps the sphere into a 2:1 equirectangular image for VR and 360° viewers. The export is always 2:1.">Equirectangular (2:1)</div>
               </div>
             </div>
           </div>
@@ -4218,7 +4218,7 @@
 
 
 
-<!-- build: 344e3fa34616 -->
+<!-- build: 3fa31ee21221 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7471,8 +7471,8 @@ const APP_VERSION='7.0.4';
 
 
 
-const MISSION_BUILD_HASH='344e3fa34616';
-const MISSION_GIT_SHA='2cf9c346cfc446848e9898648a4453c0dcdaea52';
+const MISSION_BUILD_HASH='3fa31ee21221';
+const MISSION_GIT_SHA='b78af42b7d90032b95dc79b629afa832d1a6bed2';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -25078,6 +25078,19 @@ setTimeout(() => f[0].focus(), 0);
 }
 }
 
+
+
+function _menuOpenerFor(el){
+if(!el || typeof el.closest !== 'function') return null;
+const menu = el.closest('[role="menu"][id]');
+if(!menu) return null;
+const opener = document.querySelector(`[aria-controls="${CSS.escape(menu.id)}"]`);
+return (opener && typeof opener.focus === 'function' && opener.offsetParent !== null) ? opener : null;
+}
+function _visibleRestoreTarget(el){
+if(el && typeof el.focus === 'function' && el.offsetParent !== null) return el;
+return _menuOpenerFor(el);
+}
 function releaseFocus(root, skipRestore){
 if(!root) return;
 const entry = _focusTraps.get(root);
@@ -25089,7 +25102,8 @@ _focusTraps.delete(root);
 
 
 if(skipRestore) return;
-try { if(entry.prev && typeof entry.prev.focus === 'function') entry.prev.focus(); } catch(e){}
+const back = (entry.prev && typeof entry.prev.focus === 'function') ? (_visibleRestoreTarget(entry.prev) || entry.prev) : null;
+try { if(back) back.focus(); } catch(e){}
 }
 
 
@@ -25182,7 +25196,7 @@ _modalFocusGuards.delete(modalId);
 
 
 if (!t || typeof t.focus !== 'function' || t.offsetParent === null) {
-t = _focusFallbackTarget();
+t = _menuOpenerFor(t) || _focusFallbackTarget();
 }
 if (t && typeof t.focus === 'function') {
 
@@ -25221,7 +25235,7 @@ const ae = document.activeElement;
 if (ae && ae !== document.body && ae !== t && ae.offsetParent !== null) return;
 
 
-const tt = (t && t.offsetParent !== null) ? t : _focusFallbackTarget();
+const tt = (t && t.offsetParent !== null) ? t : (_menuOpenerFor(t) || _focusFallbackTarget());
 try { if (tt) tt.focus(); } catch (_e) {_swallowed('_restoreModalFocusGuard', _e);}
 }, 0);
 }
@@ -25280,21 +25294,21 @@ en: {
 'tour.ui.prev':               '← Back',
 'tour.ui.skip':               'Skip tour',
 'tour.ui.finish':             'Finish',
-'tour.ui.complete':           'You\'re ready. Explore freely, press ? any time for the keys.',
+'tour.ui.complete':           'That\'s the tour. Press ? at any time to see the keyboard shortcuts.',
 'tour.ui.canvas.title':       'The canvas',
-'tour.ui.canvas.body':        'Click to zoom, drag to pan, pinch on touch. This is where every fractal, pattern, and animation renders.',
+'tour.ui.canvas.body':        'Every fractal and pattern, still or animated, draws here. Click to zoom, drag to pan, or pinch on a touch screen.',
 'tour.ui.modes.title':        'Switch render modes',
-'tour.ui.modes.body':         'Fractals (58) or Geometry (183 patterns). Switch here; the inspector re-shapes itself for each.',
+'tour.ui.modes.body':         'Fractals (58) or Geometry (183 patterns). Switch here, and the Inspector changes to fit what you picked.',
 'tour.ui.inspire.title':      'The catalog',
-'tour.ui.inspire.body':       'Every type and pattern as a card, with favorites, recents and Showcase. Press / to search it, or try Curated random.',
+'tour.ui.inspire.body':       'Every type and pattern has a card here, along with your favorites, your recent picks and the Showcase. Press / to search, or try Curated random.',
 'tour.ui.palette.title':      'Color & palette',
 'tour.ui.palette.body':       'Cycle through 51 curated palettes, build your own from stops, or import one from a swatch file.',
 'tour.ui.export.title':       'Export your work',
-'tour.ui.export.body':        'PNG · video (MP4/WebM) · GIF · SVG. Press E any time or use this button.',
+'tour.ui.export.body':        'Save a PNG, a video (MP4 or WebM), a GIF or an SVG. Press E at any time, or use this button.',
 'tour.ui.gallery.title':      'Save to gallery',
 'tour.ui.gallery.body':       'Bookmark interesting views to come back to. Browse with G.',
 'tour.ui.keys.title':         'Keyboard shortcuts',
-'tour.ui.keys.body':          'Press ? any time for the keys. The menu here opens them too, and lets you rebind them.',
+'tour.ui.keys.body':          'Press ? at any time to see every shortcut. This menu opens the same list, where you can also change the keys.',
 'tour.ui.tours.title':        'Guided tours',
 'tour.ui.tours.body':         'Four narrated walks: a Mandelbrot walk-through, a Julia parameter sweep, the logistic bifurcation cascade, and a sacred-geometry primer.',
 'tour.ui.guide.title':        'Welcome guide',
@@ -43798,7 +43812,7 @@ if(_focusRaf)cancelAnimationFrame(_focusRaf);
 document.removeEventListener('keydown',onKey,true);
 m.removeEventListener('click',onBackdrop);
 if(m.parentNode)m.parentNode.removeChild(m);
-try{prevFocus&&prevFocus.focus&&prevFocus.focus();}catch(_e){_swallowed('cleanup', _e);}
+try{const back=prevFocus&&(_visibleRestoreTarget(prevFocus)||prevFocus); back&&back.focus&&back.focus();}catch(_e){_swallowed('cleanup', _e);}
 };
 const finish=(val)=>{
 if(_resolved)return;
@@ -43892,7 +43906,7 @@ if(_focusRaf)cancelAnimationFrame(_focusRaf);
 document.removeEventListener('keydown',onKey,true);
 m.removeEventListener('click',onBackdrop);
 if(m.parentNode)m.parentNode.removeChild(m);
-try{prevFocus&&prevFocus.focus&&prevFocus.focus();}catch(_e){_swallowed('cleanup', _e);}
+try{const back=prevFocus&&(_visibleRestoreTarget(prevFocus)||prevFocus); back&&back.focus&&back.focus();}catch(_e){_swallowed('cleanup', _e);}
 };
 const finish=(val)=>{ if(_resolved)return; _resolved=true; cleanup(); resolve(!!val); };
 m._cdCleanup=finish;
@@ -50029,28 +50043,28 @@ showImportStatus('Generated '+colors.length+' colors locally',false);
 
 const FOREWORD_SECTIONS=[
 { headline:"αἰών: an unbounded age.",
-body:"The Greek αἰών (aiōn) names a duration without bound: cyclical, generative time, the turning of an age rather than a frozen infinity. That sense fits what the instrument studies. Its dynamical systems have orbits that return to where they started; its tilings hold an order that stays exact and never repeats; its harmonic lattices carry chord spectra that recur at every octave; its iterations settle, fly apart, or trace a fractal boundary that never closes. Each is a kind of unbounded age, and the instrument is named for the forms it was built to watch.",
+body:"The Greek word αἰών (aiōn) means an age without end: time that turns and keeps producing, rather than time that stands still. The name fits what this program draws. A dynamical system carries a point around its orbit and brings it back. A Penrose tiling keeps a perfect order across the whole plane and never repeats. You can follow the edge of a Julia set forever and it never closes. AEON was built to look at forms like these, and it is named after them.",
 margin:"AEON · αἰών\nGreek\nan unbounded\ngenerative age" },
 { headline:"Mathematics is the grammar of reality.",
-body:"Every figure here rests on a single conviction: that mathematics is the grammar reality is already speaking, and our calculations only make it legible. When Shishikura proved in 1991 that the Mandelbrot boundary has Hausdorff dimension exactly 2, he was stating a fact about complex iteration itself. It holds in any universe that admits complex numbers, and it holds while the canvas is dark, with no screen to show it. Everything this instrument draws comes from a structure that is already in place whether or not anyone is watching. The reactor does not author the geometry; it brings it into view.",
+body:"One belief sits under every figure here: the mathematics comes first, and computing only lets us see it. In 1991 Mitsuhiro Shishikura proved that the boundary of the Mandelbrot set has Hausdorff dimension exactly 2. That is a fact about complex numbers. It was true before anyone drew the set, and it stays true with the screen switched off. So the program does not make these shapes up. It finds structures that were already there and draws them as clearly as it can.",
 margin:"Mathematics is\nthe script the\nUniverse is\nalready running." },
 { headline:"An instrument for the dynamics of form.",
-body:"AEON is the working observatory built on that conviction. A telescope makes the night sky legible; this instrument does the same for the parameter spaces of complex dynamics, the regular tessellations of the hyperbolic plane, and the long-run behavior of nonlinear systems, at the precision the mathematics demands. Its lineage runs long and unbroken, from Euclid's two intersecting circles to the monotile proved aperiodic in the spring of 2023, and every figure in it was first someone's theorem. The instrument carries those results forward into glass and light, the latest in a long line of lenses ground for forms that were already there. Their authors, years, and papers are gathered in the References.",
+body:"AEON is the observatory we built on that belief. A telescope shows you the night sky. AEON shows you the parameter plane of a complex map, the tilings of the hyperbolic plane and the long-run behavior of nonlinear systems, drawn as precisely as the mathematics allows. Every figure in it was somebody's theorem first. The oldest is Euclid's pair of intersecting circles; the newest is the hat, a single tile proved in the spring of 2023 to cover the plane only without repeating. Who proved what, and when, is listed in the References.",
 margin:"Coxeter:\n“The mathematician\nlives only in\nan ideal world.”" },
-{ headline:"The fractal catalog is mathematically faithful.",
-body:"Each fractal family is drawn the way its theorems define it. The Mandelbrot–Julia sweep is carried by perturbation and series approximation far past the depth where ordinary floating point gives out; Newton basins respect the multiplicity of their roots; strange attractors are integrated with the same Runge–Kutta a physicist would reach for; the distance-estimated solids are raymarched straight from their defining inequalities. Where the mathematics is settled, the figure is exact. Where it is still open, as with the conjecture that the Mandelbrot set is locally connected, the instrument draws what is known and stops at the edge of the proof. It does not guess past it.",
-margin:"MLC is still open.\nWe draw its\nconsequences\nand stop where\nthe proof stops." },
+{ headline:"Each fractal is drawn the way its theorems define it.",
+body:"Deep Mandelbrot and Julia zooms use perturbation and series approximation, which keep working long after ordinary floating point runs out of digits. Newton basins respect the multiplicity of their roots. Strange attractors are integrated with fourth-order Runge–Kutta, the method a physicist would use, and the 3D fractals are raymarched straight from their distance estimates. Where a question is settled, the picture is exact. Where it is still open, as with whether the Mandelbrot set is locally connected, we draw what has been proved and stop there.",
+margin:"Whether the\nMandelbrot set is\nlocally connected\nis still open." },
 { headline:"Sacred geometry, treated as a research catalog.",
-body:"The sacred-geometry catalog is held to that same standard. It is a research collection, each pattern constructed from its definition: the Vesica Piscis at its exact √3 lens; the Sri Yantra held to the concurrence its nine triangles demand; the aperiodic tilings laid down by the monotiles that closed a fifty-year problem; the regular tilings of the hyperbolic plane drawn on the disk where they actually live; a space-filling curve that visits every cell of its grid exactly once; the Pythagoras tree, which renders a² + b² = c² as a proof you can see. The catalog is large on purpose. Each figure earns its place by being the real object, and the real object is the one that rewards a long look. Provenance for every one of them is in the References.",
-margin:"The Hat broke\na half-century\nopen problem.\nIt is here because\nits geometry is here." },
+body:"The sacred-geometry patterns are held to the same standard, and each one is built from its definition. The Vesica Piscis is the lens where two equal circles overlap, exactly √3 times as tall as it is wide. The Sri Yantra's nine triangles meet at the points its construction requires. The aperiodic tilings are laid by the hat and the spectre, the monotiles that settled a fifty-year-old problem. Hyperbolic tilings sit on the Poincaré disk, where they actually live, and a space-filling curve passes through every cell of its grid exactly once. The Pythagoras tree turns a² + b² = c² into a proof you can check by eye. The catalog is big because every entry is the real object, and real objects reward a long look. Sources for all of them are in the References.",
+margin:"The hat settled\na fifty-year-old\nproblem in 2023." },
 { headline:"The patterns are systems at work.",
-body:"What appears on the canvas is what the equations are doing, moment to moment. The cellular automata run their literal update rules; the reaction–diffusion is integrated as a coupled system of two species; the continuous automata evolve under a smooth kernel; the Kleinian limit sets are the true fixed sets of their Möbius groups. Each image is a phase portrait. The same phase portrait that describes a reaction–diffusion also describes a leopard's spots, a developing embryo, and the convection rolls turning inside a star. One mathematics keeps surfacing, and the instrument shows it one screen at a time.",
-margin:"What is on this canvas\nis the same mathematics\nthat governs weather,\nneural firing,\ngalactic structure." },
-{ headline:"The contemplative dimension is held open.",
-body:"Many of these figures are also sacred. The Vesica Piscis appears in Christian iconography, in Pythagorean construction, and in Sufi geometry; the Sri Yantra sits at the center of Tantric meditation; the Bagua at the center of I Ching cosmology; the Triquetra woven through Celtic and early Christian ornament; the Lo Shu square at the root of Chinese numerology. The instrument endorses none of these traditions and shuts out none of them. It holds the geometry as a meeting place. The Penrose vertex studied in aperiodicity research is the same vertex at the heart of a yantra, and both are drawn the same way. Whatever meaning you bring to them is yours to bring.",
-margin:"The mathematics is one.\nThe readings are many.\nThe instrument is\nindifferent to which\nyou bring." },
+body:"What you see on the canvas is the equations running. The cellular automata apply their update rules cell by cell. The reaction–diffusion patterns integrate two chemical species, one feeding the other. The continuous automata evolve under a smooth kernel, and the Kleinian limit sets are the true limit sets of their Möbius groups. Each image is a phase portrait. The equations behind a reaction–diffusion run also describe a leopard's spots, a developing embryo and the convection rolls inside a star, so the same mathematics keeps turning up, one screen at a time.",
+margin:"Turing, 1952:\nThe Chemical Basis\nof Morphogenesis." },
+{ headline:"Many of these figures are also sacred.",
+body:"The Vesica Piscis turns up in Christian iconography, in Pythagorean construction and in Sufi geometry. The Sri Yantra is at the center of Tantric meditation and the Bagua at the center of I Ching cosmology. The Triquetra runs through Celtic and early Christian ornament, and the Lo Shu square sits at the root of Chinese numerology. AEON takes no side among these traditions and leaves none of them out. The Penrose vertex studied in aperiodicity research is the same vertex found at the heart of a yantra, and the program draws it the same way for both. What it means to you is yours to decide.",
+margin:"One construction,\nmany readings." },
 { headline:"The instrument is open.",
-body:"Open in the older sense of the word: a thing left unlocked, meant to be walked into. The mathematics here belongs to no one and to everyone; these figures have been studied for two thousand years and will be studied for two thousand more. Whoever sits down at this canvas joins a long tradition of looking hard at a form and asking what it is doing. And since mathematics is the grammar the Universe is speaking, that question is finally the same as asking what the Universe is doing. The instrument adds nothing to the question. It only makes the asking visible. Welcome to the studio.",
+body:"Open in the old sense: unlocked, a place you can walk into. Nobody owns this mathematics. People have studied these figures for two thousand years and will go on studying them. When you sit down at the canvas you join them, looking hard at a form and asking what it is doing. If mathematics really is the grammar the universe speaks, that is also a question about the universe. AEON can't answer it for you. It can put the form in front of you as clearly as we know how. Welcome to the studio.",
 margin:"An instrument\nis a gift\nto whoever\ntunes it next." },
 ];
 
@@ -50749,7 +50763,7 @@ const PATTERN_INFO={
 'ford-circles':{title:'Ford Circles',body:'At every reduced fraction p/q sits a circle of radius 1/(2q²), tangent to the number line at p/q. Two Ford circles never overlap, and they are tangent exactly when their fractions are Farey neighbors, |ps − qr| = 1, so the picture IS the Farey sequence: each new mediant (p+r)/(q+s) nests a smaller circle into the gap between its parents, forever. Introduced by Lester R. Ford (American Mathematical Monthly 45, 1938); the tangency criterion is equivalent to the Stern–Brocot mediant construction and underlies the Hurwitz approximation theorem.'},
 'steiner-chain':{title:'Steiner Chain',body:'A closed ring of n circles, each tangent to its two neighbors and to two fixed non-tangent base circles. Steiner\'s porism (c. 1826): if one closed chain exists, infinitely many do. The chain can be rotated to any starting position and still closes. The proof is one line with inversive geometry: invert the two base circles to a concentric annulus, where a chain closes iff sin(π/n) = (R−r)/(R+r), then invert back. Tangency is preserved. This rendering performs exactly that construction. Treatment in Coxeter & Greitzer, Geometry Revisited (1967) and C. S. Ogilvy, Excursions in Geometry (1969).'},
 'borromean-rings':{title:'Borromean Rings',body:'Three rings, no two of which are linked, that nonetheless cannot be pulled apart, the prototypical Brunnian link (L6a4 in the Thistlethwaite table). Each pair crosses twice with one over- and one under-crossing, so every pairwise linking number is zero; cutting any one ring frees the other three crossings entirely. Named for the Borromeo family crest (15th c.), studied in knot tables since Tait (1876). Remarkably, the link cannot be realized by three flat geometric circles in 3-space (Lindström & Zetterström, American Mathematical Monthly 98, 1991). Ellipses are required; the planar diagram here is the standard alternating projection.'},
-'celtic-knot':{title:'Celtic Knot',body:'Interlaced knotwork patterns characteristic of Insular art (Book of Kells, c. 800 CE) and Pictish stone carvings. The mathematical theory of knots is younger (Tait 1880s; Vaughan Jones 1980s polynomial). This rendering is a decorative interleaved arc pattern, not a knot-theoretic projection.'},
+'celtic-knot':{title:'Celtic Knot',body:'Interlaced knotwork patterns characteristic of Insular art (Book of Kells, c. 800 CE) and Pictish stone carvings. The mathematical theory of knots is younger (Tait 1880s; Vaughan Jones 1980s polynomial). This rendering draws decorative interleaved arcs rather than a knot-theoretic projection.'},
 
 
 'truncated-icosahedron':{title:'Truncated Icosahedron',body:'Archimedean solid with 32 faces (12 pentagons + 20 hexagons), 90 edges, 60 vertices. The shape of a soccer ball and of the C₆₀ fullerene molecule (discovered 1985, Kroto–Curl–Smalley, 1996 Chemistry Nobel). Vertex orbit: even cyclic permutations of (0, ±1, ±3φ), (±1, ±(2+φ), ±2φ), (±φ, ±2, ±(2φ+1)).'},
@@ -50913,7 +50927,7 @@ const PATTERN_INFO={
 'triakis-octahedron':{title:'Triakis Octahedron',body:'Catalan solid: dual of the truncated cube. 14 vertices, 36 edges, 24 isosceles-triangle faces. Constructed by erecting a low triangular pyramid on each face of a regular octahedron. Catalan (1865).'},
 'tetrakis-hexahedron':{title:'Tetrakis Hexahedron',body:'Catalan solid: dual of the truncated octahedron. 14 vertices, 36 edges, 24 isosceles-triangle faces. Constructed by erecting a square pyramid on each face of a cube (= tetrakis cube). The Bauhinia flower icon on the Hong Kong flag is geometrically a tetrakis hexahedron. Catalan (1865).'},
 'deltoidal-icositetrahedron':{title:'Deltoidal Icositetrahedron',body:'Catalan solid: dual of the rhombicuboctahedron. 26 vertices, 48 edges, 24 kite faces. Each face is a "deltoid" (kite) with two short and two long edges in golden-ratio proportion. Catalan (1865); also called the trapezoidal icositetrahedron.'},
-'disdyakis-dodecahedron':{title:'Disdyakis Dodecahedron',body:'Catalan solid: dual of the truncated cuboctahedron. 26 vertices, 72 edges, 48 scalene-triangle faces. Has three distinct edge lengths. Also called the hexakis octahedron. Catalan (1865).'},
+'disdyakis-dodecahedron':{title:'Disdyakis Dodecahedron',body:'Catalan solid: dual of the truncated cuboctahedron. 26 vertices, 72 edges, 48 scalene-triangle faces. Also called the hexakis octahedron, it has three distinct edge lengths. Catalan (1865).'},
 'pentagonal-icositetrahedron':{title:'Pentagonal Icositetrahedron',body:'Catalan solid: dual of the snub cube. <em>Chiral.</em> 38 vertices, 60 edges, 24 irregular-pentagonal faces. Has the same chirality as its parent snub cube; left- and right-handed forms exist. Catalan (1865).'},
 'rhombic-triacontahedron':{title:'Rhombic Triacontahedron',body:'Catalan solid: dual of the icosidodecahedron. 32 vertices, 60 edges, 30 <em>golden-rhombus</em> faces (with diagonal ratio = φ). Vertex set = icosahedron ∪ dodecahedron vertices. Famous as the shape of the "Bilinski" or "Kepler" zonohedron (Kepler 1611). Tiles 3-space when combined with three other zonohedra.'},
 'triakis-icosahedron':{title:'Triakis Icosahedron',body:'Catalan solid: dual of the truncated dodecahedron. 32 vertices, 90 edges, 60 isosceles-triangle faces. Constructed by erecting a low triangular pyramid on each face of a regular icosahedron. Catalan (1865).'},
@@ -50935,7 +50949,7 @@ const PATTERN_INFO={
 'newton3':{title:'Newton zⁿ − 1',body:'Newton\'s method applied to f(z) = zⁿ − 1: iterates z ← z − (zⁿ − 1)/(n·zⁿ⁻¹). The Degree slider sets n (3–6). Each starting point converges (almost surely) to one of the n roots of unity; coloring by basin produces the iconic multi-color fractal first plotted for the cubic by John Hubbard (1980) and popularized by Robert Devaney. With three or more basins the boundary has the Wada-lake property (Yoneyama, 1917): every boundary point lies on the boundary of every basin at once. As the degree grows the basins narrow and the Julia set densifies, its fractal dimension approaching 2. Cayley posed the basin-classification problem in 1879; it is solved completely only for degree 2.'},
 'newton_cayley':{title:'Newton–Cayley',body:'Newton iteration on the cubic f(z) = z³ − 2z + 2, the canonical example used by Arthur Cayley (1879) when he posed the (still partly open) problem of fully characterizing the basin geometry for general polynomials of degree ≥ 3. The three roots partition ℂ into three basins whose common boundary is the Julia set of the Newton map; with three or more roots the boundary has the Wada-lake property: every point on it borders all three basins simultaneously. For arbitrary user polynomials see also the named Newton fractals (z³−1, z⁴−1, …).'},
 'lyapunov':{title:'Lyapunov Fractal',body:'Generated by the logistic map xₙ₊₁ = rₙ · xₙ · (1 − xₙ), where the parameter r is read out of a binary "AB" sequence (e.g. ABAB, AABBAB). Pixel color encodes the Lyapunov exponent λ = lim (1/n) Σ ln|f′(xₙ)|: λ < 0 (stable) shows the curve branches; λ > 0 (chaotic) appears as the dark "swallows". Discovered as a fractal by Mario Markus and Bruno Hess (1989); the canonical "Markus-Lyapunov" sequence ABBABA generates the eponymous swallow figure. The exponent is well-defined wherever the iteration is bounded.'},
-'mandelbulb':{title:'Mandelbulb 3D',body:'A 3D analogue of the Mandelbrot set proposed by Daniel White and Paul Nylander (2009). Coordinates (x, y, z) are mapped to spherical (r, θ, φ); the iteration "cubes" both r → rⁿ and angles → nθ, nφ; then translated by c. With n = 8 (canonical), the surface produces the iconic bulbous-headed figure; varying n changes the symmetry. There is no canonical complex-number generalization to ℝ³ (no 3D division algebra exists, by Frobenius 1877); the Mandelbulb is a *constructive* analogue, not a strict mathematical extension. Distance estimation lets ray-marching converge in O(1) steps per pixel.'},
+'mandelbulb':{title:'Mandelbulb 3D',body:'A 3D analogue of the Mandelbrot set proposed by Daniel White and Paul Nylander (2009). Coordinates (x, y, z) are mapped to spherical (r, θ, φ); the iteration "cubes" both r → rⁿ and angles → nθ, nφ; then translated by c. With n = 8 (canonical), the surface produces the iconic bulbous-headed figure; varying n changes the symmetry. There is no canonical complex-number generalization to ℝ³ (no 3D division algebra exists, by Frobenius 1877); the Mandelbulb is an analogue built by construction rather than a strict mathematical extension. Distance estimation lets ray-marching converge in O(1) steps per pixel.'},
 'mandelbox':{title:'Mandelbox 3D',body:'A 3D escape-time fractal defined by alternating *box folding* (clipping each coordinate to [−1, 1] and reflecting on overflow) and *ball folding* (radius inversion below a threshold). Discovered by Tom Lowe (2010); the resulting figure has cubic symmetry and crystalline self-similarity at every scale. Parameters: scale s (canonical s = 2 or s ≈ 2.5), fold limit (1.0), min-radius² (0.5). Rendered via signed distance estimation against the iterated-fold field.'},
 'menger':{title:'Menger Sponge',body:'A 3D generalization of the Sierpiński carpet defined by recursive subdivision of a cube into 27 (3³) sub-cubes, removing the central cube of each face and the absolute center, leaving 20. Karl Menger (1926) constructed the figure as a "universal" Peano continuum: every 1-dimensional compact metric space embeds in it. Hausdorff dimension = log 20 / log 3 ≈ 2.7268. Total surface area diverges as iteration depth → ∞; total volume → 0. Rendered via signed distance estimation: each iteration refines the SDF.'},
 'sierp_tetra':{title:'Sierpiński Tetrahedron',body:'A 3D Sierpiński fractal: recursively replace each tetrahedron with 4 half-scale copies at its corners. Hausdorff dimension = log 4 / log 2 = 2 exactly, a 2-dimensional set living in 3-space. The figure is the attractor of the IFS with 4 contractions w_i(p) = (p + v_i) / 2 where v_i are the tetrahedron vertices (the "chaos game" generates it). Rendered here via SDF iteration: at each step, fold the point through the nearest vertex and double, terminating when the iterated radius stabilizes. 3D analogue of the Sierpiński triangle; first described by Sierpiński (1915).'},
@@ -52083,7 +52097,7 @@ blurb: 'A walk along the edge of the most famous fractal.',
 stops: [
 { snap:{mode:'fractal',fractalType:'mandelbrot',centerX:-0.5,centerY:0,zoom:0.6,maxIter:256,palette:'ultraviolet',colorCycle:3.5,colorOffset:0.18},
 title:'The Whole Set',                                                            
-line:'The entire object, drawn from one line of algebra: z becomes z squared plus c. Everything that follows lives on its edge.',
+line:'The whole set comes from one line of algebra: z becomes z squared plus c. Every stop on this walk is somewhere on its edge.',
 cite:'mandelbrot' },   
 { snap:{mode:'fractal',fractalType:'mandelbrot',centerX:0.2555,centerY:0,zoom:5,maxIter:400,palette:'ultraviolet',colorCycle:3.5,colorOffset:0.18},
 title:'Elephant Valley',                                                          
@@ -52096,11 +52110,11 @@ cite:'mandelbrot' },
 
 
 { snap:{mode:'fractal',fractalType:'mandelbrot',centerX:-0.16,centerY:1.035,zoom:6,maxIter:400,palette:'ultraviolet',colorCycle:3.5,colorOffset:0.18},
-title:'The Western Reach',                                                        
-line:'The far side tells the same story: black islands ringed in filament, endlessly. Nowhere does the edge ever smooth.' },
+title:'The Northern Reach',                                                        
+line:'Up here it is the same: black islands ringed in filament, as deep as you care to zoom. The edge never smooths out.' },
 { snap:{mode:'fractal',fractalType:'mandelbrot',centerX:-0.088,centerY:0.654,zoom:2.2,maxIter:400,palette:'ultraviolet',colorCycle:3.5,colorOffset:0.18},
 title:'The Triple Spiral',                                                        
-line:'Where three regions of the set meet, three arms wind into a single whorl, and that whorl repeats down every arm, without end.',
+line:'Where three regions of the set meet, three arms wind into a single whorl, and the whorl repeats down every arm.',
 cite:'mandelbrot' },   
 
 
