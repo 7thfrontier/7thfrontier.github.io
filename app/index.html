@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-hcQBVaCrEauucAr3SmJYwQM4vRFC1WwrOnmfvDFCGr8='; font-src 'self'; script-src 'self' 'sha256-Z+MQz/N1kbSBLNF0tTy08Srb3HlqAFajRSk7BDXRqoc='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-hcQBVaCrEauucAr3SmJYwQM4vRFC1WwrOnmfvDFCGr8='; font-src 'self'; script-src 'self' 'sha256-skJXrbPxlFJqpO7ewgtdgn/9LW1X5yqQDhrkmbDD47Q='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4231,12 +4231,12 @@
 
 
 
-<!-- build: 09ca842a35b0 -->
+<!-- build: 0cc4ee15b9b5 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.5
+ * AEON -- Universal Dynamics Reactor v7.0.6
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7475,7 +7475,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.5';
+const APP_VERSION='7.0.6';
 
 
 
@@ -7484,8 +7484,8 @@ const APP_VERSION='7.0.5';
 
 
 
-const MISSION_BUILD_HASH='09ca842a35b0';
-const MISSION_GIT_SHA='0f7d174b9905dfc5f2a95a315d33f6a7ef1cc47c';
+const MISSION_BUILD_HASH='0cc4ee15b9b5';
+const MISSION_GIT_SHA='3a6592f59d8bdde7c047244349dd10daa7762b2e';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -50220,6 +50220,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.6',
+date:'2026-10-06',
+headline:'A first visit now shows you where to start.',
+items:[
+'After the welcome, a small card at the top left lists three things to try: zoom into the picture, open the catalog, and change the palette.',
+'Each one ticks off as you do it. Show me around starts the controls tour, and Hide puts the card away for good.',
+],
+},
+{
 version:'7.0.5',
 date:'2026-10-06',
 headline:'Dialogs opened from a menu hand focus back to it, and the Inspector keeps its title bar.',
@@ -50297,18 +50306,6 @@ items:[
 'Pin any inspector slider to the strip: two per type family, remembered between sessions.',
 'On a phone a full-width Inspector handle replaces the gear button, and the readout sits clear of it.',
 'The About dialog, bookmarks and disabled sliders share the inspector styling.',
-],
-},
-{
-version:'6.68.0',
-date:'2026-09-30',
-headline:'The picture spans the window.',
-items:[
-'The canvas now runs under both side panels. Attractors, Buddhabrot, 3D and IFS types fill the window; the rest follow in a later release.',
-'A strip along the bottom holds the type, two sliders, the palette, the coordinates and Export.',
-'Edits made while a layer thumbnail refreshes now land on the layer you are editing.',
-'Share links opened in a tab that already has Reactor open now apply, Copy Image no longer copies a blank picture on some machines, and opening a file resets undo so Save cannot overwrite it with the previous document.',
-'The Studio tab splits into Compose and Output, and small text is raised to a readable minimum.',
 ],
 },
 ];

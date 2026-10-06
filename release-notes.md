@@ -1,7 +1,5 @@
-Dialogs hand focus back to their menu · 2026-10-06
+A first visit shows you where to start · 2026-10-06
 
-- **Closing a dialog opened from a menu returns you to the menu button.** Opening Keyboard shortcuts or Export image from a menu and pressing Escape left keyboard focus on the canvas, and canceling the New or Reset all confirmation left it on no control at all. It now goes back to the button that opened the menu.
-- **The Inspector keeps its title bar and tabs.** Opening a section from the palette chip under the picture, or from the catalog, could scroll the whole Inspector instead of its contents, so the title bar and tabs disappeared and only collapsing every section brought them back. The Inspector, the catalog sheet and the canvas area can no longer be scrolled that way.
-- **The Foreword and the landing page read like a person wrote them.** Both were rewritten in plainer language with the same facts, sections and links. Four facts were also wrong and are fixed. Penrose's tiling came eight years before Shechtman's quasicrystals (the page said fifty), and the spectre followed the hat by two months (it said three). Mandelbrot coined the word fractal in 1975, five years before his first pictures of the set, and the app is about 2.4 MB. A few hints and info cards that used the same patterns were rewritten too, the Mandelbulb card no longer shows stray asterisks, and the Mandelbrot expedition's top stop is The Northern Reach.
+- **A first visit shows you where to start.** After the welcome, a small card at the top left lists three things to try: zoom into the picture, open the catalog, and change the palette. Each one ticks off as you do it, and Show me around starts the controls tour. It goes away for good once the three are done or you press Hide, and it never appears on a later visit.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.
