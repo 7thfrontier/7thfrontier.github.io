@@ -1,5 +1,7 @@
-A first visit shows you where to start · 2026-10-06
+Fractals draw only what you can see · 2026-10-06
 
-- **A first visit shows you where to start.** After the welcome, a small card at the top left lists three things to try: zoom into the picture, open the catalog, and change the palette. Each one ticks off as you do it, and Show me around starts the controls tour. It goes away for good once the three are done or you press Hide, and it never appears on a later visit.
+- **Escape-time fractals draw only the window.** With the Inspector open, the 24 escape-time types (Mandelbrot, Julia, Burning Ship, Newton and the rest) also drew the strip under the Inspector, which nobody sees. They now draw the window alone, 21% fewer pixels at 1440 by 900, on every path including deep zoom, so slow views finish sooner, and the picture does not move. In a composite, an IFS, Buddhabrot, attractor or flame layer stays in place beside them.
+- **Post-FX now applies to deep zoom past the GPU's precision.** There the vignette, grain and other Post-FX were applied to the previous picture and then painted over, so the finished frame showed none of them. IFS, attractor and fractal flame renders on the main thread now also show the slow-render hint and announce "Render complete" to screen readers when they finish.
+- **The Catalog stops re-rendering the view while you scroll.** The picture behind the sheet is redrawn once, when you close it, instead of every time a batch of previews finishes. Each preview still shows the art centred, as picking that card draws it. Previews are also kept across an update unless that update changes how pictures are drawn.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.

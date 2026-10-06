@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-hcQBVaCrEauucAr3SmJYwQM4vRFC1WwrOnmfvDFCGr8='; font-src 'self'; script-src 'self' 'sha256-oPq+GF0xqeXU+EQxWOW1ZqEy0JG06lXRLPMpnMa8Je0='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-hcQBVaCrEauucAr3SmJYwQM4vRFC1WwrOnmfvDFCGr8='; font-src 'self'; script-src 'self' 'sha256-CGIYa7pHejvtt+RlpdtM0l4SBuQ/QoKRMHe0glCDI64='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4231,12 +4231,12 @@
 
 
 
-<!-- build: 8f066f6e7058 -->
+<!-- build: 34d81b4bd180 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.6
+ * AEON -- Universal Dynamics Reactor v7.0.7
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7492,7 +7492,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.6';
+const APP_VERSION='7.0.7';
 
 
 
@@ -7501,8 +7501,8 @@ const APP_VERSION='7.0.6';
 
 
 
-const MISSION_BUILD_HASH='8f066f6e7058';
-const MISSION_GIT_SHA='bce26ac2b9e44a8757d2e3611d92e8891f5f47cb';
+const MISSION_BUILD_HASH='34d81b4bd180';
+const MISSION_GIT_SHA='f42d5405e788f3078a0c4f856efc709043160647';
 
 const MISSION_RENDER_HASH='387fca5d0438';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50317,6 +50317,16 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.7',
+date:'2026-10-06',
+headline:'Fractals now draw only what you can see.',
+items:[
+'With the Inspector open, Mandelbrot, Julia and the other escape-time fractals no longer draw the strip hidden under it, so slow views finish sooner. The picture does not move.',
+'Post-FX such as the vignette and grain now show on deep zooms past the GPU\'s precision.',
+'The Catalog redraws the picture behind it once, when you close it, instead of while you scroll.',
+],
+},
+{
 version:'7.0.6',
 date:'2026-10-06',
 headline:'A first visit now shows you where to start.',
@@ -50392,17 +50402,6 @@ items:[
 'Dialogs, toasts and menus share one plate style and stay clear of the corner, the strip and the panels.',
 'Keyboard fixes: Cmd-K works from a slider, dialogs opened from the welcome keep focus, and leaving Focus returns focus where it was.',
 'Fixed: double-clicking a card no longer zooms, Penrose tiles color by position, and multiply-blend fills with glow no longer freeze the page.',
-],
-},
-{
-version:'6.69.0',
-date:'2026-10-01',
-headline:'The inspector floats over the picture.',
-items:[
-'The right panel is now a floating inspector. Click its title or press X to fold it to a title bar and give the picture the full width.',
-'Pin any inspector slider to the strip: two per type family, remembered between sessions.',
-'On a phone a full-width Inspector handle replaces the gear button, and the readout sits clear of it.',
-'The About dialog, bookmarks and disabled sliders share the inspector styling.',
 ],
 },
 ];
