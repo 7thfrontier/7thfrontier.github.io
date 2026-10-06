@@ -32,6 +32,8 @@ const _RK4_SCRATCH = new Float64Array(12);
 
 let S = {}, W = 0, H = 0;
 
+let VCX = 0, VTX = 0, VFW = 0;   
+
 
 
 
@@ -94,7 +96,7 @@ function _renderIFS(oc){
     var nx=a*x+b*y+e,ny=c*x+d*y+f;x=nx;y=ny;
     if(i<20)continue;
     var py_ifs=def.yup?-y:y;
-    var px=Math.round((x-S.centerX)/scale+W/2)|0;
+    var px=Math.round((x-S.centerX)/scale+(VCX||W/2))|0;   
     var py=Math.round((py_ifs-S.centerY)/scale+H/2)|0;
     if(px>=0&&px<W&&py>=0&&py<H){
       var idx=py*W+px;density[idx]++;colorAcc[idx]+=ti/nT;
@@ -320,7 +322,7 @@ function _renderAttractor(oc){
       if(py2d<bbMinY)bbMinY=py2d;
       if(py2d>bbMaxY)bbMaxY=py2d;
     }
-    var ppx=Math.round((px2d-S.centerX)/sc+W/2)|0;
+    var ppx=Math.round((px2d-S.centerX)/sc+(VCX||W/2))|0;   
     var ppy=Math.round((py2d-S.centerY)/sc+H/2)|0;
     if(dbg){
       if(dbg.first.length<10)dbg.first.push([+x.toFixed(4),+y.toFixed(4),+z.toFixed(4),ppx,ppy]);
@@ -385,7 +387,7 @@ function _cpuOrbitTrapMin(px,py){
   var ft=S.fractalType, pw=(S.fractalPower==null?2:S.fractalPower);
   var zx,zy,cx,cy,kind;
   var sc = FRACTAL_VIEW_WIDTH / (Math.min(W, H) * S.zoom);   
-  var px0=S.centerX+(px-W/2)*sc, py0=S.centerY+(py-H/2)*sc;
+  var px0=S.centerX+(px-(VCX||W/2))*sc, py0=S.centerY+(py-H/2)*sc;
   if(ft==='mandelbrot' && Math.abs(pw-2)<0.001){ zx=0;zy=0;cx=px0;cy=py0;kind=0; }
   else if(ft==='julia' && Math.abs(pw-2)<0.001){ zx=px0;zy=py0;cx=S.juliaReal;cy=S.juliaImag;kind=0; }
   else if(ft==='burningship'){ zx=0;zy=0;cx=px0;cy=py0;kind=1; }
@@ -420,7 +422,7 @@ function _renderEscapeTime(oc, seq){
   var sc = FRACTAL_VIEW_WIDTH / (Math.min(W, H) * S.zoom);
   var mi = S.maxIter, er2 = S.escRad * S.escRad;
   var iterate = function(px, py){
-    var cx = S.centerX + (px - W / 2) * sc;
+    var cx = S.centerX + (px - (VCX || W / 2)) * sc;
     var cy = S.centerY + (py - H / 2) * sc;
     return fn(cx, cy, mi, er2);
   };
@@ -466,7 +468,7 @@ function _renderEscapeTime(oc, seq){
         var nS = aa * aa, i4 = (row * W + px) * 4;
         var mr = rA / nS | 0, mg = gA / nS | 0, mb = bA / nS | 0;
         if (_opacField) {
-          var fa = _pixelAlphaField(px, H - 1 - row, W, H, lastT);   
+          var fa = _pixelAlphaField(px + VTX, H - 1 - row, VFW || W, H, lastT);   
           if (fa < 0.999) {
             mr = bg[0] * (1 - fa) + mr * fa | 0;
             mg = bg[1] * (1 - fa) + mg * fa | 0;
@@ -568,7 +570,7 @@ self.onmessage = function(e){
   }
   if (d.type !== 'render') return;
   try {
-    S = d.S; W = d.W; H = d.H;
+    S = d.S; W = d.W; H = d.H; VCX = (typeof d.VCX === 'number') ? d.VCX : W / 2; VTX = d.VTX || 0; VFW = d.VFW || W;
     
     
     

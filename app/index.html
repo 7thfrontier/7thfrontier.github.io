@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-hcQBVaCrEauucAr3SmJYwQM4vRFC1WwrOnmfvDFCGr8='; font-src 'self'; script-src 'self' 'sha256-skJXrbPxlFJqpO7ewgtdgn/9LW1X5yqQDhrkmbDD47Q='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-hcQBVaCrEauucAr3SmJYwQM4vRFC1WwrOnmfvDFCGr8='; font-src 'self'; script-src 'self' 'sha256-oPq+GF0xqeXU+EQxWOW1ZqEy0JG06lXRLPMpnMa8Je0='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -2330,7 +2330,7 @@
         }
     </style>
 </head>
-<body data-app-mode="fractal">
+<body data-app-mode="fractal" class="vp-tile">
 <svg class="ic-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><symbol id="ic-compass" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M10.6 5.4L9.1 9.1 5.4 10.6 6.9 6.9z"/></symbol><symbol id="ic-eye" viewBox="0 0 16 16"><path d="M1.5 8S3.9 3.6 8 3.6 14.5 8 14.5 8 12.1 12.4 8 12.4 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></symbol><symbol id="ic-star" viewBox="0 0 16 16"><path d="M8 1.6l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.6 3.9 13.9l1-4.5L1.5 6.3l4.6-.5z"/></symbol><symbol id="ic-home" viewBox="0 0 16 16"><path d="M2 8l6-5.5L14 8M3.8 7v6.5h3V10h2.4v3.5h3V7"/></symbol><symbol id="ic-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></symbol><symbol id="ic-minus" viewBox="0 0 16 16"><path d="M3 8h10"/></symbol><symbol id="ic-check" viewBox="0 0 16 16"><path d="M2.5 8l3.5 3.5 7.5-8"/></symbol><symbol id="ic-warn" viewBox="0 0 16 16"><path d="M8 2.2L14.2 13.3H1.8Z"/><path d="M8 6.4v3.4"/><circle cx="8" cy="11.6" r=".6" fill="currentColor"/></symbol><symbol id="ic-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2v4.3"/><circle cx="8" cy="4.9" r=".6" fill="currentColor"/></symbol><symbol id="ic-menu" viewBox="0 0 16 16"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/></symbol><symbol id="ic-close" viewBox="0 0 16 16"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></symbol><symbol id="ic-grid" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M2.5 2.5h4.5v4.5h-4.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5h-4.5zM9 9h4.5v4.5H9z"/></symbol><symbol id="ic-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.3"/><path d="M10.2 10.2l3.6 3.6"/></symbol><symbol id="ic-chev-down" viewBox="0 0 16 16"><path d="M3.5 6l4.5 4.5L12.5 6"/></symbol><symbol id="ic-chev-up" viewBox="0 0 16 16"><path d="M3.5 10l4.5-4.5 4.5 4.5"/></symbol><symbol id="ic-pin" viewBox="0 0 16 16"><path d="M9.5 2.5l4 4-2.5 1L8.5 10l.5 3-6-6 3 .5L8.5 5z"/><path d="M5.5 10.5l-3 3"/></symbol><symbol id="ic-chev-right" viewBox="0 0 16 16"><path d="M6 3.5L10.5 8 6 12.5"/></symbol><symbol id="ic-chev-left" viewBox="0 0 16 16"><path d="M10 3.5L5.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-left" viewBox="0 0 16 16"><path d="M8.5 3.5L4 8l4.5 4.5M13 3.5L8.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-right" viewBox="0 0 16 16"><path d="M3 3.5L7.5 8 3 12.5M7.5 3.5L12 8l-4.5 4.5"/></symbol><symbol id="ic-gear" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.3"/><circle cx="8" cy="8" r="4.6"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></symbol><symbol id="ic-dot" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.4" fill="currentColor" stroke="none"/></symbol><symbol id="ic-circle" viewBox="0 0 16 16"><circle cx="8" cy="8" r="4.6"/></symbol><symbol id="ic-reset" viewBox="0 0 16 16"><path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v3h3"/></symbol><symbol id="ic-redo" viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.6-3.7M13 2.5v3h-3"/></symbol><symbol id="ic-download" viewBox="0 0 16 16"><path d="M8 2v8M4.5 7L8 10.5 11.5 7M3 13.5h10"/></symbol><symbol id="ic-upload" viewBox="0 0 16 16"><path d="M8 10.5v-8M4.5 6L8 2.5 11.5 6M3 13.5h10"/></symbol><symbol id="ic-contrast" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"/></symbol><symbol id="ic-dice" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2.2"/><circle cx="5.6" cy="5.6" r=".8" fill="currentColor" stroke="none"/><circle cx="10.4" cy="10.4" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r=".8" fill="currentColor" stroke="none"/></symbol><symbol id="ic-sparkle" viewBox="0 0 16 16"><path d="M8 1.5c.5 3.6 2.9 6 6.5 6.5-3.6.5-6 2.9-6.5 6.5-.5-3.6-2.9-6-6.5-6.5 3.6-.5 6-2.9 6.5-6.5z"/></symbol><symbol id="ic-infinity" viewBox="0 0 16 16"><path d="M8 8c-1.2-1.8-2.3-3-3.7-3a3 3 0 0 0 0 6c1.4 0 2.5-1.2 3.7-3s2.3-3 3.7-3a3 3 0 0 1 0 6c-1.4 0-2.5-1.2-3.7-3z"/></symbol><symbol id="ic-diamond" viewBox="0 0 16 16"><path d="M8 1.8l6.2 6.2L8 14.2 1.8 8z"/><path d="M8 5.2L10.8 8 8 10.8 5.2 8z"/></symbol><symbol id="ic-circle-x" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 5.2l5.6 5.6M10.8 5.2l-5.6 5.6"/></symbol><symbol id="ic-nabla" viewBox="0 0 16 16"><path d="M2.5 3h11L8 13.5z"/></symbol><symbol id="ic-circle-plus" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4.8v6.4M4.8 8h6.4"/></symbol><symbol id="ic-option" viewBox="0 0 16 16"><path d="M2 4h3.5l5 8H14M9.5 4H14"/></symbol><symbol id="ic-asterisk" viewBox="0 0 16 16"><path d="M8 2.5v11M3.2 5.2l9.6 5.6M12.8 5.2L3.2 10.8"/></symbol><symbol id="ic-circle-equals" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 6.6h5.6M5.2 9.4h5.6"/></symbol><symbol id="ic-arrows-down" viewBox="0 0 16 16"><path d="M5 2.5v9M2.5 9L5 11.5 7.5 9M11 2.5v9M8.5 9l2.5 2.5L13.5 9"/></symbol><symbol id="ic-swap-h" viewBox="0 0 16 16"><path d="M13.5 5h-11M5.5 2l-3 3 3 3M2.5 11h11M10.5 8l3 3-3 3"/></symbol></svg>
 <a id="skip-link" href="#cv">Skip to canvas</a>
 
@@ -4231,7 +4231,7 @@
 
 
 
-<!-- build: 0cc4ee15b9b5 -->
+<!-- build: 8f066f6e7058 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -6225,7 +6225,9 @@ let orbit, seriesA=null, seriesB=null, seriesC=null, validity=null, skipN=0;
 
 
 
-const _refKey=[tier, cx, cy, maxIter, _jre, _jim, (S.escRad||4), z, _orbType, (h/w)].join('|');
+
+const _sfwT=(typeof _liveViewTile==='function')?_liveViewTile(w):null, _sfw=_sfwT?_sfwT.fullW:w;
+const _refKey=[tier, cx, cy, maxIter, _jre, _jim, (S.escRad||4), z, _orbType, (h/_sfw)].join('|');
 if((useSeries||useSeries3) && _dzRefCache && _dzRefCache.key===_refKey){
 ({orbit, seriesA, seriesB, seriesC, validity, skipN}=_dzRefCache.val);
 } else if(useSeries3){
@@ -6237,8 +6239,8 @@ orbit=r.orbit; seriesA=r.seriesA; seriesB=r.seriesB; seriesC=r.seriesC; validity
 
 
 
-const _halfW=FRACTAL_VIEW_WIDTH/(2*z),maxPxMag=Math.hypot(_halfW,_halfW*(h/w));
-skipN=_chooseSeriesSkipStep3(seriesA, seriesB, seriesC, validity, maxPxMag*w/Math.min(w,h), maxIter);   
+const _halfW=FRACTAL_VIEW_WIDTH/(2*z),maxPxMag=Math.hypot(_halfW,_halfW*(h/_sfw));
+skipN=_chooseSeriesSkipStep3(seriesA, seriesB, seriesC, validity, maxPxMag*_sfw/Math.min(_sfw,h), maxIter);   
 _dzRefCache={key:_refKey, val:{orbit, seriesA, seriesB, seriesC, validity, skipN}};
 } else if(useSeries){
 const r=_computeReferenceOrbitWithSeries(cx, cy, maxIter, 256);
@@ -6246,13 +6248,16 @@ orbit=r.orbit; seriesA=r.seriesA; seriesB=r.seriesB; validity=r.validity;
 
 
 
-const _halfW=FRACTAL_VIEW_WIDTH/(2*z),maxPxMag=Math.hypot(_halfW,_halfW*(h/w));
-skipN=_chooseSeriesSkipStep(seriesA, seriesB, validity, maxPxMag*w/Math.min(w,h), maxIter);   
+const _halfW=FRACTAL_VIEW_WIDTH/(2*z),maxPxMag=Math.hypot(_halfW,_halfW*(h/_sfw));
+skipN=_chooseSeriesSkipStep(seriesA, seriesB, validity, maxPxMag*_sfw/Math.min(_sfw,h), maxIter);   
 _dzRefCache={key:_refKey, val:{orbit, seriesA, seriesB, seriesC:null, validity, skipN}};
 } else {
 orbit=_dzGetOrbit(cx, cy, maxIter, _jre, _jim, _orbType);
 }
 const scale=_pxScale(w,h,S.zoom);
+
+const _dzVt=(typeof _liveViewTile==='function')?_liveViewTile(w):null;
+const _dzCx=(typeof _viewCenterPx==='function')?_viewCenterPx(w):w/2, _dzTx=_dzVt?_dzVt.tx:0, _dzFw=_dzVt?_dzVt.fullW:w;
 
 
 results=_floatAcquire(w*h);   
@@ -6288,7 +6293,7 @@ if(token!==tok){ _setPillProgress(null,null); if(_pillEl) _pillEl.classList.remo
 _checkAbort(signal);
 if((py & 31) === 0) _setPillProgress(_zTag, Math.round(100*py/h)+'%');
 for(let px=0;px<w;px++){
-const dcx=(px-w/2)*scale;
+const dcx=(px-_dzCx)*scale;
 const dcy=(py-h/2)*scale;
 let r;
 if(useSeries3 && skipN>0){
@@ -6334,9 +6339,9 @@ if(_demoted)console.warn(`[Aeon] deep zoom: ${_demoted} outlived pixels with no 
 
 
 let rebases=0;
-const _mainRef={px:w/2, py:h/2, o:orbit}, _refs=[_mainRef];
+const _mainRef={px:_dzCx, py:h/2, o:orbit}, _refs=[_mainRef];
 const _hib=_bigCreate(256);
-const _refAt=(c)=>_computeReferenceOrbit(_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('x')), _hib.fromNum((c.px - w/2)*scale)), 76),
+const _refAt=(c)=>_computeReferenceOrbit(_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('x')), _hib.fromNum((c.px - _dzCx)*scale)), 76),
 _hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('y')), _hib.fromNum((c.py - h/2)*scale)), 76), maxIter, 256, _jre, _jim, _orbType);
 while(rebases<8){
 if(token!==tok){ _setPillProgress(null,null); if(_pillEl) _pillEl.classList.remove('show'); return; }   
@@ -6419,18 +6424,18 @@ const _oNoise=Math.max(0.1,Math.min(8,(_ogp?_ogp.noise:S.colorNoiseScale)||1));
 const _oAxis=(_ogp?_ogp.axis:S.colorAxisAngle)||0;
 function _dzAlphaCPU(colourT, px, py){
 if(_oMode===0)return 1;
-const fx=px+0.5, fy=(h-1-py)+0.5;
-const dxp=fx-w*0.5, dyp=fy-h*0.5;
-const maxR=Math.max(1,Math.hypot(w*0.5,h*0.5));
+const fx=px+0.5+_dzTx, fy=(h-1-py)+0.5;   
+const dxp=fx-_dzFw*0.5, dyp=fy-h*0.5;
+const maxR=Math.max(1,Math.hypot(_dzFw*0.5,h*0.5));
 let t=0;
 if(_oMode===1)t=((colourT%1)+1)%1;
-else if(_oMode===2)t=fx/Math.max(1,w-1);
+else if(_oMode===2)t=fx/Math.max(1,_dzFw-1);
 else if(_oMode===3)t=Math.hypot(dxp,dyp)/maxR;
 else if(_oMode===4)t=Math.atan2(dyp,dxp)/6.28318530718+0.5;
 else if(_oMode===5){const u=Math.hypot(dxp,dyp)/maxR;t=Math.min(_oBands-1,Math.floor(u*_oBands))/Math.max(1,_oBands-1);}
 else if(_oMode===6){const a=(Math.floor(fy)*7919+Math.floor(fx)+1)*_oNoise;const p=a-Math.floor(a/65536)*65536;const f=Math.sin(p*0.13+17.13)*43758.5453;t=f-Math.floor(f);}
 else if(_oMode===7){const ang=_oAxis*0.0174533;t=0.5+0.5*((dxp*Math.cos(ang)+dyp*Math.sin(ang))/maxR);}
-else if(_oMode===8)t=((((fx-0.5)+(fy-0.5))/(w+h))%1+1)%1;   
+else if(_oMode===8)t=((((fx-0.5)+(fy-0.5))/(_dzFw+h))%1+1)%1;   
 t=Math.max(0,Math.min(1,t));
 if(_oWarpName!=='linear')t=_warpT(t,_oWarpName,_oWarpAmt);
 t=Math.max(0,Math.min(1,t+_oPhase));
@@ -6453,7 +6458,7 @@ col=[_icSolid[0],_icSolid[1],_icSolid[2]];
 
 
 const fzx=fzData?fzData[2*i]:0, fzy=fzData?fzData[2*i+1]:0;
-const dcx=(px-w/2)*scale, dcy=(py-h/2)*scale;
+const dcx=(px-_dzCx)*scale, dcy=(py-h/2)*scale;
 const cpx=isJulia?_jre:(S.centerX+dcx), cpy=isJulia?_jim:(S.centerY+dcy);
 
 
@@ -6714,7 +6719,7 @@ const scale=_pxScale(W,H,S.zoom||1);
 
 
 const _hib=_bigCreate(256);
-const fcx=_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('x')), _hib.fromNum((cluster.cxPx - W/2)*scale)), 76);
+const fcx=_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('x')), _hib.fromNum((cluster.cxPx - _viewCenterPx())*scale)), 76);
 
 
 
@@ -6742,8 +6747,10 @@ gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
 gl.viewport(0, 0, W, H);
 const u=name=>_dzUniformLoc(rebaseProg, name);
 gl.uniform2f(u('u_res'), W, H);
-gl.uniform2f(u('u_center'), W/2, H/2);
-gl.uniform2f(u('u_centerOffset'), cluster.cxPx-W/2, cluster.cyPx-H/2);
+
+gl.uniform2f(u('u_center'), _viewCenterPx(), H/2);
+{ const _t=_liveViewTile(W); gl.uniform1f(u('u_viewTx'), _t?_t.tx:0); gl.uniform1f(u('u_viewFullW'), _t?_t.fullW:W); }
+gl.uniform2f(u('u_centerOffset'), cluster.cxPx-_viewCenterPx(), cluster.cyPx-H/2);
 _dzUploadDeltaScaleDS(u, scale);
 gl.uniform1i(u('u_orbitLen'), validLen);
 gl.uniform1i(u('u_maxIter'), maxIter);
@@ -6800,7 +6807,9 @@ gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 gl.useProgram(prog);
 const u=name=>_dzUniformLoc(prog, name);
 gl.uniform2f(u('u_res'), W, H);
-gl.uniform2f(u('u_center'), W/2, H/2);
+
+gl.uniform2f(u('u_center'), _viewCenterPx(), H/2);
+{ const _t=_liveViewTile(W); gl.uniform1f(u('u_viewTx'), _t?_t.tx:0); gl.uniform1f(u('u_viewFullW'), _t?_t.fullW:W); }
 const scale=_pxScale(W,H,S.zoom||1);
 _dzUploadDeltaScaleDS(u, scale);
 gl.uniform1i(u('u_orbitLen'), validLen);
@@ -6876,7 +6885,11 @@ if(!prog)return false;
 const maxIter=Math.min(4000, Math.max(500, S.maxIter||1000));
 const cx=_hiCenterStr('x'), cy=_hiCenterStr('y');
 const pixelScale=_pxScale(W,H,S.zoom||1);
-const pixelMaxMag=pixelScale*Math.hypot(W/2, H/2);   
+
+
+
+const _vt=_liveViewTile(W);
+const pixelMaxMag=pixelScale*Math.hypot(_vt ? _vt.fullW/2 : W/2, H/2);   
 
 
 const useDeg3=(S.zoom||1) > 1e40;
@@ -6934,7 +6947,9 @@ gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 gl.useProgram(prog);
 const u=name=>_dzUniformLoc(prog, name);
 gl.uniform2f(u('u_res'), W, H);
-gl.uniform2f(u('u_center'), W/2, H/2);
+
+gl.uniform2f(u('u_center'), _viewCenterPx(), H/2);
+{ const _t=_liveViewTile(W); gl.uniform1f(u('u_viewTx'), _t?_t.tx:0); gl.uniform1f(u('u_viewFullW'), _t?_t.fullW:W); }
 gl.uniform2f(u('u_deltaScale'), pixelScale, -pixelScale);
 gl.uniform1i(u('u_orbitLen'), validLen);
 gl.uniform1i(u('u_maxIter'), maxIter - skipStep);
@@ -6991,7 +7006,9 @@ glcv.width=W; glcv.height=H;
 gl.viewport(0, 0, W, H);
 const u=name=>_dzUniformLoc(prog, name);
 gl.uniform2f(u('u_res'), W, H);
-gl.uniform2f(u('u_center'), W/2, H/2);
+
+gl.uniform2f(u('u_center'), _viewCenterPx(), H/2);
+{ const _t=_liveViewTile(W); gl.uniform1f(u('u_viewTx'), _t?_t.tx:0); gl.uniform1f(u('u_viewFullW'), _t?_t.fullW:W); }
 const scale=_pxScale(W,H,S.zoom||1);
 _dzUploadDeltaScaleDS(u, scale); 
 gl.uniform1i(u('u_orbitLen'), validLen);
@@ -7484,8 +7501,10 @@ const APP_VERSION='7.0.6';
 
 
 
-const MISSION_BUILD_HASH='0cc4ee15b9b5';
-const MISSION_GIT_SHA='3a6592f59d8bdde7c047244349dd10daa7762b2e';
+const MISSION_BUILD_HASH='8f066f6e7058';
+const MISSION_GIT_SHA='bce26ac2b9e44a8757d2e3611d92e8891f5f47cb';
+
+const MISSION_RENDER_HASH='387fca5d0438';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -7691,13 +7710,28 @@ const VIEWPORT_ASPECT_TYPES=new Set([
 
 
 
-const VIEW_TILE_TYPES=new Set(['mandelbulb','mandelbox','menger','qjulia','sierp_tetra','custom_3d']);
+const VIEW_TILE_TYPES=new Set([
+
+'mandelbulb','mandelbox','menger','qjulia','sierp_tetra','custom_3d',
+
+'mandelbrot','julia','burningship','tricorn','multibrot3','phoenix','celtic','newton3','newton_cayley','nova','magnet1','lyapunov','perp_mandelbrot','perp_burning','buffalo','lambda','collatz','biomorph','burningship_julia','exp_map','magnet2','newton_sin','tricorn_julia','formula',
+]);
 let _vpTile=null;   
 
 function _liveViewTile(w){
-if(!_vpTile || w!==W || (typeof _exportInFlight==='function' && _exportInFlight())) return null;
+
+
+
+
+if(!_vpTile || w!==W || w!==_vpTile.w || (typeof _exportOwnsCanvas==='function' && _exportOwnsCanvas())) return null;
 return _vpTile;
 }
+
+function _viewOffPx(w=W){
+const t=_liveViewTile(w);
+return t ? t.tx + w/2 - t.fullW/2 : 0;
+}
+function _viewCenterPx(w=W){ return w/2 - _viewOffPx(w); }
 function _refitCanvas(aspect){
 const w=cv.width, h=cv.height;
 _resizeCanvasForAspect(aspect);
@@ -7763,7 +7797,7 @@ newH = Math.round(logH * _renderDPR);
 
 const _d = _tileOn && typeof getComputedStyle==='function' ? parseFloat(getComputedStyle(wrap).getPropertyValue('--vp-d')) || 0 : 0;
 const _s = newW / _mw;
-const _nt = _d ? { tx: Math.round(Math.max(0, -_d) * _s), fullW: newW + Math.round(Math.abs(_d) * _s) } : null;
+const _nt = _d ? { tx: Math.round(Math.max(0, -_d) * _s), fullW: newW + Math.round(Math.abs(_d) * _s), w: newW } : null;
 const _tileMoved = JSON.stringify(_nt) !== JSON.stringify(_vpTile);
 _vpTile = _nt;
 if (_tileMoved && cv.width===newW && cv.height===newH && typeof scheduleRender==='function') scheduleRender();
@@ -9085,7 +9119,7 @@ for(const n of [
 'u_colorWarp','u_colorWarpAmt','u_colorRepeat','u_colorPhase','u_bgColor','u_opacityWarpAmt',
 'u_opacityMode','u_opacityRange','u_opacityWarp','u_opacityPhase',
 'u_colorBands','u_colorNoiseScale','u_colorAxisAngle',
-'u_oFieldOff','u_oFieldRes'
+'u_oFieldOff','u_oFieldRes','u_viewOff'
 ]){
 glUniforms[n]=gl.getUniformLocation(glProg,n);
 }
@@ -9593,10 +9627,14 @@ const u=n=>{let m=glUniforms[n];if(m===undefined){m=gl.getUniformLocation(glProg
 gl.uniform2f(u('u_res'),w,h);
 
 
-const _oft=(typeof _oFieldTile!=='undefined'&&_oFieldTile)?_oFieldTile:null;
+
+const _lvt=_liveViewTile(w);
+const _oft=(typeof _oFieldTile!=='undefined'&&_oFieldTile)?_oFieldTile:(_lvt?{ox:_lvt.tx,oy:0,rw:_lvt.fullW,rh:h}:null);
 gl.uniform2f(u('u_oFieldOff'),_oft?_oft.ox:0,_oft?_oft.oy:0);
 gl.uniform2f(u('u_oFieldRes'),_oft?_oft.rw:0,_oft?_oft.rh:0);
 gl.uniform2f(u('u_center'),S.centerX,S.centerY);
+
+gl.uniform1f(u('u_viewOff'),_viewOffPx(w));
 gl.uniform1f(u('u_zoom'),S.zoom);
 gl.uniform1i(u('u_maxIter'),S.maxIter);
 gl.uniform1f(u('u_escRad'),S.escRad);
@@ -10318,10 +10356,14 @@ gl.uniform1i(u('u_palette'),0);
 gl.uniform2f(u('u_res'),w,h);
 
 
-const _oft=(typeof _oFieldTile!=='undefined'&&_oFieldTile)?_oFieldTile:null;
+
+const _lvt=_liveViewTile(w);
+const _oft=(typeof _oFieldTile!=='undefined'&&_oFieldTile)?_oFieldTile:(_lvt?{ox:_lvt.tx,oy:0,rw:_lvt.fullW,rh:h}:null);
 gl.uniform2f(u('u_oFieldOff'),_oft?_oft.ox:0,_oft?_oft.oy:0);
 gl.uniform2f(u('u_oFieldRes'),_oft?_oft.rw:0,_oft?_oft.rh:0);
 gl.uniform2f(u('u_center'),S.centerX,S.centerY);
+
+gl.uniform1f(u('u_viewOff'),_viewOffPx(w));
 gl.uniform1f(u('u_zoom'),S.zoom);
 gl.uniform1i(u('u_maxIter'),S.maxIter);
 gl.uniform1f(u('u_escRad'),S.escRad);
@@ -10531,7 +10573,7 @@ const IT_DISPATCH=new Map([
 
 function iterate(px,py){
 const sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);   
-const cx=S.centerX+(px-W/2)*sc;
+const cx=S.centerX+(px-_viewCenterPx())*sc;   
 const cy=S.centerY+(py-H/2)*sc;
 const mi=S.maxIter, er2=S.escRad*S.escRad;
 const fn=IT_DISPATCH.get(S.fractalType);
@@ -10553,7 +10595,7 @@ if(mode<=0 || !(S.trapMix>0)) return 1e10;
 const ft=S.fractalType, pw=S.fractalPower??2;
 let zx,zy,cx,cy,kind;
 const sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);   
-const px0=S.centerX+(px-W/2)*sc, py0=S.centerY+(py-H/2)*sc;
+const px0=S.centerX+(px-_viewCenterPx())*sc, py0=S.centerY+(py-H/2)*sc;
 if(ft==='mandelbrot' && Math.abs(pw-2)<0.001){ zx=0;zy=0;cx=px0;cy=py0;kind=0; }
 else if(ft==='julia' && Math.abs(pw-2)<0.001){ zx=px0;zy=py0;cx=S.juliaReal;cy=S.juliaImag;kind=0; }
 else if(ft==='burningship'){ zx=0;zy=0;cx=px0;cy=py0;kind=1; }
@@ -10771,7 +10813,7 @@ const nx=a*x+b*y+e,ny=c*x+d*y+f;
 x=nx;y=ny;
 if(i<20)continue;
 const py_ifs=def.yup?-y:y;
-const px=Math.round((x-S.centerX)/scale+W/2)|0,
+const px=Math.round((x-S.centerX)/scale+_viewCenterPx())|0,   
 py=Math.round((py_ifs-S.centerY)/scale+H/2)|0;
 if(px>=0&&px<W&&py>=0&&py<H){
 const idx=py*W+px;
@@ -10794,6 +10836,8 @@ _setPillProgress('IFS',null);
 _pill().classList.remove('show');
 updateCoordBar();
 _applyPostFXOnScreen();
+if(typeof _announceRenderDone==='function')_announceRenderDone();
+_bumpRenderSeq();   
 }
 }finally{
 _floatRelease(density);
@@ -11063,6 +11107,11 @@ if(typeof cv!=='undefined' && cv)cv.classList.remove('is-hidden');
 
 
 const t=++tok; await renderDeepZoom(t).catch(e=>console.warn('Deep-zoom render failed:', e));
+
+
+
+
+if(t===tok){if(typeof _applyPostFXOnScreen==='function')_applyPostFXOnScreen();if(typeof _announceRenderDone==='function')_announceRenderDone();_bumpRenderSeq();}
 }
 updateCoordBar();
 drawMandelbrotFeatures();if(typeof drawOrbitOverlay==='function')drawOrbitOverlay();
@@ -11315,7 +11364,8 @@ const _wOk=await new Promise(res=>{
 
 
 
-const msg={type:'render',seq:++_cpuFracSeq,S,_origType:S.fractalType,W,H,pal:_geoActivePal()};   
+const _lt=_liveViewTile(W);   
+const msg={type:'render',seq:++_cpuFracSeq,S,_origType:S.fractalType,W,H,VCX:_viewCenterPx(),VTX:_lt?_lt.tx:0,VFW:_lt?_lt.fullW:W,pal:_geoActivePal()};   
 _cpuFracEscapeWaiters.set(msg.seq,res);
 _pill().classList.add('show');
 _setPillProgress('CPU RENDER',null);
@@ -11416,7 +11466,8 @@ rA+=r;gA+=g;bA+=b;
 const n=aa*aa,i4=(row*W+px)*4;
 let mr=rA/n|0,mg=gA/n|0,mb=bA/n|0;
 if(S.opacityFieldStroke&&S.opacityFieldStroke!=='constant'){
-const fa=_pixelAlphaField(px,H-1-row,W,H,lastT);   
+const _lt=_liveViewTile(W);   
+const fa=_pixelAlphaField(px+(_lt?_lt.tx:0),H-1-row,_lt?_lt.fullW:W,H,lastT);   
 if(fa<0.999){
 mr=_bgFR[0]*(1-fa)+mr*fa|0;
 mg=_bgFR[1]*(1-fa)+mg*fa|0;
@@ -12093,7 +12144,8 @@ const W = cv.width, H = cv.height, m = Math.min(W, H);
 const aPx = FRACTAL_VIEW_WIDTH / (m * a.zoom);   
 const cPx = FRACTAL_VIEW_WIDTH / (m * S.zoom);   
 
-const srcX = (S.centerX - (W / 2) * cPx - (a.cx - (W / 2) * aPx)) / aPx;
+const _vc = _viewCenterPx(W);   
+const srcX = (S.centerX - _vc * cPx - (a.cx - _vc * aPx)) / aPx;
 const srcY = (S.centerY - (H / 2) * cPx - (a.cy - (H / 2) * aPx)) / aPx;
 const srcW = W * (cPx / aPx), srcH = H * (cPx / aPx);   
 
@@ -12429,6 +12481,7 @@ function render(){
 
 
 if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(scheduleRender)) return;
+if (typeof _catVeilHoldsRender === 'function' && _catVeilHoldsRender()) return;   
 _settleAspect();
 
 
@@ -12439,7 +12492,10 @@ return _perfMark('render', () => {
 _showRenderBar();
 _renderStartMs = performance.now();   
 try{
-if(S.mode==='fractal')renderFractal();
+
+
+
+if(S.mode==='fractal'){window._renderFractalInFlight=(window._renderFractalInFlight||0)+1;Promise.resolve(renderFractal()).finally(()=>{window._renderFractalInFlight--;});}
 else{
 if(glReady)glcv.classList.remove('is-shown');
 
@@ -18437,7 +18493,7 @@ if(!anti && orbLen < _minOrb) continue;
 
 for(let i=0; i<orbLen; i++){
 const ox=orbX[i], oy=orbY[i];
-const px=Math.round((ox-S.centerX)/sc+W/2)|0;
+const px=Math.round((ox-S.centerX)/sc+_viewCenterPx())|0;   
 if(px<0||px>=W) continue;
 
 const py0=Math.round((oy-S.centerY)/sc+H/2)|0;
@@ -18737,11 +18793,11 @@ const midY=(cur[0].clientY+cur[1].clientY)/2;
 
 if(S.mode==='fractal'&&!GL_3D_TYPES.has(S.fractalType)){
 const sc0=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);  
-const mx=S.centerX+(midX-rect.left)/rect.width*W*sc0-W/2*sc0;
+const mx=S.centerX+(midX-rect.left)/rect.width*W*sc0-_viewCenterPx()*sc0;
 const my=S.centerY+(midY-rect.top)/rect.height*H*sc0-H/2*sc0;
 S.zoom=Math.max(.05,Math.min(ZOOM_MAX_NAV,S.zoom*factor));   
 const sc1=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);
-S.centerX=mx-(midX-rect.left)/rect.width*W*sc1+W/2*sc1;
+S.centerX=mx-(midX-rect.left)/rect.width*W*sc1+_viewCenterPx()*sc1;
 S.centerY=my-(midY-rect.top)/rect.height*H*sc1+H/2*sc1;
 if(typeof _syncCenterStrFromNumeric==='function')_syncCenterStrFromNumeric();   
 updateZoomUI();scheduleRender();_touchViewMoved=true;   
@@ -27433,7 +27489,8 @@ const params = new ArrayBuffer(80);
 const dv = new DataView(params);
 dv.setUint32( 0, w,                          true); 
 dv.setUint32( 4, h,                          true); 
-dv.setFloat32( 8, S.centerX,                 true); 
+
+dv.setFloat32( 8, S.centerX + _viewOffPx(w) * _pxScale(w, h, S.zoom), true); 
 dv.setFloat32(12, S.centerY,                 true); 
 dv.setFloat32(16, S.zoom,                    true); 
 dv.setUint32( 20, S.maxIter,                 true); 
@@ -28124,6 +28181,7 @@ const float PI=3.14159265358979;
 const float TAU=6.28318530717959;
 uniform vec2 u_res;
 uniform vec2 u_center;
+uniform float u_viewOff;    
 uniform float u_zoom;
 uniform int u_maxIter;
 uniform float u_escRad;
@@ -28712,7 +28770,7 @@ vec4 escapeIterNormalMap(vec2 z0, vec2 c, int type, out float shadeOut, out floa
 void main(){
   float sc=3.5/(min(u_res.x,u_res.y)*u_zoom);
   vec2 fragCoord=vec2(gl_FragCoord.x,u_res.y-gl_FragCoord.y);
-  vec2 px=u_center+(fragCoord-u_res*.5)*sc;
+  vec2 px=u_center+(fragCoord-u_res*.5+vec2(u_viewOff,0.))*sc;
 
   if(u_type==15){vec4 lr=lyapunovIter(px);float lambda=lr.x;vec3 col;float lt=0.0;if(lambda<=-1e5){col=u_interiorColor;}else if(lambda<0.0){lt=fract(-lambda*u_colorCycle*0.15+u_colorOffset);col=pal(lt)*pow(clamp(-lambda*0.5,0.,1.),0.4);}else{lt=fract(lambda*u_colorCycle*0.15+u_colorOffset+0.33);col=mix(pal(lt),vec3(0.85,0.05,0.02),clamp(lambda*0.25,0.,0.75));}fc=fcOut(col,_resT(lt));return;}
 
@@ -29154,8 +29212,9 @@ float _pixelAlpha3(vec2 fragCoord, float colourT){
   t=clamp(t+u_opacityPhase,0.0,1.0);
   return clamp(u_opacityRange.x+(u_opacityRange.y-u_opacityRange.x)*t,0.0,1.0);
 }
+
 vec4 fcOut3(vec3 col, float colourT, float outA){
-  float a=_pixelAlpha3(gl_FragCoord.xy,colourT);
+  float a=_pixelAlpha3(gl_FragCoord.xy+u_tileOffset,colourT);
   return vec4(mix(u_bgColor,col,a),outA);
 }
 
@@ -29369,6 +29428,8 @@ uniform vec2 u_deltaScale;
 uniform vec2 u_deltaScaleLo; 
 uniform vec2 u_center;
 uniform vec2 u_centerOffset; 
+uniform float u_viewTx;        
+uniform float u_viewFullW;     
 uniform int u_juliaMode;     
 uniform int u_maxIter;
 uniform float u_escRad2;      
@@ -29442,15 +29503,17 @@ float _dzWarp(float t){
 float _dzNoise(float i){float s=max(0.1,min(8.0,u_colorNoiseScale));float a=(i+1.0)*s;float p=a-floor(a/65536.0)*65536.0;float f=sin(p*0.13+17.13)*43758.5453;return f-floor(f);}
 float _dzAlpha(float colourT){
   if(u_opacityMode==0)return 1.0;
-  vec2 c=u_res*0.5;vec2 d=gl_FragCoord.xy-c;float maxR=max(1.0,length(c));float t=0.0;
+  
+  vec2 _fc=gl_FragCoord.xy+vec2(u_viewTx,0.0);vec2 _R=vec2(u_viewFullW>0.5?u_viewFullW:u_res.x,u_res.y);
+  vec2 c=_R*0.5;vec2 d=_fc.xy-c;float maxR=max(1.0,length(c));float t=0.0;
   if(u_opacityMode==1)t=fract(colourT);
-  else if(u_opacityMode==2)t=gl_FragCoord.x/max(1.0,u_res.x-1.0);
+  else if(u_opacityMode==2)t=_fc.x/max(1.0,_R.x-1.0);
   else if(u_opacityMode==3)t=length(d)/maxR;
   else if(u_opacityMode==4)t=atan(d.y,d.x)/6.28318530718+0.5;
   else if(u_opacityMode==5){float B=max(2.0,min(32.0,u_colorBands));float u=length(d)/maxR;t=min(B-1.0,floor(u*B))/max(1.0,B-1.0);}
-  else if(u_opacityMode==6)t=_dzNoise(floor(gl_FragCoord.y)*7919.0+floor(gl_FragCoord.x));
+  else if(u_opacityMode==6)t=_dzNoise(floor(_fc.y)*7919.0+floor(_fc.x));
   else if(u_opacityMode==7){float ang=radians(u_colorAxisAngle);t=0.5+0.5*((d.x*cos(ang)+d.y*sin(ang))/maxR);}
-  else if(u_opacityMode==8)t=mod(((gl_FragCoord.x-0.5)+(gl_FragCoord.y-0.5))/(u_res.x+u_res.y),1.0); 
+  else if(u_opacityMode==8)t=mod(((_fc.x-0.5)+(_fc.y-0.5))/(_R.x+_R.y),1.0); 
   t=clamp(t,0.0,1.0);
   if(u_opacityWarp!=0)t=_dzWarp(t);
   t=clamp(t+u_opacityPhase,0.0,1.0);
@@ -29639,6 +29702,8 @@ uniform int u_refEscaped;
 uniform vec2 u_deltaScale;     
 uniform vec2 u_deltaScaleLo;   
 uniform vec2 u_center;         
+uniform float u_viewTx;        
+uniform float u_viewFullW;     
 uniform int u_juliaMode;       
 uniform int u_maxIter;
 uniform float u_escRad2;       
@@ -29712,15 +29777,17 @@ float _dz2Warp(float t){
 float _dz2Noise(float i){float s=max(0.1,min(8.0,u_colorNoiseScale));float a=(i+1.0)*s;float p=a-floor(a/65536.0)*65536.0;float f=sin(p*0.13+17.13)*43758.5453;return f-floor(f);}
 float _dz2Alpha(float colourT){
   if(u_opacityMode==0)return 1.0;
-  vec2 c=u_res*0.5;vec2 d=gl_FragCoord.xy-c;float maxR=max(1.0,length(c));float t=0.0;
+  
+  vec2 _fc=gl_FragCoord.xy+vec2(u_viewTx,0.0);vec2 _R=vec2(u_viewFullW>0.5?u_viewFullW:u_res.x,u_res.y);
+  vec2 c=_R*0.5;vec2 d=_fc.xy-c;float maxR=max(1.0,length(c));float t=0.0;
   if(u_opacityMode==1)t=fract(colourT);
-  else if(u_opacityMode==2)t=gl_FragCoord.x/max(1.0,u_res.x-1.0);
+  else if(u_opacityMode==2)t=_fc.x/max(1.0,_R.x-1.0);
   else if(u_opacityMode==3)t=length(d)/maxR;
   else if(u_opacityMode==4)t=atan(d.y,d.x)/6.28318530718+0.5;
   else if(u_opacityMode==5){float B=max(2.0,min(32.0,u_colorBands));float u=length(d)/maxR;t=min(B-1.0,floor(u*B))/max(1.0,B-1.0);}
-  else if(u_opacityMode==6)t=_dz2Noise(floor(gl_FragCoord.y)*7919.0+floor(gl_FragCoord.x));
+  else if(u_opacityMode==6)t=_dz2Noise(floor(_fc.y)*7919.0+floor(_fc.x));
   else if(u_opacityMode==7){float ang=radians(u_colorAxisAngle);t=0.5+0.5*((d.x*cos(ang)+d.y*sin(ang))/maxR);}
-  else if(u_opacityMode==8)t=mod(((gl_FragCoord.x-0.5)+(gl_FragCoord.y-0.5))/(u_res.x+u_res.y),1.0); 
+  else if(u_opacityMode==8)t=mod(((_fc.x-0.5)+(_fc.y-0.5))/(_R.x+_R.y),1.0); 
   t=clamp(t,0.0,1.0);
   if(u_opacityWarp!=0)t=_dz2Warp(t);
   t=clamp(t+u_opacityPhase,0.0,1.0);
@@ -35349,7 +35416,7 @@ const _mc={
 'feigenbaum':  _rootCS.getPropertyValue('--marker-feigenbaum').trim()  || '#7A8FA8',
 };
 for(const f of MANDELBROT_FEATURES){
-const px=(f.re - S.centerX)/sc + W/2;
+const px=(f.re - S.centerX)/sc + _viewCenterPx();   
 const py=(f.im - S.centerY)/sc + H/2;
 if(px < -50 || px > W+50 || py < -50 || py > H+50)continue;
 let color=_mc['default'], glyph='○';
@@ -46108,7 +46175,7 @@ if(typeof _catPickT==='number'&&e.timeStamp-_catPickT<500){drag.active=false;ret
 
 const _mx=e.clientX,_my=e.clientY,_zoomAt=()=>{
 const r=cv.getBoundingClientRect(),_csc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom),
-_cdx=((_mx-r.left)*(W/r.width)-W/2)*_csc,
+_cdx=((_mx-r.left)*(W/r.width)-_viewCenterPx())*_csc,
 _cdy=((_my-r.top)*(H/r.height)-H/2)*_csc,
 _ckx=S.centerX+_cdx,_cky=S.centerY+_cdy;
 S.centerX=_ckx;S.centerY=_cky;
@@ -46172,7 +46239,7 @@ S.zoom=Math.max(.1,Math.min(50,S.zoom*0.5));updateZoomUI();scheduleRender();if(t
 }else{
 const rect=cv.getBoundingClientRect(),
 sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom),
-_dox=(e.clientX-rect.left)/rect.width*W*sc-W/2*sc,
+_dox=(e.clientX-rect.left)/rect.width*W*sc-_viewCenterPx()*sc,
 _doy=(e.clientY-rect.top)/rect.height*H*sc-H/2*sc,
 tx=S.centerX+_dox,ty=S.centerY+_doy;
 if(typeof _hiNavAddDelta==='function')_hiNavAddDelta(_dox,_doy);   
@@ -46243,12 +46310,12 @@ e.preventDefault();
 
 const _isBuddha=(S.fractalType==='buddhabrot'||S.fractalType==='buddhabrot_anti')&&typeof _drawZoomPreview==='function';
 if(_isBuddha && !_zoomPreviewActive){ _capturePreviewAnchor(); _zoomPreviewActive=true; }
-const r=cv.getBoundingClientRect(),sc0=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom),mx=S.centerX+(e.clientX-r.left)/r.width*W*sc0-W/2*sc0,my=S.centerY+(e.clientY-r.top)/r.height*H*sc0-H/2*sc0;
+const r=cv.getBoundingClientRect(),sc0=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom),mx=S.centerX+(e.clientX-r.left)/r.width*W*sc0-_viewCenterPx()*sc0,my=S.centerY+(e.clientY-r.top)/r.height*H*sc0-H/2*sc0;
 const d=norm>0?factor:1/factor;
 S.zoom=Math.max(.05,Math.min(ZOOM_MAX_NAV,S.zoom*d));   
-const sc1=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);S.centerX=mx-(e.clientX-r.left)/r.width*W*sc1+W/2*sc1;S.centerY=my-(e.clientY-r.top)/r.height*H*sc1+H/2*sc1;
+const sc1=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);S.centerX=mx-(e.clientX-r.left)/r.width*W*sc1+_viewCenterPx()*sc1;S.centerY=my-(e.clientY-r.top)/r.height*H*sc1+H/2*sc1;
 
-if(typeof _hiNavAddDelta==='function')_hiNavAddDelta(((e.clientX-r.left)/r.width*W-W/2)*(sc0-sc1),((e.clientY-r.top)/r.height*H-H/2)*(sc0-sc1));
+if(typeof _hiNavAddDelta==='function')_hiNavAddDelta(((e.clientX-r.left)/r.width*W-_viewCenterPx())*(sc0-sc1),((e.clientY-r.top)/r.height*H-H/2)*(sc0-sc1));
 updateZoomUI();
 if(_isBuddha){
 
@@ -46311,7 +46378,7 @@ _longPressStart = null;
 function _screenToFractal(sx, sy) {
 const r = cv.getBoundingClientRect();
 const sc = FRACTAL_VIEW_WIDTH / (Math.min(W,H) * S.zoom);
-const offX = ((sx - r.left) / r.width * W - W / 2) * sc;
+const offX = ((sx - r.left) / r.width * W - _viewCenterPx()) * sc;
 const offY = ((sy - r.top) / r.height * H - H / 2) * sc;
 const wx = S.centerX + offX, wy = S.centerY + offY;
 
@@ -46447,9 +46514,9 @@ if (_pinchAnchor) {
 
 const r = cv.getBoundingClientRect();
 const sc = FRACTAL_VIEW_WIDTH / (Math.min(W,H) * S.zoom);
-S.centerX = _pinchAnchor.wx - (mid.x - r.left) / r.width * W * sc + W / 2 * sc;
+S.centerX = _pinchAnchor.wx - (mid.x - r.left) / r.width * W * sc + _viewCenterPx() * sc;
 S.centerY = _pinchAnchor.wy - (mid.y - r.top) / r.height * H * sc + H / 2 * sc;
-if(typeof _hiNavFromAnchor === 'function') _hiNavFromAnchor(_pinchAnchor.wxStr, _pinchAnchor.wyStr, -((mid.x - r.left) / r.width * W - W / 2) * sc, -((mid.y - r.top) / r.height * H - H / 2) * sc);
+if(typeof _hiNavFromAnchor === 'function') _hiNavFromAnchor(_pinchAnchor.wxStr, _pinchAnchor.wyStr, -((mid.x - r.left) / r.width * W - _viewCenterPx()) * sc, -((mid.y - r.top) / r.height * H - H / 2) * sc);
 }
 
 
@@ -47275,7 +47342,7 @@ if(!r.width || !r.height) return null;
 
 const sc = _pxScale();
 const c = {
-re: S.centerX + ((e.clientX - r.left) * (W / r.width) - W / 2) * sc,
+re: S.centerX + ((e.clientX - r.left) * (W / r.width) - _viewCenterPx()) * sc,
 im: S.centerY + ((e.clientY - r.top) * (H / r.height) - H / 2) * sc,
 };
 return (Number.isFinite(c.re) && Number.isFinite(c.im)) ? c : null;
@@ -47504,7 +47571,7 @@ if(_badge){ _badge.classList.remove('orbit-active'); _badge.setAttribute('aria-h
 return;
 }
 const sc = _pxScale(W, H, S.zoom || 1);
-const toPx = p => ({ x: (p.x - S.centerX) / sc + W / 2, y: (p.y - S.centerY) / sc + H / 2 });
+const toPx = p => ({ x: (p.x - S.centerX) / sc + _viewCenterPx(), y: (p.y - S.centerY) / sc + H / 2 });
 const _theme = document.documentElement.getAttribute('data-theme') || '';
 if(_orbitTokCache.theme !== _theme){
 const cs = getComputedStyle(document.documentElement);
@@ -48424,6 +48491,7 @@ if (!sheet || sheet.hidden) return;
 _catThumbGen++;
 if (_catThumbObs) _catThumbObs.disconnect();
 sheet.hidden = true;
+if (_catIdleT && _catThumbBusy === 0) { clearTimeout(_catIdleT); _catThumbsSettle(); }   
 releaseFocus(sheet);
 if (_catRpWasOpen && typeof _setRpCollapsed === 'function') _setRpCollapsed(false);
 _catRpWasOpen = false;
@@ -48495,7 +48563,7 @@ let _catPickT = -Infinity;
 let _catThumbGen = 0, _catThumbObs = null, _catThumbBusy = 0, _catThumbDB = null;
 
 function _catThumbKey(mode, type) {
-return (typeof MISSION_BUILD_HASH !== 'undefined' ? MISSION_BUILD_HASH : 'dev') + ':' + mode + ':' + type;
+return (typeof MISSION_RENDER_HASH !== 'undefined' ? MISSION_RENDER_HASH : 'dev') + ':' + mode + ':' + type;
 }
 function _catDB() {
 if (_catThumbDB) return _catThumbDB;
@@ -48513,9 +48581,13 @@ async function _catDBGet(key) {
 const db = await _catDB(); if (!db) return null;
 return new Promise((res) => { try { const g = db.transaction('t').objectStore('t').get(key); g.onsuccess = () => res(g.result || null); g.onerror = () => res(null); } catch (_) { res(null); } });
 }
+
 async function _catDBPut(key, url) {
 const db = await _catDB(); if (!db) return;
-try { db.transaction('t', 'readwrite').objectStore('t').put(url, key); } catch (_) {  }
+await new Promise((res) => {
+try { const tx = db.transaction('t', 'readwrite'); tx.objectStore('t').put(url, key); tx.oncomplete = tx.onerror = tx.onabort = () => res(); }
+catch (_) { res(); }   
+});
 }
 
 
@@ -48565,6 +48637,8 @@ let url = await _catDBGet(key);
 if (!url) {
 if (gen !== _catThumbGen || (typeof _exportInFlight === 'function' && _exportInFlight())) return;
 _catFreeze(true);
+
+
 const full = await _renderLayerToCanvas({ params: _catThumbParams(mode, type) });
 const tc = document.createElement('canvas'); tc.width = _CAT_THUMB_W; tc.height = _CAT_THUMB_H;
 
@@ -48572,7 +48646,7 @@ const s = Math.max(_CAT_THUMB_W / full.width, _CAT_THUMB_H / full.height), w = f
 tc.getContext('2d').drawImage(full, (_CAT_THUMB_W - w) / 2, (_CAT_THUMB_H - h) / 2, w, h);
 if (typeof _freeCanvas === 'function') _freeCanvas(full);
 url = tc.toDataURL('image/jpeg', 0.8);
-_catDBPut(key, url);
+await _catDBPut(key, url);
 _catThumbsDrewLive = true;
 }
 _catThumbMem.set(key, url);
@@ -48583,9 +48657,32 @@ finally { if (--_catThumbBusy === 0) _catThumbsIdle(); }
 _thumbRefreshChain = run.catch(() => {});
 }
 
-let _catThumbsDrewLive = false;
+let _catThumbsDrewLive = false, _catIdleT = 0;
 
 function _catThumbsIdle() {
+clearTimeout(_catIdleT);
+const sheet = document.getElementById('catalog-sheet');
+if (sheet && !sheet.hidden) { _catIdleT = -1; return; }   
+_catIdleT = setTimeout(_catThumbsSettle, 0);
+}
+
+function _catVeilHoldsRender() {
+const sheet = document.getElementById('catalog-sheet');
+if (!sheet || sheet.hidden || !document.getElementById('cat-freeze')) return false;
+_catThumbsDrewLive = true;
+return true;
+}
+
+if (typeof window !== 'undefined') window.addEventListener('resize', () => {
+if (!document.getElementById('cat-freeze') || _catThumbBusy > 0) return;
+clearTimeout(_catIdleT); _catIdleT = 0; _catThumbsDrewLive = false;
+_catFreeze(false);
+if (typeof scheduleRender === 'function') scheduleRender();
+});
+
+function _catThumbsSettle() {
+_catIdleT = 0;
+if (_catThumbBusy > 0) return;   
 if (!_catThumbsDrewLive) { _catFreeze(false); return; }
 _catThumbsDrewLive = false;
 if (typeof render === 'function') render();
@@ -64853,7 +64950,7 @@ if(!isFinite(px)||!isFinite(py))continue;
 
 
 
-const ppx=Math.round((px-S.centerX)/sc+W/2)|0;
+const ppx=Math.round((px-S.centerX)/sc+_viewCenterPx())|0;   
 const ppy=Math.round((py-S.centerY)/sc+H/2)|0;
 if(ppx>=0&&ppx<W&&ppy>=0&&ppy<H&&i>=20){
 const idx=ppy*W+ppx;
@@ -64928,7 +65025,7 @@ ctx.putImageData(img,0,0);
 }
 await new Promise(r=>setTimeout(r,0));
 }
-if(rtok===tok){_setPillProgress('FLAME',null);document.getElementById('pill').classList.remove('show');_applyPostFXOnScreen();window._renderSeq=(window._renderSeq||0)+1;if(_flameHandlesActive)_drawFlameHandles()}
+if(rtok===tok){_setPillProgress('FLAME',null);document.getElementById('pill').classList.remove('show');_applyPostFXOnScreen();if(typeof _announceRenderDone==='function')_announceRenderDone();_bumpRenderSeq();if(_flameHandlesActive)_drawFlameHandles()}
 } finally {
 _floatRelease(hist); _floatRelease(rAcc); _floatRelease(gAcc); _floatRelease(bAcc); _floatRelease(tAcc); _floatRelease(wAcc);
 
@@ -65324,7 +65421,7 @@ _fhDetachEvents();
 
 function _flameToCanvas(fx,fy){
 const sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);  
-return[(fx-S.centerX)/sc+W/2,(fy-S.centerY)/sc+H/2];
+return[(fx-S.centerX)/sc+_viewCenterPx(),(fy-S.centerY)/sc+H/2];   
 }
 function _drawFlameHandles(){
 if(!_fhcv||!_fhctx||!flameSystem)return;
@@ -66302,7 +66399,7 @@ if(!isFinite(x)||!isFinite(y)||!isFinite(z)){
 if(_attrDbg)_dbgNaNCount++;
 [x,y,z]=_reseedICs();continue;
 }
-const ppx=Math.round((px2d-S.centerX)/sc+W/2)|0;
+const ppx=Math.round((px2d-S.centerX)/sc+_viewCenterPx())|0;   
 const ppy=Math.round((py2d-S.centerY)/sc+H/2)|0;
 if(_attrDbg){
 _dbgTotalCount++;
@@ -66371,7 +66468,7 @@ ctx.putImageData(img,0,0);
 }
 await new Promise(r=>opts.animate?requestAnimationFrame(()=>r()):setTimeout(r,0));
 }
-if(t===tok){_setPillProgress('ATTRACTOR',null);document.getElementById('pill').classList.remove('show');_applyPostFXOnScreen();window._renderSeq=(window._renderSeq||0)+1;}
+if(t===tok){_setPillProgress('ATTRACTOR',null);document.getElementById('pill').classList.remove('show');_applyPostFXOnScreen();if(typeof _announceRenderDone==='function')_announceRenderDone();_bumpRenderSeq();}
 
 
 
@@ -66489,7 +66586,7 @@ for(let i=0;i<n;i++){
 const x=pts[i*3], y=pts[i*3+1], z=pts[i*3+2];
 let wx,wy,wz; if(proj==='xz'){wx=x;wy=z;wz=y;}else if(proj==='xy'){wx=x;wy=y;wz=z;}else{wx=y;wy=z;wz=x;}
 let px,py; if(rot){ const ax=wx-cx, az=wz-cwz, nx=ax*cRY+az*sRY, nz=-ax*sRY+az*cRY; px=nx+cx; py=(wy-cy)*cRX-nz*sRX+cy; } else { px=wx; py=wy; }   
-const sx=Math.round((px-cx)/sc+W*0.5)|0, sy=Math.round((py-cy)/sc+H*0.5)|0;   
+const sx=Math.round((px-cx)/sc+_viewCenterPx())|0, sy=Math.round((py-cy)/sc+H*0.5)|0;   
 if(sx<0||sx>=W||sy<0||sy>=H) continue;
 const idx=(sy*W+sx)*4;   
 data[idx]=Math.max(0,Math.min(255,data[idx]+_pvSign*60)); data[idx+1]=Math.max(0,Math.min(255,data[idx+1]+_pvSign*42)); data[idx+2]=Math.max(0,Math.min(255,data[idx+2]+_pvSign*16));
