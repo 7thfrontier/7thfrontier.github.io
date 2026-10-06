@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-I6gu+PQ2hm5dVhfMeJfYed0W57lSHoJmt1EcP7pYM8M='; font-src 'self'; script-src 'self' 'sha256-ZzOpmyducdzGlc3sz+E0Z8Qu/pN4jNTFmOL8Ui8hsZw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-Gf4R/ZqxGAGh7sWF1kRBfRs0aYJXDjXS+YGx3cj6nmE='; font-src 'self'; script-src 'self' 'sha256-pd1QcfMqRsXi/bQz7BQPdthKstVEK6HjscCwMcAz8/w='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -578,7 +578,10 @@
         .app:has(.right-panel.rp-collapsed){--rp-cur:0px}
         body.zen-mode #app-shell{--lp-cur:0px;--rp-cur:0px}
         
-        #cv-wrap{width:calc(100% + max(var(--lp-cur) - var(--rp-cur), var(--rp-cur) - var(--lp-cur)));height:100%;max-width:none;max-height:none;border-radius:0;overflow:hidden;position:relative;cursor:crosshair;background:var(--canvas-bg);transition:background var(--dur-langorous),margin-left var(--dur-slow) ease;flex-shrink:0;margin-left:calc(var(--lp-cur) - var(--rp-cur))}
+        @property --vp-d{syntax:'<length>';inherits:false;initial-value:0px}
+        body.vp-tile #cv-wrap{width:100%;margin-left:0}
+        #cv-wrap.vp-snap{transition:none}
+        #cv-wrap{--vp-d:calc(var(--lp-cur) - var(--rp-cur));width:calc(100% + max(var(--lp-cur) - var(--rp-cur), var(--rp-cur) - var(--lp-cur)));height:100%;max-width:none;max-height:none;border-radius:0;overflow:hidden;position:relative;cursor:crosshair;background:var(--canvas-bg);transition:background var(--dur-langorous),margin-left var(--dur-slow) ease;flex-shrink:0;margin-left:calc(var(--lp-cur) - var(--rp-cur))}
         
         #cv{display:block;width:100%;height:100%;background:var(--cv-bg,var(--canvas-bg));transform:translate(var(--cv-dx,0),var(--cv-dy,0));touch-action:none}
         #cv[data-cursor="grab"]{cursor:grab}
@@ -4215,7 +4218,7 @@
 
 
 
-<!-- build: 4760e1e7b8ed -->
+<!-- build: 948cbca56606 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7468,8 +7471,8 @@ const APP_VERSION='7.0.3';
 
 
 
-const MISSION_BUILD_HASH='4760e1e7b8ed';
-const MISSION_GIT_SHA='7a508d6f6a033577fd409dc9e6c7b14902da9c22';
+const MISSION_BUILD_HASH='948cbca56606';
+const MISSION_GIT_SHA='fa086839512467c3efbd66e18d71ab07df7f3a5f';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -7671,6 +7674,17 @@ const VIEWPORT_ASPECT_TYPES=new Set([
 ]);
 
 
+
+
+
+
+const VIEW_TILE_TYPES=new Set(['mandelbulb','mandelbox','menger','qjulia','sierp_tetra','custom_3d']);
+let _vpTile=null;   
+
+function _liveViewTile(w){
+if(!_vpTile || w!==W || (typeof _exportInFlight==='function' && _exportInFlight())) return null;
+return _vpTile;
+}
 function _refitCanvas(aspect){
 const w=cv.width, h=cv.height;
 _resizeCanvasForAspect(aspect);
@@ -7688,6 +7702,15 @@ const wrap=document.getElementById('cv-wrap');
 
 _renderDPR = _computeRenderDPR();
 if(!wrap) return;
+const _tileOn=S.mode==='fractal' && VIEW_TILE_TYPES.has(S.fractalType);
+if(document.body.classList.contains('vp-tile')!==_tileOn){
+
+
+wrap.classList.add('vp-snap');
+document.body.classList.toggle('vp-tile',_tileOn);
+void wrap.offsetWidth;
+wrap.classList.remove('vp-snap');
+}
 
 
 
@@ -7724,6 +7747,13 @@ const logW = Math.max(1, Math.round(_mw * _k));
 const logH = Math.max(1, Math.round(_mh * _k));
 newW = Math.round(logW * _renderDPR);
 newH = Math.round(logH * _renderDPR);
+
+const _d = _tileOn && typeof getComputedStyle==='function' ? parseFloat(getComputedStyle(wrap).getPropertyValue('--vp-d')) || 0 : 0;
+const _s = newW / _mw;
+const _nt = _d ? { tx: Math.round(Math.max(0, -_d) * _s), fullW: newW + Math.round(Math.abs(_d) * _s) } : null;
+const _tileMoved = JSON.stringify(_nt) !== JSON.stringify(_vpTile);
+_vpTile = _nt;
+if (_tileMoved && cv.width===newW && cv.height===newH && typeof scheduleRender==='function') scheduleRender();
 }
 if(cv.width===newW && cv.height===newH) return; 
 cv.width=newW; cv.height=newH;
@@ -9803,8 +9833,9 @@ if(!compileCustom3DShader())return;
 if(!gl||!gl3dCustomProg)return;
 gl.useProgram(gl3dCustomProg);
 const gw=glcv.width=(w||W), gh=glcv.height=(h||H);
-const fullW=opts?opts.fullW:gw, fullH=opts?opts.fullH:gh;
-const tileX=opts?opts.tileX:0, tileY=opts?opts.tileY:0;
+const _vt=opts?null:_liveViewTile(gw);
+const fullW=opts?opts.fullW:(_vt?_vt.fullW:gw), fullH=opts?opts.fullH:gh;
+const tileX=opts?opts.tileX:(_vt?_vt.tx:0), tileY=opts?opts.tileY:0;
 gl.viewport(0,0,gw,gh);
 const u=(name)=>_glProgUniformLoc(gl3dCustomProg,name);
 gl.uniform2f(u('u_res'),fullW,fullH);
@@ -9888,8 +9919,9 @@ w=w||W;h=h||H;
 
 
 
-const fullW=opts?opts.fullW:w,fullH=opts?opts.fullH:h;
-const tileX=opts?opts.tileX:0,tileY=opts?opts.tileY:0;
+const _vt=opts?null:_liveViewTile(w);
+const fullW=opts?opts.fullW:(_vt?_vt.fullW:w),fullH=opts?opts.fullH:h;
+const tileX=opts?opts.tileX:(_vt?_vt.tx:0),tileY=opts?opts.tileY:0;
 glcv.width=w;glcv.height=h;
 gl.viewport(0,0,w,h);
 gl.useProgram(gl3dProg);
@@ -26330,7 +26362,7 @@ struct Params {
   width:         u32,
   height:        u32,
   cx:            f32,   
-  cy:            f32,
+  cy:            f32,   
   zoom:          f32,   
   maxIter:       u32,   
   colorOffset:   f32,
@@ -26585,10 +26617,11 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
   
   
   
-  let W = f32(p.width);
+  
+  let W = select(f32(p.width), p.cy, p.cy > 0.0);
   let H = max(f32(p.height), 1.0);
   let uv = vec2<f32>(
-    (f32(id.x) - 0.5 * W) / H,
+    (f32(id.x) + p.cx - 0.5 * W) / H,
     (0.5 * H - f32(id.y)) / H
   );
   
@@ -27512,8 +27545,10 @@ const params = new ArrayBuffer(128);
 const dv = new DataView(params);
 dv.setUint32 (  0, w,                            true);
 dv.setUint32 (  4, h,                            true);
-dv.setFloat32(  8, S.centerX,                    true);  
-dv.setFloat32( 12, S.centerY,                    true);  
+
+const _vt = (typeof _liveViewTile === 'function') ? _liveViewTile(w) : null;
+dv.setFloat32(  8, _vt ? _vt.tx : 0,             true);
+dv.setFloat32( 12, _vt ? _vt.fullW : 0,          true);
 dv.setFloat32( 16, S.zoom,                       true);
 dv.setUint32 ( 20, Math.min(S.maxIter || 100, 256), true);  
 dv.setFloat32( 24, S.colorOffset || 0,           true);
@@ -57720,7 +57755,11 @@ return tc.toDataURL('image/jpeg', 0.80);
 
 function _drawCover(c, src, w, h){
 const sw = src.width, sh = src.height, k = Math.min(sw / w, sh / h);
-c.drawImage(src, (sw - w * k) / 2, (sh - h * k) / 2, w * k, h * k, 0, 0, w, h);
+
+const vt = (typeof _liveViewTile === 'function') ? _liveViewTile(sw) : null;
+const cx = vt ? vt.fullW / 2 - vt.tx : sw / 2;
+const x = Math.max(0, Math.min(sw - w * k, cx - w * k / 2));
+c.drawImage(src, x, (sh - h * k) / 2, w * k, h * k, 0, 0, w, h);
 }
 
 
@@ -60609,9 +60648,11 @@ function applyVignette(ctx,W,H){
 
 const fade=Math.max(0.01,Math.min(0.99,+S.pfxVigR||0.01));
 const str=Math.max(0,Math.min(1,+S.pfxVigStr||0));
-const key=W+'|'+H+'|'+fade.toFixed(4)+'|'+str.toFixed(2);
+const _vt=(typeof _liveViewTile==='function')?_liveViewTile(W):null;
+const fw=_vt?_vt.fullW:W, vx=fw/2-(_vt?_vt.tx:0);
+const key=W+'|'+H+'|'+fw+'|'+vx+'|'+fade.toFixed(4)+'|'+str.toFixed(2);
 if(_vigCtx!==ctx||_vigKey!==key){
-const gr=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)/2);
+const gr=ctx.createRadialGradient(vx,H/2,0,vx,H/2,Math.max(fw,H)/2);
 gr.addColorStop(fade,'rgba(0,0,0,0)');
 gr.addColorStop(1,`rgba(0,0,0,${str.toFixed(2)})`);
 _vigGr=gr;_vigKey=key;_vigCtx=ctx;
@@ -62618,11 +62659,11 @@ await _compositeLayersToExport(octx,W2,H2,_pfmtAlpha,signal);
 
 
 
-const [fitW, fitH] = _screenFit(W2, H2);
-const fractalLetterbox = S.mode==='fractal' && (fitW!==W2 || fitH!==H2) && (S.exportFractalCompose||'letterbox')==='letterbox' && !_equirectExportActive();
+const _lbFit = _fractalLetterboxFit(W2, H2);
+const fractalLetterbox = !!_lbFit;
 let renderCtx, renderW, renderH, subCanvas = null;
 if(fractalLetterbox){
-renderW = fitW; renderH = fitH;
+[renderW, renderH] = _lbFit;
 subCanvas = document.createElement('canvas');
 subCanvas.width = renderW; subCanvas.height = renderH;
 renderCtx = subCanvas.getContext('2d');
@@ -63204,6 +63245,17 @@ return false;
 }
 
 
+
+
+function _fractalLetterboxFit(W2,H2){
+if(S.mode!=='fractal'||_equirectExportActive()||(S.exportFractalCompose||'letterbox')!=='letterbox')return null;
+
+
+const [fitW,fitH]=_screenFit(W2,H2);
+return (W2-fitW>1||H2-fitH>1)?[fitW,fitH]:null;
+}
+
+
 async function _exportRenderRetryOnce(fn){
 if (await _exportRenderAsyncGuarded(fn, 4, true)) return true;
 if (await _exportRenderAsyncGuarded(fn, 4, true)) return true;
@@ -63333,7 +63385,7 @@ if(typeof _restoreBackgroundLoops==='function') _restoreBackgroundLoops(_dxLoopS
 return;
 }
 try {
-const oc=_trackCanvas(document.createElement('canvas'));oc.width=W2;oc.height=H2;const octx=oc.getContext('2d');
+const oc=_trackCanvas(document.createElement('canvas'));oc.width=W2;oc.height=H2;let octx=oc.getContext('2d');
 
 
 
@@ -63356,6 +63408,13 @@ if(typeof _drawGeoGuides==='function')_drawGeoGuides(c,bR);
 _drawGeomWithMirrors(c,bR);c.restore();octx.drawImage(oc2,0,0);
 }finally{W=oW;H=oH;}   
 } else {
+
+
+
+const _lbFit=_fractalLetterboxFit(W2,H2), _lbAlpha=_fmt==='png'||_fmt==='webp'||_fmt==='gif';
+const _lbOut=octx, _lbW=W2, _lbH=H2; let _lbSub=null;
+if(_lbFit){ _lbSub=_trackCanvas(document.createElement('canvas')); [_lbSub.width,_lbSub.height]=_lbFit; octx=_lbSub.getContext('2d'); [W2,H2]=_lbFit; }
+try {
 
 
 
@@ -63594,6 +63653,8 @@ const _bgFR=hexRgb(S.bgColor);
 const _opacField=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
 const _itFnQ=(typeof IT_DISPATCH!=='undefined'&&IT_DISPATCH.get(S.fractalType))||itMandelbrot;   
 for(let py=0;py<H2;py+=CHUNK){if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');for(let row=py;row<Math.min(py+CHUNK,H2);row++){for(let px=0;px<W2;px++){let rA=0,gA=0,bA=0,lastT=0;for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){const spx=px+(sx+.5)/aa-.5,spy=row+(sy+.5)/aa-.5,cx=S.centerX+(spx-W2/2)*sc,cy=S.centerY+(spy-H2/2)*sc;const res=_itFnQ(cx,cy,mi,er2);const[iter,zx,zy]=res;let r,g,b;if(isNewton){[r,g,b]=newtonRGB(iter,zx,zy);if(typeof _newtonOpacT==='function')lastT=_newtonOpacT(zx,zy,iter);}else if(iter>=S.maxIter){[r,g,b]=interiorRGB(zx,zy,iter);if(typeof _interiorOpacT==='function')lastT=_interiorOpacT(zx,zy);}else{const tc=colorT(iter,zx,zy);lastT=tc;const rgba=palRGBA(tc);r=rgba[0];g=rgba[1];b=rgba[2];const a=rgba[3];if(a<0.999){r=_bgFR[0]*(1-a)+r*a|0;g=_bgFR[1]*(1-a)+g*a|0;b=_bgFR[2]*(1-a)+b*a|0;}}rA+=r;gA+=g;bA+=b;}const n=aa*aa,i4=(row*W2+px)*4;let mr=rA/n|0,mg=gA/n|0,mb=bA/n|0;if(_opacField){const fa=_pixelAlphaField(px,H2-1-row,W2,H2,lastT);if(fa<0.999){mr=_bgFR[0]*(1-fa)+mr*fa|0;mg=_bgFR[1]*(1-fa)+mg*fa|0;mb=_bgFR[2]*(1-fa)+mb*fa|0;}}d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255;}}octx.putImageData(img,0,0);bar.style.setProperty('--progress',Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)+'%');status.textContent=`Rendering… ${Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)}%`;await new Promise(r=>setTimeout(r,0));}}
+} finally { if(_lbFit){ octx=_lbOut; W2=_lbW; H2=_lbH; } }
+if(_lbFit){ _exportBgFill(octx,W2,H2,_lbAlpha); octx.drawImage(_lbSub,Math.round((W2-_lbSub.width)/2),Math.round((H2-_lbSub.height)/2)); }
 }
 if(_pfxAnyActive()){status.textContent='Post-FX…';bar.style.setProperty('--progress','92%');await new Promise(r=>setTimeout(r,10));await applyPostFXAsync(octx,W2,H2,bar,status,signal);}
 bar.style.setProperty('--progress','100%');status.textContent='Encoding…';await new Promise(r=>setTimeout(r,30));
