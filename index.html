@@ -791,7 +791,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.4</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.5</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1118,7 +1118,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.0.4</h2>
+    <h2>AEON · v7.0.5</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1179,21 +1179,20 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.0.4.</h2>
-    <p class="section-lede">Quick export keeps the whole view · 2026-10-06</p>
+    <h2 class="section-title">What's new<br>in 7.0.5.</h2>
+    <p class="section-lede">Dialogs hand focus back to their menu · 2026-10-06</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Quick export no longer crops a wide view.</strong> A Quick export at a square or other size whose shape differs from the canvas cut the view down to fill it, while Print showed the whole view on bars. Quick now does what Print does: the full view, centered on the background color. Match canvas is unchanged.</li>
-    <li><strong>The landing page and the poster carry a security policy.</strong> Like the app, they now run only their own scripts and styles, refuse form submissions and load nothing from other sites. Nothing visible changes.</li>
-    <li><strong>Pages cannot submit forms.</strong> The app's security policy now refuses every form submission. The app has no forms, so nothing visible changes; a form slipped into any page content can no longer post anywhere.</li>
-    <li><strong>3D fractals render only the window.</strong> With the Inspector open, the Mandelbulb, Mandelbox, Menger sponge, quaternion Julia, Sierpinski tetrahedron and custom 3D types also rendered the strip under the Inspector, which nobody sees: 27% more pixels than a 1440 by 900 window. They now render the window alone, 4 to 25% faster per frame, and the picture does not move.</li>
+    <li><strong>Closing a dialog opened from a menu returns you to the menu button.</strong> Opening Keyboard shortcuts or Export image from a menu and pressing Escape left keyboard focus on the canvas, and canceling the New or Reset all confirmation left it on no control at all. It now goes back to the button that opened the menu.</li>
+    <li><strong>The Inspector keeps its title bar and tabs.</strong> Opening a section from the palette chip under the picture, or from the catalog, could scroll the whole Inspector instead of its contents, so the title bar and tabs disappeared and only collapsing every section brought them back. The Inspector, the catalog sheet and the canvas area can no longer be scrolled that way.</li>
+    <li><strong>The Foreword and the landing page read like a person wrote them.</strong> Both were rewritten in plainer language with the same facts, sections and links. Four facts were also wrong and are fixed. Penrose's tiling came eight years before Shechtman's quasicrystals (the page said fifty), and the spectre followed the hat by two months (it said three). Mandelbrot coined the word fractal in 1975, five years before his first pictures of the set, and the app is about 2.4 MB. A few hints and info cards that used the same patterns were rewritten too, the Mandelbulb card no longer shows stray asterisks, and the Mandelbrot expedition's top stop is The Northern Reach.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.4</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.5</p>
 </footer>
 
 <script>

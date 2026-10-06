@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-03mSB2LTWXxh6jzJcOLbgzZTK0tvYwJFMLjSK3Tm6yw='; font-src 'self'; script-src 'self' 'sha256-Sz6bxgedVJEO/xmm4W9RGt0jmk6dZ7UiibE0nXqs198='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-03mSB2LTWXxh6jzJcOLbgzZTK0tvYwJFMLjSK3Tm6yw='; font-src 'self'; script-src 'self' 'sha256-KK1SjjmGmMQ5Xbs9yvurJsvbhxEUo89CjmhKS6rujWE='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4218,12 +4218,12 @@
 
 
 
-<!-- build: 3fa31ee21221 -->
+<!-- build: 461dc866e355 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.4
+ * AEON -- Universal Dynamics Reactor v7.0.5
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7462,7 +7462,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.4';
+const APP_VERSION='7.0.5';
 
 
 
@@ -7471,8 +7471,8 @@ const APP_VERSION='7.0.4';
 
 
 
-const MISSION_BUILD_HASH='3fa31ee21221';
-const MISSION_GIT_SHA='b78af42b7d90032b95dc79b629afa832d1a6bed2';
+const MISSION_BUILD_HASH='461dc866e355';
+const MISSION_GIT_SHA='55c09ea25589087316714ab1038ab2b13de0b4bf';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -50192,6 +50192,16 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.5',
+date:'2026-10-06',
+headline:'Dialogs opened from a menu hand focus back to it, and the Inspector keeps its title bar.',
+items:[
+'Closing a dialog opened from a menu, or canceling New or Reset all, returns keyboard focus to the menu button.',
+'Opening a section from the palette chip or the catalog no longer scrolls the Inspector\'s title bar and tabs out of view.',
+'The Foreword and the landing page were rewritten in plainer language, and four wrong facts in them are fixed.',
+],
+},
+{
 version:'7.0.4',
 date:'2026-10-06',
 headline:'Quick export keeps the whole view, and the 3D types draw only what you see.',
@@ -50271,17 +50281,6 @@ items:[
 'Edits made while a layer thumbnail refreshes now land on the layer you are editing.',
 'Share links opened in a tab that already has Reactor open now apply, Copy Image no longer copies a blank picture on some machines, and opening a file resets undo so Save cannot overwrite it with the previous document.',
 'The Studio tab splits into Compose and Output, and small text is raised to a readable minimum.',
-],
-},
-{
-version:'6.67.12',
-date:'2026-09-01',
-headline:'Mid-restore failures, cross-tab bookmark crashes, and silent blank exports are fixed.',
-items:[
-'Loading a project, stepping through undo/redo, or opening an older bookmark now rolls all the way back to your prior view if anything goes wrong partway through, instead of possibly leaving some fields updated and others not.',
-'A malformed bookmark write arriving from another open tab could crash the Bookmarks panel in the current tab, leaving it showing fewer bookmarks than actually existed until reload. Cross-tab bookmark writes are now filtered the same way local ones already are.',
-'An export repeatedly interrupted by a concurrent render could silently save a blank or background-only file while reporting success. Every export density render now checks it actually finished before saving; a genuine failure now shows a visible error and writes nothing, instead of an incomplete file that looked fine.',
-'Behind the scenes: a destructive-before-validate sweep across keybindings, attractors, and safe storage, the gradient editor\'s cross-tab sync, and several process/tooling fixes, with no other user-visible change.',
 ],
 },
 ];
