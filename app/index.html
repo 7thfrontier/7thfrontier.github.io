@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-03mSB2LTWXxh6jzJcOLbgzZTK0tvYwJFMLjSK3Tm6yw='; font-src 'self'; script-src 'self' 'sha256-KK1SjjmGmMQ5Xbs9yvurJsvbhxEUo89CjmhKS6rujWE='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-hcQBVaCrEauucAr3SmJYwQM4vRFC1WwrOnmfvDFCGr8='; font-src 'self'; script-src 'self' 'sha256-Z+MQz/N1kbSBLNF0tTy08Srb3HlqAFajRSk7BDXRqoc='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -550,6 +550,19 @@
         
         .app{--lp-cur:0px;--rp-cur:calc(var(--insp-w) + var(--sp-6) * 2)}
         .catalog-corner{position:absolute;left:var(--sp-6);top:var(--sp-6);z-index:var(--z-panel);height:50px;display:flex;align-items:center;gap:var(--sp-3);padding:0 var(--sp-3) 0 var(--sp-5);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);max-width:calc(100% - var(--rp-cur) - var(--sp-6) * 2)}
+        
+        .first-steps{position:fixed;top:calc(var(--sp-6) + 50px + var(--sp-3));left:var(--sp-6);z-index:var(--z-panel);width:min(300px,calc(100vw - var(--sp-6) * 2));padding:var(--sp-5) var(--sp-6);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);font-family:var(--font-ui);color:var(--text)}
+        .first-steps .fs-title{font-style:italic;font-weight:400;font-size:18px;line-height:1.2;margin:0 0 var(--sp-3)}
+        .first-steps .fs-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--sp-3)}
+        .first-steps .fs-step{display:flex;align-items:flex-start;gap:var(--sp-3);font-size:13px;line-height:1.4;color:var(--text-mid)}
+        .first-steps .fs-mark{flex:none;width:14px;height:14px;margin-top:var(--sp-0);border:1px solid var(--border-mid);border-radius:50%}
+        .first-steps .fs-step.is-done{color:var(--text)}
+        .first-steps .fs-step.is-done .fs-mark{background:var(--accent);border-color:var(--accent)}
+        .first-steps .fs-done-note{margin:var(--sp-5) 0 0;font-size:13px;line-height:1.4}
+        .first-steps .fs-actions{display:flex;gap:var(--sp-3);margin-top:var(--sp-5)}
+        .first-steps .fs-actions .btn{min-height:44px}
+        body.zen-mode .first-steps{display:none}
+        @media(max-width:860px){.first-steps{top:calc(var(--sp-5) + 50px + var(--sp-3));left:var(--sp-5)}body.fs-up .nav-hints{display:none}}
         .catalog-corner .cc-logo{gap:var(--sp-2);margin-right:var(--sp-2)}
         .catalog-corner .lp-logo{font-size:22px;line-height:1}
         .catalog-corner .lp-logo-glyph{width:20px;height:20px}
@@ -4218,7 +4231,7 @@
 
 
 
-<!-- build: 461dc866e355 -->
+<!-- build: 09ca842a35b0 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7471,8 +7484,8 @@ const APP_VERSION='7.0.5';
 
 
 
-const MISSION_BUILD_HASH='461dc866e355';
-const MISSION_GIT_SHA='55c09ea25589087316714ab1038ab2b13de0b4bf';
+const MISSION_BUILD_HASH='09ca842a35b0';
+const MISSION_GIT_SHA='0f7d174b9905dfc5f2a95a315d33f6a7ef1cc47c';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11781,6 +11794,7 @@ let _lastRenderMs = 0;
 const HEAVY_RENDER_MS = 500;
 function _bumpRenderSeq(){
 window._renderSeq = (window._renderSeq || 0) + 1;
+if (typeof _firstStepsTick === 'function') _firstStepsTick();   
 
 if (typeof _xfadeRelease === 'function') _xfadeRelease();
 
@@ -25287,6 +25301,19 @@ en: {
 'welcome.whats-new':          "What's new",
 'welcome.references':         'References',
 'welcome.close':              'Close welcome',
+'firststeps.title':           'First steps',
+'firststeps.zoom':            'Click the picture to zoom in. Right-click zooms back out.',
+'firststeps.catalog':         'Press / or open Catalog to try another form.',
+'firststeps.palette':         'Click the palette at the bottom, then pick another one.',
+'firststeps.zoom-touch':      'Pinch the picture to zoom in and out.',
+'firststeps.catalog-touch':   'Tap the grid button at the top to try another form.',
+'firststeps.palette-touch':   'Tap the palette at the bottom, then pick another one.',
+'firststeps.tour':            'Show me around',
+'firststeps.hide':            'Hide',
+'firststeps.todo':            'not done yet',
+'firststeps.done':            'done',
+'firststeps.step-done':       'Done: {step}',
+'firststeps.finished':        'That\'s the basics. Press ? at any time to see every shortcut.',
 'welcome.inspire-failed':     'Welcome: open the catalog (/) to pick a type, and the inspector to shape it.',
 
 
@@ -48372,6 +48399,7 @@ if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-cur
 function openCatalog(opts) {
 const sheet = document.getElementById('catalog-sheet');
 if (!sheet || !sheet.hidden) return;
+if (typeof _firstStepsMark === 'function') _firstStepsMark('catalog');
 if (typeof closeCommandPalette === 'function') closeCommandPalette();
 _catMode = S.mode === 'geometry' ? 'geometry' : 'fractal';
 _catChip = 'all';
@@ -50557,11 +50585,14 @@ return;
 
 
 if (!_safeGetItem(WELCOME_KEY)) {
+_firstStepsArm();
 try {
 _safeSetItem('reactor.onboarded','1');
 _applyBrightHero();
 } catch (_e) {  }
 openWelcome();
+} else {
+_firstStepsMaybeShow();   
 }
 }
 
@@ -50627,7 +50658,7 @@ ov.classList.add('is-fading-out');
 
 
 clearTimeout(_welcomeCloseTimer);
-_welcomeCloseTimer=setTimeout(()=>{ov.classList.add('is-hidden');},300);
+_welcomeCloseTimer=setTimeout(()=>{ov.classList.add('is-hidden'); _firstStepsMaybeShow();},300);
 
 
 
@@ -50716,6 +50747,87 @@ return ov;
 
 let _welcomeCloseTimer = null;
 let _heroChainGen = 0;
+
+
+const _FS_KEY = 'aeon-first-steps-v1';   
+const _FS_SESSION = 'aeon-first-steps-session';   
+let _fs = null;   
+
+function _fsTestBoot(){ try{ return !!localStorage.getItem('aeon-test-seed'); }catch(_e){ return false; } }
+function _fsFinished(){ const v=_safeGetItem(_FS_KEY); return v==='done' || v==='dismissed'; }
+function _fsSessionArmed(){ try{ return sessionStorage.getItem(_FS_SESSION)==='1'; }catch(_e){ return false; } }
+
+
+function _firstStepsArm(){
+if(_fsTestBoot() || _fsFinished()) return;
+try{ sessionStorage.setItem(_FS_SESSION,'1'); }catch(_e){ _swallowed('_firstStepsArm', _e); }
+}
+
+
+function _firstStepsMaybeShow(){
+if(_fs || _fsTestBoot() || _fsFinished() || !_fsSessionArmed()) return;
+const el=document.createElement('section');
+el.id='first-steps';
+el.className='first-steps';
+el.setAttribute('aria-labelledby','first-steps-title');
+
+const _touch=typeof matchMedia==='function' && matchMedia('(pointer: coarse)').matches;
+
+const steps=_touch
+? [['zoom','firststeps.zoom-touch'],['catalog','firststeps.catalog-touch'],['palette','firststeps.palette-touch']]
+: [['zoom','firststeps.zoom'],['catalog','firststeps.catalog'],['palette','firststeps.palette']];
+el.innerHTML=html.raw`<h2 id="first-steps-title" class="fs-title">${t('firststeps.title')}</h2>
+    <ol class="fs-list">${steps.map(([id,key])=>html.raw`<li class="fs-step" data-fs-step="${id}"><span class="fs-mark" aria-hidden="true"></span><span class="fs-text">${t(key)}</span><span class="sr-only fs-state">${t('firststeps.todo')}</span></li>`).join('')}</ol>
+    <p class="fs-done-note" hidden>${t('firststeps.finished')}</p>
+    <div class="fs-actions">
+      <button type="button" class="btn ghost fs-tour" data-action="firstStepsTour">${t('firststeps.tour')}</button>
+      <button type="button" class="btn ghost fs-hide" data-action="firstStepsHide">${t('firststeps.hide')}</button>
+    </div>
+    <p class="sr-only" id="first-steps-live" aria-live="polite"></p>`;
+document.body.appendChild(el);
+document.body.classList.add('fs-up');
+_fs={ el, base:{ zoom:S.zoom, palette:S.palette, type:S.fractalType, pattern:S.pattern, mode:S.mode }, done:new Set() };
+}
+
+function _firstStepsMark(id){
+if(!_fs || _fs.done.has(id)) return;
+const li=_fs.el.querySelector(`[data-fs-step="${id}"]`);
+if(!li) return;
+_fs.done.add(id);
+li.classList.add('is-done');
+const st=li.querySelector('.fs-state'); if(st) st.textContent=t('firststeps.done');
+const live=document.getElementById('first-steps-live');
+if(live) live.textContent=t('firststeps.step-done',{step:li.querySelector('.fs-text').textContent});
+if(_fs.done.size===3){
+const note=_fs.el.querySelector('.fs-done-note'); if(note) note.hidden=false;
+if(live) live.textContent=t('firststeps.finished');
+_safeSetItem(_FS_KEY,'done');
+const el=_fs.el;
+setTimeout(()=>{ if(_fs && _fs.el===el) _firstStepsClose(); }, 6000);
+}
+}
+
+
+function _firstStepsTick(){
+if(!_fs) return;
+const b=_fs.base;
+if(S.zoom && b.zoom && Math.abs(Math.log(S.zoom/b.zoom))>0.05) _firstStepsMark('zoom');
+if(S.mode!==b.mode || S.fractalType!==b.type || S.pattern!==b.pattern) _firstStepsMark('catalog');
+
+if(S.palette!==b.palette && !(typeof _palPreviewActive!=='undefined' && _palPreviewActive)) _firstStepsMark('palette');
+}
+
+function _firstStepsClose(){
+if(!_fs) return;
+const el=_fs.el; _fs=null;
+document.body.classList.remove('fs-up');
+const hadFocus=el.contains(document.activeElement);
+el.remove();
+if(hadFocus && typeof _focusFallbackTarget==='function'){ const f=_focusFallbackTarget(); if(f && f.focus) f.focus({preventScroll:true}); }
+}
+function firstStepsHide(){ if(!_fsFinished()) _safeSetItem(_FS_KEY,'dismissed'); _firstStepsClose(); }
+function firstStepsTourStarted(){ if(_fsSessionArmed() && !_fsFinished()) _safeSetItem(_FS_KEY,'done'); _firstStepsClose(); }
+function firstStepsTour(){ if(typeof startInteractiveTour==='function') startInteractiveTour(); }
 
 
 
@@ -51822,6 +51934,9 @@ function startInteractiveTour(){
 if(typeof _safeSetItem==='function'){ try{ _safeSetItem('reactor.onboarded','1'); }catch(_e){_swallowed('startInteractiveTour', _e);} }
 
 if(typeof closeWelcome==='function'){ closeWelcome(false); }
+
+
+if(typeof firstStepsTourStarted==='function') firstStepsTourStarted();
 
 
 
