@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-hcQBVaCrEauucAr3SmJYwQM4vRFC1WwrOnmfvDFCGr8='; font-src 'self'; script-src 'self' 'sha256-CGIYa7pHejvtt+RlpdtM0l4SBuQ/QoKRMHe0glCDI64='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-nXIC9mGFnTL8R1c+WaEovFWgrQnqvCcWqLaPND2Mc3Y='; font-src 'self'; script-src 'self' 'sha256-FTBc+4chKR7+irQsQcGxwk/lKc57IdSvKBHw4CQz5YE='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -1257,9 +1257,10 @@
           }
         }
 
-        #welcome-showcase,#welcome-ui-tour,#welcome-foreword,#welcome-whats-new,#welcome-references{background:none;border:1px solid var(--border-mid);color:var(--text-dim);min-height:44px;padding:var(--sp-3) var(--sp-6);border-radius:var(--r-2);cursor:pointer;font-size:12px;font-family:var(--font-ui);transition:all var(--dur-snappy);letter-spacing:.02em}
+        #welcome-showcase,#welcome-ui-tour,#welcome-tour-video,#welcome-foreword,#welcome-whats-new,#welcome-references{background:none;border:1px solid var(--border-mid);color:var(--text-dim);min-height:44px;padding:var(--sp-3) var(--sp-6);border-radius:var(--r-2);cursor:pointer;font-size:12px;font-family:var(--font-ui);transition:all var(--dur-snappy);letter-spacing:.02em}
         #welcome-showcase:hover,#welcome-showcase:focus-visible,
         #welcome-ui-tour:hover,#welcome-ui-tour:focus-visible,
+        #welcome-tour-video:hover,#welcome-tour-video:focus-visible,
         #welcome-whats-new:hover,#welcome-whats-new:focus-visible,
         #welcome-references:hover,#welcome-references:focus-visible,
         #welcome-foreword:hover,#welcome-foreword:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
@@ -4231,7 +4232,7 @@
 
 
 
-<!-- build: 34d81b4bd180 -->
+<!-- build: 3dfed9f48c13 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7501,10 +7502,10 @@ const APP_VERSION='7.0.7';
 
 
 
-const MISSION_BUILD_HASH='34d81b4bd180';
-const MISSION_GIT_SHA='f42d5405e788f3078a0c4f856efc709043160647';
+const MISSION_BUILD_HASH='3dfed9f48c13';
+const MISSION_GIT_SHA='080e92cea9d7aaaee0026929ea88a5f9f6c4876f';
 
-const MISSION_RENDER_HASH='387fca5d0438';
+const MISSION_RENDER_HASH='bdbaa779cad3';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -22534,6 +22535,7 @@ openWhatsNew,closeWhatsNew,
 openForeword,closeForeword,
 openCitations,closeCitations,
 openShowcase,closeShowcase,
+openTourVideo,
 openCatalog,closeCatalog,
 inspireMe,
 forceRenderAnyway,
@@ -25354,6 +25356,7 @@ en: {
 'welcome.read-foreword':      'Read the foreword',
 'welcome.showcase':           'Showcase',
 'welcome.learn-controls':     'Tour the controls',
+'welcome.tour-video':         'Watch the 1-minute tour',
 'welcome.whats-new':          "What's new",
 'welcome.references':         'References',
 'welcome.close':              'Close welcome',
@@ -50519,6 +50522,25 @@ if(typeof _restoreModalFocusGuard==='function') _restoreModalFocusGuard('whats-n
 const WELCOME_KEY = 'aeon-welcomed-v1';
 
 
+
+let TOUR_VIDEO_ID = '';
+function _tourVideoUrl(){
+if (!TOUR_VIDEO_ID) return null;
+if (typeof navigator !== 'undefined' && navigator.onLine === false) return null;
+try { if (localStorage.getItem('aeon-test-seed')) return null; } catch (_e) {}
+return 'https://www.youtube.com/watch?v=' + encodeURIComponent(TOUR_VIDEO_ID);
+}
+function _syncTourVideoLinks(){
+const on = !!_tourVideoUrl();
+document.querySelectorAll('[data-tour-video]').forEach(b => { b.hidden = !on; });
+}
+function openTourVideo(){
+const u = _tourVideoUrl();
+if (u) window.open(u, '_blank', 'noopener,noreferrer');
+}
+if (typeof window !== 'undefined') { window.addEventListener('online', _syncTourVideoLinks); window.addEventListener('offline', _syncTourVideoLinks); }
+
+
 const WELCOME_PRESETS = [
 {
 
@@ -50824,6 +50846,7 @@ ov.innerHTML=html.raw`
     <nav id="welcome-links" aria-label="More">
       <button id="welcome-showcase" data-action="openShowcase" type="button" title="Browse a curated gallery of named forms" aria-haspopup="dialog" aria-controls="showcase-overlay">${t('welcome.showcase')}</button>
       <button id="welcome-ui-tour" data-action="startInteractiveTour" type="button" title="An interactive, spotlighted walkthrough of the main UI controls">${t('welcome.learn-controls')}</button>
+      <button id="welcome-tour-video" data-action="openTourVideo" data-tour-video type="button" hidden title="A one-minute video of the basics, on YouTube (opens a new tab)">${t('welcome.tour-video')}</button>
       <button id="welcome-foreword" data-action="openForeword" type="button" title="Read the foreword" aria-haspopup="dialog" aria-controls="foreword-overlay">${t('welcome.read-foreword')}</button>
       <button id="welcome-references" data-action="openCitations" type="button" title="The mathematics and sources behind the catalog" aria-haspopup="dialog" aria-controls="citations-overlay">${t('welcome.references')}</button>
       <button id="welcome-whats-new" data-action="openWhatsNew" type="button" title="See what changed in this version" aria-haspopup="dialog" aria-controls="whats-new-modal">${t('welcome.whats-new')} · v${html`${APP_VERSION}`}</button>
@@ -50831,6 +50854,7 @@ ov.innerHTML=html.raw`
   </div>
 </div>`;
 ov.addEventListener('click',e=>{if(e.target===ov)closeWelcome(true);});
+_syncTourVideoLinks();
 return ov;
 }
 
@@ -51262,12 +51286,13 @@ ov.innerHTML=
 aeonGlyph+
 '<h2 id="help-overlay-title" class="m-0">Keyboard Shortcuts</h2>'+
 '</header>'+
-'<div class="hsub">Press <kbd>Esc</kbd> to close · <kbd>?</kbd> to reopen · <button class="hcustomize" data-action="openKeybindingsModal" type="button" aria-haspopup="dialog" aria-controls="kb-modal">Customize…</button> · <button class="hcustomize" data-action="openCitations" type="button" aria-haspopup="dialog" aria-controls="citations-overlay">References</button></div>'+
+'<div class="hsub">Press <kbd>Esc</kbd> to close · <kbd>?</kbd> to reopen · <button class="hcustomize" data-action="openKeybindingsModal" type="button" aria-haspopup="dialog" aria-controls="kb-modal">Customize…</button> · <button class="hcustomize" data-action="openCitations" type="button" aria-haspopup="dialog" aria-controls="citations-overlay">References</button><span data-tour-video hidden> · <button class="hcustomize" data-action="openTourVideo" type="button" title="Opens YouTube in a new tab">'+t('welcome.tour-video')+'</button></span></div>'+
 '<input class="hsearch" id="help-search" type="search" placeholder="Filter shortcuts…" aria-label="Filter shortcuts">'+
 '<div id="help-body"></div>'+
 '</div>';
 ov.addEventListener('click',e=>{ if(e.target===ov) closeHelpOverlay(); });
 document.body.appendChild(ov);
+_syncTourVideoLinks();
 _a11yWireModals();
 const search=document.getElementById('help-search');
 if(search){

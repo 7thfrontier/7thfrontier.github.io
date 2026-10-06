@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="author" content="© 2026 7th Frontier, Inc. All Rights Reserved.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data:; style-src 'self' 'sha256-cpsHMZ0oiiD/91kOhbFZ28xadZp+DyhBATzHWfXi17I=' 'sha256-MYZE3Myk80Lmi+QpaWtKgvXF6rIg/Y3BL3HmCzttyjM=' 'sha256-4EupS2ecbqBJmSSt3SHTBfIftBzlLgqJi7v8gVbCztk='; font-src 'self'; script-src 'self' 'sha256-Zne5Z6h7n4weyj6/vOklq9Nv5ZzEtvScXCA84XCnh0A='; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data:; style-src 'self' 'sha256-cpsHMZ0oiiD/91kOhbFZ28xadZp+DyhBATzHWfXi17I=' 'sha256-y2NFRhd7HyG/oRaiwzZeUEfUPHr4o3NdBtofIfT7MQ4=' 'sha256-4EupS2ecbqBJmSSt3SHTBfIftBzlLgqJi7v8gVbCztk='; font-src 'self'; script-src 'self' 'sha256-pociHX2l5YVsGsRyjvTt+lnw7y9wMhaTuiRjQ2vtr5w='; connect-src 'none'; frame-src https://www.youtube-nocookie.com">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AEON: Universal Dynamics Reactor</title>
 <meta name="description" content="AEON is a single-file fractal explorer and sacred-geometry studio. 58 fractal types, 183 patterns, zero dependencies. Open the file and create.">
@@ -481,16 +481,15 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   border-color: var(--accent);
   box-shadow: var(--shadow-md);
 }
-.tile-svg {
+.tile-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  color: var(--accent);
-  opacity: .85;
-  transition: opacity .14s, transform 12s linear;
+  object-fit: cover;
+  transition: transform .6s cubic-bezier(.2,.8,.3,1);
 }
-.tile:hover .tile-svg { opacity: 1; transform: rotate(360deg); }
+.tile:hover .tile-img { transform: scale(1.04); }
 .tile-cap {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -513,7 +512,9 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   letter-spacing: 0;
   font-weight: 500;
 }
-[data-theme="light"] .tile-cap { background: linear-gradient(to top, rgba(242,235,220,.92), transparent); }
+
+[data-theme="light"] .tile-cap { color: var(--color-cream-50); }
+[data-theme="light"] .tile-cap em { color: var(--color-copper-500); }
 
 
 .timeline {
@@ -743,6 +744,25 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   .spec-grid { grid-template-columns: 1fr; gap: var(--sp-2); }
   .spec-grid dt { padding-top: var(--sp-3); }
 }
+
+
+.tour-video { margin-top: var(--sp-9); }
+.tour-video[hidden] { display: none; }
+.tour-video-frame {
+  position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0;
+  border: 1px solid var(--border-mid); border-radius: var(--r-3); overflow: hidden;
+  background: var(--surface); cursor: pointer;
+}
+.tour-video-frame img, .tour-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+.tour-video-label {
+  position: absolute; left: var(--sp-6); bottom: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-1);
+  padding: var(--sp-4) var(--sp-6); border-radius: var(--r-2); background: var(--color-charcoal-950); color: var(--color-cream-50);
+  font-family: var(--font-ui); font-size: 15px; text-align: left;
+}
+.tour-video-label small { font-size: 12px; color: var(--color-cream-400); }
+.tour-video-frame:hover .tour-video-label, .tour-video-frame:focus-visible .tour-video-label { background: var(--accent); color: var(--color-charcoal-950); }
+.tour-video-frame:hover .tour-video-label small, .tour-video-frame:focus-visible .tour-video-label small { color: var(--color-charcoal-950); }
+.tour-video-frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 </style>
 <style>
 .render-hero { margin: 0; padding: 0 var(--sp-10); max-width: 1600px; margin-inline: auto; }
@@ -846,6 +866,13 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
     <h2 class="section-title">The Instrument</h2>
     <p class="section-lede">AEON is a program for looking at mathematical forms: fractals, tilings, polytopes and strange attractors. The canvas fills most of the screen, and the controls stay at the edges until you need them.</p>
   </header>
+  
+  <div class="tour-video" data-tour-id="" hidden>
+    <button type="button" class="tour-video-frame" aria-label="Watch the 1-minute tour. Plays from YouTube.">
+      <img src="./assets/tour-poster.jpg" alt="" width="1280" height="720" loading="lazy">
+      <span class="tour-video-label">Watch the 1-minute tour<small>Plays from YouTube when you press it</small></span>
+    </button>
+  </div>
 </section>
 
 
@@ -857,75 +884,27 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   </header>
   <div class="gallery">
     <article class="tile">
-      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
-        <g fill="none" stroke="currentColor" stroke-width="1.2">
-          <circle cx="50" cy="50" r="14"/>
-          <circle cx="50" cy="32" r="14"/><circle cx="50" cy="68" r="14"/>
-          <circle cx="34.4" cy="41" r="14"/><circle cx="65.6" cy="41" r="14"/>
-          <circle cx="34.4" cy="59" r="14"/><circle cx="65.6" cy="59" r="14"/>
-        </g>
-      </svg>
+      <img class="tile-img" src="./assets/landing/seed-of-life.webp" alt="The Seed of Life: seven equal circles in hexagonal symmetry" width="720" height="720" loading="lazy" decoding="async">
       <div class="tile-cap"><em>Seed of Life</em>Seven circles, hex symmetry</div>
     </article>
     <article class="tile">
-      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
-        <g fill="none" stroke="currentColor" stroke-width="1">
-          <polygon points="50,15 85,75 15,75"/>
-          <polygon points="50,85 15,25 85,25"/>
-          <polygon points="50,28 73,68 27,68"/>
-          <polygon points="50,72 27,32 73,32"/>
-          <polygon points="50,40 64,62 36,62"/>
-          <polygon points="50,60 36,38 64,38"/>
-          <circle cx="50" cy="50" r="2" fill="currentColor"/>
-        </g>
-      </svg>
+      <img class="tile-img" src="./assets/landing/sri-yantra.webp" alt="The Sri Yantra: nine interlocking triangles around a central point" width="720" height="720" loading="lazy" decoding="async">
       <div class="tile-cap"><em>Sri Yantra</em>Nine triangles, central bindu</div>
     </article>
     <article class="tile">
-      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
-        <g fill="none" stroke="currentColor" stroke-width="1.2">
-          <path d="M20,50 Q35,20 50,50 T80,50 M20,50 Q35,80 50,50 T80,50"/>
-          <path d="M50,20 Q20,35 50,50 T50,80 M50,20 Q80,35 50,50 T50,80"/>
-          <circle cx="50" cy="50" r="22"/>
-        </g>
-      </svg>
+      <img class="tile-img" src="./assets/landing/maurer-rose.webp" alt="A Maurer rose, n=6, d=71: chords stepping 71 degrees around a six-petal rose" width="720" height="720" loading="lazy" decoding="async">
       <div class="tile-cap"><em>Maurer Rose</em>n=6 d=71</div>
     </article>
     <article class="tile">
-      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
-        <g fill="none" stroke="currentColor" stroke-width="1.2">
-          <polygon points="50,15 85,40 72,80 28,80 15,40"/>
-          <polygon points="50,15 72,80 15,40"/>
-          <polygon points="85,40 28,80 50,15"/>
-          <polygon points="50,15 28,80 85,40"/>
-          <polygon points="15,40 72,80 50,15"/>
-        </g>
-      </svg>
-      <div class="tile-cap"><em>Pentagram</em>Compound of 5 inscribed</div>
+      <img class="tile-img" src="./assets/landing/penrose-tiling.webp" alt="A Penrose tiling of kites and darts with fivefold symmetry" width="720" height="720" loading="lazy" decoding="async">
+      <div class="tile-cap"><em>Penrose Tiling</em>Kites and darts, fivefold</div>
     </article>
     <article class="tile">
-      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
-        <g fill="none" stroke="currentColor" stroke-width="1">
-          <path d="M50,50 m-30,0 a30,30 0 1,1 60,0 a30,30 0 1,1 -60,0" stroke-dasharray="2 3"/>
-          <path d="M50,50 Q60,30 80,50 T50,50 Q40,70 20,50 T50,50 Q70,40 50,20 T50,50 Q30,60 50,80 T50,50"/>
-          <circle cx="50" cy="50" r="3"/>
-        </g>
-      </svg>
+      <img class="tile-img" src="./assets/landing/mandelbrot.webp" alt="The Mandelbrot set" width="720" height="720" loading="lazy" decoding="async">
       <div class="tile-cap"><em>Mandelbrot</em>z² + c, |z| ≤ 2</div>
     </article>
     <article class="tile">
-      <svg class="tile-svg" viewBox="0 0 100 100" aria-hidden="true">
-        <g fill="none" stroke="currentColor" stroke-width="1">
-          <polygon points="50,12 80,28 80,72 50,88 20,72 20,28"/>
-          <polygon points="50,28 70,40 70,60 50,72 30,60 30,40"/>
-          <line x1="50" y1="12" x2="50" y2="28"/>
-          <line x1="80" y1="28" x2="70" y2="40"/>
-          <line x1="80" y1="72" x2="70" y2="60"/>
-          <line x1="50" y1="88" x2="50" y2="72"/>
-          <line x1="20" y1="72" x2="30" y2="60"/>
-          <line x1="20" y1="28" x2="30" y2="40"/>
-        </g>
-      </svg>
+      <img class="tile-img" src="./assets/landing/tesseract.webp" alt="A tesseract, the four-dimensional cube, projected into three dimensions" width="720" height="720" loading="lazy" decoding="async">
       <div class="tile-cap"><em>Tesseract</em>4-cube, 3D-projected</div>
     </article>
   </div>
@@ -1324,6 +1303,27 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     else root.setAttribute('data-theme', 'light');
     try { localStorage.setItem(KEY, isLight ? 'dark' : 'light'); } catch (_e) {}
   });
+})();
+
+
+(function(){
+  const box = document.querySelector('.tour-video');
+  const id = box && box.getAttribute('data-tour-id');
+  if (!id || navigator.onLine === false) return;
+  box.hidden = false;
+  const btn = box.querySelector('.tour-video-frame');
+  btn.addEventListener('click', () => {
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
+    f.title = 'AEON: the 1-minute tour';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    const wrap = document.createElement('div');
+    wrap.className = 'tour-video-frame';
+    wrap.appendChild(f);
+    btn.replaceWith(wrap);
+    f.focus();
+  }, { once: true });
 })();
 </script>
 </body>
