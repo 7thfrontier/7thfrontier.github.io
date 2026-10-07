@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-fpBG/Gx1/e+3X9BEfB0bsJGekqJU6O2xWA9UJQSTQyQ=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-4ac9+u57rHtXCqv0us3VyXs34Q2SFujEeXEQ9YCWF+k=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4225,7 +4225,7 @@
 
 
 
-<!-- build: 2c7a9025ac4e -->
+<!-- build: d1b30f39e4e6 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -4274,7 +4274,7 @@ info:{name:'Newton zⁿ−1',formula:'z ← z − (zⁿ−1)/(n·zⁿ⁻¹)'},
 desc:{f:'z → z − (zⁿ−1)/(n·zⁿ⁻¹)',d:"Newton's method on zⁿ=1. The Degree slider sets n (3–6): n roots create n basins of attraction with an infinitely detailed fractal boundary between them."}},
 newton_cayley:{glType:12,family:'escape',juliaMode:false,label:'Newton Cayley',fd:{cx:0,cy:0,zoom:1.0},
 info:{name:'Newton–Cayley (z³−2z+2)',formula:'z ← z − (z³−2z+2)/(3z²−2)'},
-desc:{f:'Newton on z³−2z+2',d:"The canonical Cayley basin: Newton iteration on the cubic z³−2z+2, the classical example with three roots whose basins exhibit Wada-lake topology (every point on a basin boundary borders all three basins)."}},
+desc:{f:'Newton on z³−2z+2',d:"The canonical Cayley basin: Newton iteration on the cubic z³−2z+2, the classical example because Newton has an attracting 2-cycle between 0 and 1 here, so besides the three root basins there are open regions that converge to no root at all."}},
 
 
 
@@ -4302,7 +4302,7 @@ desc:{f:'Newton on z³−2z+2',d:"The canonical Cayley basin: Newton iteration o
 
 nova:{glType:13,family:'escape',juliaMode:false,label:'Nova',fd:{cx:-0.15,cy:0,zoom:2.2},escR:32,mi:64,
 info:{name:'Nova Fractal',formula:'f(z) = z − (z³−1)/(3z²) + c'},
-desc:{f:'z → z − p·f(z)/f′(z) + c',d:'Newton-relaxed iteration. Smooth basins of attraction separated by a fine-grained fractal boundary.'}},
+desc:{f:'z → z − f(z)/f′(z) + c',d:'Newton iteration on z³ − 1 with c added each step (relaxation 1), starting from z = 1. Smooth basins of attraction separated by a fine-grained fractal boundary.'}},
 
 
 magnet1:{glType:14,family:'escape',juliaMode:false,label:'Magnet I',fd:{cx:0,cy:0,zoom:.85},escR:16,
@@ -4310,16 +4310,16 @@ info:{name:'Magnet I',formula:'f(z) = ((z²+c−1)/(2z+c−2))²'},
 desc:{f:'z → ((z²+c−1)/(2z+c−2))²',d:'Models renormalization in 2D magnets. Both fractal and analytic structure coexist inside one shape.'}},
 lyapunov:{glType:15,family:'escape',juliaMode:false,label:'Lyapunov',fd:{cx:3.0,cy:3.0,zoom:1.2},
 info:{name:'Lyapunov Fractal',formula:'λ = lim Σ ln|r·(1−2xₙ)|/n'},
-desc:{f:'λ = lim (1/n)Σ log|f′|',d:'Lyapunov exponent mapped to color. Positive = chaos (blue), negative = stability (red).'}},
+desc:{f:'λ = lim (1/n)Σ log|f′|',d:'Lyapunov exponent mapped to color. Negative (stable) takes the palette; positive (chaotic) is pulled toward red.'}},
 perp_mandelbrot:{glType:16,family:'escape',juliaMode:false,label:'Perp. Mandelbrot',fd:{cx:-.5,cy:0,zoom:1},
 info:{name:'Perpendicular Mandelbrot',formula:'z → (|Re(z)| + i·Im(z))² + c'},
-desc:{f:'z → (|Re(z)|+i·Im(z))² + c',d:'Mandelbrot variant with absolute value on the real part before squaring. Reflective symmetry across the imaginary axis; mirrored tendrils.'}},
+desc:{f:'z → (|Re(z)|+i·Im(z))² + c',d:'Mandelbrot variant with absolute value on the real part before squaring. Mirror-symmetric across the real axis: the top and bottom halves match.'}},
 perp_burning:{glType:17,family:'escape',juliaMode:false,label:'Perp. Burning Ship',fd:{cx:-1.75,cy:-.04,zoom:1.2},
 info:{name:'Perpendicular Burning Ship',formula:'z → (Re(z) + i·|Im(z)|)² + c'},
-desc:{f:'Asymmetric absolute fold',d:'Burning Ship variant: abs only on the imaginary axis (real part is signed). Half the symmetry of Burning Ship; produces ship-hull silhouettes mirrored only in the y-axis.'}},
+desc:{f:'Asymmetric absolute fold',d:'Burning Ship variant: abs only on the imaginary axis (real part is signed). Produces ship-hull silhouettes with no mirror symmetry in either axis.'}},
 buffalo:{glType:18,family:'escape',juliaMode:false,label:'Buffalo',fd:{cx:-.5,cy:0,zoom:1},
 info:{name:'Buffalo',formula:'z → |Re(z²)| + i·|Im(z²)| + c'},
-desc:{f:'z → |Re(z²)| + i·|Im(z²)| + c',d:'Buffalo fractal, componentwise absolute value applied to z² before adding c. Dense, spiky, four-fold symmetric.'}},
+desc:{f:'z → |Re(z²)| + i·|Im(z²)| + c',d:'Buffalo fractal, componentwise absolute value applied to z² before adding c. Dense and spiky, with no mirror or rotational symmetry in the parameter plane.'}},
 lambda:{glType:19,family:'escape',juliaMode:false,label:'Lambda (Logistic)',fd:{cx:.5,cy:0,zoom:.7},
 info:{name:'Lambda (Logistic)',formula:'f(z) = λz(1−z)'},
 desc:{f:'z → λz(1−z)',d:'Logistic map in the complex plane. Period-doubling route to chaos visible as nested islands.'}},
@@ -4335,7 +4335,7 @@ info:{name:'Biomorph',formula:'z₀=pixel, z→z³+c (fixed c), body: |Re(z)|<R 
 desc:{f:'z₀=pixel, z→z³+c (fixed c), Pickover body test',d:"Pickover's biological fractal. z starts at each pixel with a fixed c (the Julia parameter) and iterates z³+c until |z| passes R. A point is part of the organism when, at that moment, |Re(z)| or |Im(z)| is still under R, which grows the spines and cilia. The exponent is fixed at 3, so the Power control does not apply to this type. Adjust the Julia C sliders to change the creature."}},
 burningship_julia:{glType:22,family:'escape',juliaMode:true,label:'B-Ship Julia',fd:{cx:0,cy:0,zoom:1.0},
 info:{name:'Burning Ship Julia',formula:'f(z) = (|Re|+i|Im|)² + c, c fixed'},
-desc:{f:'(|Re|+i|Im|)² + c, c fixed',d:'Julia variant of the Burning Ship. Fixed c produces jagged, asymmetric silhouettes, ship hulls and spines at every scale.'}},
+desc:{f:'(|Re|+i|Im|)² + c, c fixed',d:'Julia variant of the Burning Ship. Fixed c produces jagged silhouettes, ship hulls and spines at every scale, mirror-symmetric in both axes because the fold discards both signs.'}},
 
 
 
@@ -4347,7 +4347,7 @@ desc:{f:'(|Re|+i|Im|)² + c, c fixed',d:'Julia variant of the Burning Ship. Fixe
 
 exp_map:{glType:23,family:'escape',juliaMode:false,label:'Exp. Map',fd:{cx:0,cy:0,zoom:0.3},escR:256,
 info:{name:'Exponential Map',formula:'f(z) = eᶻ + c'},
-desc:{f:'z → eᶻ + c',d:'Exponential map. The complex exponential has infinitely many critical points, producing tiling horizontal bands of detail that repeat with the imaginary period 2πi.'}},
+desc:{f:'z → eᶻ + c',d:'Exponential map, followed from c: the exponential has no critical points, and c is the one value its orbits can approach, so its orbit decides each point. Adding 2πi to c shifts the whole orbit by 2πi, so the detail repeats in horizontal bands of height 2π.'}},
 
 
 
@@ -4367,7 +4367,7 @@ info:{name:'Newton sin(z)',formula:'z ← z − tan(z), roots at nπ'},
 desc:{f:'z → z − tan(z)',d:"Newton's method on sin(z)=0. Roots at nπ create infinitely many narrow basins, a striped fractal garden of convergence that stretches to infinity along the real axis."}},
 tricorn_julia:{glType:26,family:'escape',juliaMode:true,label:'Tricorn Julia',fd:{cx:0,cy:0,zoom:1.0},
 info:{name:'Tricorn Julia',formula:'f(z) = z̄² + c, c fixed'},
-desc:{f:'z̄² + c, c fixed',d:'Julia variant of the Tricorn. Complex conjugate iteration creates 3-fold symmetric star-burst forms, spikier and more angular than standard Julia sets.'}},
+desc:{f:'z̄² + c, c fixed',d:'Julia variant of the Tricorn. Complex conjugate iteration creates star-burst forms with 180° rotational symmetry, spikier and more angular than standard Julia sets (the 3-fold symmetry belongs to the Tricorn parameter plane).'}},
 formula:{glType:99,family:'escape',juliaMode:false,label:'Custom Formula',fd:{cx:0,cy:0,zoom:1},
 info:{name:'Custom GLSL Formula',formula:'User-defined z → f(z, c), live GLSL recompile'},
 desc:{f:'Custom GLSL body',d:'Write your own complex iteration in GLSL. Full access to cmul, cpow, cexp, csin and more.'}},
@@ -4381,7 +4381,7 @@ info:{name:'Mandelbulb 3D',formula:'rⁿ·trig(nθ,nφ) + c, n=power'},
 desc:{f:'rⁿ·trig(nθ, nφ) + c',d:'Spherical-coordinate 3D extension of Mandelbrot. Power-8 produces otherworldly alien coral forms.'}},
 mandelbox:{family:'3d',juliaMode:false,label:'Mandelbox 3D',fd:{cx:0,cy:0,zoom:1.0},
 info:{name:'Mandelbox 3D',formula:'spherefold(boxfold(z))·s + c'},
-desc:{f:'box fold → sphere fold → scale',d:'IFS iteration using box and sphere folds. Boxy crystalline structures at power 2, chaotic at higher scales.'}},
+desc:{f:'box fold → sphere fold → scale',d:'IFS iteration using box and sphere folds. Boxy crystalline structures at scale 2, more chaotic as the scale grows.'}},
 
 
 menger:{family:'3d',juliaMode:false,label:'Menger Sponge',fd:{cx:0,cy:0,zoom:0.6},
@@ -4413,13 +4413,13 @@ info:{name:'Barnsley Fern',formula:'4 affine IFS transformations'},
 desc:{f:'Barnsley 4-map IFS',d:'Four affine maps mimic real fern frond growth. Chaos game reveals biological branching.'}},
 ifs_levy:{family:null,juliaMode:false,label:'Lévy C Curve',fd:{cx:.5,cy:.35,zoom:1.6},
 info:{name:'Lévy C Curve',formula:'f(p) = rotate(p, 45°)/√2'},
-desc:{f:'Two-map IFS',d:'Lévy C curve, two reflections produce a self-tiling curve with fractal coastline character.'}},
+desc:{f:'Two-map IFS',d:'Lévy C curve: two maps, each a 45° rotation (one each way) scaled by 1/√2, produce a self-tiling curve with fractal coastline character.'}},
 ifs_dragon:{family:null,juliaMode:false,label:'Dragon Curve',fd:{cx:.3,cy:.1,zoom:1.1},
 info:{name:'Dragon Curve',formula:'2 rotational IFS maps'},
 desc:{f:'Two-map IFS (rotation)',d:'Dragon curve built from two rotated self-copies. Tile the plane with no gaps.'}},
 ifs_polygon:{family:null,juliaMode:false,label:'Chaos Game Lab',fd:{cx:0,cy:0,zoom:1.3},
 info:{name:'Chaos Game Lab',formula:'Polygon IFS, z → (1−r)·z + r·Vₖ'},
-desc:{f:'N-gon chaos game',d:'Generalized polygon chaos game: N vertices on a circle, jump ratio r, optional center. N=3, r=½ is the Sierpiński gasket; N=5, r≈0.382 the pentaflake. Each step contracts toward a randomly chosen vertex.'}},
+desc:{f:'N-gon chaos game',d:'Generalized polygon chaos game: N vertices on a circle, jump ratio r, optional center. N=3, r=½ is the Sierpiński gasket; N=5, r≈0.618 the pentaflake (each step keeps 1 − r of the distance to the chosen vertex). Each step contracts toward a randomly chosen vertex.'}},
 
 
 buddhabrot:{family:null,juliaMode:false,label:'Buddhabrot',fd:{cx:0,cy:0,zoom:1},
@@ -4456,7 +4456,7 @@ defaults:{a:1.41,b:-2.35,c:1.43,d:-2.37,label:['a','b','c','d'],hasD:true},
 params:{labels:['a','b','c','d'],ranges:[{min:-3,max:3,step:0.01,def:1.41},{min:-3,max:3,step:0.01,def:-2.35},{min:-3,max:3,step:0.01,def:1.43},{min:-3,max:3,step:0.01,def:-2.37}],has4:true}}},
 attractor_duffing:{family:null,juliaMode:false,label:'Duffing',fd:{cx:0,cy:0,zoom:0.6},
 info:{name:'Duffing Oscillator',formula:'ẍ+δẋ−x+αx³=γcos(ωt)'},
-desc:{f:'ẍ+δẋ−x+αx³=γcos(ωt)',d:"Georg Duffing's 1918 forced double-well oscillator, drawn as the (x,y) phase portrait. The periodic drive stretches and reinjects the orbit, folding a strange attractor between the two potential wells. δ damps, γ forces, ω sets the drive frequency, α the cubic stiffness."},
+desc:{f:'ẍ+δẋ−x+αx³=γcos(ωt)',d:"Duffing’s forced oscillator (1918) in the double-well form studied by Holmes (1979), drawn as the (x,y) phase portrait. The periodic drive stretches and reinjects the orbit, folding a strange attractor between the two potential wells. δ damps, γ forces, ω sets the drive frequency, α the cubic stiffness."},
 attractor:{
 defaults:{a:0.25,b:0.30,c:1.0,d:1.0,label:['δ','γ','ω','α'],hasD:true},
 params:{labels:['δ (damping)','γ (forcing)','ω (drive freq)','α (cubic)'],ranges:[{min:0,max:1,step:0.005,def:0.25},{min:0,max:0.8,step:0.005,def:0.30},{min:0.3,max:2,step:0.01,def:1.0},{min:0.2,max:3,step:0.01,def:1.0}],has4:true}}},
@@ -4498,7 +4498,7 @@ defaults:{a:1.0,b:0,c:0,d:0,label:['a','—','—','—'],hasD:false},
 params:{labels:['a','—','—','—'],ranges:[{min:0.5,max:3,step:0.01,def:1.0},{min:-5,max:5,step:0.01,def:0},{min:-5,max:5,step:0.01,def:0},{min:-5,max:5,step:0.01,def:0}],has4:false}}},
 attractor_thomas:{family:null,juliaMode:false,label:'Thomas',fd:{cx:0,cy:0,zoom:0.55},
 info:{name:'Thomas Cyclic Attractor',formula:'ẋ=sin(y)−bx, ẏ=sin(z)−by, ż=sin(x)−bz'},
-desc:{f:'3D, Thomas cyclically symmetric',d:"René Thomas (1999): a 3D flow with 3-fold rotational symmetry. The dissipation parameter b controls the bifurcation: b ≈ 0 gives a labyrinth; b ≈ 0.21 the canonical attractor."},
+desc:{f:'3D, Thomas cyclically symmetric',d:"René Thomas (1999): a 3D flow with 3-fold rotational symmetry. The dissipation parameter b controls the bifurcation: smaller b moves toward Thomas’s labyrinth chaos; b ≈ 0.21, the default, gives the canonical attractor."},
 attractor:{
 defaults:{a:0,b:0.208,c:0,d:0,label:['—','b','—','—'],hasD:false},
 params:{labels:['—','b (dissipation)','—','—'],ranges:[{min:-5,max:5,step:0.01,def:0},{min:0.05,max:0.5,step:0.001,def:0.208},{min:-5,max:5,step:0.01,def:0},{min:-5,max:5,step:0.01,def:0}],has4:false}}},
@@ -4668,7 +4668,7 @@ function itBurningJulia(zx,zy,cx,cy,mi,er2){for(let i=0;i<mi;i++){const n=zx*zx-
 
 function itTricornJulia(zx,zy,cx,cy,mi,er2){for(let i=0;i<mi;i++){const n=zx*zx-zy*zy+cx;zy=-2*zx*zy+cy;zx=n;if(zx*zx+zy*zy>er2)return[i,zx,zy]}return[mi,zx,zy]}
 
-function itExpMap(cx,cy,mi,er2){let zx=0,zy=0;for(let i=0;i<mi;i++){const ex=Math.exp(zx);const n=ex*Math.cos(zy)+cx;zy=ex*Math.sin(zy)+cy;zx=n;if(zx*zx+zy*zy>er2)return[i,zx,zy]}return[mi,zx,zy]}
+function itExpMap(cx,cy,mi,er2){let zx=cx,zy=cy;for(let i=0;i<mi;i++){const ex=Math.exp(zx);const n=ex*Math.cos(zy)+cx;zy=ex*Math.sin(zy)+cy;zx=n;if(zx*zx+zy*zy>er2)return[i,zx,zy]}return[mi,zx,zy]}
 
 
 function itNova(cx,cy,mi,er2){let zx=1,zy=0;for(let i=0;i<mi;i++){const z2x=zx*zx-zy*zy,z2y=2*zx*zy;const z3x=z2x*zx-z2y*zy,z3y=z2x*zy+z2y*zx;if(z2x*z2x+z2y*z2y<1e-10)return[mi,zx,zy];const[qx,qy]=cdiv(z3x-1,z3y,3*z2x,3*z2y);const px=zx,py=zy;zx=zx-qx+cx;zy=zy-qy+cy;if(zx*zx+zy*zy>er2)return[i,zx,zy];const dd=(zx-px)*(zx-px)+(zy-py)*(zy-py);if(dd<1e-10){const q=Math.min(64,Math.max(1.0001,Math.log(Math.max(dd,1e-30))/Math.log(1e-10))),L=Math.hypot(zx,zy),r=Math.sqrt(Math.pow(2,q)),ux=L>1e-20?zx/L:1,uy=L>1e-20?zy/L:0;return[i,ux*r,uy*r]}}return[mi,zx,zy]}
@@ -7495,10 +7495,10 @@ const APP_VERSION='7.0.9';
 
 
 
-const MISSION_BUILD_HASH='2c7a9025ac4e';
-const MISSION_GIT_SHA='6a2407f5ed984f33b7d15b23d48708bbf9f14e07';
+const MISSION_BUILD_HASH='d1b30f39e4e6';
+const MISSION_GIT_SHA='de0b42ae642f2a282d715c60e84eea5862d2b86f';
 
-const MISSION_RENDER_HASH='d036007248e6';
+const MISSION_RENDER_HASH='00c4eaef60cd';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -21592,7 +21592,7 @@ _legibleTable,_legibleT,
 
 _lwK,
 
-_geoFrameExt,_geoGrowLevels,_geoCullTris,_geoPolyKey,_geoGrowSun,
+_geoFrameExt,_geoGrowLevels,_geoCullTris,_geoPolyKey,_geoGrowSun,_penroseJoin,_penrosePath,_boyPoint,
 
 
 _mirrorConfigs,_drawGeomWithMirrors,_withCompositedGlow,_glowSelfManaged,
@@ -21616,6 +21616,8 @@ _mandalaGate,_mandalaPalace,_mandalaFireRing,_mandalaVajraRing,_mandalaCharnelRi
 
 _mandalaQuadTint,_mandalaSpokes,
 drawMetatronsCube,drawSriYantra,drawMandala,drawGoldenSpiral,
+
+_sriYantraTriangles,
 
 
 _fruit3DVerts,_project3DSorted,_drawSpheres3D,
@@ -28571,8 +28573,9 @@ vec4 lyapunovIter(vec2 r){
 }
 
 
+
 vec4 expMapIter(vec2 c){
-  float er2=u_escRad*u_escRad;vec2 z=vec2(0.);float trapMin=1e10;
+  float er2=u_escRad*u_escRad;vec2 z=c;float trapMin=1e10;
   for(int i=0;i<10000;i++){
     if(i>=u_maxIter)return vec4(float(u_maxIter),z,trapMin);
     z=cexp(z)+c;
@@ -31107,62 +31110,46 @@ SOLIDS['truncated-icosidodecahedron']={verts:tidVerts,edges:computeEdges(tidVert
 
 
 
-const sdXi=(()=>{
 
-let x=0.9; const phi2=phi*phi;
-for(let i=0;i<80;i++){const f=x*x*x+2*x*x-phi2, fp=3*x*x+4*x; x=x-f/fp}
-return x;
-})();
 const sdVerts=(()=>{
-const v=[];
-const xi=sdXi;
-const alpha=xi-1/xi;
-const beta=xi*phi+phi*phi+phi/xi;
+const sub=(u,w)=>[u[0]-w[0],u[1]-w[1],u[2]-w[2]], add=(u,w)=>[u[0]+w[0],u[1]+w[1],u[2]+w[2]], dot=(u,w)=>u[0]*w[0]+u[1]*w[1]+u[2]*w[2];
+const cross=(u,w)=>[u[1]*w[2]-u[2]*w[1],u[2]*w[0]-u[0]*w[2],u[0]*w[1]-u[1]*w[0]], unit=(u)=>{const l=Math.hypot(u[0],u[1],u[2]);return [u[0]/l,u[1]/l,u[2]/l];};
+const dist=(u,w)=>Math.hypot(u[0]-w[0],u[1]-w[1],u[2]-w[2]), mv=(M,v)=>M.map((r)=>dot(r,v));
+const ico=[]; for(const s1 of [1,-1]) for(const s2 of [1,-1]){ const q=[0,s1,s2*phi]; ico.push(q,[q[1],q[2],q[0]],[q[2],q[0],q[1]]); }
+const adj=(i,j)=>Math.abs(dist(ico[i],ico[j])-2)<1e-9;
+const frame=(u,w)=>{ const x=unit(u), z=unit(cross(u,w)); return [x, cross(z,x), z]; };
+const j0=ico.findIndex((v,i)=>i>0&&adj(0,i)), k0=ico.findIndex((v,i)=>i>0&&i!==j0&&adj(0,i)&&adj(j0,i));
 
-const sets=[
-[2*alpha, 2, 2*beta],
-[alpha+beta/phi+phi, -alpha*phi+beta+1/phi, alpha/phi+beta*phi-1],
-[-alpha/phi+beta*phi+1, -alpha+beta/phi-phi, alpha*phi+beta-1/phi],
-[alpha+beta/phi-phi, alpha*phi-beta+1/phi, alpha/phi+beta*phi+1],
-[-alpha/phi+beta*phi-1, alpha-beta/phi-phi, alpha*phi+beta+1/phi],
-];
-for(const base of sets){
-
-const evens=[base, [base[1],base[2],base[0]], [base[2],base[0],base[1]]];
-for(const e of evens){
-for(let s=0;s<8;s++){
-const sx=(s&1)?-1:1, sy=(s&2)?-1:1, sz=(s&4)?-1:1;
-
-if(sx*sy*sz>0)v.push([e[0]*sx, e[1]*sy, e[2]*sz]);
+const F0=frame(ico[0],ico[j0]), G=[];
+for(let i=0;i<12;i++) for(let j=0;j<12;j++){
+if(i===j||!adj(i,j)) continue;
+const F=frame(ico[i],ico[j]), R=[0,1,2].map((r)=>[0,1,2].map((col)=>F[0][r]*F0[0][col]+F[1][r]*F0[1][col]+F[2][r]*F0[2][col]));
+if(ico.every((v)=>ico.some((w)=>dist(mv(R,v),w)<1e-9))) G.push(R);
 }
+const rot=(ax,t)=>{ const c=Math.cos(t), sn=Math.sin(t), [x,y,z]=ax;
+return [[c+x*x*(1-c),x*y*(1-c)-z*sn,x*z*(1-c)+y*sn],[y*x*(1-c)+z*sn,c+y*y*(1-c),y*z*(1-c)-x*sn],[z*x*(1-c)-y*sn,z*y*(1-c)+x*sn,c+z*z*(1-c)]]; };
+const a5=unit(ico[0]), a3=unit(add(add(ico[0],ico[j0]),ico[k0])), a2=unit(add(ico[0],ico[j0]));
+const R5=rot(a5,TAU/5), R3=rot(a3,TAU/3), R2=rot(a2,Math.PI);
+const resid=(p)=>{ const d5=dist(p,mv(R5,p)); return [d5-dist(p,mv(R3,p)), d5-dist(p,mv(R2,p))]; };
+const c0=unit(add(add(a5,a3),a2)), u=unit(cross(c0,a5)), w=cross(c0,u);
+const at=(s,t)=>unit(add(c0,add(u.map((x)=>x*s), w.map((x)=>x*t))));
+let s=0, t=0;
+for(let it=0;it<60;it++){
+const f0=resid(at(s,t)), h=1e-7, fs=resid(at(s+h,t)), ft=resid(at(s,t+h));
+const j00=(fs[0]-f0[0])/h, j01=(ft[0]-f0[0])/h, j10=(fs[1]-f0[1])/h, j11=(ft[1]-f0[1])/h, det=j00*j11-j01*j10;
+if(!det) break;
+s-=(j11*f0[0]-j01*f0[1])/det; t-=(-j10*f0[0]+j00*f0[1])/det;
 }
-}
-return uniformScale(dedup(v));
+const p=at(s,t);
+return uniformScale(G.map((R)=>mv(R,p)));
 })();
-
-
-
-
-
 
 const sdEdges=(()=>{
-const eds=new Set();
-const k=5;
-for(let i=0;i<sdVerts.length;i++){
-const dists=[];
-for(let j=0;j<sdVerts.length;j++){
-if(j===i)continue;
-const d=Math.hypot(sdVerts[i][0]-sdVerts[j][0],sdVerts[i][1]-sdVerts[j][1],sdVerts[i][2]-sdVerts[j][2]);
-dists.push({j,d});
-}
-dists.sort((a,b)=>a.d-b.d);
-for(let n=0;n<k;n++){
-const j=dists[n].j;
-const key=Math.min(i,j)+'_'+Math.max(i,j);
-eds.add(key);
-}
-}
-return [...eds].map(k=>k.split('_').map(Number));
+let mn=Infinity;
+for(let i=0;i<sdVerts.length;i++) for(let j=i+1;j<sdVerts.length;j++) mn=Math.min(mn, Math.hypot(sdVerts[i][0]-sdVerts[j][0],sdVerts[i][1]-sdVerts[j][1],sdVerts[i][2]-sdVerts[j][2]));
+const eds=[];
+for(let i=0;i<sdVerts.length;i++) for(let j=i+1;j<sdVerts.length;j++) if(Math.hypot(sdVerts[i][0]-sdVerts[j][0],sdVerts[i][1]-sdVerts[j][1],sdVerts[i][2]-sdVerts[j][2])<mn*(1+1e-6)) eds.push([i,j]);
+return eds;
 })();
 SOLIDS['snub-dodecahedron']={verts:sdVerts,edges:sdEdges};
 })();
@@ -31206,11 +31193,6 @@ SOLIDS['great-dodecahedron']={verts:icoVerts,edges:SOLIDS.icosahedron.edges};
 
 
 
-
-
-
-
-
 const dodecVerts=SOLIDS.dodecahedron.verts;
 const gsdEdges=(()=>{
 let minD=Infinity;
@@ -31218,11 +31200,14 @@ for(let i=0;i<dodecVerts.length;i++)for(let j=i+1;j<dodecVerts.length;j++){
 const d=Math.sqrt((dodecVerts[i][0]-dodecVerts[j][0])**2+(dodecVerts[i][1]-dodecVerts[j][1])**2+(dodecVerts[i][2]-dodecVerts[j][2])**2);
 if(d>0.01&&d<minD)minD=d;
 }
-const targetD=minD*phi;
+
+
+
+const targetD=minD*phi*phi;
 const eds=[];
 for(let i=0;i<dodecVerts.length;i++)for(let j=i+1;j<dodecVerts.length;j++){
 const d=Math.sqrt((dodecVerts[i][0]-dodecVerts[j][0])**2+(dodecVerts[i][1]-dodecVerts[j][1])**2+(dodecVerts[i][2]-dodecVerts[j][2])**2);
-if(Math.abs(d-targetD)<0.05)eds.push([i,j]);
+if(Math.abs(d-targetD)<minD*1e-6)eds.push([i,j]);
 }
 return eds;
 })();
@@ -31889,6 +31874,45 @@ _drawSphericalDots(c, N, goldenAngle, bR*2.4, dotR);
 }
 
 
+function _sriYantraTriangles(){
+if(_sriYantraTriangles._c!==undefined)return _sriYantraTriangles._c;
+const P3=0.332,P6=0.537,P7=0.602,P9=0.835;
+const TR=[[1,2,7],[2,3,7],[1,3,8],[1,4,6],[1,5,9],[4,6,9],[2,7,9],[3,7,8],[3,8,9],[4,4,8],[5,5,6],[2,6,6]];
+const circ=(y)=>Math.sqrt(0.25-(y-0.5)*(y-0.5));
+const build=(u)=>{
+const b=[0,u[0],u[1],P3,u[2],u[3],P6,P7,u[4],P9];
+const a=[0,b[6],b[9],1,b[8],b[7],b[2],0,b[1],b[3]];
+const w=[0,u[5],u[6],circ(P3),u[7],u[8],u[9],circ(P7),u[10],u[11]];
+return {a,b,w};
+};
+const F=(u)=>{const T=build(u),leg=(i,y)=>T.w[i]*(y-T.a[i])/(T.b[i]-T.a[i]);return TR.map(([p,q,r])=>leg(p,T.b[q])-leg(r,T.b[q]));};
+let u=[0.15,0.25,0.42,0.48,0.70];
+{const T=build(u.concat([0,0,0,0,0,0,0]));u=u.concat([1,2,4,5,6,8,9].map((i)=>0.75*Math.abs(T.a[i]-T.b[i])));}
+let res=Infinity;
+for(let it=0;it<60&&res>1e-12;it++){
+const f=F(u),n=u.length,M=[];
+for(let i=0;i<n;i++)M.push(new Array(n+1).fill(0));
+for(let j=0;j<n;j++){const v=u.slice();v[j]+=1e-7;const g=F(v);for(let i=0;i<n;i++)M[i][j]=(g[i]-f[i])/1e-7;}
+for(let i=0;i<n;i++)M[i][n]=-f[i];
+for(let col=0;col<n;col++){
+let piv=col;for(let r=col+1;r<n;r++)if(Math.abs(M[r][col])>Math.abs(M[piv][col]))piv=r;
+const tmp=M[col];M[col]=M[piv];M[piv]=tmp;
+if(Math.abs(M[col][col])<1e-15){_sriYantraTriangles._c=null;return null;}
+for(let r=0;r<n;r++)if(r!==col){const k=M[r][col]/M[col][col];for(let k2=col;k2<=n;k2++)M[r][k2]-=k*M[col][k2];}
+}
+u=u.map((x,i)=>x+M[i][n]/M[i][i]);
+res=Math.max.apply(null,F(u).map(Math.abs));
+}
+const T=build(u);
+let ok=res<1e-9;
+for(let i=1;i<9;i++)if(!(T.b[i]<T.b[i+1]))ok=false;
+for(let i=1;i<=9;i++)if(!(T.w[i]>0))ok=false;
+const out=ok?[1,2,3,4,5,6,7,8,9].map((i)=>({i,ay:(T.a[i]-0.5)*2,by:(T.b[i]-0.5)*2,w:T.w[i]*2})):null;
+_sriYantraTriangles._c=out;
+return out;
+}
+
+
 function drawSriYantra(c,bR){
 const R=bR*3,depth=Math.min(S.layers,4),total=depth*2+1,gi=S.glowIntensity;let idx=0;
 
@@ -31912,11 +31936,11 @@ c.restore();
 if(S.glow&&gi>0){c.shadowBlur=S.lineWeight*6*gi*_lwK();c.shadowColor=accentColor()}
 
 const iR=R*.78;
-const triangles=[];
-const up=[{a:-.92,b:.76,w:.88},{a:-.64,b:.46,w:.56},{a:-.36,b:.18,w:.28},{a:-.12,b:.01,w:.08}];
-const dn=[{a:.92,b:-.76,w:.88},{a:.72,b:-.54,w:.64},{a:.48,b:-.30,w:.40},{a:.24,b:-.10,w:.18},{a:.06,b:-.02,w:.04}];
-for(let i=0;i<Math.min(depth,4);i++)triangles.push({dir:'up',ay:up[i].a,by:up[i].b,w:up[i].w});
-for(let i=0;i<Math.min(depth+1,5);i++)triangles.push({dir:'dn',ay:dn[i].a,by:dn[i].b,w:dn[i].w});
+
+const all=_sriYantraTriangles()||[];
+const byW=(list)=>list.slice().sort((p,q)=>q.w-p.w);
+const up=byW(all.filter((t)=>t.i>=6)), dn=byW(all.filter((t)=>t.i<=5));
+const triangles=up.slice(0,Math.min(depth,4)).concat(dn.slice(0,Math.min(depth+1,5)));
 for(const t of triangles){
 c.strokeStyle=geoElemColor(idx++,total*2,Math.abs(t.ay)*R,R);
 if(S.fill)c.fillStyle=geoFillColor(idx,total*2,Math.abs(t.ay)*R,R);
@@ -32767,13 +32791,16 @@ function drawTorusKnot(c,R){
 const p=Math.max(2,Math.round(S.layers)),q=Math.max(2,Math.min(9,Math.round(S.torusQ||3)));
 
 const scl=R*2.2,r1n=.38,r2n=.14; 
+
+
+const gcd=(a,b)=>{while(b){const t=a%b;a=b;b=t;}return a;}, dd=gcd(p,q), pp=p/dd, qq=q/dd;
 const steps=Math.ceil(500*Math.max(p,q)),segs=p*q*2;
 const rx0=S.rotX+.55,ry0=S.rotY+.75;
 
-const pts3=[];
-for(let i=0;i<=steps;i++){
-const t=(i/steps)*TAU*p;
-const qs=q*t/p; 
+const pts3=[], per=Math.ceil(steps/dd);
+for(let k=0;k<dd;k++) for(let i=0;i<=per;i++){
+const t=(i/per)*TAU*pp;
+const qs=(qq*t-TAU*k/dd)/pp; 
 const xn=(r1n+r2n*Math.cos(qs))*Math.cos(t);
 const yn=(r1n+r2n*Math.cos(qs))*Math.sin(t);
 const zn=r2n*Math.sin(qs);
@@ -32782,10 +32809,12 @@ const[px,py]=project(rx,ry,rz,scl);
 pts3.push({x:px,y:py,z:rz});
 }
 
-const segLen=Math.ceil(steps/segs);
+
+const segsPer=Math.ceil(segs/dd), segLen=Math.ceil(per/segsPer);
 const segArr=[];
-for(let s=0;s<segs;s++){
-const i0=s*segLen,i1=Math.min(i0+segLen+1,steps);
+for(let k=0;k<dd;k++) for(let s=0;s<segsPer;s++){
+const base=k*(per+1), i0=base+s*segLen, i1=Math.min(i0+segLen+1, base+per);
+if(i0>=base+per) continue;
 let avgZ=0,cnt=0;
 for(let i=i0;i<=i1&&i<pts3.length;i++){avgZ+=pts3[i].z;cnt++;}
 segArr.push({i0,i1,avgZ:cnt?avgZ/cnt:0});
@@ -33038,7 +33067,8 @@ const a1=Math.atan2(p1[1]-ay,p1[0]-ax), a2=Math.atan2(p2[1]-ay,p2[0]-ax);
 
 
 
-if(j===(i+1)%3)gaps[i].push(a1);else gaps[i].push(a2);
+
+if(j===(i+2)%3)gaps[i].push(a1,a2);
 }
 }
 for(let i=0;i<3;i++){
@@ -33161,15 +33191,18 @@ const nT=tris.length;
 tris=tris.concat(_geoGrowSun(scale,depth,2,seed,deflate,R,tris));   
 
 
-const secIdx=(A,B,C)=>{ const u=((Math.atan2(A[1]+B[1]+C[1],A[0]+B[0]+C[0])+TAU/20)/TAU%1+1)%1;
-return Math.min(nT-1,Math.floor(u*nT)); };
-tris.forEach(({type,A,B,C},i0)=>{
-const dist=Math.hypot(A[0],A[1]), i=i0<nT?i0:secIdx(A,B,C);
+
+
+
+for(const p of _penroseJoin(tris,'BC')){
+const {type,A}=p.t, dist=Math.hypot(A[0],A[1]), q=p.poly;
+let sx=0, sy=0; for(const v of q){ sx+=v[0]; sy+=v[1]; }
+const u=((Math.atan2(sy,sx)+TAU/20)/TAU%1+1)%1, old=p.ix.filter((k)=>k<nT);
+const i=old.length ? (old.find((k)=>Math.floor(k*10/nT)===Math.floor(u*10)) ?? old[0]) : Math.min(nT-1,Math.floor(u*nT));
 c.strokeStyle=geoElemColor(type===0?i:nT-1-i,nT,dist,scale);
-c.beginPath();c.moveTo(A[0],A[1]);c.lineTo(B[0],B[1]);c.lineTo(C[0],C[1]);c.closePath();
-if(S.fill){c.fillStyle=geoFillColor(type===0?i*2:i*2+1,nT*2,dist,scale);c.fill();}
-c.stroke();
-});
+if(S.fill){c.fillStyle=geoFillColor(type===0?i*2:i*2+1,nT*2,dist,scale);_penrosePath(c,p,true);c.fill();}
+_penrosePath(c,p,false);c.stroke();
+}
 }
 
 
@@ -35458,31 +35491,38 @@ ctx.restore();
 
 
 
+
+
+
+
+
+function _boyPoint(rho, th){
+const wr=rho*Math.cos(th), wi=rho*Math.sin(th);
+const mul=(a,b,c2,d)=>[a*c2-b*d, a*d+b*c2];
+const [w2r,w2i]=mul(wr,wi,wr,wi), [w3r,w3i]=mul(w2r,w2i,wr,wi), [w4r,w4i]=mul(w2r,w2i,w2r,w2i), [w6r,w6i]=mul(w3r,w3i,w3r,w3i);
+const Dr=w6r+Math.sqrt(5)*w3r-1, Di=w6i+Math.sqrt(5)*w3i, dd=Dr*Dr+Di*Di;
+const div=(a,b)=>[(a*Dr+b*Di)/dd, (b*Dr-a*Di)/dd];
+const [a1r,a1i]=div(...mul(wr,wi,1-w4r,-w4i)), [a2r]=div(...mul(wr,wi,1+w4r,w4i)), [,a3i]=div(1+w6r,w6i);
+const g1=-1.5*a1i, g2=-1.5*a2r, g3=a3i-0.5, n=g1*g1+g2*g2+g3*g3;
+return [g1/n, g2/n, g3/n];
+}
 function drawProjectivePlane(c, bR){
 const R=bR*1.6;
-const N=Math.max(40, S.layers*6);
-const M=Math.max(12, Math.floor(S.layers*1.5));
+const K=Math.max(6, Math.round(S.layers||6)), M=Math.max(12, Math.floor((S.layers||6)*2)), N=120;
 const cosX=Math.cos(S.rotX||0), sinX=Math.sin(S.rotX||0), cosY=Math.cos(S.rotY||0), sinY=Math.sin(S.rotY||0);
 c.save();
 c.lineWidth=Math.max(1, S.lineWeight*0.6*_lwK());
 
-for(let j=0;j<M;j++){
-const v=(j/M)*TAU;
-c.strokeStyle=geoElemColor(j, M, R, R);
-c.beginPath();
-for(let i=0;i<=N;i++){
-const u=i/N*Math.PI; 
-const cu=Math.cos(u), su=Math.sin(u);
-const cu2=Math.cos(u/2), su2=Math.sin(u/2);
-const sv=Math.sin(v), s2v=Math.sin(2*v);
-const r=R*0.45 + R*0.4*(cu2*sv - su2*s2v);   
-const X=r*cu, Y=r*su, Z=R*0.4*(su2*sv + cu2*s2v);
-const p=_geoRot3D(X,Y,Z,cosX,sinX,cosY,sinY),pp=3.5/(3.5+p.z/R),px=p.x*pp,py=p.y*pp; 
-if(i===0)c.moveTo(px, py);
-else c.lineTo(px, py);
-}
+const sc=R*0.55;
+const trace=(pts, col)=>{
+c.strokeStyle=col; c.beginPath();
+pts.forEach(([x,y,z],i)=>{ const p=_geoRot3D(x*sc,y*sc,z*sc,cosX,sinX,cosY,sinY), pp=3.5/(3.5+p.z/R); if(i===0) c.moveTo(p.x*pp, p.y*pp); else c.lineTo(p.x*pp, p.y*pp); });
 c.stroke();
-}
+};
+
+for(let k=1;k<=K;k++){ const pts=[]; for(let i=0;i<=N*2;i++) pts.push(_boyPoint(k/K, i/(N*2)*TAU)); trace(pts, geoElemColor(k, K+M, R, R)); }
+
+for(let j=0;j<M;j++){ const pts=[], th=j/M*TAU; for(let i=0;i<=N;i++) pts.push(_boyPoint(i/N, th)); trace(pts, geoElemColor(K+j, K+M, R, R)); }
 c.restore();
 }
 
@@ -36096,33 +36136,33 @@ c.globalAlpha=1;
 
 
 
+
+
+
+const rv=Math.tanh(Math.acosh(1/Math.tan(Math.PI/14)/Math.tan(Math.PI/7))/2);
 const verts=[];
-for(let i=0;i<n;i++){
-const a=i*TAU/n - Math.PI/2;
-verts.push([R*0.85*Math.cos(a), R*0.85*Math.sin(a)]);
-}
+for(let i=0;i<n;i++){ const a=i*TAU/n - Math.PI/2; verts.push([rv*Math.cos(a), rv*Math.sin(a)]); }
 
+const partner=(s)=>s%2 ? ((s+4)%14)+1 : ((s+8)%14)+1;
+const letter=(s)=>'abcdefg'[((s%2 ? s : partner(s))-1)/2];
+for(let s=1;s<=n;s++){
+const A=verts[s-1], B=verts[s%n], li='abcdefg'.indexOf(letter(s));
+c.strokeStyle=geoElemColor(li, 7, bR, bR);
 
-const pattern=['a','b','c','d','e','f','g','a','b','c','d','e','f','g'];
-const dirs=[1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1];
-const colorIdx={};
-let nLetters=0;
-for(const lt of pattern){if(colorIdx[lt]===undefined)colorIdx[lt]=nLetters++}
-for(let i=0;i<n;i++){
-const A=verts[i], B=verts[(i+1)%n];
-c.strokeStyle=geoElemColor(colorIdx[pattern[i]], nLetters, bR, bR);
+const a2=A[0]*A[0]+A[1]*A[1], As=[A[0]/a2, A[1]/a2];
+const d=2*(A[0]*(B[1]-As[1])+B[0]*(As[1]-A[1])+As[0]*(A[1]-B[1]));
+const b2=B[0]*B[0]+B[1]*B[1], s2=As[0]*As[0]+As[1]*As[1];
+const ux=(a2*(B[1]-As[1])+b2*(As[1]-A[1])+s2*(A[1]-B[1]))/d, uy=(a2*(As[0]-B[0])+b2*(A[0]-As[0])+s2*(B[0]-A[0]))/d;
+const rc=Math.hypot(A[0]-ux, A[1]-uy);
+let t0=Math.atan2(A[1]-uy, A[0]-ux), t1=Math.atan2(B[1]-uy, B[0]-ux);
 
-const mx=(A[0]+B[0])*0.5, my=(A[1]+B[1])*0.5;
-const inwardX=mx*0.85, inwardY=my*0.85;
-c.beginPath();
-c.moveTo(A[0], A[1]);
-c.quadraticCurveTo(inwardX, inwardY, B[0], B[1]);
-c.stroke();
-
+let dt=t1-t0; while(dt>Math.PI) dt-=TAU; while(dt<-Math.PI) dt+=TAU;
+c.beginPath(); c.arc(ux*R, uy*R, rc*R, t0, t0+dt, dt<0); c.stroke();
+const tm=t0+dt/2, mx=(ux+rc*Math.cos(tm))*R, my=(uy+rc*Math.sin(tm))*R;
 c.font=`${Math.max(11,bR*0.085|0)}px `+(window.UI_FONT_FAMILY||'sans-serif'); 
 c.textAlign='center'; c.textBaseline='middle';
-c.fillStyle=geoElemColor(colorIdx[pattern[i]], nLetters, bR, bR);
-c.fillText(pattern[i], mx*0.7, my*0.7);
+c.fillStyle=geoElemColor(li, 7, bR, bR);
+c.fillText(letter(s), mx*0.82, my*0.82);
 }
 c.restore();
 }
@@ -38347,31 +38387,30 @@ const yMax=3.5;
 c.save();
 c.lineWidth=Math.max(2, S.lineWeight*_lwK());
 c.strokeStyle=geoElemColor(0, 1, bR, bR);
-const N=600;
-let prevPosY=null, prevNegY=null;
-c.beginPath();
-let started=false;
-for(let i=0;i<=N;i++){
-const x=xMin + (i/N)*(xMax-xMin);
-const y2=x*x*x + a*x + b;
-if(y2<0){started=false; continue}
-const y=Math.sqrt(y2);
-if(y>yMax){started=false; continue}
-const px=x*scale, py=-y*scale;
-if(!started){c.moveTo(px, py); started=true}
-else c.lineTo(px, py);
-}
 
-started=false;
-for(let i=N;i>=0;i--){
-const x=xMin + (i/N)*(xMax-xMin);
-const y2=x*x*x + a*x + b;
-if(y2<0){started=false; continue}
-const y=Math.sqrt(y2);
-if(y>yMax){started=false; continue}
-const px=x*scale, py=y*scale;
-if(!started){c.moveTo(px, py); started=true}
-else c.lineTo(px, py);
+
+
+
+const realRoots=(p, q)=>{
+let r;
+const d=4*p*p*p+27*q*q;
+if(Math.abs(d)<1e-12) r = Math.abs(p)<1e-12 ? [0] : [3*q/p, -3*q/(2*p)];
+else if(d<0){ const m=2*Math.sqrt(-p/3), th=Math.acos(Math.max(-1,Math.min(1,(3*q/(2*p))*Math.sqrt(-3/p))))/3;
+r=[0,1,2].map((k)=>m*Math.cos(th-2*Math.PI*k/3)); }
+else { const s0=Math.sqrt(q*q/4+p*p*p/27); r=[Math.cbrt(-q/2+s0)+Math.cbrt(-q/2-s0)]; }
+return r.map((x)=>{ const f1=3*x*x+p; return Math.abs(f1)>1e-9 ? x-(x*x*x+p*x+q)/f1 : x; }).sort((u,v)=>u-v);
+};
+const cuts=[xMin, ...realRoots(a, b).filter((x)=>x>xMin&&x<xMax), xMax];
+const N=600;
+const pen=(seq)=>{ let on=false;
+for(const [x,y] of seq){ if(Math.abs(y)>yMax){ on=false; continue; } const px=x*scale, py=y*scale; if(!on){ c.moveTo(px,py); on=true; } else c.lineTo(px,py); } };
+c.beginPath();
+for(let k=0;k+1<cuts.length;k++){
+const l=cuts[k], r=cuts[k+1], m=(l+r)/2;
+if(m*m*m+a*m+b<0) continue;
+const top=[];
+for(let i=0;i<=N;i++){ const x=l+(r-l)*(1-Math.cos(Math.PI*i/N))/2; top.push([x, Math.sqrt(Math.max(0, x*x*x+a*x+b))]); }
+pen(top.slice().reverse().concat(top.map(([x,y])=>[x,-y])));
 }
 c.stroke();
 
@@ -38476,13 +38515,16 @@ c.restore();
 }
 
 
+
+
+
+
 function drawLissajousKnot(c, bR){
 const presets=[
 [3,2,7, 0.7, 0.2],   
-[3,5,7, 0.7, 0.0],   
-[3,7,11, 0.7, 1.0],
-[2,3,5, 0.0, 0.5],
-[3,4,5, 0.4, 0.2]
+[3,2,5, 1.5, 0.2],   
+[3,5,7, 0.7, 1.0],   
+[3,4,7, 0.1, 0.7]    
 ];
 const idx=((S.layers||1)-1)%presets.length;
 const [nx, ny, nz, px, py]=presets[idx];
@@ -38497,8 +38539,8 @@ c.lineWidth=Math.max(2, S.lineWeight*_lwK());
 const pts=[];
 for(let i=0;i<=N;i++){
 const t=i/N*TAU;
-const X=Math.cos(nx*t + px*Math.PI);
-const Y=Math.cos(ny*t + py*Math.PI);
+const X=Math.cos(nx*t + px);
+const Y=Math.cos(ny*t + py);
 const Z=Math.cos(nz*t);
 const p=_geoRot3D(X,Y,Z,cosX,sinX,cosY,sinY);
 const persp=3.5/(3.5+p.z);
@@ -38605,63 +38647,70 @@ return g.filter((t)=>!have.has(_geoPolyKey(pts(t), bR)));
 }
 
 
+function _penroseJoin(tris, seam){
+const u=seam[0], v=seam[1], w=['A','B','C'].find((x)=>x!==u&&x!==v);
+
+
+const cells=new Map(), ids=[];
+const k=(p)=>{ const cx=Math.round(p[0]*1e3), cy=Math.round(p[1]*1e3);
+for(let dx=-1;dx<=1;dx++) for(let dy=-1;dy<=1;dy++){ const l=cells.get((cx+dx)+','+(cy+dy)); if(l) for(const j of l) if(Math.abs(ids[j][0]-p[0])<1e-6&&Math.abs(ids[j][1]-p[1])<1e-6) return j; }
+const key=cx+','+cy; ids.push(p); (cells.get(key)||cells.set(key,[]).get(key)).push(ids.length-1); return ids.length-1; };
+const by=new Map(), out=[];
+tris.forEach((t,i)=>{ const key=t.type+'|'+[k(t[u]),k(t[v])].sort().join('|'); const l=by.get(key); if(l) l.push(i); else by.set(key,[i]); });
+for(const l of by.values()){
+const t=tris[l[0]];
+if(l.length===2){ const t2=tris[l[1]]; out.push({type:t.type, i:Math.min(l[0],l[1]), ix:[l[0],l[1]], t, poly:[t[w],t[u],t2[w],t[v]], half:false}); }
+else for(const i of l){ const h=tris[i]; out.push({type:h.type, i, ix:[i], t:h, poly:[h[u],h[w],h[v]], half:true}); }
+}
+return out.sort((p,q)=>p.i-q.i);
+}
+
+function _penrosePath(c, piece, closed){
+const p=piece.poly; c.beginPath(); c.moveTo(p[0][0],p[0][1]); for(let i=1;i<p.length;i++) c.lineTo(p[i][0],p[i][1]);
+if(closed||!piece.half) c.closePath();
+}
+
+
 function drawPenroseP2(c, bR){
 const phi=(1+Math.sqrt(5))/2;
 const depth=Math.min(6, Math.max(2, S.layers||5));
-
-
-
-
-
-
 const R=bR*1.6;
+
 const seed=(R, rot)=>{
-const triangles=[]; 
-for(let i=0;i<10;i++){
-const a1=i*TAU/10 - TAU/20 + rot, a2=(i+1)*TAU/10 - TAU/20 + rot;
-let B=[R*Math.cos(a1), R*Math.sin(a1)];
-let C=[R*Math.cos(a2), R*Math.sin(a2)];
-if(i%2===0){const tmp=B; B=C; C=tmp;} 
-triangles.push({type:'kite', A:[0,0], B, C});
+const T=[];
+for(let i=0;i<5;i++){
+const th=i*TAU/5 - TAU/20 + rot, d=(a)=>[R*Math.cos(a), R*Math.sin(a)];
+for(const s of [1,-1]) T.push({type:'kite', A:[0,0], B:d(th), C:d(th+s*Math.PI/5)});
 }
-return triangles;
+return T;
 };
-
-
-
-
-
-
 function lerp(P, Q, t){return [P[0]+(Q[0]-P[0])*t, P[1]+(Q[1]-P[1])*t]}
 function deflate(tris){
-const result=[];
+const out=[];
 for(const t of tris){
-if(t.type==='kite'){ 
-const Q=lerp(t.A, t.B, 1/phi); 
-const R=lerp(t.A, t.C, 1/phi); 
-result.push({type:'kite', A:t.A, B:Q, C:R});
-result.push({type:'kite', A:t.C, B:t.B, C:Q});
-result.push({type:'dart', A:R, B:t.C, C:Q});
-} else { 
-const M=lerp(t.B, t.C, 1/phi); 
-result.push({type:'kite', A:t.B, B:t.A, C:M});
-result.push({type:'dart', A:M, B:t.A, C:t.C});
+if(t.type==='kite'){
+
+const Rs=lerp(t.A, t.B, 1/phi), Q=lerp(t.A, t.C, 1/(phi*phi));
+out.push({type:'dart', A:Q, B:t.A, C:Rs}, {type:'kite', A:t.C, B:Rs, C:Q}, {type:'kite', A:t.C, B:Rs, C:t.B});
+} else {
+
+const M=lerp(t.B, t.C, 1/phi);
+out.push({type:'kite', A:t.B, B:t.A, C:M}, {type:'dart', A:M, B:t.C, C:t.A});
 }
 }
-return result;
+return out;
 }
 let tris=seed(R, 0);
 for(let i=0;i<depth;i++)tris=deflate(tris);
-tris=tris.concat(_geoGrowSun(R, depth, 1, seed, deflate, bR, tris));
+
+tris=tris.concat(_geoGrowSun(R, depth, 4, seed, deflate, bR, tris));
 c.save();
 c.lineWidth=Math.max(1, S.lineWeight*0.6*_lwK());
-for(let i=0;i<tris.length;i++){
-const t=tris[i];
-c.strokeStyle=geoElemColor(t.type==='kite'?0:1, 2, bR, bR);
-if(S.fill)c.fillStyle=geoFillColor(t.type==='kite'?0:1, 2, bR, bR);
-c.beginPath(); c.moveTo(t.A[0], t.A[1]); c.lineTo(t.B[0], t.B[1]); c.lineTo(t.C[0], t.C[1]); c.closePath();
-if(S.fill)c.fill();
-c.stroke();
+for(const p of _penroseJoin(tris, 'AB')){
+const ci=p.type==='kite'?0:1;
+c.strokeStyle=geoElemColor(ci, 2, bR, bR);
+if(S.fill){ c.fillStyle=geoFillColor(ci, 2, bR, bR); _penrosePath(c, p, true); c.fill(); }
+_penrosePath(c, p, false); c.stroke();
 }
 c.restore();
 }
@@ -38706,13 +38755,12 @@ for(let i=0;i<depth;i++)tris=deflate(tris);
 tris=tris.concat(_geoGrowSun(R, depth, 2, seed, deflate, bR, tris));
 c.save();
 c.lineWidth=Math.max(1, S.lineWeight*0.6*_lwK());
-for(let i=0;i<tris.length;i++){
-const t=tris[i];
-c.strokeStyle=geoElemColor(t.type==='red'?0:1, 2, bR, bR);
-if(S.fill)c.fillStyle=geoFillColor(t.type==='red'?0:1, 2, bR, bR);
-c.beginPath(); c.moveTo(t.A[0], t.A[1]); c.lineTo(t.B[0], t.B[1]); c.lineTo(t.C[0], t.C[1]); c.closePath();
-if(S.fill)c.fill();
-c.stroke();
+
+for(const p of _penroseJoin(tris, 'BC')){
+const ci=p.type==='red'?0:1;
+c.strokeStyle=geoElemColor(ci, 2, bR, bR);
+if(S.fill){ c.fillStyle=geoFillColor(ci, 2, bR, bR); _penrosePath(c, p, true); c.fill(); }
+_penrosePath(c, p, false); c.stroke();
 }
 c.restore();
 }
@@ -47513,6 +47561,7 @@ if(juliaMode){ st.zx = re; st.zy = im; cx = S.juliaReal || 0; cy = S.juliaImag |
 else if(newton || ft === 'collatz' || ft === 'phoenix'){ st.zx = re; st.zy = im; }
 else if(ft === 'lambda'){ st.zx = 0.5; st.zy = 0; }
 else if(ft === 'nova'){ st.zx = 1; st.zy = 0; }
+else if(ft === 'exp_map'){ st.zx = re; st.zy = im; }   
 const er2 = Math.max(4, (S.escRad || 4) * (S.escRad || 4));
 const pts = [{ x: st.zx, y: st.zy }];
 const cap = Math.min(_ORBIT_MAX_STEPS, Math.max(16, S.maxIter | 0 || 256));
@@ -51006,15 +51055,15 @@ const PATTERN_INFO={
 'fruit-of-life':{title:'Fruit of Life',body:'13 disjoint circles selected from the Flower of Life lattice nodes (1 central + 6 inner + 6 outer). Each circle\'s center lies on a triangular-lattice node within a hexagonal patch. When the 13 centers are connected with all C(13,2) = 78 line segments, the result is Metatron\'s Cube. Thirteen-circle reduction labeled by Drunvalo Melchizedek (1990).'},
 
 'metatrons-cube':{title:"Metatron's Cube",body:'All 78 line segments connecting the 13 centers of the Fruit of Life. The figure encodes 2D projections of all five Platonic solids. The modern name comes from the Jewish-mystical archangel Metatron (Sefer Yetzirah, Talmudic tradition); the geometric construction predates the name. Thirteen-vertex graph drawn over the Fruit of Life; the modern name is attributable to Melchizedek (1990); the Metatron angel-figure traces to the Talmudic Hagigah (c. 500 CE).'},
-'sri-yantra':{title:'Sri Yantra',body:'Hindu Tantric diagram of nine interlocking triangles (4 upward Shiva, 5 downward Shakti) superimposed on a common center (the bindu). Intersections form 43 smaller triangles in five concentric levels. Surrounded by 16- and 8-petal lotuses, three concentric rings, and a square bhupura with four T-gates. The figure drawn here is a stylized version: its nine triangles are placed for balance and do not meet in the exact concurrences of the canonical form.'},
+'sri-yantra':{title:'Sri Yantra',body:'Hindu Tantric diagram of nine interlocking triangles (4 upward Shiva, 5 downward Shakti) superimposed on a common center (the bindu). Intersections form 43 smaller triangles in five concentric levels. Surrounded by 16- and 8-petal lotuses, three concentric rings, and a square bhupura with four T-gates. The figure drawn here is a concurrent one: wherever three of its lines should meet in a single point, they do. Its triangles are solved to the conditions set out by Chiodo (2021) from Huet’s parameters, and their intersections form exactly the 43 small triangles.'},
 'mandala':{title:'Mandala',body:'Sanskrit "circle". A geometric ritual diagram, typically circular, of cosmological structure. First appears in the Rig Veda (c. 1500–1100 BCE). In Tibetan Vajrayana the mandala becomes a square-within-circle floor plan of a deity\'s celestial palace. Sand mandalas, made then ritually destroyed, are documented in Tibet from the 11th century onward. The figure carries an n-fold rotational symmetry C_n (the symmetry order is the S.symmetry parameter; the catalog renders n = 3..24) plus the full dihedral D_n when reflections through the spokes are admitted.'},
 
 'golden-spiral':{title:'Golden Spiral',body:'Logarithmic spiral r = a·e^(θ·ln(φ)/(π/2)) with growth factor φ = (1+√5)/2 ≈ 1.618 per quarter turn. Jacob Bernoulli, "Spira mirabilis" (1692). Often approximated by quarter-circle arcs in golden rectangles. Note: nautilus shells are NOT golden spirals. They are logarithmic with average ratio ≈ 1.31 (Smithsonian survey of 80 specimens). The "nautilus is golden" claim is a 20th-century misattribution (Keith Devlin retracted his original statement after it was rebroadcast without context, 2007).'},
 'phyllotaxis':{title:'Phyllotaxis',body:'Vogel\'s 1979 model: n-th seed at (r, θ) = (c·√n, n·α) where α = (3 − √5)·180° = 360°/φ² ≈ 137.508° is the golden angle. Levitov (1991), then Douady and Couder (1992), showed this divergence angle is the generic attractor of repulsive growth on a slowly expanding meristem. The Fibonacci-spiral parastichy counts in sunflowers, pineapples, and pinecones follow rigorously from this dynamic. The strongest "golden ratio in nature" claim with both empirical support and a mathematical mechanism.'},
 'fibonacci-lattice':{title:'Fibonacci Lattice',body:'Equivalent to phyllotaxis: points distributed by the golden angle 137.5° with radius ∝ √n. Produces the canonical sunflower-seed-head pattern with parastichy counts from consecutive Fibonacci numbers (34/55, 55/89). Fibonacci sequence itself was first described in Indian mathematics (Pingala, c. 200 BCE; Virahanka 6th c. CE; Hemachandra 12th c.). Leonardo of Pisa transmitted it to Europe (Liber Abaci, 1202).'},
 'star-of-david':{title:'Star of David / Hexagram',body:'Two overlapping equilateral triangles offset by 60°, forming a hexagram. Identified with King David in Jewish iconography from the late medieval period; symbol on the modern flag of Israel since 1948. The geometric figure itself appears across cultures (the {6/2} star polygon).'},
-'enneagram':{title:'Enneagram (9-Star)',body:'Nine-pointed star polygons {9/2} and {9/4} in Schläfli notation. Both are vertex-transitive figures with 9-fold rotational symmetry. The {9/2} is the compound of three congruent equilateral triangles (one of the simplest regular compound polygons); the {9/4} is the "great enneagram", a single connected star whose edges wrap the 9 vertices four positions at a time. Both share the cyclic group C₉ as rotational symmetry; {9/2} also has the dihedral reflection group D₉. Adopted in 20th-century esoteric (Gurdjieff / Bennett) and personality-typology systems; the geometric figure itself has a much older history in Islamic ornament and number theory. Nine-pointed figure formalized in Gurdjieff (1916), with antecedents in Sufi numerology.'},
-'tree-of-life':{title:'Tree of Life (Kabbalah)',body:'A planar graph with 10 vertices (sefirot, sometimes 11 with Da\'at) and 22 edges (paths) arranged in three vertical pillars (Mercy, Severity, Equilibrium). Each edge corresponds to one of 22 Hebrew letters. By Euler\'s formula V − E + F = 2 the embedding partitions the plane into 14 faces (counting the outer face). The diagram acquires its modern stylization in medieval Spain (Zohar, late 13th century); canonized in Christian Kabbalah by Athanasius Kircher and others in the 17th century. Rooted in Sefer Yetzirah (one of the earliest Jewish mystical texts). Ten-sephirot Kabbalistic diagram; canonical configuration in Isaac Luria, 16th-century Safed school (Vital, 1573 manuscript).'},
+'enneagram':{title:'Enneagram (9-Star)',body:'Nine-pointed star polygons {9/2} and {9/4} in Schläfli notation. Both are vertex-transitive figures with 9-fold rotational symmetry. Because 9 shares no factor with 2 or 4, each is a single connected star drawn in one closed path: {9/2} steps two vertices at a time and {9/4}, the "great enneagram", four. The compound of three equilateral triangles is a different figure, {9/3}. Both stars have the full dihedral symmetry D₉, whose rotations form the cyclic group C₉. Adopted in 20th-century esoteric (Gurdjieff / Bennett) and personality-typology systems; the geometric figure itself has a much older history in Islamic ornament and number theory. Nine-pointed figure formalized in Gurdjieff (1916), with antecedents in Sufi numerology.'},
+'tree-of-life':{title:'Tree of Life (Kabbalah)',body:'A graph with 10 vertices (sefirot, sometimes 11 with Da\'at) and 22 edges (paths) arranged in three vertical pillars (Mercy, Severity, Equilibrium). Each edge corresponds to one of 22 Hebrew letters. As traditionally drawn some paths cross, so the figure is a drawing of the graph rather than a crossing-free one. The diagram acquires its modern stylization in medieval Spain (Zohar, late 13th century); canonized in Christian Kabbalah by Athanasius Kircher and others in the 17th century. Rooted in Sefer Yetzirah (one of the earliest Jewish mystical texts). Ten-sephirot Kabbalistic diagram; canonical configuration in Isaac Luria, 16th-century Safed school (Vital, 1573 manuscript).'},
 'lissajous':{title:'Lissajous Curves',body:'Parametric curves x = cos(at + δ), y = sin(bt). Closed when a:b is rational. Studied by Bowditch (1815) and named for Jules Lissajous (1857). Used by 19th-century physicists for visualizing sound and electrical waves; underpins modern oscilloscope traces.'},
 'spirograph':{title:'Spirograph (Hypotrochoid)',body:'x = (R−r)cos(t) + d·cos((R−r)t/r), y = (R−r)sin(t) − d·sin((R−r)t/r). The locus of a point fixed at distance d from the center of a small circle of radius r rolling inside a large circle of radius R. Patented as a children\'s toy in 1965; a special case of an ancient family of mathematical curves dating to Albrecht Dürer.'},
 'rose-curve':{title:'Rose Curve / Rhodonea',body:'Polar curve r = a·cos(kθ) (or sin). For integer k, gives k petals if k is odd, 2k petals if even. Maurer rose: connect every n-th point on a rose curve to its (n·d)-th by a straight line for d = 1..361, producing star-like patterns. Polar curve r = cos(kθ), studied by Guido Grandi (1723).'},
@@ -51022,8 +51071,8 @@ const PATTERN_INFO={
 'fermat-spiral':{title:'Fermat Spiral',body:'The parabolic spiral r = ±a√θ, named for Pierre de Fermat, who studied it in 1636. Squaring gives r² = a²θ, so equal turns sweep equal increments of area, which is why the two point-symmetric arms (the + and − branches) pack the plane evenly. The same equal-area spacing underlies sunflower-seed and phyllotaxis arrangements, where florets sit at radius √n spaced by the golden angle. Its turns crowd together toward the rim rather than staying equidistant like the Archimedean spiral.'},
 'apollonian':{title:'Apollonian Gasket',body:'Fractal generated by starting with three mutually tangent circles and recursively filling the gaps with circles tangent to three predecessors. Named for Apollonius of Perga (3rd c. BCE). Curvatures satisfy the Descartes circle theorem (k₁+k₂+k₃+k₄)² = 2(k₁²+k₂²+k₃²+k₄²). Hausdorff dimension ≈ 1.30568673 (Curt T. McMullen, "Hausdorff dimension and conformal dynamics III: Computation of dimension", Amer. J. Math. 120, 1998); subsequent high-precision computations have extended this to dozens of decimal places.'},
 'hilbert-curve':{title:'Hilbert Curve',body:'Space-filling curve constructed by David Hilbert ("Über die stetige Abbildung einer Linie auf ein Flächenstück", Math. Ann. 38, 1891), the second continuous surjection from [0,1] onto [0,1]² after Peano (1890), with a smoother U-shape recursion that preserves locality (close indices stay close in the plane). At order n the curve visits each of the 2ⁿ × 2ⁿ unit-square cells exactly once via 4ⁿ connected segments; its Hausdorff dimension as n → ∞ is exactly 2. The locality property makes the Hilbert mapping a standard tool in spatial indexing: R-trees and B-trees with Hilbert ordering (Kamel & Faloutsos, 1994) outperform Z-order/Morton on nearest-neighbor queries. Computed here by the closed-form Lam–Shapiro (1994) index → coord walk: 2-bit rotation dispatch at each recursion level.'},
-'pythagoras-tree':{title:'Pythagoras Tree',body:'Fractal constructed by Albert E. Bosman (Het Wondere Onderzoekingsveld der Vlakke Meetkunde, 1957; original drawing 1942) from a single square via recursive Pythagorean self-application: a right triangle sits on the parent square\'s top edge, and two child squares attach to its legs. The theorem a² + b² = c² is the recursion\'s area-conservation law: total square area at every depth equals the trunk\'s area. With branch angle θ the child-side ratios are cos θ and sin θ; for the isosceles θ = 45° the tree fits a 6 × 4 rectangle. Hausdorff dimension solves the Moran equation (cos θ)^d + (sin θ)^d = 1: d = 2 at θ = 45° (just-barely space-filling), d ∈ (1, 2) for intermediate angles. The catalog\'s most direct visual proof of the Pythagorean theorem.'},
-'penrose':{title:'Penrose Tiling',body:'Generic Penrose-style aperiodic rendering. Roger Penrose (1974) developed three matching-rule sets that tile only aperiodically with 5-fold local symmetry impossible in periodic crystals. The dedicated Penrose P1, P2 (Kite-Dart), and P3 (Rhombi) entries each implement one matching-rule set explicitly; this entry shows the canonical kite-dart appearance. Cuts-and-projects from a 5D cubic lattice (de Bruijn, 1981); models the real quasicrystal materials discovered by Shechtman (1982; Nobel in Chemistry 2011).'},
+'pythagoras-tree':{title:'Pythagoras Tree',body:'Fractal constructed by Albert E. Bosman (Het Wondere Onderzoekingsveld der Vlakke Meetkunde, 1957; original drawing 1942) from a single square via recursive Pythagorean self-application: a right triangle sits on the parent square\'s top edge, and two child squares attach to its legs. The theorem a² + b² = c² is the recursion\'s area-conservation law: total square area at every depth equals the trunk\'s area. With branch angle θ the child-side ratios are cos θ and sin θ; for the isosceles θ = 45° the tree fits a 6 × 4 rectangle. Because cos²θ + sin²θ = 1 at every angle, the Moran equation (cos θ)^d + (sin θ)^d = 1 always gives similarity dimension d = 2: the two children always carry the parent’s whole area. The catalog\'s most direct visual proof of the Pythagorean theorem.'},
+'penrose':{title:'Penrose Tiling',body:'Generic Penrose-style aperiodic rendering. Roger Penrose (1974) developed three matching-rule sets that tile only aperiodically with 5-fold local symmetry impossible in periodic crystals. The dedicated Penrose P1, P2 (Kite-Dart), and P3 (Rhombi) entries each implement one matching-rule set explicitly; this entry draws the rhombus (P3) tiling with its colors running across the whole palette. Cuts-and-projects from a 5D cubic lattice (de Bruijn, 1981); models the real quasicrystal materials discovered by Shechtman (1982; Nobel in Chemistry 2011).'},
 'girih':{title:'Girih Tiles',body:'Set of five equilateral polygons (regular decagon, irregular hexagon, bowtie, rhombus, regular pentagon) with strapwork patterns, used in Islamic architecture from c. 1200 CE. Lu and Steinhardt (Science, 2007) showed that the Darb-i Imam shrine in Isfahan (1453) contains a near-perfect Penrose-style tiling, anticipating the Western discovery by 500 years. The Topkapı scroll (late 15th c.) documents the technique.'},
 'voronoi':{title:'Voronoi Diagram',body:'Partition of the plane into cells, each consisting of points closer to its site than to any other site. Boundaries are perpendicular bisectors of site pairs. Dual to the Delaunay triangulation. Computed in O(n log n) by Fortune\'s algorithm (1986). Ubiquitous in computer graphics, biology (cell shapes), urban planning.'},
 'delaunay':{title:'Delaunay Triangulation',body:'The triangulation of a point set in which no point lies inside the circumcircle of any triangle, equivalently, the one that maximizes the minimum interior angle, avoiding sliver triangles. It is the geometric dual of the Voronoi diagram (this pattern triangulates the same seeds Voronoi partitions). Named for Boris Delaunay (1934); the empty-circumcircle property underlies mesh generation, terrain modeling, and finite-element analysis. Built here by the Bowyer–Watson incremental algorithm (1981).'},
@@ -51031,7 +51080,7 @@ const PATTERN_INFO={
 'truchet':{title:'Truchet Tiles',body:'Square tiles with arcs or diagonals oriented randomly per cell. Introduced by Sébastien Truchet (1704) as a study in combinatorial pattern. Modern variants by Cyril Smith and others.'},
 'chladni':{title:'Chladni Figures',body:'Standing-wave node patterns on a vibrating plate, first studied systematically by Ernst Chladni (Entdeckungen über die Theorie des Klanges, 1787). Mathematically these are nodal sets of biharmonic eigenfunctions on the plate (Kirchhoff–Love thin-plate theory); 2D Helmholtz solutions describe membrane vibrations and serve as a useful first approximation. Different (n,m) modes yield the characteristic geometric patterns.'},
 'lemniscate':{title:'Lemniscate',body:'Figure-eight curve. Bernoulli\'s lemniscate (1694): r² = a² cos(2θ). Gerono\'s lemniscate (1844): a different but related figure-eight. The infinity symbol ∞ derives from the lemniscate.'},
-'torus-knot':{title:'Torus Knot (p,q)',body:'A knot lying on the surface of a standard torus, winding p times around the symmetry axis and q times around the tube. Trefoil = (2,3). Topologically classified by gcd(p,q): coprime → genuine knot, otherwise a link. (p,q) torus knots classified by Listing (1847) and Reidemeister (1932).'},
+'torus-knot':{title:'Torus Knot (p,q)',body:'A knot lying on the surface of a standard torus, winding p times around the symmetry axis and q times around the tube. Trefoil = (2,3). Topologically classified by gcd(p,q): coprime → genuine knot, otherwise a link of gcd(p,q) components, each a (p/d, q/d) torus knot, all of them drawn here. (p,q) torus knots classified by Listing (1847) and Reidemeister (1932).'},
 'islamic-star':{title:'Islamic Star Polygon',body:'Generalized n-pointed star {n/k}: n vertices, edges connecting every k-th vertex. Foundational to Islamic geometric ornament (8th–17th c. CE), aniconism encouraged the systematic development of geometric pattern as the primary decorative idiom of mosques and madrasas. Symmetry orders 4, 6, 8, 10, 12, 16 dominate. Star polygons {n/k} in Iznik tiling (c. 1500–1600); modern analysis Bonner (2017).'},
 'zellij-rosette':{title:'Zellij Rosette',body:'The star-and-petal rosette at the heart of Islamic geometric ornament: an {n/k} star polygon whose chord intersections fix the inner vertices, ringed by a band of kite-shaped petals, the "polygons in contact" technique that lets one compass-and-straightedge module tile walls, doors, and domes. Documented across the Maghreb and al-Andalus (the Alhambra, Fez zellij work, 13th–15th c.). First systematically cataloged by Jules Bourgoin (Les Éléments de l\'art arabe, 1879); the construction analyzed by A. J. Lee (Muqarnas 4, 1987) and given its modern practical treatment in Jay Bonner, Islamic Geometric Patterns (Springer, 2017).'},
 'rose-window':{title:'Rose Window',body:'The Gothic cathedral rose reduced to its geometry: n petal lights whose circles, centered on a ring of radius ρ with radius ρ·sin(π/n), are mutually tangent by construction, the same relation that packs n equal circles around a center. Radial mullions tie the ring to the central oculus, and cusped foils fill the spandrels to the enclosing ring. The form reaches its height in the 13th-century roses of Chartres (north transept, c. 1235), Notre-Dame de Paris, and Sainte-Chapelle. Geometry and iconography surveyed in Painton Cowen, The Rose Window: Splendour and Symbol (Thames & Hudson, 2005).'},
@@ -51039,12 +51088,12 @@ const PATTERN_INFO={
 'sona':{title:'Sona (Lusona)',body:'Sand drawing of the Chokwe people (Angola / DR Congo): the akwa kuta sona, masters of the tradition, trace a single unbroken line around a rectangular grid of dots while telling a story. The line must close without lifting the finger. The drawing is exactly a 45° mirror-curve billiard, and it is monolinear precisely when gcd(rows, cols) = 1; this rendering keeps cols = rows + 1 so the classic one-line "plaited mat" always closes. Documented and mathematically analyzed by Paulus Gerdes (Sona Geometry: Reflections on the Tradition of Sand Drawings in Africa South of the Equator, 1994) and Marcia Ascher (Ethnomathematics, 1991).'},
 'ford-circles':{title:'Ford Circles',body:'At every reduced fraction p/q sits a circle of radius 1/(2q²), tangent to the number line at p/q. Two Ford circles never overlap, and they are tangent exactly when their fractions are Farey neighbors, |ps − qr| = 1, so the picture IS the Farey sequence: each new mediant (p+r)/(q+s) nests a smaller circle into the gap between its parents, forever. Introduced by Lester R. Ford (American Mathematical Monthly 45, 1938); the tangency criterion is equivalent to the Stern–Brocot mediant construction and underlies the Hurwitz approximation theorem.'},
 'steiner-chain':{title:'Steiner Chain',body:'A closed ring of n circles, each tangent to its two neighbors and to two fixed non-tangent base circles. Steiner\'s porism (c. 1826): if one closed chain exists, infinitely many do. The chain can be rotated to any starting position and still closes. The proof is one line with inversive geometry: invert the two base circles to a concentric annulus, where a chain closes iff sin(π/n) = (R−r)/(R+r), then invert back. Tangency is preserved. This rendering performs exactly that construction. Treatment in Coxeter & Greitzer, Geometry Revisited (1967) and C. S. Ogilvy, Excursions in Geometry (1969).'},
-'borromean-rings':{title:'Borromean Rings',body:'Three rings, no two of which are linked, that nonetheless cannot be pulled apart, the prototypical Brunnian link (L6a4 in the Thistlethwaite table). Each pair crosses twice with one over- and one under-crossing, so every pairwise linking number is zero; cutting any one ring frees the other three crossings entirely. Named for the Borromeo family crest (15th c.), studied in knot tables since Tait (1876). Remarkably, the link cannot be realized by three flat geometric circles in 3-space (Lindström & Zetterström, American Mathematical Monthly 98, 1991). Ellipses are required; the planar diagram here is the standard alternating projection.'},
+'borromean-rings':{title:'Borromean Rings',body:'Three rings, no two of which are linked, that nonetheless cannot be pulled apart, the prototypical Brunnian link (L6a4 in the Thistlethwaite table). Each ring passes over one neighbor at both of their crossings and under the other at both, so every pair is unlinked (linking number zero), while the three together cannot be separated; remove any one ring and the other two fall apart. Named for the Borromeo family crest (15th c.), studied in knot tables since Tait (1876). Remarkably, the link cannot be realized by three flat geometric circles in 3-space (Lindström & Zetterström, American Mathematical Monthly 98, 1991). Ellipses are required; the planar diagram here is the standard alternating projection, in which the crossings along each ring alternate over and under.'},
 'celtic-knot':{title:'Celtic Knot',body:'Interlaced knotwork patterns characteristic of Insular art (Book of Kells, c. 800 CE) and Pictish stone carvings. The mathematical theory of knots is younger (Tait 1880s; Vaughan Jones 1980s polynomial). This rendering draws decorative interleaved arcs rather than a knot-theoretic projection.'},
 
 
 'truncated-icosahedron':{title:'Truncated Icosahedron',body:'Archimedean solid with 32 faces (12 pentagons + 20 hexagons), 90 edges, 60 vertices. The shape of a soccer ball and of the C₆₀ fullerene molecule (discovered 1985, Kroto–Curl–Smalley, 1996 Chemistry Nobel). Vertex orbit: even cyclic permutations of (0, ±1, ±3φ), (±1, ±(2+φ), ±2φ), (±φ, ±2, ±(2φ+1)).'},
-'cuboctahedron':{title:'Cuboctahedron',body:'Quasiregular Archimedean solid with 14 faces (8 triangles + 6 squares), 24 edges, 12 vertices. Vertices at all permutations of (±1, ±1, 0). Edge graph identical to that of the rhombic dodecahedron. First systematic treatment in Kepler, Harmonices Mundi (1619).'},
+'cuboctahedron':{title:'Cuboctahedron',body:'Quasiregular Archimedean solid with 14 faces (8 triangles + 6 squares), 24 edges, 12 vertices. Vertices at all permutations of (±1, ±1, 0). Its dual is the rhombic dodecahedron (14 vertices, 12 rhombic faces). First systematic treatment in Kepler, Harmonices Mundi (1619).'},
 
 'kleinian':{title:"Indra's Pearls",body:'Limit set of a 2-generator Kleinian/Schottky group acting on the Riemann sphere. Iterating Möbius transformations on a seed point produces a fractal point cloud whose Hausdorff dimension equals the group\'s Poincaré critical exponent (Patterson–Sullivan theory). Pictured extensively in Mumford–Series–Wright, Indra\'s Pearls (Cambridge 2002).'},
 'dla':{title:'Diffusion-Limited Aggregation',body:'Growth model proposed by Witten and Sander (1981). Random walkers attach to a seed cluster on contact, producing branching aggregates with empirical Hausdorff dimension ≈ 1.71 in 2D. Models electrodeposition, Hele-Shaw flow, mineral dendrites. No analytic proof of the dimension is known.'},
@@ -51066,7 +51115,7 @@ const PATTERN_INFO={
 'epicycloid':{title:'Epicycloid',body:'A point on a circle of radius r rolling outside a fixed circle of radius R. Cardioid (R=r) and nephroid (R=2r) are the most-studied cases. Closed when R/r is rational. Studied by Albrecht Dürer (1525) and rediscovered by Ole Rømer (1674).'},
 'maurer-rose':{title:'Maurer Rose',body:'For a rose r = sin(nθ) and a degree-step d, sample 361 points (r·cos(kd°), r·sin(kd°)) at θ = k·d° for k = 0, 1, …, 360, and connect consecutive samples with straight chords. The resulting figure superimposes a polygonal walk on the underlying rose. Discovered by Peter Maurer (1987); the appearance changes radically with the integer pair (n, d).'},
 'parabolic-art':{title:'Parabolic String Art',body:'The envelope of a family of straight chords connecting equally-spaced points on two perpendicular axes traces a parabola. Used in textile and string-art crafts; illustrates the geometric envelope concept that a smooth curve can emerge from a family of straight lines. Envelope-of-lines construction popularized by Mary Boole (1909).'},
-'superformula':{title:'Superformula (Gielis)',body:'r(θ) = (|cos(mθ/4)/a|^n₂ + |sin(mθ/4)/b|^n₃)^(−1/n₁), introduced by Johan Gielis (2003) to unify many natural shapes, starfish, flowers, leaves, microorganisms, under a single parametric family. m, n₁, n₂, n₃, a, b are tunable.'},
+'superformula':{title:'Superformula (Gielis)',body:'r(θ) = (|cos(mθ/4)/a|^n₂ + |sin(mθ/4)/b|^n₃)^(−1/n₁), introduced by Johan Gielis (2003) to unify many natural shapes, starfish, flowers, leaves, microorganisms, under a single parametric family. Here m, n₁, n₂ and n₃ are tunable, with a = b = 1.'},
 'poincare-disk':{title:'Poincaré Disk',body:'A model of the hyperbolic plane: the unit disk with metric ds² = 4|dz|²/(1−|z|²)². Geodesics are diameters and circular arcs perpendicular to the boundary. Conformal (preserves angles, not distances). Henri Poincaré 1882. Used by Escher for the Circle Limit series.'},
 'domain-coloring':{title:'Domain Coloring',body:'A visualization of a holomorphic function f:ℂ→ℂ. Each pixel z is colored by f(z): hue carries arg f(z); brightness encodes log|f(z)| (continuous or banded one octave apart). Zeros → full-spectrum rosettes; poles → reversed rosettes; essential singularities (exp(1/z) near 0) → Picard wraparound. Introduced as "phase plots" by Frank Farris (1997) and developed by Elias Wegert (Visual Complex Functions, Birkhäuser 2012). Library: z², 1/z, z^n−1, Möbius, finite Blaschke products, exp(1/z), Weierstrass ℘, Γ (Lanczos g=7), and Riemann ζ via eta-series acceleration.'},
 
@@ -51080,11 +51129,11 @@ const PATTERN_INFO={
 'truncated-dodecahedron':{title:'Truncated Dodecahedron',body:'Archimedean solid (3.10.10) with 20 triangular + 12 decagonal faces, 90 edges, 60 vertices. Vertex orbit: even cyclic permutations of (0, ±1/φ, ±(2+φ)), (±1/φ, ±φ, ±2φ), (±φ, ±2, ±(φ+1)). First systematic treatment in Kepler, Harmonices Mundi (1619).'},
 'rhombicosidodecahedron':{title:'Rhombicosidodecahedron',body:'Archimedean solid (3.4.5.4) with 20 triangles + 30 squares + 12 pentagons, 120 edges, 60 vertices. Vertex orbit: even cyclic permutations of (±1, ±1, ±φ³), (±φ², ±φ, ±2φ), (±(2+φ), 0, ±φ²). First systematic treatment in Kepler, Harmonices Mundi (1619).'},
 'truncated-icosidodecahedron':{title:'Truncated Icosidodecahedron',body:'Archimedean solid (4.6.10) with 30 squares + 20 hexagons + 12 decagons, 180 edges, 120 vertices. Largest of the Archimedean solids; also called the great rhombicosidodecahedron. Vertex-transitive under the full icosahedral group I_h (order 120). First systematic treatment in Kepler, Harmonices Mundi (1619).'},
-'snub-dodecahedron':{title:'Snub Dodecahedron',body:'Chiral Archimedean solid (3.3.3.3.5) with 80 triangles + 12 pentagons, 150 edges, 60 vertices. Closest of the 13 Archimedean solids to a sphere. Vertex orbit involves the snub-dodec constant ξ ≈ 0.94315 (root of x³ + 2x² − φ² = 0). Vertex-transitive under the chiral icosahedral rotation group I (order 60); left- and right-handed forms are not superposable. First systematic treatment in Kepler, Harmonices Mundi (1619).'},
+'snub-dodecahedron':{title:'Snub Dodecahedron',body:'Chiral Archimedean solid (3.3.3.3.5) with 80 triangles + 12 pentagons, 150 edges, 60 vertices. Closest of the 13 Archimedean solids to a sphere. Its 60 vertices are the orbit of a single point under the rotations of the icosahedron, placed so that all 150 edges have the same length. Vertex-transitive under the chiral icosahedral rotation group I (order 60); left- and right-handed forms are not superposable. First systematic treatment in Kepler, Harmonices Mundi (1619).'},
 
 'small-stellated-dodecahedron':{title:'Small Stellated Dodecahedron',body:'Kepler–Poinsot star polyhedron {5/2, 5}: 12 pentagrammic faces, 30 edges, 12 vertices. Each vertex meets 5 pentagrams. Dual: Great Dodecahedron {5, 5/2}. Discovered by Johannes Kepler (Harmonices Mundi, 1619). Vertices = icosahedron vertices; edges connect golden-ratio-stretched chords.'},
 'great-dodecahedron':{title:'Great Dodecahedron',body:'Kepler–Poinsot star polyhedron {5, 5/2}: 12 pentagonal faces interpenetrating, 30 edges, 12 vertices. Same vertex and edge graph as the icosahedron, but pentagons fold across each other in a 5/2 vertex figure. Dual: Small Stellated Dodecahedron {5/2, 5}. Discovered by Louis Poinsot ("Mémoire sur les polygones et les polyèdres", J. de l\'École Polytechnique, 1810).'},
-'great-stellated-dodecahedron':{title:'Great Stellated Dodecahedron',body:'Kepler–Poinsot star polyhedron {5/2, 3}: 12 pentagrammic faces, 60 edges rendered (double the canonical 30, see below), 20 vertices. Vertices = dodecahedron vertices; edges are the long pentagram diagonals. Dual: Great Icosahedron {3, 5/2}. Kepler 1619 (Harmonices Mundi). This implementation renders the full 60-segment pentagram skeleton (every face\'s diagonals) for a more vivid star wireframe rather than the strict 30-edge skeleton.'},
+'great-stellated-dodecahedron':{title:'Great Stellated Dodecahedron',body:'Kepler–Poinsot star polyhedron {5/2, 3}: 12 pentagrammic faces, 30 edges, 20 vertices. Vertices = dodecahedron vertices; each edge joins two vertices φ² dodecahedron edges apart, three meeting at each vertex, and every face is a regular pentagram. Dual: Great Icosahedron {3, 5/2}. Kepler 1619 (Harmonices Mundi).'},
 'great-icosahedron':{title:'Great Icosahedron',body:'Kepler–Poinsot star polyhedron {3, 5/2}: 20 triangular faces meeting in five-fold pentagrammic vertex figures. 30 edges, 12 vertices. Same vertex set as the icosahedron. Dual: Great Stellated Dodecahedron {5/2, 3}. Discovered by Poinsot (1810). Cauchy proved (1813) that there are exactly four regular Kepler–Poinsot polyhedra.'},
 
 'stella-octangula':{title:'Stella Octangula',body:'Compound of two regular tetrahedra inscribed in a cube, Kepler\'s figure from Harmonices Mundi (1619), originally illustrated in De Stella Octangula (a section of Kepler\'s 1611 Strena seu de Nive Sexangula). 8 vertices = cube vertices, partitioned into the two tetrahedra by the parity of sign₁·sign₂·sign₃. Each tetrahedron is its own dual (tetrahedra are self-dual); the two tetrahedra of the compound are mutually dual under the cube\'s central inversion. Their intersection is the regular octahedron.'},
@@ -51111,7 +51160,7 @@ const PATTERN_INFO={
 'twelve-tone':{title:'12-Tone Clock',body:'The 12 pitch classes of equal temperament arranged on a clock face. Tone-row analysis (Arnold Schoenberg, 1921; Method of Composing with Twelve Tones Which Are Related Only with One Another, 1923) treats permutations of the 12 chromatic pitches as the basic compositional unit. The 12 transpositions T and 12 inversions TI together form the dihedral group D₁₂ of order 24 (geometric convention: Dₙ = symmetries of an n-gon); including retrograde R and retrograde-inversion RI extends a row class to 48 forms, the group D₁₂ × ℤ/2.'},
 
 'bagua':{title:'Bagua',body:'The Eight Trigrams (八卦) of Chinese cosmology. Each trigram is three stacked yin (broken) or yang (solid) lines, a binary sequence of length 3, giving the 2³ = 8 elements of the cyclic group ℤ/8 or equivalently the vertices of the 3-cube graph Q₃ when adjacency = single-bit flip. Two canonical arrangements: the Earlier Heaven (先天) of Fu Xi (mythic) places trigrams in the antipodal-pair configuration (each trigram opposite its complement, i.e. its bitwise negation); the Later Heaven (後天) of King Wen (~1100 BCE) permutes them to show temporal cycles. Foundation of the I Ching (whose 64 hexagrams form Q₆), Feng Shui, and Daoist cosmology.'},
-'i-ching':{title:'I Ching',body:'The I Ching or Yi Jing 易經 ("Book of Changes", c. 1000 BCE), divinatory and philosophical text whose 64 hexagrams (= 2⁶) are pairs of trigrams. Each hexagram has a name, a judgement, and line-by-line readings. Gottfried Leibniz (1703) found the binary representation 0-63 of the King Wen ordering. The hexagram square arranges them as a 6-cube unfolded.'},
+'i-ching':{title:'I Ching',body:'The I Ching or Yi Jing 易經 ("Book of Changes", c. 1000 BCE), divinatory and philosophical text whose 64 hexagrams (= 2⁶) are pairs of trigrams. Each hexagram has a name, a judgement, and line-by-line readings. Gottfried Leibniz (1703) read the hexagrams as the binary numbers 0 to 63 in the Fu Xi (Shao Yong) ordering, not the received King Wen order. The hexagram square arranges them as a 6-cube unfolded.'},
 'lo-shu':{title:'Lo Shu Square',body:'The Luo Shu (洛書, "Luo River writing"), a 3×3 magic square of order 3 with the digits 1-9, all rows, columns, and diagonals summing to 15. Mythologically presented to Yu the Great (~2100 BCE) on the back of a turtle. The unique 3×3 magic square up to rotation and reflection. Foundational to Chinese mathematics, Feng Shui, and the assignment of trigrams to compass directions.'},
 'sufi-nine-star':{title:'Sufi 9-Star',body:'Nine-pointed star polygon (enneagram) emblematic of various Sufi orders, also adopted by the Bahá\'í Faith as their primary symbol. The number 9 is the highest single digit and traditionally represents culmination, completeness, and the unity of all spiritual paths. Geometric construction: regular 9-fold star polygon {9/2} or {9/4} obtained by connecting every 2nd or 4th of 9 evenly-spaced points. Nine-fold star in Bahá\'í symbology (Mírzá Husayn-\'Alí, mid-1850s; canonized 1925).'},
 'triquetra':{title:'Triquetra',body:'Three interlaced vesicae (Latin: tri- + quetrus = "three-cornered") with 3-fold rotational symmetry (C₃) plus three reflection axes (full dihedral D₃). Pre-Christian Celtic and Germanic motif (Newgrange ~3200 BCE; Pictish stones; Norse runestones). Adopted by early Christianity in Insular illumination (Book of Kells, c. 800 CE) as a symbol of the Holy Trinity. Topologically the figure is an unknot. Its knot group π₁(S³ \\ K) is the integers ℤ, although its planar projection has the over/under crossings of a non-trivial diagram. The Borromean rings (3 components, none pairwise linked) and Brunnian higher-order generalizations ARE knotted; the single-curve triquetra is not.'},
@@ -51132,25 +51181,25 @@ const PATTERN_INFO={
 'tesseract':{title:'Tesseract {4,3,3} (8-cell)',body:'4D hypercube, 16 vertices = {±1}⁴, 32 edges, 24 squares, 8 cubic cells. Schläfli symbol {4,3,3}. Salvador Dalí\'s "Crucifixion (Corpus Hypercubus)" (1954) depicts an unfolded tesseract net. Coordinated by Charles Howard Hinton ("A New Era of Thought", 1888) who popularized the term "tesseract".'},
 'sixteen-cell':{title:'16-cell {3,3,4} (4D orthoplex)',body:'Cross-polytope in 4D, 8 vertices = ±e_i, 24 edges, 32 triangular faces, 16 tetrahedral cells. Schläfli symbol {3,3,4}. Dual to the tesseract. The 8 vertices are the unit vectors and their negatives along the 4 axes. Discovered by Schläfli, Theorie der vielfachen Kontinuität (1852, posthumous 1901).'},
 'twenty-four-cell':{title:'24-cell {3,4,3}',body:'Self-dual regular 4-polytope with 24 vertices, 96 edges, 96 triangular faces, 24 octahedral cells. Schläfli symbol {3,4,3}. <em>Unique</em>: there is no analogue of the 24-cell in any other dimension. Vertices are the 24 minimal-length vectors of the D₄ root lattice, equivalently all permutations of (±1, ±1, 0, 0). Symmetry group F₄ (Coxeter rank-4 group, order 1152).'},
-'one-twenty-cell':{title:'120-cell {5,3,3}',body:'600 vertices, 1200 edges, 720 pentagonal faces, 120 dodecahedral cells. Schläfli symbol {5,3,3}. Discovered by Schläfli (1850s). Coordinates use the golden ratio φ; vertices are the 600 minimal vectors of the H₄ root system. Dual to the 600-cell. Most complex of the 6 convex regular 4-polytopes; analogue of the dodecahedron in 4D.'},
+'one-twenty-cell':{title:'120-cell {5,3,3}',body:'600 vertices, 1200 edges, 720 pentagonal faces, 120 dodecahedral cells. Schläfli symbol {5,3,3}. Discovered by Schläfli (1850s). Coordinates use the golden ratio φ; the H₄ root system has 120 roots, which are the vertices of the dual 600-cell. Dual to the 600-cell. Most complex of the 6 convex regular 4-polytopes; analogue of the dodecahedron in 4D.'},
 'six-hundred-cell':{title:'600-cell {3,3,5}',body:'120 vertices, 720 edges, 1200 triangular faces, 600 tetrahedral cells. Schläfli symbol {3,3,5}. Dual to the 120-cell. Vertices include those of the 16-cell (8), the tesseract (16 scaled), and 96 even permutations of (±½, ±φ/2, ±1/(2φ), 0). 4D analogue of the icosahedron. Discovered by Schläfli (1850s).'},
 
 'icosahedral-one-twenty-cell':{title:'Icosahedral 120-cell {3, 5, 5/2}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1920 edges rendered: the shortest chord (0.618≈1/φ) superimposed with the second-shortest (chord 1) so the wireframe is distinct from the convex 600-cell; the canonical {3,5,5/2} skeleton has 720 edges. 1200 triangular faces, 120 icosahedral cells (canonical). Dual: Small Stellated 120-cell {5/2, 5, 3}. One of the six star 4-polytopes Edmund Hess added in 1883 ("Einleitung in die Lehre von der Kugelteilung") to complete the set Schläfli had begun in the 1850s (published posthumously 1901).'},
 'small-stellated-one-twenty-cell':{title:'Small Stellated 120-cell {5/2, 5, 3}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1200 edges, 720 pentagrammic faces, 120 small-stellated-dodecahedral cells. Dual: Icosahedral 120-cell {3, 5, 5/2}. The 4D analogue of the small stellated dodecahedron, pentagrammic edges replace pentagonal ones in the parent 120-cell. Source: Hess, "Einleitung in die Lehre von der Kugelteilung" (1883), which catalogued the complete set of 10 Schläfli–Hess star 4-polytopes; enumerated again in Coxeter, Regular Polytopes (1948).'},
-'great-six-hundred-cell':{title:'600-cell (long-chord wireframe)',body:'Non-canonical edge selection on the 600-cell vertex set (120 vertices). 2400 edges rendered: the chord-1 shell (1200 edges) superimposed with the √3 shell (1200 edges), both distinct from the 720-edge {3,3,5} canonical skeleton. Useful for visual exploration of the H₄ root-system\'s chord spectrum. The Schläfli–Hess catalog has 10 canonical regular star 4-polytopes, 9 of them are cataloged separately in this app (Icosahedral 120-cell, Small Stellated 120-cell, Great 120-cell, Grand 120-cell, Grand 600-cell, Great Stellated 120-cell, Grand Stellated 120-cell, Great Grand 120-cell, Great Icosahedral 120-cell); the 10th (Great Grand Stellated 120-cell) shares the Grand Stellated 120-cell\'s wireframe and is omitted to avoid duplication.'},
+'great-six-hundred-cell':{title:'600-cell (long-chord wireframe)',body:'Non-canonical edge selection on the 600-cell vertex set (120 vertices). 2400 edges rendered: the chord-1 shell (1200 edges) superimposed with the √3 shell (1200 edges), both distinct from the 720-edge {3,3,5} canonical skeleton. Useful for visual exploration of the H₄ root-system\'s chord spectrum. The Schläfli–Hess catalog has 10 canonical regular star 4-polytopes, 9 of them are cataloged separately in this app (Icosahedral 120-cell, Small Stellated 120-cell, Great 120-cell, Grand 120-cell, Grand 600-cell, Great Stellated 120-cell, Grand Stellated 120-cell, Great Grand 120-cell, Great Icosahedral 120-cell); the 10th, the Great Grand Stellated 120-cell {5/2,3,3}, has the 120-cell’s 600 vertices rather than this 120-vertex set, so it cannot be drawn here.'},
 'grand-six-hundred-cell':{title:'Grand 600-cell {3, 3, 5/2}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1200 edges rendered: the √3 chord picks the dense 1200-edge configuration to distinguish this wireframe from the {3,3,5} 600-cell; the canonical {3,3,5/2} skeleton has 720 edges. 1200 triangular faces, 600 tetrahedral cells (canonical). Dual: Great Grand Stellated 120-cell {5/2, 3, 3} (not independently implemented in this catalog). The largest of the Schläfli–Hess star 4-polytopes by cell count. Both this polytope and its dual are among the four Schläfli found in the 1850s (published posthumously 1901); the other six were added by Hess in 1883. Cauchy (1813, for 3D Kepler–Poinsot) and Coxeter (1947, Regular Polytopes §14, for 4D Schläfli–Hess) proved exhaustiveness: exactly 10 regular star 4-polytopes exist.'},
 
 'great-one-twenty-cell':{title:'Great 120-cell {5, 5/2, 5}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 720 edges, 720 pentagonal faces, 120 great-dodecahedral cells. Self-dual (Schläfli symbol is palindromic). The cells are great dodecahedra {5, 5/2}, a form Schläfli\'s own Euler-characteristic criterion excluded. Discovered by Hess (1883, "Einleitung in die Lehre von der Kugelteilung"), one of the six he added past Schläfli\'s original four.'},
 'grand-one-twenty-cell':{title:'Grand 120-cell {5, 3, 5/2}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 720 edges, 720 pentagonal faces, 120 dodecahedral cells. Dual: Great Stellated 120-cell {5/2, 3, 5}. One of the four star 4-polytopes Schläfli found in the 1850s (published posthumously 1901); catalogued alongside the other nine in Hess, "Einleitung in die Lehre von der Kugelteilung" (1883).'},
 'great-stellated-one-twenty-cell':{title:'Great Stellated 120-cell {5/2, 3, 5}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1920 edges rendered: chord 1.82 deliberately spans the 1.732+1.902 chord shells for a wireframe distinct from every other entry sharing this vertex set; the canonical {5/2,3,5} skeleton has 720 edges. 720 pentagrammic faces, 120 great-stellated-dodecahedral cells (canonical). Dual: Grand 120-cell {5, 3, 5/2}. The 4D analogue of the great stellated dodecahedron in some respects. One of the four Schläfli found in the 1850s (published posthumously 1901); catalogued alongside the other nine in Hess, "Einleitung in die Lehre von der Kugelteilung" (1883), enumerated again in Coxeter, Regular Polytopes (1948, 3rd ed. 1973).'},
-'grand-stellated-one-twenty-cell':{title:'Grand Stellated 120-cell {5/2, 5, 5/2}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 780 edges rendered: chord 2 selects the 1.902/2 shell, picked for a distinct non-empty wireframe since the 720-edge shell at 0.618 is already used by the convex 600-cell and the icosahedral 120-cell; the canonical {5/2,5,5/2} skeleton has 720 edges. 720 pentagrammic faces, 120 small-stellated-dodecahedral cells (canonical). Self-dual (Schläfli symbol is palindromic). Has both stellated faces and stellated cells, giving a densely self-intersecting structure. Discovered by Edmund Hess (1883); enumerated in Coxeter, Regular Polytopes (1948).'},
+'grand-stellated-one-twenty-cell':{title:'Grand Stellated 120-cell {5/2, 5, 5/2}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 780 edges rendered: chord 2 selects the 1.902/2 shells, picked so this wireframe differs from its neighbors on the same vertex set; the canonical {5/2,5,5/2} skeleton is a different shell of 720 edges. 720 pentagrammic faces, 120 small-stellated-dodecahedral cells (canonical). Self-dual (Schläfli symbol is palindromic). Has both stellated faces and stellated cells, giving a densely self-intersecting structure. Discovered by Edmund Hess (1883); enumerated in Coxeter, Regular Polytopes (1948).'},
 'great-grand-one-twenty-cell':{title:'Great Grand 120-cell {5, 5/2, 3}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1800 edges rendered: chord √2 selects the 1.414 shell, the densest available, picked for a distinct wireframe since the two 1200-edge shells (1 and √3) are already used by Small Stellated 120-cell and Grand 600-cell; the canonical {5,5/2,3} skeleton has 1200 edges. 720 pentagonal faces, 120 great-dodecahedral cells (canonical). Dual: Great Icosahedral 120-cell {3, 5/2, 5}. One of the six star 4-polytopes Hess added in 1883, past Schläfli\'s own Euler-characteristic exclusion criterion. Coxeter, Regular Polytopes (1948, 3rd ed. 1973), calls this and the great 120-cell "the most beautiful of the Schläfli–Hess polychora" for their dual symmetry.'},
 'great-icosahedral-one-twenty-cell':{title:'Great Icosahedral 120-cell {3, 5/2, 5}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1920 edges rendered: chord 1.67 spans the 1.618+1.732 chord shells for a wireframe distinct from Great 120-cell, Grand 120-cell, and Grand 600-cell; the canonical {3,5/2,5} skeleton has 720 edges. 1200 triangular faces, 120 great-icosahedral cells (canonical). Dual: Great Grand 120-cell {5, 5/2, 3}. The cells are great icosahedra {3, 5/2}. With this 6th entry Sprint L completes Reactor\'s coverage of the canonical 10 regular star 4-polytopes (4 added in Sprint K2). One of the six star 4-polytopes Hess added in 1883, "Einleitung in die Lehre von der Kugelteilung", past Schläfli\'s own exclusion criterion; enumerated again in Coxeter, Regular Polytopes (1948).'},
 
 'elliptic-curve':{title:'Elliptic Curve',body:'Real-locus visualization of y² = x³ + ax + b. The discriminant Δ = -16(4a³ + 27b²) determines the topology: Δ > 0 gives two connected components (oval + branch); Δ < 0 gives one connected component; Δ = 0 is singular (cusp or node). Modular elliptic curves over ℚ are central to Andrew Wiles\' 1995 proof of Fermat\'s Last Theorem. Foundation of modern public-key cryptography (Koblitz / Miller, 1985).'},
 'cassini-ovals':{title:'Cassini Ovals',body:'Quartic locus |z² - c²| = a² (Giovanni Domenico Cassini, 1680). For a > c the curve is a single oval; for a = c it degenerates to the Lemniscate of Bernoulli; for a < c it splits into two separate ovals (each enclosing one focus). Cassini, then favoring the Tychonic geo-heliocentric model, proposed that the Sun orbits the Earth on one of these ovals (with the Earth at one focus). Kepler\'s heliocentric ellipse (Earth orbiting the Sun, eccentricity 0.0167) is correct.'},
 'conic-section':{title:'Conic Section',body:'Apollonius of Perga\'s "Conics" (~200 BCE) proved all conic sections (circle, ellipse, parabola, hyperbola) arise from cutting a double cone with a plane. In polar form r = p / (1 - e·cos θ): e = 0 circle; 0 < e < 1 ellipse; e = 1 parabola; e > 1 hyperbola. Adjust the Eccentricity slider to sweep from circle through ellipse and parabola to hyperbola. Foundational to Kepler\'s laws of planetary motion (1609-1619) and Newton\'s Principia (1687).'},
-'lissajous-knot':{title:'Lissajous Knot',body:'Closed 3D curve x(t) = cos(n_x t + φ_x), y(t) = cos(n_y t + φ_y), z(t) = cos(n_z t). For coprime (n_x, n_y, n_z) and generic phases, the curve forms a knot. Bogle, Hearst, Jones, Stoilov ("Lissajous knots", 1994) cataloged the knot types realized by small coprime integer triples, including 5_2, 7_4, and many composites.'},
+'lissajous-knot':{title:'Lissajous Knot',body:'Closed 3D curve x(t) = cos(n_x t + φ_x), y(t) = cos(n_y t + φ_y), z(t) = cos(n_z t). For coprime (n_x, n_y, n_z) and generic phases, the curve forms a knot. The curve is a knot when the three frequencies are pairwise coprime and none of n_x φ_y − n_y φ_x, n_y φ_z − n_z φ_y, n_z φ_x − n_x φ_z is a multiple of π. Bogle, Hearst, Jones and Stoilov ("Lissajous knots", 1994) introduced them; the four drawn here are the three-twist knot 5_2, the stevedore knot 6_1, the square knot and 8_21.'},
 'watt-curve':{title:"Watt's Curve",body:'Sextic algebraic curve traced by the midpoint of the connecting rod in James Watt\'s 1784 parallel-motion linkage. Watt designed the linkage to convert the rotational motion of a steam-engine flywheel into approximately straight reciprocating motion without expensive sliding joints. The curve was studied algebraically by Sylvester (1875). For specific arm-and-coupler ratios, the central segment of the curve is straight to high order.'},
 'witch-of-agnesi':{title:'Witch of Agnesi',body:'y = 8a³/(x² + 4a²): a bell-shaped cubic-rational curve. Maria Gaetana Agnesi described it in "Instituzioni Analitiche ad uso della gioventù italiana" (1748), the first calculus textbook to systematically present integral and differential calculus. Italian "versiera" (sail-rope) was mistranslated as "avversiera" (witch / female adversary) by John Colson in 1801, fixing the misnomer in English.'},
 
@@ -51166,9 +51215,9 @@ const PATTERN_INFO={
 'klein-sextic':{title:'Klein Icosahedral Sextic',body:'A degree-6 plane algebraic curve with 5-fold (icosahedral-related) symmetry. Klein\'s 1884 "Vorlesungen über das Ikosaeder" connected the icosahedral group A₅ to the resolvent of the quintic equation. The visualization is an implicit-curve plot of (x²+y²)³ - 0.4·Re(z⁵) = 0, exhibiting the canonical 5-fold rotational symmetry.'},
 'bezout-cubic-cubic':{title:'Bezout Cubic ∩ Cubic',body:'Étienne Bezout\'s theorem (1779): two plane curves of degrees m and n intersect in exactly m·n points (counting multiplicities, complex points, and points at infinity). Two cubics → 9 intersection points. The visualization shows two cubics f(x,y) = x³-3xy²-x+y and g(x,y) = y³-3x²y+0.5 along with the real subset of their 9 intersections (some pairs may be complex and not visible).'},
 
-'penrose-p-one':{title:'Penrose P1',body:'Roger Penrose\'s 1974 aperiodic set of six prototiles across four basic shape types: pentagon (with three matching-rule variants), pentagram (5-pointed star), boat (3 connected pentagon sectors), and diamond (a 36°/144° rhombus). Required matching rules on the edges (curved arcs) prevent periodic configurations. Penrose, R., "The role of aesthetics in pure and applied mathematical research", Bulletin of the IMA, 10 (1974), 266–271. The rendering here is a simplified representation that conveys the tiling\'s character rather than constructing it from the rules described above.'},
+'penrose-p-one':{title:'Penrose P1',body:'Roger Penrose\'s 1974 aperiodic set of six prototiles across four basic shape types: pentagon (with three matching-rule variants), pentagram (5-pointed star), boat (3 connected pentagon sectors), and diamond (a 36°/144° rhombus). Required matching rules on the edges (curved arcs) prevent periodic configurations. Penrose, R., "The role of aesthetics in pure and applied mathematical research", Bulletin of the IMA, 10 (1974), 266–271. The picture here is not the tiling: it is a fixed cluster of pentagons, a star and a rhombus, without a boat, and not drawn to P1’s exact proportions.'},
 'penrose-p-two':{title:'Penrose P2 (Kite-Dart)',body:'Penrose\'s 1977 reduction to two prototiles: the kite (a 72°/72°/72°/144° quadrilateral) and the dart (a "bow-tie" 36°/216°/36°/72° quadrilateral). Both are rep-tiles for each other under the deflation rule (kite → 2 kites + 1 dart; dart → 1 kite + 1 dart). With matching rules they tile the plane only aperiodically. Implemented here via the deflation substitution starting from the canonical "sun" cluster of 5 kites.'},
-'penrose-p-three':{title:'Penrose P3 (Rhombi)',body:'Penrose\'s two-rhombus aperiodic tiling (late 1970s): a thick rhombus (72°/108°) and a thin rhombus (36°/144°), both with unit side length and area ratio φ:1. Rendered via Robinson-triangle deflation, each rhombus splits along its short diagonal into two isosceles half-tiles whose substitution rules (acute → 1 acute + 1 obtuse; obtuse → 1 obtuse + 1 acute) generate the classic 5-fold-symmetric tiling. With single- and double-arrow edge markings the only valid tilings are aperiodic. Vertex configurations realize 8 distinct local environments, all sharing the inflation factor φ.'},
+'penrose-p-three':{title:'Penrose P3 (Rhombi)',body:'Penrose\'s two-rhombus aperiodic tiling (late 1970s): a thick rhombus (72°/108°) and a thin rhombus (36°/144°), both with unit side length and area ratio φ:1. Rendered via Robinson-triangle deflation: the thick rhombus splits along its long diagonal into two 36°-36°-108° half-tiles and the thin one along its short diagonal into two 36°-72°-72° half-tiles. Each deflation turns an acute half-tile into 1 acute + 1 obtuse, and an obtuse one into 2 obtuse + 1 acute, which generates the classic 5-fold-symmetric tiling. With single- and double-arrow edge markings the only valid tilings are aperiodic. Vertex configurations realize 8 distinct local environments, all sharing the inflation factor φ.'},
 'robinson-tiles':{title:'Robinson Tiles',body:'Raphael M. Robinson, "Undecidability and nonperiodicity for tilings of the plane", Inventiones Mathematicae 12 (1971), 177–209. The first 6-prototile aperiodic set, predating Penrose\'s P1 by 3 years. Each tile is a square with notches forming a "cross" pattern; the matching rules force a hierarchical aperiodic structure. Subsequent work has reduced the count: Penrose 6 (1974, P1), Penrose 2 (1977 P2 kite-and-dart and late-1970s P3 rhombi), Hat 1 (2023), Spectre 1 (2023). The rendering here is a simplified representation that conveys the tiling\'s character rather than constructing it from the rules described above.'},
 'ammann-beenker':{title:'Ammann-Beenker',body:'The canonical 8-fold aperiodic tiling, found by Robert Ammann around 1977 and independently described by F. P. M. Beenker (TH Eindhoven report, 1982). Two prototiles, a unit square and a 45° rhombus, tile the plane with eightfold orientational order but no translational symmetry. Rendered here by N. G. de Bruijn\'s multigrid (dual) method: four families of equally spaced parallel lines, set 45° apart, are dualized so that every crossing of two lines becomes a tile whose edges run along those two grid directions. Its self-similar inflation factor is the silver ratio 1 + √2, and Ammann bars across the tiles encode the matching rules that force aperiodicity.'},
 'pinwheel':{title:'Pinwheel',body:'Charles Radin\'s pinwheel tiling (Annals of Mathematics 139, 1994), based on a construction of John Conway. The single prototile is the right triangle with legs 1 and 2 and hypotenuse √5. Each triangle subdivides into five copies scaled by 1/√5: four meet at the midpoint of the long leg and the fifth sits rotated at the center. Because the substitution turns children by arctan(1/2), an irrational multiple of π, the tiles occur in infinitely many orientations, the first tiling shown to have this property. Its statistical roundness later informed quasicrystal and acoustic-scattering studies.'},
@@ -51190,10 +51239,10 @@ const PATTERN_INFO={
 'hopf-fibration':{title:'Hopf Fibration',body:'The fiber bundle S¹ → S³ → S² discovered by Heinz Hopf in 1931 ("Über die Abbildungen der dreidimensionalen Sphäre auf die Kugelfläche", Math. Ann. 104). Each point of the base S² lifts to a great circle of S³; in stereographic projection these great circles become LINKED CIRCLES in ℝ³, the Hopf-link signature. The Hopf invariant (Hopf 1931) classifies these maps; the Hopf fibration has invariant 1, the smallest positive value. Standard example in algebraic topology and quantum-information theory (the Bloch sphere is exactly the base S² of the Hopf fibration of a qubit\'s state space).'},
 
 'genus-four-polygon':{title:'Genus-4 Fundamental Polygon',body:'A 16-gon with the standard relator a₁b₁a₁⁻¹b₁⁻¹a₂b₂a₂⁻¹b₂⁻¹a₃b₃a₃⁻¹b₃⁻¹a₄b₄a₄⁻¹b₄⁻¹. Edge identification yields a closed orientable surface of genus 4 (a quadruple-handle torus), Euler characteristic χ = 2 - 2g = -6. Hyperbolic surfaces of this genus have moduli space of complex dimension 3g - 3 = 9. They form a 9-complex-dimensional family. Fundamental polygon for the Bolza surface (genus 2 / area 4π) and higher-genus analogues; canonical edge-pairing in Beardon (1983).'},
-'klein-quartic':{title:'Klein Quartic',body:'A genus-3 Riemann surface defined by x³y + y³z + z³x = 0 in ℂP². Felix Klein, "Über die Transformation siebenter Ordnung der elliptischen Funktionen", Math. Ann. 14 (1879). Its automorphism group PSL₂(7) has order 168 = 84(g-1), achieving the Hurwitz upper bound for the maximum number of automorphisms of a genus-g surface. Drawn here approximately as a regular 14-gon in the Poincaré disk model with hyperbolic-style curved edges and the canonical edge-identification labeling.'},
+'klein-quartic':{title:'Klein Quartic',body:'A genus-3 Riemann surface defined by x³y + y³z + z³x = 0 in ℂP². Felix Klein, "Über die Transformation siebenter Ordnung der elliptischen Funktionen", Math. Ann. 14 (1879). Its automorphism group PSL₂(7) has order 168 = 84(g-1), achieving the Hurwitz upper bound for the maximum number of automorphisms of a genus-g surface. Drawn here as its fundamental domain: the regular hyperbolic 14-gon with angles 2π/7 in the Poincaré disk, its sides true geodesics, letters marking the pairs that glue together (odd side s with side s + 5).'},
 'riemann-branch-cuts':{title:'Riemann Branch Cuts',body:'Multivalued complex functions like log(z) and √z are single-valued on a Riemann surface that covers ℂ multiple times, branched at certain points. The visualization shows the Riemann sphere with the branch cut for log(z) drawn from the origin (= south pole) along the negative-real meridian to ∞ (= north pole). Bernhard Riemann, "Grundlagen für eine allgemeine Theorie der Funktionen einer veränderlichen complexen Grösse" (1851).'},
 
-'projective-plane':{title:'Real Projective Plane RP²',body:'The non-orientable closed 2-manifold of genus 1 with Euler characteristic χ = 1. Topologically the quotient S²/{±1} (each point identified with its antipode). Cannot be embedded in ℝ³ without self-intersection (an immersion is the best we can do; here drawn as a Boy\'s-surface-style cross-cap). Coxeter, H. S. M., "Projective Geometry" (1974). The Boy surface immersion was discovered by Werner Boy (1903) on instruction from David Hilbert who had asked whether such an immersion existed.'},
+'projective-plane':{title:'Real Projective Plane RP²',body:'The non-orientable closed 2-manifold of genus 1 with Euler characteristic χ = 1. Topologically the quotient S²/{±1} (each point identified with its antipode). Cannot be embedded in ℝ³ without self-intersection (an immersion is the best we can do; here drawn as Boy’s surface in the Bryant–Kusner parametrization, a closed immersion whose disk boundary is glued antipodally). Coxeter, H. S. M., "Projective Geometry" (1974). The Boy surface immersion was discovered by Werner Boy (1903) on instruction from David Hilbert who had asked whether such an immersion existed.'},
 'antipodal-id':{title:'Antipodal Identification',body:'Visualizes the quotient map S² → RP² by drawing 12 antipodal point pairs (each pair gets a distinct color) connected by chord lines through the sphere. The projective plane is constructed by identifying each pair to a single point. The same construction in 4D yields S³/{±1} = RP³, the configuration space of 3D rotations (homotopy-equivalent to SO(3)). Quotient construction for the real projective plane RP²; canonical treatment in Hilbert & Cohn-Vossen (1932).'},
 'riemann-sphere':{title:'Riemann Sphere',body:'The one-point compactification ℂ ∪ {∞}, topologically S². Stereographic projection from the north pole sends each finite point z = u + iv to (2u/D, 2v/D, (|z|²-1)/D) where D = |z|² + 1; the north pole is identified with ∞. Foundation of complex analysis (Riemann\'s 1851 thesis "Grundlagen für eine allgemeine Theorie der Funktionen einer veränderlichen complexen Grösse"). Mandelbrot/Julia iteration is meromorphic on the Riemann sphere.'},
 'spherical-icosahedron':{title:'Spherical Icosahedron',body:'The 20 triangular faces of the regular icosahedron projected radially to its circumscribed sphere, with chord edges replaced by great-circle arcs. The icosahedral rotation group A₅ acts on this tiling. Source: Klein, F., "Vorlesungen über das Ikosaeder und die Auflösung der Gleichungen vom fünften Grade" (1884), Klein\'s celebrated treatise relating the icosahedron to the quintic equation.'},
@@ -51203,7 +51252,7 @@ const PATTERN_INFO={
 'rhombic-dodecahedron':{title:'Rhombic Dodecahedron',body:'Catalan solid: dual of the cuboctahedron. 14 vertices, 24 edges, 12 congruent rhombic faces. Tiles 3-space alone (one of five known isohedral parallelohedra after Fedorov). Each face is a rhombus with diagonal ratio √2:1, giving acute and obtuse angles arccos(1/3) ≈ 70.53° and arccos(−1/3) ≈ 109.47°. Constructed by erecting a square pyramid on each face of a cube. Catalan (1865).'},
 'triakis-octahedron':{title:'Triakis Octahedron',body:'Catalan solid: dual of the truncated cube. 14 vertices, 36 edges, 24 isosceles-triangle faces. Constructed by erecting a low triangular pyramid on each face of a regular octahedron. Catalan (1865).'},
 'tetrakis-hexahedron':{title:'Tetrakis Hexahedron',body:'Catalan solid: dual of the truncated octahedron. 14 vertices, 36 edges, 24 isosceles-triangle faces. Constructed by erecting a square pyramid on each face of a cube (= tetrakis cube). The Bauhinia flower icon on the Hong Kong flag is geometrically a tetrakis hexahedron. Catalan (1865).'},
-'deltoidal-icositetrahedron':{title:'Deltoidal Icositetrahedron',body:'Catalan solid: dual of the rhombicuboctahedron. 26 vertices, 48 edges, 24 kite faces. Each face is a "deltoid" (kite) with two short and two long edges in golden-ratio proportion. Catalan (1865); also called the trapezoidal icositetrahedron.'},
+'deltoidal-icositetrahedron':{title:'Deltoidal Icositetrahedron',body:'Catalan solid: dual of the rhombicuboctahedron. 26 vertices, 48 edges, 24 kite faces. Each face is a "deltoid" (kite) with two short and two long edges; the long edge is about 1.29 times the short one (not the golden ratio, which belongs to the icosahedral family). Catalan (1865); also called the trapezoidal icositetrahedron.'},
 'disdyakis-dodecahedron':{title:'Disdyakis Dodecahedron',body:'Catalan solid: dual of the truncated cuboctahedron. 26 vertices, 72 edges, 48 scalene-triangle faces. Also called the hexakis octahedron, it has three distinct edge lengths. Catalan (1865).'},
 'pentagonal-icositetrahedron':{title:'Pentagonal Icositetrahedron',body:'Catalan solid: dual of the snub cube. <em>Chiral.</em> 38 vertices, 60 edges, 24 irregular-pentagonal faces. Has the same chirality as its parent snub cube; left- and right-handed forms exist. Catalan (1865).'},
 'rhombic-triacontahedron':{title:'Rhombic Triacontahedron',body:'Catalan solid: dual of the icosidodecahedron. 32 vertices, 60 edges, 30 <em>golden-rhombus</em> faces (with diagonal ratio = φ). Vertex set = icosahedron ∪ dodecahedron vertices. Famous as the shape of the "Bilinski" or "Kepler" zonohedron (Kepler 1611). Tiles 3-space when combined with three other zonohedra.'},
@@ -51224,25 +51273,25 @@ const PATTERN_INFO={
 'phoenix':{title:'Phoenix Fractal',body:'Iterates f(z) = z² + c + p · z_prev (a degree-2 escape with a memory term, where z_prev is the value from the previous iteration). The Phoenix curve was studied by Shigehiro Ushiki (1988); its parameter space generalizes the Mandelbrot to a memory-augmented dynamical system. The "phoenix" silhouette of upward-curling tendrils at the canonical view gives the figure its name. Memory dynamics make the iteration non-Markovian, closely related to the IFS attractor literature.'},
 'celtic':{title:'Celtic Mandelbrot',body:'Iteration of the map f(z) = |Re(z²)| + i·Im(z²) + c. The asymmetric absolute-value fold (only on the real part) makes f non-holomorphic. It is real-analytic but breaks the Cauchy–Riemann equations along Re(z²) = 0, producing a hybrid between Mandelbrot conformality and Burning Ship roughness. Sometimes called "Mandelbar variants"; the canonical view shows characteristic Celtic-knotwork interleavings along the boundary curve of the bounded-orbit set. Mandelbrot fractal variant z → |Re(z²)| + i·Im(z²) + c; introduced in the fractalforums community (c. 2009).'},
 'newton3':{title:'Newton zⁿ − 1',body:'Newton\'s method applied to f(z) = zⁿ − 1: iterates z ← z − (zⁿ − 1)/(n·zⁿ⁻¹). The Degree slider sets n (3–6). Each starting point converges (almost surely) to one of the n roots of unity; coloring by basin produces the iconic multi-color fractal first plotted for the cubic by John Hubbard (1980) and popularized by Robert Devaney. With three or more basins the boundary has the Wada-lake property (Yoneyama, 1917): every boundary point lies on the boundary of every basin at once. As the degree grows the basins narrow and the Julia set densifies, its fractal dimension approaching 2. Cayley posed the basin-classification problem in 1879; it is solved completely only for degree 2.'},
-'newton_cayley':{title:'Newton–Cayley',body:'Newton iteration on the cubic f(z) = z³ − 2z + 2, the canonical example used by Arthur Cayley (1879) when he posed the (still partly open) problem of fully characterizing the basin geometry for general polynomials of degree ≥ 3. The three roots partition ℂ into three basins whose common boundary is the Julia set of the Newton map; with three or more roots the boundary has the Wada-lake property: every point on it borders all three basins simultaneously. For arbitrary user polynomials see also the named Newton fractals (z³−1, z⁴−1, …).'},
-'lyapunov':{title:'Lyapunov Fractal',body:'Generated by the logistic map xₙ₊₁ = rₙ · xₙ · (1 − xₙ), where the parameter r is read out of a binary "AB" sequence (e.g. ABAB, AABBAB). Pixel color encodes the Lyapunov exponent λ = lim (1/n) Σ ln|f′(xₙ)|: λ < 0 (stable) shows the curve branches; λ > 0 (chaotic) appears as the dark "swallows". Discovered as a fractal by Mario Markus and Bruno Hess (1989); the canonical "Markus-Lyapunov" sequence ABBABA generates the eponymous swallow figure. The exponent is well-defined wherever the iteration is bounded.'},
+'newton_cayley':{title:'Newton–Cayley',body:'Newton iteration on the cubic f(z) = z³ − 2z + 2, the canonical example used by Arthur Cayley (1879) when he posed the (still partly open) problem of fully characterizing the basin geometry for general polynomials of degree ≥ 3. Here Newton’s method has a superattracting 2-cycle (0 maps to 1 and 1 maps back to 0), so besides the three root basins there are open regions whose points converge to no root at all: this is why the polynomial is the classic example of Newton’s method failing on whole regions. For arbitrary user polynomials see also the named Newton fractals (z³−1, z⁴−1, …).'},
+'lyapunov':{title:'Lyapunov Fractal',body:'Generated by the logistic map xₙ₊₁ = rₙ · xₙ · (1 − xₙ), where the parameter r is read out of a binary "AB" sequence (e.g. ABAB, AABBAB). Pixel color encodes the Lyapunov exponent λ = lim (1/n) Σ ln|f′(xₙ)|: λ < 0 (stable) regions form the "swallow" shapes and take the palette; λ > 0 (chaotic) regions are pulled toward red. Discovered as a fractal by Mario Markus and Bruno Hess (1989); the canonical "Markus-Lyapunov" sequence ABBABA generates the eponymous swallow figure. The exponent is well-defined wherever the iteration is bounded.'},
 'mandelbulb':{title:'Mandelbulb 3D',body:'A 3D analogue of the Mandelbrot set proposed by Daniel White and Paul Nylander (2009). Coordinates (x, y, z) are mapped to spherical (r, θ, φ); the iteration "cubes" both r → rⁿ and angles → nθ, nφ; then translated by c. With n = 8 (canonical), the surface produces the iconic bulbous-headed figure; varying n changes the symmetry. There is no canonical complex-number generalization to ℝ³ (no 3D division algebra exists, by Frobenius 1877); the Mandelbulb is an analogue built by construction rather than a strict mathematical extension. Distance estimation lets ray-marching converge in O(1) steps per pixel.'},
-'mandelbox':{title:'Mandelbox 3D',body:'A 3D escape-time fractal defined by alternating *box folding* (clipping each coordinate to [−1, 1] and reflecting on overflow) and *ball folding* (radius inversion below a threshold). Discovered by Tom Lowe (2010); the resulting figure has cubic symmetry and crystalline self-similarity at every scale. Parameters: scale s (canonical s = 2 or s ≈ 2.5), fold limit (1.0), min-radius² (0.5). Rendered via signed distance estimation against the iterated-fold field.'},
+'mandelbox':{title:'Mandelbox 3D',body:'A 3D escape-time fractal defined by alternating *box folding* (clipping each coordinate to [−1, 1] and reflecting on overflow) and *ball folding* (radius inversion below a threshold). Discovered by Tom Lowe (2010); the resulting figure has cubic symmetry and crystalline self-similarity at every scale. Parameters: scale s (canonical s = 2 or s ≈ 2.5), fold limit (1.0), min radius 0.5 (min-radius² 0.25). Rendered via signed distance estimation against the iterated-fold field.'},
 'menger':{title:'Menger Sponge',body:'A 3D generalization of the Sierpiński carpet defined by recursive subdivision of a cube into 27 (3³) sub-cubes, removing the central cube of each face and the absolute center, leaving 20. Karl Menger (1926) constructed the figure as a "universal" Peano continuum: every 1-dimensional compact metric space embeds in it. Hausdorff dimension = log 20 / log 3 ≈ 2.7268. Total surface area diverges as iteration depth → ∞; total volume → 0. Rendered via signed distance estimation: each iteration refines the SDF.'},
 'sierp_tetra':{title:'Sierpiński Tetrahedron',body:'A 3D Sierpiński fractal: recursively replace each tetrahedron with 4 half-scale copies at its corners. Hausdorff dimension = log 4 / log 2 = 2 exactly, a 2-dimensional set living in 3-space. The figure is the attractor of the IFS with 4 contractions w_i(p) = (p + v_i) / 2 where v_i are the tetrahedron vertices (the "chaos game" generates it). Rendered here via SDF iteration: at each step, fold the point through the nearest vertex and double, terminating when the iterated radius stabilizes. 3D analogue of the Sierpiński triangle; first described by Sierpiński (1915).'},
 'qjulia':{title:'Quaternion Julia',body:'Julia set of f(q) = q² + c in the quaternion algebra ℍ (Hamilton, 1843). q² uses the non-commutative quaternion product. Visualized as a 3D slice of the 4D set: the c-parameter selects which Julia set, the slice plane (typically w = 0) selects the visible "skin". Norton, Hart, and Sandin (1982) first plotted the figure; the resulting forms resemble warped Mandelbrot copies in three dimensions, often with Mandelbulb-like symmetry. Distance estimation works because the iteration is conformal in ℍ.'},
-'buddhabrot':{title:'Buddhabrot',body:'An alternative rendering of the Mandelbrot set by Melinda Green (1993): instead of coloring c by escape-iteration count, plot the histogram of every orbit point visited by escaping orbits. The resulting density map resembles a meditating Buddha figure (rotated 90° from the standard Mandelbrot orientation). Three-channel "Nebulabrot" coloring uses different escape-iteration thresholds (50 / 500 / 5000) for R / G / B. The orbit-density approach reveals features invisible to the standard escape-time view: tendrils, internal-cardioid structure, and the "cosmic web" of orbit shadows.'},
+'buddhabrot':{title:'Buddhabrot',body:'An alternative rendering of the Mandelbrot set by Melinda Green (1993): instead of coloring c by escape-iteration count, plot the histogram of every orbit point visited by escaping orbits. The resulting density map resembles a meditating Buddha figure (rotated 90° from the standard Mandelbrot orientation). Three-channel "Nebulabrot" coloring uses different escape-iteration depths for R / G / B; here they are the iteration limit, a quarter of it and a sixteenth of it. The orbit-density approach reveals features invisible to the standard escape-time view: tendrils, internal-cardioid structure, and the "cosmic web" of orbit shadows.'},
 'buddhabrot_anti':{title:'Anti-Buddhabrot',body:'Melinda Green\'s variant of the Buddhabrot: histograms only the orbits of c values that DO NOT escape (the points inside M itself). The result reveals the periodic-attractor structure inside the Mandelbrot set, bulbs and cardioids show up as bright clusters where attracting cycles concentrate. Combined with the standard Buddhabrot, the two views together show the complete orbit-density picture of the Mandelbrot dynamics. Density-orbit accumulation over INSIDE-M trajectories; Melinda Green named the Buddhabrot variants (1993).'},
-'attractor_lorenz':{title:'Lorenz Attractor',body:'The first famous strange attractor: the long-time behavior of dx/dt = σ(y − x), dy/dt = x(ρ − z) − y, dz/dt = xy − βz, derived by Edward Lorenz (1963) as a simplified model of atmospheric convection. The canonical parameters σ = 10, ρ = 28, β = 8/3 produce two interleaved butterfly-wing lobes; trajectories alternate between them in apparently-random order, the original "butterfly effect" of sensitive dependence on initial conditions. Hausdorff dimension ≈ 2.06 (Sparrow, 1982). Integrated here by classical 4th-order Runge–Kutta at dt = 0.005. Fourth-order local accuracy preserves the chaotic-attractor manifold structure across long trajectory accumulations.'},
+'attractor_lorenz':{title:'Lorenz Attractor',body:'The first famous strange attractor: the long-time behavior of dx/dt = σ(y − x), dy/dt = x(ρ − z) − y, dz/dt = xy − βz, derived by Edward Lorenz (1963) as a simplified model of atmospheric convection. The canonical parameters σ = 10, ρ = 28, β = 8/3 (entered here as 2.667, the β slider’s 0.001 step) produce two interleaved butterfly-wing lobes; trajectories alternate between them in apparently-random order, the original "butterfly effect" of sensitive dependence on initial conditions. Hausdorff dimension ≈ 2.06 (Sparrow, 1982). Integrated here by classical 4th-order Runge–Kutta at dt = 0.005. Fourth-order local accuracy preserves the chaotic-attractor manifold structure across long trajectory accumulations.'},
 'attractor_rossler':{title:'Rössler Attractor',body:'Otto Rössler\'s 3D ODE (1976), originally proposed as a "minimal" chaotic system: dx/dt = −y − z, dy/dt = x + ay, dz/dt = b + z(x − c). Canonical parameters a = 0.2, b = 0.2, c = 5.7 give a single-funnel attractor that twists upward and folds back. Banded structure where adjacent trajectories diverge exponentially, a Smale horseshoe in disguise. Easier to integrate than Lorenz (no quadratic terms in two equations) but with all the chaotic-attractor signatures.'},
 'attractor_clifford':{title:'Clifford Attractor',body:'2D iterated map: xₙ₊₁ = sin(a · yₙ) + c · cos(a · xₙ), yₙ₊₁ = sin(b · xₙ) + d · cos(b · yₙ). Discovered by Clifford Pickover (1990s) in his "Computers, Pattern, Chaos and Beauty" experiments. Sweeping the parameter quadruple (a, b, c, d) produces an enormous gallery of distinct attractor shapes, leaf-like, web-like, swirling, looping. The map has no theoretical closed-form basin description; visual exploration is the canonical way to discover new figures.'},
 'attractor_dejong':{title:'De Jong Attractor',body:'2D iterated map: xₙ₊₁ = sin(a · yₙ) − cos(b · xₙ), yₙ₊₁ = sin(c · xₙ) − cos(d · yₙ). Studied extensively by Peter de Jong (1980s) and popularized by Pickover. Like the Clifford family, the parameter space hides countless distinct attractors. The interleaved sin/cos terms produce smoothly-curving filaments rather than sharp folds, giving De Jong attractors a characteristic flowing texture.'},
-'attractor_duffing':{title:'Duffing Oscillator',body:'A forced, damped oscillator with a double-well restoring force: ẍ + δẋ − x + αx³ = γ·cos(ωt), introduced by Georg Duffing (1918). Rendered here as the (x, y) = (position, velocity) phase portrait, integrated by 4th-order Runge–Kutta with the drive phase carried as a third coordinate (φ̇ = ω) to keep the system autonomous. Under light damping (δ ≈ 0.25) and a periodic drive (γ ≈ 0.3, ω ≈ 1) the orbit no longer settles into either well: it stretches along the unstable manifold and is reinjected each drive period, folding a strange attractor, a canonical low-dimensional route to chaos in a smooth mechanical system (Ueda, 1979; Holmes, 1979).'},
+'attractor_duffing':{title:'Duffing Oscillator',body:'A forced, damped oscillator with a double-well restoring force: ẍ + δẋ − x + αx³ = γ·cos(ωt). Georg Duffing (1918) introduced the forced cubic oscillator; this negative-stiffness double-well form is the one Philip Holmes (1979) showed to be chaotic. Rendered here as the (x, y) = (position, velocity) phase portrait, integrated by 4th-order Runge–Kutta with the drive phase carried as a third coordinate (φ̇ = ω) to keep the system autonomous. Under light damping (δ ≈ 0.25) and a periodic drive (γ ≈ 0.3, ω ≈ 1) the orbit no longer settles into either well: it stretches along the unstable manifold and is reinjected each drive period, folding a strange attractor, a canonical low-dimensional route to chaos in a smooth mechanical system (Ueda, 1979; Holmes, 1979).'},
 'attractor_henon':{title:'Hénon Attractor',body:'2D iterated map: xₙ₊₁ = 1 − a·xₙ² + yₙ, yₙ₊₁ = b·xₙ. Michel Hénon (1976) introduced this map as a simplified Lorenz-like dissipative system. Canonical (a, b) = (1.4, 0.3) produces the iconic horseshoe-fold attractor, a strange attractor whose Hausdorff dimension ≈ 1.26 (Russell, Hanson, Ott 1980). The folding mechanism is exactly Smale\'s horseshoe; the attractor was the first explicit example of a strange attractor in a 2D iterated map.'},
 'attractor_aizawa':{title:'Aizawa Attractor',body:'3D ODE: dx/dt = (z − b)·x − d·y, dy/dt = d·x + (z − b)·y, dz/dt = c + a·z − z³/3 − (x² + y²)·(1 + e·z) + f·z·x³. Yoji Aizawa\'s parameter set produces a striking double-spiral with a connecting central column. Less studied than Lorenz but visually distinctive. The central z-axis behavior creates a vase-like silhouette absent from most chaotic attractors. It comes from his torus-Hopf bifurcation system (1976).'},
-'attractor_thomas':{title:'Thomas Attractor',body:'René Thomas (1999) cyclically-symmetric 3D ODE: dx/dt = sin(y) − bx, dy/dt = sin(z) − by, dz/dt = sin(x) − bz. The cyclic symmetry x → y → z → x is unusual among chaotic attractors. For small b (≈ 0.18) the figure is a 3D weave of curving tendrils filling a roughly cubical region. Dissipation rate b controls the bifurcation from periodic orbits to fully chaotic flow.'},
+'attractor_thomas':{title:'Thomas Attractor',body:'René Thomas (1999) cyclically-symmetric 3D ODE: dx/dt = sin(y) − bx, dy/dt = sin(z) − by, dz/dt = sin(x) − bz. The cyclic symmetry x → y → z → x is unusual among chaotic attractors. For small b (the default here is 0.208) the figure is a 3D weave of curving tendrils filling a roughly cubical region. Dissipation rate b controls the bifurcation from periodic orbits to fully chaotic flow.'},
 'attractor_halvorsen':{title:'Halvorsen Attractor',body:'Cyclically-symmetric 3D ODE: dx/dt = −a·x − 4y − 4z − y², dy/dt = −a·y − 4z − 4x − z², dz/dt = −a·z − 4x − 4y − x². Each equation is a cyclic permutation of the others. Like the Thomas attractor, exhibits 3-fold cyclic symmetry; produces a triangular weave reminiscent of a Borromean ring projection. Halvorsen\'s cyclically symmetric attractor; Vallée et al. (2017).'},
-'attractor_dadras':{title:'Dadras Attractor',body:'3D ODE: dx/dt = y − a·x + b·y·z, dy/dt = c·y − x·z + z, dz/dt = d·x·y − e·z. Sara Dadras and Hamid Reza Momeni (2009) introduced this as part of a parametric family designed to produce diverse chaotic regimes. Different parameter sets give attractors with strikingly different fractal dimensions and topologies.'},
+'attractor_dadras':{title:'Dadras Attractor',body:'3D ODE: dx/dt = y − a·x + b·y·z, dy/dt = c·y − x·z + z, dz/dt = 2·x·y − d·z, with the x·y coupling fixed at 2 and d as the z-damping. Sara Dadras and Hamid Reza Momeni (2009) introduced this as part of a parametric family designed to produce diverse chaotic regimes. Different parameter sets give attractors with strikingly different fractal dimensions and topologies.'},
 'ifs_sierpinski':{title:'IFS, Sierpiński (Chaos Game)',body:'Iterated Function System: a finite set of contractive affine maps {w₁, …, wₙ}, each with probability pᵢ. Plot orbits of the random-iteration "chaos game": pick a starting point, then repeatedly apply a randomly-chosen wᵢ and plot. Michael Barnsley (1988) proved that the orbit converges to the unique attractor (a fractal) regardless of starting point: the Banach fixed-point theorem applied to the Hutchinson operator on the metric space of compact subsets of ℝ². Famous attractors: the Sierpiński triangle (3 maps at corners, the canonical IFS), the Barnsley fern (4 maps), and the dragon curve. Edit the affine matrices in the right inspector to design custom IFS attractors. The three transforms place the apex at (0.5, √3/2) for a true equilateral triangle, the canonical Sierpiński gasket.'},
 };
 
@@ -52203,7 +52252,9 @@ entries:[
 { who:"Ludwig Schläfli", year:"written 1850–1852, published 1901", work:"Theorie der vielfachen Kontinuität", where:"Denkschriften der Schweizerischen Naturforschenden Gesellschaft", what:"Enumerated the regular polytopes in every dimension, including the six convex regular 4-polytopes, and introduced the Schläfli symbol." },
 { who:"David Hilbert", year:"1891", work:"Über die stetige Abbildung einer Linie auf ein Flächenstück", where:"Mathematische Annalen 38", what:"The Hilbert space-filling curve: a continuous map of an interval onto a square, visiting every cell of a grid exactly once." },
 { who:"Eugène Catalan", year:"1865", work:"Mémoire sur la théorie des polyèdres", where:"Journal de l’École Polytechnique 24", what:"The thirteen Catalan solids, the isohedral duals of the Archimedean solids." },
-{ who:"A. P. Kulaichev", year:"1984", work:"Sriyantra and its mathematical properties", where:"Indian Journal of History of Science 19(3)", what:"The constraint analysis of the Sri Yantra: the conditions under which all nine triangles meet in exact concurrence. The figure in this app is a stylized drawing and does not solve them." },
+{ who:"A. P. Kulaichev", year:"1984", work:"Sriyantra and its mathematical properties", where:"Indian Journal of History of Science 19(3)", what:"The constraint analysis of the Sri Yantra: the conditions under which all nine triangles meet in exact concurrence." },
+{ who:"G. Huet", year:"2002", work:"Sri Yantra Geometry", where:"Theoretical Computer Science 281", what:"A formal statement of the concurrence problem and the five-parameter family of its solutions; this app draws the figure from Huet's parameters." },
+{ who:"Alessandro Chiodo", year:"2021", work:"On the construction of the Sri Yantra", where:"Comptes Rendus Mathématique 359", what:"A straightedge-and-compass construction of concurrent Sri Yantras, reducing it to the circle-line-point problem of Apollonius. The app solves its conditions numerically to draw the nine triangles." },
 { who:"Albert E. Bosman", year:"conceived 1942, published 1957", work:"Het wondere onderzoekingsveld der vlakke meetkunde", where:"Breda: Parcival", what:"The Pythagoras tree, a self-similar tiling of squares that is a visual proof of a² + b² = c²." },
 { who:"Roger Penrose", year:"1974", work:"The role of aesthetics in pure and applied mathematical research", where:"Bulletin of the Institute of Mathematics and its Applications 10", what:"The aperiodic Penrose tilings (P1/P2/P3); popularized by Martin Gardner in Scientific American, January 1977." },
 { who:"D. Smith, J. S. Myers, C. S. Kaplan & C. Goodman-Strauss", year:"2023", work:"An aperiodic monotile · A chiral aperiodic monotile", where:"arXiv:2303.10798 (the Hat) · arXiv:2305.17743 (the Spectre)", what:"The first single tiles that tile the plane only aperiodically, the “einstein” problem, open for half a century, resolved twice in one spring." },
