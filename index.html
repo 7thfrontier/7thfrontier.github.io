@@ -797,7 +797,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.10</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.11</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1083,7 +1083,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.0.10</h2>
+    <h2>AEON · v7.0.11</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1144,25 +1144,24 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.0.10.</h2>
-    <p class="section-lede">Drawings match their mathematics · 2026-10-07</p>
+    <h2 class="section-title">What's new<br>in 7.0.11.</h2>
+    <p class="section-lede">Aperiodic tilings drawn true · 2026-10-07</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Pattern notes match the pictures.</strong> About thirty notes described something the picture does not show. The Perpendicular Mandelbrot's mirror is the real axis; the Lyapunov fractal's chaos is drawn in red and its swallows are the stable regions; Newton on z³ − 2z + 2 has whole regions that reach no root; the {9/2} enneagram is a single star. Symmetry claims for the Burning Ship and Tricorn Julia sets and the Buffalo, and the stated parameters of the Mandelbox, Buddhabrot, Nova, Thomas, Dadras and Duffing systems, now match what is drawn. The landing page's Penrose substitution rule is corrected the same way.</li>
-    <li><strong>The Sri Yantra is drawn from its real construction.</strong> Its nine triangles are now solved so that every point where three lines should meet is a single point, and their intersections form exactly the 43 small triangles of the traditional diagram. The pattern notes and References name the sources, Huet (2002) and Chiodo (2021).</li>
-    <li><strong>The Penrose kite-and-dart tiling is a real one.</strong> The P2 entry drew triangles that never assembled into kites and darts: its pieces met in mismatched edges across the whole picture. It now follows the true substitution, so every kite and dart meets its neighbors edge to edge, and kites outnumber darts by the golden ratio as they should. P2, P3 and the plain Penrose entry also draw each tile whole, without the line that used to run down the middle of every kite, dart and rhombus.</li>
-    <li><strong>Elliptic curves close at the axis.</strong> The curve y² = x³ + ax + b showed a gap wherever it crossed the x-axis, and its oval was drawn as two separate halves. Each component is now drawn as one unbroken stroke through its axis crossings. The exponential map now follows the orbit of its one special value, c, the standard picture of this family, and its description no longer claims critical points it does not have. The Lorenz and superformula notes now say what the controls really set.</li>
-    <li><strong>The snub dodecahedron and the great stellated dodecahedron are the real solids.</strong> The snub dodecahedron's edges varied in length by up to 84%, so its triangles and pentagons were uneven; every edge is now the same length. The great stellated dodecahedron drew the same 60 lines as the compound of five cubes; it now draws its own 30 edges, which outline twelve five-pointed stars.</li>
-    <li><strong>Torus links and the Borromean rings cross correctly.</strong> A torus knot whose two numbers share a factor, such as (2, 4), is a link of several rings, but only one of them was drawn; all of them are now. The Borromean rings had one crossing of each pair cut on both rings and the other on neither; now each ring passes over one neighbor and under the other, the arrangement that makes the three inseparable.</li>
-    <li><strong>Lissajous knots are knots.</strong> Most of the Lissajous knot choices drew curves that passed through themselves, which a knot cannot do. The four choices are now published examples, each a real knot: the three-twist knot, the stevedore knot, the square knot and 8_21.</li>
-    <li><strong>The Klein quartic and the projective plane are drawn as themselves.</strong> The Klein quartic showed a 14-sided figure with its sides paired the wrong way and its curved edges only roughly drawn; it is now the true hyperbolic 14-gon with sides glued as Klein gave them. The projective plane was an open band; it is now Boy's surface, a closed surface that passes through itself, the classic picture of the projective plane in space.</li>
+    <li><strong>The Hat draws the real hat tiling.</strong> The Aperiodic Hat pattern used to repeat a 13-sided shape that was not quite the hat on a regular lattice, overlapping its neighbors. It now draws a patch of the true tiling, built by the substitution from the paper: every tile is the same hat, they meet edge to edge with no gaps or overlaps, and about one in eight is a mirror image. The construction is ported from Craig Kaplan's hatviz under the BSD 3-Clause License, whose notice ships in THIRD_PARTY_NOTICES.md.</li>
+    <li><strong>The Spectre draws the real Spectre tiling.</strong> The Spectre pattern used to repeat rotated copies of the tile on a hexagonal lattice, overlapping. It now draws a patch of the true tiling, built by the paper's two substitution rules: every tile has the same handedness and they meet with no gaps or overlaps. The Edge curvature slider now bends every edge into the same S-curve, so curved tiles still fit their neighbors.</li>
+    <li><strong>The Torus Knot opens as a knot.</strong> Its default was p = 3, q = 3, which is a link of three separate rings rather than a knot. q now starts at 2, so the first picture is the trefoil (3, 2), and the Inspire pick uses p = 5. A link still appears whenever p and q share a factor, as the note explains.</li>
+    <li><strong>Three star 4-polytopes draw their faces and cells.</strong> The Icosahedral 120-cell, the Great Icosahedral 120-cell and the Grand 600-cell used to draw extra or wrong edges to look different from one another. Each now draws its true 720 edges and 1200 triangular faces, with one whole cell solid in the middle: an icosahedron, a great icosahedron or a tetrahedron. Two of them share every edge and face, and the solid cell is what tells them apart. Their notes now say this.</li>
+    <li><strong>Three more star 4-polytopes draw their faces and cells.</strong> The Great 120-cell, the Grand 120-cell and the Great Grand 120-cell now draw their true edges and 720 pentagonal faces, with one whole cell solid: a great dodecahedron or a dodecahedron. The Great and Grand 120-cells share every edge, and the solid cell tells them apart. The Great Grand 120-cell used to draw 1800 edges where it has 1200.</li>
+    <li><strong>The last three star 4-polytopes draw their faces and cells.</strong> The Small Stellated, Great Stellated and Grand Stellated 120-cells now draw their true edges and 720 pentagram faces, with one whole cell solid: a small or a great stellated dodecahedron. All nine star polytopes on the 600-cell's vertices are now drawn exactly. The note on the 600-cell long-chord wireframe no longer says the tenth, {5/2, 3, 3}, shares a wireframe here: it has the 120-cell's 600 vertices. On all nine the faces show, faintly, when Fill is on; the solid cell always shows, and each draws faster than before.</li>
+    <li><strong>Penrose P1 draws the real pentagon tiling.</strong> The entry showed one small fixed cluster of tiles. It now draws the 1974 tiling of pentagons, stars, boats and diamonds across the frame, built from the rhombus tiling it is locally equivalent to: three pentagons on each fat half-rhombus, with the other shapes filling the gaps. Each pentagon contains Penrose’s own six-pentagon dissection two levels down, and P1 gains the Depth control P2 and P3 already had.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.10</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.11</p>
 </footer>
 
 <script>

@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-FdOQ5EUpTSLM2v3DpTRtuX7WSij925DiwI806eUhMOc=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-UTnWdPi4wBqXBaO/X9BKfyKlMdra5YzES/XIksLK9Yo=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4225,12 +4225,12 @@
 
 
 
-<!-- build: 39ae4194a539 -->
+<!-- build: fec792788238 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.10
+ * AEON -- Universal Dynamics Reactor v7.0.11
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7486,7 +7486,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.10';
+const APP_VERSION='7.0.11';
 
 
 
@@ -7495,8 +7495,8 @@ const APP_VERSION='7.0.10';
 
 
 
-const MISSION_BUILD_HASH='39ae4194a539';
-const MISSION_GIT_SHA='40895508b1ff84b280b57d9e9ed20d100a772165';
+const MISSION_BUILD_HASH='fec792788238';
+const MISSION_GIT_SHA='ced4f4879db622409cb70573113f3ccc3667272c';
 
 const MISSION_RENDER_HASH='e4bc831a6bf4';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50314,6 +50314,16 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.11',
+date:'2026-10-07',
+headline:'Aperiodic tilings drawn true.',
+items:[
+'The Hat and the Spectre draw patches of their real tilings, every tile fitting its neighbors with no gaps or overlaps.',
+'Penrose P1 draws the pentagon tiling across the frame, with a Depth control.',
+'All nine star 4-polytopes draw their true edges and faces, with one whole cell solid.',
+],
+},
+{
 version:'7.0.10',
 date:'2026-10-07',
 headline:'Drawings match their mathematics.',
@@ -50381,18 +50391,6 @@ items:[
 'With the Inspector open, the six 3D types render the window alone, 4 to 25% faster per frame, and the picture does not move.',
 'The landing page and the poster now run only their own scripts and styles, and load nothing from other sites.',
 'No page can submit a form, so content slipped into a page cannot post anywhere.',
-],
-},
-{
-version:'7.0.3',
-date:'2026-10-05',
-headline:"Nova shows its structure, and Histogram EQ keeps each color's hue.",
-items:[
-'Nova is now colored by how many steps a point takes to settle, so its basins and bulbs show. It opens on a new default view.',
-'Histogram EQ no longer turns the Julia and Burning Ship backgrounds magenta; it brightens the picture without changing hues.',
-"The Julia pad in the Inspector previews the set you are picking, with each type's own formula.",
-'Scrolling, pinching and dragging sliders keep up on 4K views, and the picture settles to full resolution when you stop.',
-'The landing page and service worker no longer ship their internal source comments.',
 ],
 },
 ];
