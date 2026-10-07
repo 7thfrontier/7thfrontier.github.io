@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-IdlRAGRjms2C14hUJi9lu1oegfWpEvvCJW8bT3uDRQc=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-FdOQ5EUpTSLM2v3DpTRtuX7WSij925DiwI806eUhMOc=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -3061,7 +3061,7 @@
       
       <div id="torusknot-panel" class="is-hidden">
         <div class="rp-sub-head">Torus Knot (p, q)</div>
-        <div class="ctrl"><label for="torusQ">q (meridional winding) <span class="badge" id="torusQ-v">3</span></label><div class="slider-row"><input type="range" id="torusQ" min="2" max="9" step="1" value="3" aria-describedby="slider-keys-hint"></div></div>
+        <div class="ctrl"><label for="torusQ">q (meridional winding) <span class="badge" id="torusQ-v">2</span></label><div class="slider-row"><input type="range" id="torusQ" min="2" max="9" step="1" value="2" aria-describedby="slider-keys-hint"></div></div>
         <details class="ctrl-hint-toggle mt-2"><summary>How many times the knot winds around the tube before it closes.</summary><div class="ctrl-hint">p comes from the Layers slider · (2,3) = trefoil · (2,5) = cinquefoil · (3,4)/(3,5) = denser knots · gcd(p,q)&gt;1 yields a torus link</div></details>
       </div>
       <div id="quasi-panel" class="is-hidden">
@@ -3200,7 +3200,7 @@
       <div id="spectre-panel" class="is-hidden">
         <div class="rp-sub-head">Spectre Monotile</div>
         <div class="ctrl"><label for="spectreCurvature">Edge curvature <span class="badge" id="spectreCurvature-v">0.15</span></label><div class="slider-row"><input type="range" id="spectreCurvature" min="0" max="0.5" step="0.01" value="0.15" aria-describedby="slider-keys-hint"></div></div>
-        <div class="ctrl-hint mt-2">0 = straight-edged tile · 0.15 = canonical curved Spectre · higher = stronger zig-zag</div>
+        <div class="ctrl-hint mt-2">0 = the straight-edged Tile(1,1) · higher = more strongly curved edges, which still fit their neighbours</div>
       </div>
       <div id="mandala-panel" class="is-hidden">
         <div class="rp-sub-head">Mandala</div>
@@ -4225,7 +4225,7 @@
 
 
 
-<!-- build: 737eb2a1c2dc -->
+<!-- build: 39ae4194a539 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7495,10 +7495,10 @@ const APP_VERSION='7.0.10';
 
 
 
-const MISSION_BUILD_HASH='737eb2a1c2dc';
-const MISSION_GIT_SHA='482eb65ec7bd7af95956f63d1e77597c16d63286';
+const MISSION_BUILD_HASH='39ae4194a539';
+const MISSION_GIT_SHA='40895508b1ff84b280b57d9e9ed20d100a772165';
 
-const MISSION_RENDER_HASH='00c4eaef60cd';
+const MISSION_RENDER_HASH='e4bc831a6bf4';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -8041,7 +8041,8 @@ hyperQ:3,
 
 
 
-torusQ:3,             
+torusQ:2,             
+
 
 quasiSymm:5,          
 
@@ -13610,6 +13611,7 @@ const PATTERN_CONFIG={
 
 'hat-monotile':{layers:false,sym:false,rot:true},
 'spectre-monotile':{layers:false,sym:false,rot:true},
+'penrose-p-one':{minLayers:2,layers:'Depth',hint:'Subdivision depth (2–6)',sym:false,rot:true,defaultLayers:3,maxLayers:6},
 'penrose-p-two':{minLayers:2,layers:'Depth',hint:'Subdivision depth (2–6)',sym:false,rot:true,defaultLayers:3,maxLayers:6},
 'penrose-p-three':{minLayers:2,layers:'Depth',hint:'Subdivision depth (2–6)',sym:false,rot:true,defaultLayers:3,maxLayers:6},
 'robinson-tiles':{minLayers:3,layers:'Size',hint:'Grid size (3–8)',sym:false,rot:true,defaultLayers:3,maxLayers:8},
@@ -14154,7 +14156,7 @@ if(tkp){
 tkp.classList.toggle('is-hidden',S.pattern!=='torus-knot');
 if(S.pattern==='torus-knot'){
 const e=document.getElementById('torusQ');
-if(e){e.value=S.torusQ||3;document.getElementById('torusQ-v').textContent=String(S.torusQ||3);}
+if(e){e.value=S.torusQ||2;document.getElementById('torusQ-v').textContent=String(S.torusQ||2);}
 }
 }
 const qcp=document.getElementById('quasi-panel');
@@ -32788,7 +32790,7 @@ function drawTorusKnot(c,R){
 
 
 
-const p=Math.max(2,Math.round(S.layers)),q=Math.max(2,Math.min(9,Math.round(S.torusQ||3)));
+const p=Math.max(2,Math.round(S.layers)),q=Math.max(2,Math.min(9,Math.round(S.torusQ||2)));
 
 const scl=R*2.2,r1n=.38,r2n=.14; 
 
@@ -34497,99 +34499,84 @@ return cx.toFixed(4)+','+cy.toFixed(4);
 
 
 
+function _hatTiles(levels){
+
+
+const cache=_hatTiles.c||(_hatTiles.c=[]);
+if(cache[levels])return cache[levels];
+const h=Math.sqrt(3)/2, P=(x,y)=>[x,y], hx=(x,y)=>[x+.5*y,h*y];
+const mul=(A,B)=>[A[0]*B[0]+A[1]*B[3],A[0]*B[1]+A[1]*B[4],A[0]*B[2]+A[1]*B[5]+A[2],A[3]*B[0]+A[4]*B[3],A[3]*B[1]+A[4]*B[4],A[3]*B[2]+A[4]*B[5]+A[5]];
+const inv=(T)=>{const d=T[0]*T[4]-T[1]*T[3];return[T[4]/d,-T[1]/d,(T[1]*T[5]-T[2]*T[4])/d,-T[3]/d,T[0]/d,(T[2]*T[3]-T[0]*T[5])/d];};
+const tp=(M,p)=>[M[0]*p[0]+M[1]*p[1]+M[2],M[3]*p[0]+M[4]*p[1]+M[5]];
+const add=(p,q)=>[p[0]+q[0],p[1]+q[1]], sub=(p,q)=>[p[0]-q[0],p[1]-q[1]];
+const tr=(x,y)=>[1,0,x,0,1,y], rot=(a)=>[Math.cos(a),-Math.sin(a),0,Math.sin(a),Math.cos(a),0];
+const rotAbout=(p,a)=>mul(tr(p[0],p[1]),mul(rot(a),tr(-p[0],-p[1])));
+const seg=(p,q)=>[q[0]-p[0],p[1]-q[1],p[0],q[1]-p[1],q[0]-p[0],p[1]];
+const match=(p1,q1,p2,q2)=>mul(seg(p2,q2),inv(seg(p1,q1)));
+const isect=(p1,q1,p2,q2)=>{const d=(q2[1]-p2[1])*(q1[0]-p1[0])-(q2[0]-p2[0])*(q1[1]-p1[1]);
+const u=((q2[0]-p2[0])*(p1[1]-p2[1])-(q2[1]-p2[1])*(p1[0]-p2[0]))/d;return[p1[0]+u*(q1[0]-p1[0]),p1[1]+u*(q1[1]-p1[1])];};
+const hat=[hx(0,0),hx(-1,-1),hx(0,-2),hx(2,-2),hx(2,-1),hx(4,-2),hx(5,-1),hx(4,0),hx(3,0),hx(2,2),hx(0,3),hx(0,2),hx(-1,2)];
+const leaf=(label)=>({label,shape:hat}), meta=(shape,kids)=>({shape,kids});
+const ev=(m,n,i)=>tp(m.kids[n].T,m.kids[n].g.shape[i]);
+const Ho=[P(0,0),P(4,0),P(4.5,h),P(2.5,5*h),P(1.5,5*h),P(-.5,h)];
+let H=meta(Ho,[{T:match(hat[5],hat[7],Ho[5],Ho[0]),g:leaf('H')},{T:match(hat[9],hat[11],Ho[1],Ho[2]),g:leaf('H')},
+{T:match(hat[5],hat[7],Ho[3],Ho[4]),g:leaf('H')},{T:mul(tr(2.5,h),mul([-.5,-h,0,h,-.5,0],[.5,0,0,0,-.5,0])),g:leaf('H1')}]);
+let T=meta([P(0,0),P(3,0),P(1.5,3*h)],[{T:[.5,0,.5,0,.5,h],g:leaf('T')}]);
+const two=(lab,o)=>meta(o,[{T:[.5,0,1.5,0,.5,h],g:leaf(lab)},{T:mul(tr(0,2*h),mul([.5,h,0,-h,.5,0],[.5,0,0,0,.5,0])),g:leaf(lab)}]);
+let Pm=two('P',[P(0,0),P(4,0),P(3,2*h),P(-1,2*h)]), F=two('F',[P(0,0),P(3,0),P(3.5,h),P(3,2*h),P(-1,2*h)]);
+
+
+const RULES=[['H'],[0,0,'P',2],[1,0,'H',2],[2,0,'P',2],[3,0,'H',2],[4,4,'P',2],[0,4,'F',3],[2,4,'F',3],[4,1,3,2,'F',0],[8,3,'H',0],
+[9,2,'P',0],[10,2,'H',0],[11,4,'P',2],[12,0,'H',2],[13,0,'F',3],[14,2,'F',1],[15,3,'H',4],[8,2,'F',1],[17,3,'H',0],[18,2,'P',0],
+[19,2,'H',2],[20,4,'F',3],[20,0,'P',2],[22,0,'H',2],[23,4,'F',3],[23,0,'F',3],[16,0,'P',2],[9,4,0,2,'T',2],[4,0,'F',3]];
+const recentre=(m)=>{let cx=0,cy=0;for(const p of m.shape){cx+=p[0];cy+=p[1];}cx/=m.shape.length;cy/=m.shape.length;
+m.shape=m.shape.map((p)=>[p[0]-cx,p[1]-cy]);const M=tr(-cx,-cy);for(const k of m.kids)k.T=mul(M,k.T);return m;};
+for(let L=0;L<levels;L++){
+const sh={H,T,P:Pm,F}, pat=meta([],[]);
+for(const r of RULES){
+if(r.length===1){pat.kids.push({T:[1,0,0,0,1,0],g:sh[r[0]]});continue;}
+let p,q,g,e;
+if(r.length===4){const k=pat.kids[r[0]],n=k.g.shape.length;p=tp(k.T,k.g.shape[(r[1]+1)%n]);q=tp(k.T,k.g.shape[r[1]]);g=sh[r[2]];e=r[3];}
+else{const kp=pat.kids[r[0]],kq=pat.kids[r[2]];p=tp(kq.T,kq.g.shape[r[3]]);q=tp(kp.T,kp.g.shape[r[1]]);g=sh[r[4]];e=r[5];}
+pat.kids.push({T:match(g.shape[e],g.shape[(e+1)%g.shape.length],p,q),g});
+}
+const b1=ev(pat,8,2),b2=ev(pat,21,2),rb=tp(rotAbout(b1,-2*Math.PI/3),b2),p72=ev(pat,7,2),p252=ev(pat,25,2);
+const llc=isect(b1,rb,ev(pat,6,2),p72);let w=sub(ev(pat,6,2),llc);
+const ho=[llc,b1];w=tp(rot(-Math.PI/3),w);ho.push(add(ho[1],w));ho.push(ev(pat,14,2));w=tp(rot(-Math.PI/3),w);ho.push(sub(ho[3],w));ho.push(ev(pat,6,2));
+const pick=(o,ids)=>meta(o,ids.map((i)=>({T:pat.kids[i].T,g:pat.kids[i].g})));
+const A=ho[2],B=add(ho[1],sub(ho[4],ho[5])),C=tp(rotAbout(B,-Math.PI/3),A);
+H=recentre(pick(ho,[0,9,16,27,26,6,1,8,10,15]));
+T=recentre(pick([B,C,A],[11]));
+Pm=recentre(pick([p72,add(p72,sub(b1,llc)),b1,llc],[7,2,3,4,28]));
+F=recentre(pick([b2,ev(pat,24,2),ev(pat,25,0),p252,add(p252,sub(llc,b1))],[21,20,22,23,24,25]));
+}
+const out=[];
+const walk=(g,M)=>{if(g.label){out.push({label:g.label,poly:g.shape.map((p)=>tp(M,p)),flip:M[0]*M[4]-M[1]*M[3]<0});return;}
+for(const k of g.kids)walk(k.g,mul(M,k.T));};
+walk(H,[1,0,0,0,1,0]);
+return(cache[levels]=out);
+}
+
 function drawHat(c,bR){
 
+const u=bR*5/12, E=_geoFrameExt(bR);
 
-
-
-const SQRT3=Math.sqrt(3);
-const hatVerts=[
-[0, 0],
-[-1, SQRT3],
-[0, 2*SQRT3],
-[2, 2*SQRT3],
-[2, 3*SQRT3],
-[3, 3*SQRT3],
-[4.5, 2.5*SQRT3],
-[4.5, 1.5*SQRT3],
-[6, SQRT3],
-[6, 0],
-[4.5, -0.5*SQRT3],
-[3, 0],
-[1.5, -0.5*SQRT3],
-];
-
-let mn=[Infinity,Infinity],mx=[-Infinity,-Infinity];
-for(const v of hatVerts){
-if(v[0]<mn[0])mn[0]=v[0]; if(v[1]<mn[1])mn[1]=v[1];
-if(v[0]>mx[0])mx[0]=v[0]; if(v[1]>mx[1])mx[1]=v[1];
-}
-const cx=(mn[0]+mx[0])/2, cy=(mn[1]+mx[1])/2;
-const span=Math.max(mx[0]-mn[0],mx[1]-mn[1]);
-const R=bR*5.0;
-const scale=R/span/2;
-const baseHat=hatVerts.map(v=>[(v[0]-cx)*scale,(v[1]-cy)*scale]);
-
-
-
-
-
-const tiles=[];
-
-
-const hatA=baseHat;
-const hatB=baseHat.map(v=>[-v[0],v[1]]);
-
-
-
-const dx=R/2.5, dy=R*SQRT3/4;
-
-
-
-
-
-
-
-const range=2;
-
-const E=_geoFrameExt(bR), rE=Math.ceil((E+R)/(dy*2))+1, qE=Math.ceil((E+R)/(dx*2))+rE;
-const cells=[];
-for(let q=-range;q<=range;q++)for(let r=-range;r<=range;r++)cells.push([q,r]);
-for(let r=-rE;r<=rE;r++)for(let q=-qE;q<=qE;q++)if(Math.abs(q)>range||Math.abs(r)>range)cells.push([q,r]);
-for(const [q,r] of cells){
-{
-const tx=(q+r*0.5)*dx*2;
-const ty=r*dy*2;
-
-const isFlip=(((q*3+r*7)%7+7)%7)===0;
-const which=isFlip?hatB:hatA;
-
-const rot=(((q+r*2)%3)+3)%3;
-const ang=rot*TAU/3;
-const cs=Math.cos(ang), sn=Math.sin(ang);
-const moved=which.map(v=>[v[0]*cs-v[1]*sn+tx, v[0]*sn+v[1]*cs+ty]);
-tiles.push({verts:moved,flipped:isFlip});
-}
-}
-
-const total=(2*range+1)*(2*range+1);
-tiles.forEach((t,i0)=>{
-const cxc=t.verts.reduce((s,v)=>s+v[0],0)/t.verts.length;
-const cyc=t.verts.reduce((s,v)=>s+v[1],0)/t.verts.length;
-const dist=Math.sqrt(cxc*cxc+cyc*cyc), i=i0%total;
-if(dist>R*1.7&&dist>E+R*.5)return; 
-c.strokeStyle=geoElemColor(i,total,dist,R);
-if(S.fill){
-c.fillStyle=t.flipped?geoFillColor(i+total/2,total,dist,R):geoFillColor(i,total,dist,R);
+const RIN=[0,4.25,11.25,27,70];
+let L=1; while(L<4&&RIN[L]*u<E+u*6)L++;
+const LAB={H:0,H1:1,T:2,P:3,F:4}, R=bR*5;
+for(const t of _hatTiles(L)){
+const v=t.poly.map((p)=>[p[0]*u,p[1]*u]);
+let cx=0,cy=0;for(const p of v){cx+=p[0];cy+=p[1];}cx/=v.length;cy/=v.length;
+const dist=Math.hypot(cx,cy);
+if(dist>E+u*6)continue;
+const i=LAB[t.label];
+c.strokeStyle=geoElemColor(i,5,dist,R);
 c.beginPath();
-t.verts.forEach((v,k)=>{if(k===0)c.moveTo(v[0],v[1]);else c.lineTo(v[0],v[1])});
-c.closePath();c.fill();
-}
-c.beginPath();
-t.verts.forEach((v,k)=>{if(k===0)c.moveTo(v[0],v[1]);else c.lineTo(v[0],v[1])});
+v.forEach((p,k)=>{if(k===0)c.moveTo(p[0],p[1]);else c.lineTo(p[0],p[1]);});
 c.closePath();
+if(S.fill){c.fillStyle=geoFillColor(i,5,dist,R);c.fill();}
 c.stroke();
-});
+}
 }
 
 
@@ -36767,115 +36754,82 @@ c.restore();
 
 
 
+function _spectreTiles(levels){
+const cache=_spectreTiles.c||(_spectreTiles.c=[]);
+if(cache[levels])return cache[levels];
+const mul=(A,B)=>[A[0]*B[0]+A[1]*B[3],A[0]*B[1]+A[1]*B[4],A[0]*B[2]+A[1]*B[5]+A[2],A[3]*B[0]+A[4]*B[3],A[3]*B[1]+A[4]*B[4],A[3]*B[2]+A[4]*B[5]+A[5]];
+const tp=(M,p)=>[M[0]*p[0]+M[1]*p[1]+M[2],M[3]*p[0]+M[4]*p[1]+M[5]];
+const rot=(deg,refl)=>{const a=deg*Math.PI/180,c=Math.cos(a),s=Math.sin(a);return refl?[c,s,0,s,-c,0]:[c,-s,0,s,c,0];};
+const V=_spectreVerts(), K=[1,3,5,9];
+
+const L=[90,30,90,330,330,150,270].map((d)=>rot(d,false)); L.push(rot(0,false));
+
+const m1=rot(30,false);{const q=tp(m1,V[4]);m1[2]=-q[0];m1[5]=-q[1];}
+const MT=[rot(0,false),m1];
+
+const E=[[0,0,2,2],[0,3,1,1],[1,3,3,1],[2,1,5,3],[3,2,4,0],[4,3,6,1],[5,0,7,3],[6,3,7,0]];
+const PS=[[6,2],[4,1],[1,2],[5,1]], PM=[[5,1],[1,2],[4,1],[6,2]];
+const BS=rot(150,true), BM=rot(180,true);   
+let SP={tiles:[[1,0,0,0,1,0]],keys:K.map((i)=>V[i])};
+let MY={tiles:MT,keys:[[1,9],[1,3],[0,13],[1,1]].map(([t,v])=>tp(MT[t],V[v]))};
+for(let n=0;n<levels;n++){
+const X=(u)=>u===7?MY:SP;
+const build=(skip0,picks,B)=>{
+const T=[];T[skip0?1:0]=L[skip0?1:0].slice();
+for(let pass=0;pass<8;pass++)for(const [i,a,j,b] of E){
+if(skip0&&(i===0||j===0))continue;
+const pr=T[i]&&!T[j]?[i,j,a,b]:T[j]&&!T[i]?[j,i,b,a]:null;
+if(!pr)continue;
+const [p,q,kp,kq]=pr, w=tp(T[p],X(p).keys[kp]), z=tp(L[q],X(q).keys[kq]);
+T[q]=L[q].slice();T[q][2]=w[0]-z[0];T[q][5]=w[1]-z[1];
+}
+const tiles=[];for(let u=skip0?1:0;u<8;u++)for(const t of X(u).tiles)tiles.push(mul(B,mul(T[u],t)));
+return{tiles,keys:picks.map(([u,a])=>tp(B,tp(T[u],X(u).keys[a])))};
+};
+const nS=build(false,PS,BS), nM=build(true,PM,BM); SP=nS; MY=nM;
+}
+let cx=0,cy=0;for(const t of SP.tiles){cx+=t[2];cy+=t[5];}cx/=SP.tiles.length;cy/=SP.tiles.length;
+return(cache[levels]=SP.tiles.map((t)=>[t[0],t[1],t[2]-cx,t[3],t[4],t[5]-cy]));
+}
+
+
+function _spectreVerts(){
+const c=Math.cos(Math.PI/3), s=Math.sin(Math.PI/3);
+const mv=[[c,s],[1,0],[0,1],[s,c],[c,-s],[-c,-s],[s,-c],[0,-1],[0,-1],[-s,-c],[-c,s],[-1,0],[0,1]];
+const v=[[0,0]];for(const [x,y] of mv){const p=v[v.length-1];v.push([p[0]+x,p[1]+y]);}
+return v;
+}
+
 function drawSpectre(c,bR){
 
+const u=bR*.7, E=_geoFrameExt(bR);
 
-
-
-
-
-
-
-const SQRT3=Math.sqrt(3);
-
-
-const edges=[
-[Math.cos(0), Math.sin(0)],
-[Math.cos(Math.PI/3), Math.sin(Math.PI/3)],
-[Math.cos(2*Math.PI/3), Math.sin(2*Math.PI/3)],
-[Math.cos(Math.PI/3), Math.sin(Math.PI/3)],
-[Math.cos(0), Math.sin(0)],
-[Math.cos(-Math.PI/3), Math.sin(-Math.PI/3)],
-[Math.cos(0), Math.sin(0)],
-[Math.cos(-2*Math.PI/3), Math.sin(-2*Math.PI/3)],
-[Math.cos(-Math.PI/3), Math.sin(-Math.PI/3)],
-[Math.cos(-2*Math.PI/3), Math.sin(-2*Math.PI/3)],
-[Math.cos(Math.PI), Math.sin(Math.PI)],
-[Math.cos(2*Math.PI/3), Math.sin(2*Math.PI/3)],
-[Math.cos(Math.PI), Math.sin(Math.PI)],
-[Math.cos(Math.PI), Math.sin(Math.PI)],   
-];
-const verts=[[0,0]];
-for(const [dx,dy] of edges){
-const last=verts[verts.length-1];
-verts.push([last[0]+dx,last[1]+dy]);
-}
-
-let mn=[Infinity,Infinity],mx=[-Infinity,-Infinity];
-for(const v of verts){if(v[0]<mn[0])mn[0]=v[0];if(v[1]<mn[1])mn[1]=v[1];if(v[0]>mx[0])mx[0]=v[0];if(v[1]>mx[1])mx[1]=v[1]}
-const cx=(mn[0]+mx[0])/2, cy=(mn[1]+mx[1])/2;
-const span=Math.max(mx[0]-mn[0],mx[1]-mn[1]);
-const R=bR*4.5;
-const scale=R/span/2;
-const baseTile=verts.map(v=>[(v[0]-cx)*scale,(v[1]-cy)*scale]);
-
-
-const dx=R/2.4, dy=R*SQRT3/4;
-
-
-
-
-
-
-const range=2;
-const tiles=[];
-
-const E=_geoFrameExt(bR), rE=Math.ceil((E+R)/(dy*1.6))+1, qE=Math.ceil((E+R)/(dx*1.6))+rE;
-const cells=[];
-for(let q=-range;q<=range;q++)for(let r=-range;r<=range;r++)cells.push([q,r]);
-for(let r=-rE;r<=rE;r++)for(let q=-qE;q<=qE;q++)if(Math.abs(q)>range||Math.abs(r)>range)cells.push([q,r]);
-for(const [q,r] of cells){
-{
-const tx=(q+r*0.5)*dx*1.6, ty=r*dy*1.6;
-
-
-const rot=(((q*5+r*3)%6)+6)%6;
-const ang=rot*Math.PI/3;
-const cs=Math.cos(ang), sn=Math.sin(ang);
-const moved=baseTile.map(v=>[v[0]*cs-v[1]*sn+tx, v[0]*sn+v[1]*cs+ty]);
-tiles.push({verts:moved,rot});
-}
-}
-const total=(2*range+1)*(2*range+1);
-tiles.forEach((t,i0)=>{
-const cxc=t.verts.reduce((s,v)=>s+v[0],0)/t.verts.length;
-const cyc=t.verts.reduce((s,v)=>s+v[1],0)/t.verts.length;
-const dist=Math.sqrt(cxc*cxc+cyc*cyc), i=i0%total;
-if(dist>R*1.6&&dist>E+R*.5)return;   
-c.strokeStyle=geoElemColor(i,total,dist,R);
-
-
-
-
-
-
+const RIN=[0,3.5,5.5,12.75,34.75];
+let L=1; while(L<4&&RIN[L]*u<E+u*4)L++;
+const V=_spectreVerts(), R=bR*4.5;
 const curv=Math.min(0.5,Math.max(0,(S.spectreCurvature!=null)?(+S.spectreCurvature):0.15));
-const drawPath=()=>{
+for(const T of _spectreTiles(L)){
+const v=V.map((p)=>[(T[0]*p[0]+T[1]*p[1]+T[2])*u,(T[3]*p[0]+T[4]*p[1]+T[5])*u]);
+let cx=0,cy=0;for(const p of v){cx+=p[0];cy+=p[1];}cx/=v.length;cy/=v.length;
+const dist=Math.hypot(cx,cy);
+if(dist>E+u*4)continue;
+
+const i=((Math.round(Math.atan2(v[1][1]-v[0][1],v[1][0]-v[0][0])/(Math.PI/6))%12)+12)%12;
+c.strokeStyle=geoElemColor(i,12,dist,R);
 c.beginPath();
-const n=t.verts.length;
-c.moveTo(t.verts[0][0],t.verts[0][1]);
-for(let k=0;k<n;k++){
-const a=t.verts[k], b=t.verts[(k+1)%n];
-if(curv<=1e-6){
-c.lineTo(b[0],b[1]);
-} else {
+c.moveTo(v[0][0],v[0][1]);
+for(let k=0;k<14;k++){
+const a=v[k], b=v[(k+1)%14];
+if(curv<=1e-6){c.lineTo(b[0],b[1]);continue;}
 
-const mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2;
-const ex=b[0]-a[0], ey=b[1]-a[1];
-const len=Math.hypot(ex,ey)||1;
-
-const sign=(k%2===0?1:-1);
-const px=-ey/len*sign, py=ex/len*sign;
-const ctrlx=mx+px*curv*len, ctrly=my+py*curv*len;
-c.quadraticCurveTo(ctrlx,ctrly,b[0],b[1]);
-}
+const ex=b[0]-a[0], ey=b[1]-a[1], nx=-ey*curv, ny=ex*curv, mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2;
+c.quadraticCurveTo(a[0]+ex/4+nx,a[1]+ey/4+ny,mx,my);
+c.quadraticCurveTo(a[0]+ex*.75-nx,a[1]+ey*.75-ny,b[0],b[1]);
 }
 c.closePath();
-};
-if(S.fill){c.fillStyle=geoFillColor(i+t.rot*7,total,dist,R); drawPath(); c.fill();}
-drawPath();
+if(S.fill){c.fillStyle=geoFillColor(i,12,dist,R);c.fill();}
 c.stroke();
-});
+}
 }
 
 
@@ -38716,11 +38670,7 @@ c.restore();
 }
 
 
-function drawPenroseP3(c, bR){
-const phi=(1+Math.sqrt(5))/2;
-const depth=Math.min(6, Math.max(2, S.layers||5));
-const R=bR*1.6;
-const seed=(R, rot)=>{
+function _penroseRhombSeed(R, rot){
 const triangles=[];
 for(let i=0;i<10;i++){
 const a1=i*TAU/10 - TAU/20 + rot;
@@ -38731,9 +38681,9 @@ if(i%2===0){const tmp=B; B=C; C=tmp;}
 triangles.push({type:'red', A:[0,0], B, C});
 }
 return triangles;
-};
-function lerp(P,Q,t){return [P[0]+(Q[0]-P[0])*t, P[1]+(Q[1]-P[1])*t]}
-function deflate(tris){
+}
+function _penroseRhombDeflate(tris){
+const phi=(1+Math.sqrt(5))/2, lerp=(P,Q,t)=>[P[0]+(Q[0]-P[0])*t, P[1]+(Q[1]-P[1])*t];
 const result=[];
 for(const t of tris){
 if(t.type==='red'){
@@ -38750,6 +38700,12 @@ result.push({type:'red', A:RR, B:Q, C:t.A});
 }
 return result;
 }
+
+
+function drawPenroseP3(c, bR){
+const depth=Math.min(6, Math.max(2, S.layers||5));
+const R=bR*1.6;
+const seed=_penroseRhombSeed, deflate=_penroseRhombDeflate;
 let tris=seed(R, 0);
 for(let i=0;i<depth;i++)tris=deflate(tris);
 tris=tris.concat(_geoGrowSun(R, depth, 2, seed, deflate, bR, tris));
@@ -38766,63 +38722,64 @@ c.restore();
 }
 
 
+function _penroseP1Tiles(tris){
+const phi=(1+Math.sqrt(5))/2, s36=Math.sin(TAU/10), cells=new Map(), pts=[];
+
+const id=(p)=>{ const cx=Math.round(p[0]*1e6), cy=Math.round(p[1]*1e6);
+for(let dx=-1;dx<=1;dx++) for(let dy=-1;dy<=1;dy++){ const l=cells.get((cx+dx)+','+(cy+dy)); if(l) for(const j of l) if(Math.abs(pts[j][0]-p[0])<1e-9*(1+Math.abs(p[0]))&&Math.abs(pts[j][1]-p[1])<1e-9*(1+Math.abs(p[1]))) return j; }
+const k=cx+','+cy; pts.push(p); (cells.get(k)||cells.set(k,[]).get(k)).push(pts.length-1); return pts.length-1; };
+const pent=new Map();
+for(const t of tris){
+if(t.type!=='blue') continue;
+
+const X=t.C, Y=t.B, Z=t.A, det=-phi*s36, map=(u,v)=>{ const l1=(u*phi/2-s36*v)/det, l2=-phi*u/det;
+return [X[0]+l1*(Y[0]-X[0])+l2*(Z[0]-X[0]), X[1]+l1*(Y[1]-X[1])+l2*(Z[1]-X[1])]; };
+for(const [x,y,rz] of [[0,0,-18],[0,1/phi,18],[s36/phi,phi-0.5,-18]]){
+const k=id(map(x,y)); if(pent.has(k)) continue;
+const P=[]; for(let j=0;j<5;j++){ const a=(rz+72*j)*DEG; P.push(map(x+Math.cos(a)/(phi*phi), y+Math.sin(a)/(phi*phi))); }
+let ar=0; for(let j=0;j<5;j++) ar+=P[j][0]*P[(j+1)%5][1]-P[(j+1)%5][0]*P[j][1];
+pent.set(k, ar<0?P.reverse():P);
+}
+}
+const pents=[...pent.values()], own=new Set(), out=new Map();
+for(const P of pents){ const ix=P.map(id); for(let j=0;j<5;j++) own.add(ix[j]+'>'+ix[(j+1)%5]); }
+
+for(const e of own){ const [u,v]=e.split('>'); if(!own.has(v+'>'+u)) (out.get(+v)||out.set(+v,[]).get(+v)).push(+u); }
+const used=new Set(), gaps=[];
+for(const [v0,l] of out) for(const u0 of l){
+if(used.has(v0+'>'+u0)) continue;
+const cyc=[v0]; let a=v0, b=u0, ok=true;
+for(;;){
+used.add(a+'>'+b); if(b===v0) break; cyc.push(b);
+const cand=out.get(b); if(!cand||cyc.length>10){ ok=false; break; }   
+
+const back=Math.atan2(pts[a][1]-pts[b][1], pts[a][0]-pts[b][0]); let best=-1, bd=9;
+for(const q of cand){ let d=(back-Math.atan2(pts[q][1]-pts[b][1], pts[q][0]-pts[b][0]))%TAU; if(d<=1e-9) d+=TAU; if(d<bd){ bd=d; best=q; } }
+a=b; b=best;
+}
+if(ok&&(cyc.length===4||cyc.length===7||cyc.length===10)) gaps.push({type:cyc.length===4?'diamond':cyc.length===7?'boat':'star', P:cyc.map((i)=>pts[i])});
+}
+return {pents, gaps};
+}
+
+
 function drawPenroseP1(c, bR){
-
-
-
-const phi=(1+Math.sqrt(5))/2;
-const R=bR*0.5;
+const depth=Math.min(6, Math.max(2, S.layers||5));
+const R=bR*1.6*(1+Math.sqrt(5))/2;   
+let tris=_penroseRhombSeed(R, 0);
+for(let i=0;i<depth;i++) tris=_penroseRhombDeflate(tris);
+tris=tris.concat(_geoGrowSun(R, depth, 2, _penroseRhombSeed, _penroseRhombDeflate, bR, tris));
+const {pents, gaps}=_penroseP1Tiles(tris), E=_geoFrameExt(bR);
 c.save();
 c.lineWidth=Math.max(1, S.lineWeight*0.6*_lwK());
-
-c.strokeStyle=geoElemColor(0, 4, bR, bR);
-if(S.fill)c.fillStyle=geoFillColor(0, 4, bR, bR);
-c.beginPath();
-for(let i=0;i<5;i++){
-const a=i*TAU/5 - Math.PI/2;
-const x=R*Math.cos(a), y=R*Math.sin(a);
-if(i===0)c.moveTo(x,y); else c.lineTo(x,y);
-}
-c.closePath();
-if(S.fill)c.fill();
-c.stroke();
-
-c.strokeStyle=geoElemColor(1, 4, bR, bR);
-for(let k=0;k<5;k++){
-const a=k*TAU/5 - Math.PI/2;
-const cx=R*phi*Math.cos(a), cy=R*phi*Math.sin(a);
-c.save(); c.translate(cx, cy); c.rotate(a + Math.PI);
-if(S.fill)c.fillStyle=geoFillColor(1, 4, bR, bR);
-c.beginPath();
-for(let i=0;i<10;i++){
-const r=(i%2===0)?R*0.6:R*0.25;
-const ang=i*TAU/10 - Math.PI/2;
-const x=r*Math.cos(ang), y=r*Math.sin(ang);
-if(i===0)c.moveTo(x,y); else c.lineTo(x,y);
-}
-c.closePath();
-if(S.fill)c.fill();
-c.stroke();
-c.restore();
-}
-
-c.strokeStyle=geoElemColor(2, 4, bR, bR);
-for(let k=0;k<5;k++){
-const a=k*TAU/5 - Math.PI/2 + TAU/10;
-const cx=R*phi*phi*Math.cos(a), cy=R*phi*phi*Math.sin(a);
-c.save(); c.translate(cx, cy); c.rotate(a);
-
-if(S.fill)c.fillStyle=geoFillColor(2, 4, bR, bR);
-c.beginPath();
-c.moveTo(0, -R*0.3);
-c.lineTo(R*0.18, 0);
-c.lineTo(0, R*0.3);
-c.lineTo(-R*0.18, 0);
-c.closePath();
-if(S.fill)c.fill();
-c.stroke();
-c.restore();
-}
+const draw=(P, ci)=>{
+if(Math.hypot(P[0][0], P[0][1])>E+bR) return;
+c.beginPath(); c.moveTo(P[0][0], P[0][1]); for(let i=1;i<P.length;i++) c.lineTo(P[i][0], P[i][1]); c.closePath();
+if(S.fill){ c.fillStyle=geoFillColor(ci, 4, bR, bR); c.fill(); }
+c.strokeStyle=geoElemColor(ci, 4, bR, bR); c.stroke();
+};
+for(const P of pents) draw(P, 0);
+for(const g of gaps) draw(g.P, g.type==='star'?1:g.type==='boat'?2:3);
 c.restore();
 }
 
@@ -44881,7 +44838,7 @@ const INSPIRE_GEO=[
 
 {pattern:'phyllotaxis',    pal:'autumn',      layers:3, rot:0},
 {pattern:'phyllotaxis',    pal:'emerald',     layers:5, rot:0},
-{pattern:'torus-knot',     pal:'cosmic',      layers:4, rot:0},
+{pattern:'torus-knot',     pal:'cosmic',      layers:5, rot:0},   
 {pattern:'spirograph',     pal:'rainbow',     layers:5, rot:0},
 {pattern:'rose-curve',     pal:'ruby',        layers:6, rot:0},
 
@@ -51105,8 +51062,8 @@ const PATTERN_INFO={
 'day-and-night':{title:'Day & Night CA',body:'Symmetric Life-like CA with rule B3678/S34678 (Nathan Thompson, 1997). Has the unusual property that swapping alive ↔ dead leaves the rule invariant (hence "Day & Night"). Produces blobby symmetric patterns with self-similar regions.'},
 'gray-scott':{title:'Gray-Scott Reaction-Diffusion',body:'Two-species PDE: ∂_t U = D_u ∇²U − UV² + F(1−U); ∂_t V = D_v ∇²V + UV² − (F+k)V. Parameter (F,k) plane traverses spots, stripes, labyrinths, U-skate, and self-replication regimes (Pearson 1993). Direct visual realization of Turing\'s 1952 morphogenesis paper.'},
 
-'hat-monotile':{title:'The Hat (aperiodic monotile)',body:'A 13-sided polygon proven to tile the plane only aperiodically (David Smith, Joseph Myers, Craig Kaplan, Chaim Goodman-Strauss, "An aperiodic monotile", arXiv:2303.10798, March 2023). The first single-shape aperiodic tile ever found, resolving the "einstein problem" (German "ein Stein", "one tile") 50+ years after Penrose\'s 2-tile solution. Caveat: the Hat tiling uses both the tile and its mirror image; the chirality-strict version of the problem was resolved by the Spectre two months later.'},
-'spectre-monotile':{title:'The Spectre',body:'A strictly chiral aperiodic monotile (Smith, Myers, Kaplan, Goodman-Strauss, "A chiral aperiodic monotile", arXiv:2305.17743, May 2023) that tiles the plane aperiodically using only direct isometries, no reflections required. Resolves the strict einstein problem that the Hat (which uses reflections) left open.'},
+'hat-monotile':{title:'The Hat (aperiodic monotile)',body:'A 13-sided polygon proven to tile the plane only aperiodically (David Smith, Joseph Myers, Craig Kaplan, Chaim Goodman-Strauss, "An aperiodic monotile", arXiv:2303.10798, March 2023). The first single-shape aperiodic tile ever found, resolving the "einstein problem" (German "ein Stein", "one tile") 50+ years after Penrose\'s 2-tile solution. Caveat: the Hat tiling uses both the tile and its mirror image; the chirality-strict version of the problem was resolved by the Spectre two months later. The picture is a patch of the true tiling, grown by the paper’s substitution of four metatiles (H, T, P, F), each level about 6.85 times the last; about one hat in 7.85 is a mirror image. The construction is ported from Craig Kaplan’s hatviz, used under the BSD 3-Clause License.'},
+'spectre-monotile':{title:'The Spectre',body:'A strictly chiral aperiodic monotile (Smith, Myers, Kaplan, Goodman-Strauss, "A chiral aperiodic monotile", arXiv:2305.17743, May 2023) that tiles the plane aperiodically using only direct isometries, no reflections required. Resolves the strict einstein problem that the Hat (which uses reflections) left open. The picture is a patch of the true tiling, built by the paper’s substitution: a Spectre becomes a Mystic (two Spectres) plus seven Spectres, a Mystic the same less one. Each level has about 4 + √15 ≈ 7.87 times the tiles of the last, and every tile in a picture has one handedness. Edge curvature bends each edge into one S-curve, so curved tiles still fit.'},
 'hyperbolic-tiling':{title:'Hyperbolic {p,q} Tiling',body:'Regular tiling of the hyperbolic plane in the Poincaré disk model. {p,q} tilings exist iff 1/p + 1/q < 1/2, infinitely many, parameterized by the Schläfli symbol. Escher\'s Circle Limit III/IV use {8,3}-derived and {6,4} tilings respectively, inspired by H. S. M. Coxeter\'s 1957 paper "Crystal Symmetry and its Generalizations".'},
 
 'harmonograph':{title:'Harmonograph',body:'Two-pendulum drawing instrument from the 1840s; mathematically a damped 2D Lissajous curve x(t) = e^(−d₁t) sin(a₁t+φ₁) + e^(−d₂t) sin(a₂t+φ₂) (and similarly for y). Popular in Victorian-era scientific entertainment; a true mechanical harmonograph traces spiral-into-rest patterns as the pendulums damp.'},
@@ -51183,17 +51140,17 @@ const PATTERN_INFO={
 'one-twenty-cell':{title:'120-cell {5,3,3}',body:'600 vertices, 1200 edges, 720 pentagonal faces, 120 dodecahedral cells. Schläfli symbol {5,3,3}. Discovered by Schläfli (1850s). Coordinates use the golden ratio φ; the H₄ root system has 120 roots, which are the vertices of the dual 600-cell. Dual to the 600-cell. Most complex of the 6 convex regular 4-polytopes; analogue of the dodecahedron in 4D.'},
 'six-hundred-cell':{title:'600-cell {3,3,5}',body:'120 vertices, 720 edges, 1200 triangular faces, 600 tetrahedral cells. Schläfli symbol {3,3,5}. Dual to the 120-cell. Vertices include those of the 16-cell (8), the tesseract (16 scaled), and 96 even permutations of (±½, ±φ/2, ±1/(2φ), 0). 4D analogue of the icosahedron. Discovered by Schläfli (1850s).'},
 
-'icosahedral-one-twenty-cell':{title:'Icosahedral 120-cell {3, 5, 5/2}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1920 edges rendered: the shortest chord (0.618≈1/φ) superimposed with the second-shortest (chord 1) so the wireframe is distinct from the convex 600-cell; the canonical {3,5,5/2} skeleton has 720 edges. 1200 triangular faces, 120 icosahedral cells (canonical). Dual: Small Stellated 120-cell {5/2, 5, 3}. One of the six star 4-polytopes Edmund Hess added in 1883 ("Einleitung in die Lehre von der Kugelteilung") to complete the set Schläfli had begun in the 1850s (published posthumously 1901).'},
-'small-stellated-one-twenty-cell':{title:'Small Stellated 120-cell {5/2, 5, 3}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1200 edges, 720 pentagrammic faces, 120 small-stellated-dodecahedral cells. Dual: Icosahedral 120-cell {3, 5, 5/2}. The 4D analogue of the small stellated dodecahedron, pentagrammic edges replace pentagonal ones in the parent 120-cell. Source: Hess, "Einleitung in die Lehre von der Kugelteilung" (1883), which catalogued the complete set of 10 Schläfli–Hess star 4-polytopes; enumerated again in Coxeter, Regular Polytopes (1948).'},
-'great-six-hundred-cell':{title:'600-cell (long-chord wireframe)',body:'Non-canonical edge selection on the 600-cell vertex set (120 vertices). 2400 edges rendered: the chord-1 shell (1200 edges) superimposed with the √3 shell (1200 edges), both distinct from the 720-edge {3,3,5} canonical skeleton. Useful for visual exploration of the H₄ root-system\'s chord spectrum. The Schläfli–Hess catalog has 10 canonical regular star 4-polytopes, 9 of them are cataloged separately in this app (Icosahedral 120-cell, Small Stellated 120-cell, Great 120-cell, Grand 120-cell, Grand 600-cell, Great Stellated 120-cell, Grand Stellated 120-cell, Great Grand 120-cell, Great Icosahedral 120-cell); the 10th, the Great Grand Stellated 120-cell {5/2,3,3}, has the 120-cell’s 600 vertices rather than this 120-vertex set, so it cannot be drawn here.'},
-'grand-six-hundred-cell':{title:'Grand 600-cell {3, 3, 5/2}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1200 edges rendered: the √3 chord picks the dense 1200-edge configuration to distinguish this wireframe from the {3,3,5} 600-cell; the canonical {3,3,5/2} skeleton has 720 edges. 1200 triangular faces, 600 tetrahedral cells (canonical). Dual: Great Grand Stellated 120-cell {5/2, 3, 3} (not independently implemented in this catalog). The largest of the Schläfli–Hess star 4-polytopes by cell count. Both this polytope and its dual are among the four Schläfli found in the 1850s (published posthumously 1901); the other six were added by Hess in 1883. Cauchy (1813, for 3D Kepler–Poinsot) and Coxeter (1947, Regular Polytopes §14, for 4D Schläfli–Hess) proved exhaustiveness: exactly 10 regular star 4-polytopes exist.'},
+'icosahedral-one-twenty-cell':{title:'Icosahedral 120-cell {3, 5, 5/2}',body:'Regular star 4-polytope: 120 vertices (the 600-cell’s), 720 edges, 1200 triangular faces and 120 icosahedral cells. Its edges are exactly the convex 600-cell’s, so the picture draws one whole cell solid, and the faces faintly when Fill is on: an icosahedron here, where the 600-cell’s cells are tetrahedra. Dual: Small Stellated 120-cell {5/2, 5, 3}. One of the six star 4-polytopes Edmund Hess added in 1883 (“Einleitung in die Lehre von der Kugelteilung”) to complete the set Schläfli had begun in the 1850s (published posthumously 1901).'},
+'small-stellated-one-twenty-cell':{title:'Small Stellated 120-cell {5/2, 5, 3}',body:'Regular star 4-polytope: 120 vertices (the 600-cell’s), 1200 edges, 720 pentagram faces and 120 cells, each a small stellated dodecahedron {5/2, 5}. The picture draws one whole cell solid, and the faces faintly when Fill is on. Dual: Icosahedral 120-cell {3, 5, 5/2}. Source: Hess, “Einleitung in die Lehre von der Kugelteilung” (1883), which catalogued the complete set of 10 Schläfli–Hess star 4-polytopes; enumerated again in Coxeter, Regular Polytopes (1948).'},
+'great-six-hundred-cell':{title:'600-cell (long-chord wireframe)',body:'Non-canonical edge selection on the 600-cell vertex set (120 vertices). 2400 edges rendered: the chord-1 shell (1200 edges) superimposed with the √3 shell (1200 edges), both distinct from the 720-edge {3,3,5} canonical skeleton. Useful for visual exploration of the H₄ root system’s chord spectrum. Of the 10 regular star 4-polytopes, the 9 on this vertex set are cataloged separately in this app, each drawn from its faces and cells. The 10th, the Great Grand Stellated 120-cell {5/2, 3, 3}, has 600 vertices (the 120-cell’s), so it cannot be drawn on these 120; it is not in this catalog.'},
+'grand-six-hundred-cell':{title:'Grand 600-cell {3, 3, 5/2}',body:'Regular star 4-polytope: 120 vertices (the 600-cell’s), 720 edges, 1200 triangular faces and 600 tetrahedral cells, the most cells of any star 4-polytope. It has the same edges and faces as the Great Icosahedral 120-cell {3, 5/2, 5}, so the picture draws one whole cell solid, and the faces faintly when Fill is on: a tetrahedron here, a great icosahedron there. Dual: Great Grand Stellated 120-cell {5/2, 3, 3} (not independently implemented in this catalog). Schläfli found it and its dual in the 1850s (published 1901); Hess added the other six in 1883. Coxeter’s Regular Polytopes (1948, ch. 14) shows the ten are all there are.'},
 
-'great-one-twenty-cell':{title:'Great 120-cell {5, 5/2, 5}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 720 edges, 720 pentagonal faces, 120 great-dodecahedral cells. Self-dual (Schläfli symbol is palindromic). The cells are great dodecahedra {5, 5/2}, a form Schläfli\'s own Euler-characteristic criterion excluded. Discovered by Hess (1883, "Einleitung in die Lehre von der Kugelteilung"), one of the six he added past Schläfli\'s original four.'},
-'grand-one-twenty-cell':{title:'Grand 120-cell {5, 3, 5/2}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 720 edges, 720 pentagonal faces, 120 dodecahedral cells. Dual: Great Stellated 120-cell {5/2, 3, 5}. One of the four star 4-polytopes Schläfli found in the 1850s (published posthumously 1901); catalogued alongside the other nine in Hess, "Einleitung in die Lehre von der Kugelteilung" (1883).'},
-'great-stellated-one-twenty-cell':{title:'Great Stellated 120-cell {5/2, 3, 5}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1920 edges rendered: chord 1.82 deliberately spans the 1.732+1.902 chord shells for a wireframe distinct from every other entry sharing this vertex set; the canonical {5/2,3,5} skeleton has 720 edges. 720 pentagrammic faces, 120 great-stellated-dodecahedral cells (canonical). Dual: Grand 120-cell {5, 3, 5/2}. The 4D analogue of the great stellated dodecahedron in some respects. One of the four Schläfli found in the 1850s (published posthumously 1901); catalogued alongside the other nine in Hess, "Einleitung in die Lehre von der Kugelteilung" (1883), enumerated again in Coxeter, Regular Polytopes (1948, 3rd ed. 1973).'},
-'grand-stellated-one-twenty-cell':{title:'Grand Stellated 120-cell {5/2, 5, 5/2}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 780 edges rendered: chord 2 selects the 1.902/2 shells, picked so this wireframe differs from its neighbors on the same vertex set; the canonical {5/2,5,5/2} skeleton is a different shell of 720 edges. 720 pentagrammic faces, 120 small-stellated-dodecahedral cells (canonical). Self-dual (Schläfli symbol is palindromic). Has both stellated faces and stellated cells, giving a densely self-intersecting structure. Discovered by Edmund Hess (1883); enumerated in Coxeter, Regular Polytopes (1948).'},
-'great-grand-one-twenty-cell':{title:'Great Grand 120-cell {5, 5/2, 3}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1800 edges rendered: chord √2 selects the 1.414 shell, the densest available, picked for a distinct wireframe since the two 1200-edge shells (1 and √3) are already used by Small Stellated 120-cell and Grand 600-cell; the canonical {5,5/2,3} skeleton has 1200 edges. 720 pentagonal faces, 120 great-dodecahedral cells (canonical). Dual: Great Icosahedral 120-cell {3, 5/2, 5}. One of the six star 4-polytopes Hess added in 1883, past Schläfli\'s own Euler-characteristic exclusion criterion. Coxeter, Regular Polytopes (1948, 3rd ed. 1973), calls this and the great 120-cell "the most beautiful of the Schläfli–Hess polychora" for their dual symmetry.'},
-'great-icosahedral-one-twenty-cell':{title:'Great Icosahedral 120-cell {3, 5/2, 5}',body:'Regular star 4-polytope: 120 vertices (same set as the 600-cell), 1920 edges rendered: chord 1.67 spans the 1.618+1.732 chord shells for a wireframe distinct from Great 120-cell, Grand 120-cell, and Grand 600-cell; the canonical {3,5/2,5} skeleton has 720 edges. 1200 triangular faces, 120 great-icosahedral cells (canonical). Dual: Great Grand 120-cell {5, 5/2, 3}. The cells are great icosahedra {3, 5/2}. With this 6th entry Sprint L completes Reactor\'s coverage of the canonical 10 regular star 4-polytopes (4 added in Sprint K2). One of the six star 4-polytopes Hess added in 1883, "Einleitung in die Lehre von der Kugelteilung", past Schläfli\'s own exclusion criterion; enumerated again in Coxeter, Regular Polytopes (1948).'},
+'great-one-twenty-cell':{title:'Great 120-cell {5, 5/2, 5}',body:'Regular star 4-polytope: 120 vertices (the 600-cell’s), 720 edges, 720 pentagonal faces and 120 cells, each a great dodecahedron {5, 5/2}. Self-dual (its Schläfli symbol reads the same both ways). It has the same edges as the Grand 120-cell {5, 3, 5/2}, so the picture draws one whole cell solid, and the faces faintly when Fill is on: a great dodecahedron on 12 vertices here, a dodecahedron on 20 there. The great dodecahedron is a form Schläfli’s own Euler-characteristic criterion excluded; Hess found this polytope in 1883 (“Einleitung in die Lehre von der Kugelteilung”), one of the six he added past Schläfli’s four.'},
+'grand-one-twenty-cell':{title:'Grand 120-cell {5, 3, 5/2}',body:'Regular star 4-polytope: 120 vertices (the 600-cell’s), 720 edges, 720 pentagonal faces and 120 dodecahedral cells. It has the same edges as the Great 120-cell {5, 5/2, 5}, so the picture draws one whole cell solid, and the faces faintly when Fill is on: a dodecahedron on 20 vertices here, a great dodecahedron on 12 there. Dual: Great Stellated 120-cell {5/2, 3, 5}. One of the four star 4-polytopes Schläfli found in the 1850s (published posthumously 1901); catalogued alongside the other nine in Hess, “Einleitung in die Lehre von der Kugelteilung” (1883).'},
+'great-stellated-one-twenty-cell':{title:'Great Stellated 120-cell {5/2, 3, 5}',body:'Regular star 4-polytope: 120 vertices (the 600-cell’s), 720 edges, 720 pentagram faces and 120 cells, each a great stellated dodecahedron {5/2, 3}. It has the same edges as the Grand Stellated 120-cell {5/2, 5, 5/2}, so the picture draws one whole cell solid, and the faces faintly when Fill is on: a great stellated dodecahedron on 20 vertices here, a small stellated dodecahedron on 12 there. Dual: Grand 120-cell {5, 3, 5/2}. One of the four Schläfli found in the 1850s (published posthumously 1901); catalogued with the other nine in Hess, “Einleitung in die Lehre von der Kugelteilung” (1883); enumerated again in Coxeter, Regular Polytopes (1948).'},
+'grand-stellated-one-twenty-cell':{title:'Grand Stellated 120-cell {5/2, 5, 5/2}',body:'Regular star 4-polytope: 120 vertices (the 600-cell’s), 720 edges, 720 pentagram faces and 120 cells, each a small stellated dodecahedron {5/2, 5}. Self-dual (its Schläfli symbol reads the same both ways). It has the same edges as the Great Stellated 120-cell {5/2, 3, 5}, so the picture draws one whole cell solid, and the faces faintly when Fill is on: a small stellated dodecahedron on 12 vertices here, a great stellated dodecahedron on 20 there. Both its faces and its cells are stars. Discovered by Edmund Hess (1883); enumerated in Coxeter, Regular Polytopes (1948).'},
+'great-grand-one-twenty-cell':{title:'Great Grand 120-cell {5, 5/2, 3}',body:'Regular star 4-polytope: 120 vertices (the 600-cell’s), 1200 edges, 720 pentagonal faces and 120 cells, each a great dodecahedron {5, 5/2}. The picture draws one whole cell solid, and the faces faintly when Fill is on. Dual: Great Icosahedral 120-cell {3, 5/2, 5}. One of the six star 4-polytopes Hess added in 1883, past Schläfli’s own Euler-characteristic exclusion criterion; enumerated again in Coxeter, Regular Polytopes (1948).'},
+'great-icosahedral-one-twenty-cell':{title:'Great Icosahedral 120-cell {3, 5/2, 5}',body:'Regular star 4-polytope: 120 vertices (the 600-cell’s), 720 edges, 1200 triangular faces and 120 cells, each a great icosahedron {3, 5/2}. It has the same edges and faces as the Grand 600-cell {3, 3, 5/2}, so the picture draws one whole cell solid, and the faces faintly when Fill is on: a great icosahedron here, a tetrahedron there. Dual: Great Grand 120-cell {5, 5/2, 3}. One of the six star 4-polytopes Hess added in 1883 (“Einleitung in die Lehre von der Kugelteilung”), past Schläfli’s own exclusion criterion; enumerated again in Coxeter, Regular Polytopes (1948).'},
 
 'elliptic-curve':{title:'Elliptic Curve',body:'Real-locus visualization of y² = x³ + ax + b. The discriminant Δ = -16(4a³ + 27b²) determines the topology: Δ > 0 gives two connected components (oval + branch); Δ < 0 gives one connected component; Δ = 0 is singular (cusp or node). Modular elliptic curves over ℚ are central to Andrew Wiles\' 1995 proof of Fermat\'s Last Theorem. Foundation of modern public-key cryptography (Koblitz / Miller, 1985).'},
 'cassini-ovals':{title:'Cassini Ovals',body:'Quartic locus |z² - c²| = a² (Giovanni Domenico Cassini, 1680). For a > c the curve is a single oval; for a = c it degenerates to the Lemniscate of Bernoulli; for a < c it splits into two separate ovals (each enclosing one focus). Cassini, then favoring the Tychonic geo-heliocentric model, proposed that the Sun orbits the Earth on one of these ovals (with the Earth at one focus). Kepler\'s heliocentric ellipse (Earth orbiting the Sun, eccentricity 0.0167) is correct.'},
@@ -51214,7 +51171,7 @@ const PATTERN_INFO={
 'klein-sextic':{title:'Klein Icosahedral Sextic',body:'A degree-6 plane algebraic curve with 5-fold (icosahedral-related) symmetry. Klein\'s 1884 "Vorlesungen über das Ikosaeder" connected the icosahedral group A₅ to the resolvent of the quintic equation. The visualization is an implicit-curve plot of (x²+y²)³ - 0.4·Re(z⁵) = 0, exhibiting the canonical 5-fold rotational symmetry.'},
 'bezout-cubic-cubic':{title:'Bezout Cubic ∩ Cubic',body:'Étienne Bezout\'s theorem (1779): two plane curves of degrees m and n intersect in exactly m·n points (counting multiplicities, complex points, and points at infinity). Two cubics → 9 intersection points. The visualization shows two cubics f(x,y) = x³-3xy²-x+y and g(x,y) = y³-3x²y+0.5 along with the real subset of their 9 intersections (some pairs may be complex and not visible).'},
 
-'penrose-p-one':{title:'Penrose P1',body:'Roger Penrose\'s 1974 aperiodic set of six prototiles across four basic shape types: pentagon (with three matching-rule variants), pentagram (5-pointed star), boat (3 connected pentagon sectors), and diamond (a 36°/144° rhombus). Required matching rules on the edges (curved arcs) prevent periodic configurations. Penrose, R., "The role of aesthetics in pure and applied mathematical research", Bulletin of the IMA, 10 (1974), 266–271. The picture here is not the tiling: it is a fixed cluster of pentagons, a star and a rhombus, without a boat, and not drawn to P1’s exact proportions.'},
+'penrose-p-one':{title:'Penrose P1',body:'Roger Penrose\'s 1974 pentagon tiling: regular pentagons, five-pointed stars, boats (three fifths of a star) and thin diamonds, all with the same edge length. Penrose found it by cutting a pentagon into six smaller pentagons and five half-diamonds and repeating, filling the gaps with the other shapes; matching rules on three kinds of pentagon force it to be nonperiodic. It is drawn here from the rhombus (P3) tiling it is locally equivalent to: each fat half-rhombus carries three pentagons, and the stars, boats and diamonds are the gaps between them. Penrose, R., "The role of aesthetics in pure and applied mathematical research", Bulletin of the IMA, 10 (1974), 266–271.'},
 'penrose-p-two':{title:'Penrose P2 (Kite-Dart)',body:'Penrose\'s 1977 reduction to two prototiles: the kite (a 72°/72°/72°/144° quadrilateral) and the dart (a "bow-tie" 36°/216°/36°/72° quadrilateral). Both are rep-tiles for each other under the deflation rule (kite → 2 kites + 1 dart; dart → 1 kite + 1 dart). With matching rules they tile the plane only aperiodically. Implemented here via the deflation substitution starting from the canonical "sun" cluster of 5 kites.'},
 'penrose-p-three':{title:'Penrose P3 (Rhombi)',body:'Penrose\'s two-rhombus aperiodic tiling (late 1970s): a thick rhombus (72°/108°) and a thin rhombus (36°/144°), both with unit side length and area ratio φ:1. Rendered via Robinson-triangle deflation: the thick rhombus splits along its long diagonal into two 36°-36°-108° half-tiles and the thin one along its short diagonal into two 36°-72°-72° half-tiles. Each deflation turns an acute half-tile into 1 acute + 1 obtuse, and an obtuse one into 2 obtuse + 1 acute, which generates the classic 5-fold-symmetric tiling. With single- and double-arrow edge markings the only valid tilings are aperiodic. Vertex configurations realize 8 distinct local environments, all sharing the inflation factor φ.'},
 'robinson-tiles':{title:'Robinson Tiles',body:'Raphael M. Robinson, "Undecidability and nonperiodicity for tilings of the plane", Inventiones Mathematicae 12 (1971), 177–209. The first 6-prototile aperiodic set, predating Penrose\'s P1 by 3 years. Each tile is a square with notches forming a "cross" pattern; the matching rules force a hierarchical aperiodic structure. Subsequent work has reduced the count: Penrose 6 (1974, P1), Penrose 2 (1977 P2 kite-and-dart and late-1970s P3 rhombi), Hat 1 (2023), Spectre 1 (2023). The rendering here is a simplified representation that conveys the tiling\'s character rather than constructing it from the rules described above.'},
@@ -57760,6 +57717,65 @@ return [...dedup.values()];
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+const _STAR_POLYTOPES={
+'{3,5,5/2}':{edge:1/PHI,kind:'vf',cell:1/PHI,face:3},
+'{3,5/2,5}':{edge:PHI,kind:'vf',cell:2*Math.sin(Math.PI/5),face:3},
+'{3,3,5/2}':{edge:PHI,kind:'tet',face:3},
+'{5,3,5/2}':{edge:1/PHI,kind:'vf',cell:1,face:5},
+'{5,5/2,5}':{edge:1/PHI,kind:'vf',cell:1/PHI,face:5},
+'{5,5/2,3}':{edge:1,kind:'vf',cell:2*Math.sin(Math.PI/5),face:5},
+'{5/2,5,3}':{edge:1,kind:'vf',cell:1/PHI,face:2.5},
+'{5/2,3,5}':{edge:PHI,kind:'vf',cell:1,face:2.5},
+'{5/2,5,5/2}':{edge:PHI,kind:'vf',cell:2*Math.sin(Math.PI/5),face:2.5},
+};
+function _starPolytope(name){
+const cache=_starPolytope.c||(_starPolytope.c=new Map());
+if(cache.has(name))return cache.get(name);
+const spec=_STAR_POLYTOPES[name], V=_verts600cell(), N=V.length, e=spec.edge;
+const dist=(i,j)=>Math.hypot(V[i][0]-V[j][0],V[i][1]-V[j][1],V[i][2]-V[j][2],V[i][3]-V[j][3]);
+const near=(i,j,c)=>Math.abs(dist(i,j)-c)<1e-6;
+const A=V.map(()=>new Set());
+for(let i=0;i<N;i++)for(let j=i+1;j<N;j++)if(near(i,j,e)){A[i].add(j);A[j].add(i);}
+
+
+const cellFaces=(set)=>{
+const out=[], s=new Set(set);
+if(spec.face===3){for(const i of set)for(const j of A[i])if(j>i&&s.has(j))for(const k of A[j])if(k>j&&s.has(k)&&A[i].has(k))out.push([i,j,k]);return out;}
+const dg=spec.face===5?e*PHI:e/PHI, seen=new Set();
+for(const a of set)for(const b of A[a])if(s.has(b))for(const c of A[b])if(c!==a&&s.has(c)&&near(a,c,dg))
+for(const d of A[c])if(s.has(d)&&near(b,d,dg)&&near(a,d,dg))for(const f of A[d])if(s.has(f)&&A[f].has(a)&&near(c,f,dg)&&near(b,f,dg)){
+const k=[a,b,c,d,f].sort((x,y)=>x-y).join();if(!seen.has(k)){seen.add(k);out.push([a,b,c,d,f]);}}
+return out;
+};
+let cellVerts;
+if(spec.kind==='vf'){cellVerts=V.map((_,u)=>{const s=[];for(let j=0;j<N;j++)if(j!==u&&near(u,j,spec.cell))s.push(j);return s;});}
+else{cellVerts=[];for(let i=0;i<N;i++)for(const j of A[i])if(j>i)for(const k of A[j])if(k>j&&A[i].has(k))for(const l of A[k])if(l>k&&A[i].has(l)&&A[j].has(l))cellVerts.push([i,j,k,l]);}
+const faceIdx=new Map(), faces=[], cells=cellVerts.map((cv)=>cellFaces(cv).map((f)=>{
+const key=[...f].sort((x,y)=>x-y).join();
+if(!faceIdx.has(key)){faceIdx.set(key,faces.length);faces.push(f);}
+return faceIdx.get(key);
+}));
+const ek=new Set(), edges=[];
+for(const f of faces)for(let i=0;i<f.length;i++){const a=f[i],b=f[(i+1)%f.length],k=a<b?a+','+b:b+','+a;if(!ek.has(k)){ek.add(k);edges.push(a<b?[a,b]:[b,a]);}}
+const res={verts:V,edges,faces,cells,cellVerts};
+cache.set(name,res);
+return res;
+}
+
+
+
+
 const _4DPolytopeEdgeCache=new Map();
 function _4DPolytopeCacheKey(verts, edgeLenTarget){
 
@@ -57769,7 +57785,7 @@ return `${verts.length}_${edgeLenTarget.toFixed(6)}_${v0[0].toFixed(4)}_${v1[0].
 }
 
 
-function _draw4DPolytope(c, bR, verts, edgeLenTarget){
+function _draw4DPolytope(c, bR, verts, edgeLenTarget, star){
 
 
 
@@ -57866,6 +57882,7 @@ _4DPolytopeEdgeCache.set(cacheKey, edges);
 
 edges.sort((p,q)=>(pts2D[p[0]][2]+pts2D[p[1]][2])-(pts2D[q[0]][2]+pts2D[q[1]][2]));
 c.save();
+if(star)_drawStarFaces(c, star, rotated, pts2D);
 c.lineWidth=Math.max(1, S.lineWeight*0.7*_lwK());
 
 
@@ -57928,24 +57945,44 @@ c.restore();
 
 
 
+function _drawStarFaces(c, star, rotated, pts2D){
+const {faces, cells, cellVerts}=star;
+const depth=(f)=>{let z=0;for(const v of f)z+=pts2D[v][2];return z/f.length;};
+let hi=0, best=Infinity;
+cells.forEach((cl,ci)=>{let w=0;for(const v of cellVerts[ci])w+=rotated[v][3];w/=cellVerts[ci].length;if(w<best){best=w;hi=ci;}});
+const outline=(f)=>{c.beginPath();c.moveTo(pts2D[f[0]][0],pts2D[f[0]][1]);for(let k=1;k<f.length;k++)c.lineTo(pts2D[f[k]][0],pts2D[f[k]][1]);c.closePath();};
+const ga=c.globalAlpha;
+
+
+if(S.fill){
+const order=faces.map((f,i)=>i).sort((a,b)=>depth(faces[a])-depth(faces[b]));
+c.globalAlpha=ga*0.12;
+order.forEach((i,k)=>{const b=Math.floor(k*32/order.length);c.fillStyle=geoFillColor(b,32,b,31);outline(faces[i]);c.fill();});
+}
+c.globalAlpha=ga*0.55;
+const hiFaces=cells[hi].slice().sort((a,b)=>depth(faces[a])-depth(faces[b]));
+hiFaces.forEach((i,k)=>{c.fillStyle=geoFillColor(k,hiFaces.length,k,Math.max(1,hiFaces.length-1));outline(faces[i]);c.fill();});
+c.globalAlpha=ga;
+c.strokeStyle=accentColor();
+for(const i of hiFaces){outline(faces[i]);c.stroke();}
+}
+
+
+
+
+
 
 function drawIcosahedral120Cell(c, bR){
 
 
-
-
-
-const phi=PHI;
-_draw4DPolytope(c, bR, _verts600cell(), 1/phi);
-_draw4DPolytope(c, bR, _verts600cell(), 1);
+const st=_starPolytope('{3,5,5/2}');
+_draw4DPolytope(c, bR, st.verts, 1/PHI, st);
 }
 function drawSmallStellated120Cell(c, bR){
 
 
-
-
-
-_draw4DPolytope(c, bR, _verts600cell(), 1);
+const st=_starPolytope('{5/2,5,3}');
+_draw4DPolytope(c, bR, st.verts, 1, st);
 }
 function drawGreat600Cell(c, bR){
 
@@ -57960,57 +57997,45 @@ function drawGrand600Cell(c, bR){
 
 
 
-
-
-_draw4DPolytope(c, bR, _verts600cell(), Math.sqrt(3));
+const st=_starPolytope('{3,3,5/2}');
+_draw4DPolytope(c, bR, st.verts, PHI, st);
 }
 function drawGreat120Cell(c, bR){
 
 
 
-_draw4DPolytope(c, bR, _verts600cell(), 1.1756);
+const st=_starPolytope('{5,5/2,5}');
+_draw4DPolytope(c, bR, st.verts, 1/PHI, st);
 }
 function drawGrand120Cell(c, bR){
 
 
-
-const phi=PHI;
-_draw4DPolytope(c, bR, _verts600cell(), phi);
+const st=_starPolytope('{5,3,5/2}');
+_draw4DPolytope(c, bR, st.verts, 1/PHI, st);
 }
 function drawGreatStellated120Cell(c, bR){
 
 
 
-
-
-
-_draw4DPolytope(c, bR, _verts600cell(), 1.82);
+const st=_starPolytope('{5/2,3,5}');
+_draw4DPolytope(c, bR, st.verts, PHI, st);
 }
 function drawGrandStellated120Cell(c, bR){
 
 
-
-
-
-
-_draw4DPolytope(c, bR, _verts600cell(), 2);
+const st=_starPolytope('{5/2,5,5/2}');
+_draw4DPolytope(c, bR, st.verts, PHI, st);
 }
 function drawGreatGrand120Cell(c, bR){
 
-
-
-
-
-
-_draw4DPolytope(c, bR, _verts600cell(), Math.sqrt(2));
+const st=_starPolytope('{5,5/2,3}');
+_draw4DPolytope(c, bR, st.verts, 1, st);
 }
 function drawGreatIcosahedral120Cell(c, bR){
 
 
-
-
-
-_draw4DPolytope(c, bR, _verts600cell(), 1.67);
+const st=_starPolytope('{3,5/2,5}');
+_draw4DPolytope(c, bR, st.verts, PHI, st);
 }
 
 function draw5cell(c, bR){_draw4DPolytope(c, bR, _verts5cell(), Math.sqrt(8/5)*Math.sqrt(5));}
