@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-nXIC9mGFnTL8R1c+WaEovFWgrQnqvCcWqLaPND2Mc3Y='; font-src 'self'; script-src 'self' 'sha256-Jac5BA4G5PE82mAiKq8yR362MLSV6vsm4OmMZ326cpg=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-nXIC9mGFnTL8R1c+WaEovFWgrQnqvCcWqLaPND2Mc3Y='; font-src 'self'; script-src 'self' 'sha256-N/3uF6ytCQ1vWjQLXhPPXpmEQcVAm4EzWehlxQ7LZDc=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4229,12 +4229,12 @@
 
 
 
-<!-- build: 7a2b2b241ae2 -->
+<!-- build: 1c4ec6353ead -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.7
+ * AEON -- Universal Dynamics Reactor v7.0.8
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7490,7 +7490,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.7';
+const APP_VERSION='7.0.8';
 
 
 
@@ -7499,8 +7499,8 @@ const APP_VERSION='7.0.7';
 
 
 
-const MISSION_BUILD_HASH='7a2b2b241ae2';
-const MISSION_GIT_SHA='4dae48ed8151141c078520a7ba4e263c32c72c38';
+const MISSION_BUILD_HASH='1c4ec6353ead';
+const MISSION_GIT_SHA='a797d4d50830dea88412af3a42bf7b66bd609d03';
 
 const MISSION_RENDER_HASH='693dd0ad1267';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50310,6 +50310,16 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.8',
+date:'2026-10-07',
+headline:'Every line of a pattern now shows.',
+items:[
+'Sacred-geometry lines no longer vanish into the background: the Seed of Life shows all seven circles, and Metatron’s Cube, the mandala and the Penrose tiling draw in full on a dark or a light canvas.',
+'The Sri Yantra draws all nine of its triangles.',
+'A shared link to an IFS, geometry or density view opens at its final size instead of widening after the app loads.',
+],
+},
+{
 version:'7.0.7',
 date:'2026-10-06',
 headline:'Fractals now draw only what you can see.',
@@ -50382,19 +50392,6 @@ items:[
 'Collatz and the Pickover attractor open where their structure shows.',
 'The canvas is full-window from the first paint, and growth patterns show their finished state in thumbnails and layers.',
 'Known issue: where the browser refuses a preserved drawing buffer, the first Copy Image after a view change copies the opening view.',
-],
-},
-{
-version:'7.0.0',
-date:'2026-10-03',
-headline:'The Eyepiece: the picture fills the window.',
-items:[
-'Every type renders full-window, with the inspector floating over the picture and a strip at the foot for the type, two sliders, the palette and the readout.',
-'The left rail is gone. Catalog, the strip type or / opens a sheet of every type and pattern as a card with a rendered thumbnail, plus favorites, recents and search.',
-'Cmd-K finds any type, pattern, Showcase piece, tour or inspector section.',
-'Dialogs, toasts and menus share one plate style and stay clear of the corner, the strip and the panels.',
-'Keyboard fixes: Cmd-K works from a slider, dialogs opened from the welcome keep focus, and leaving Focus returns focus where it was.',
-'Fixed: double-clicking a card no longer zooms, Penrose tiles color by position, and multiply-blend fills with glow no longer freeze the page.',
 ],
 },
 ];
