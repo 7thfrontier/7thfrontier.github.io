@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-k7qXjJLBTwQYTIfo9eR2ssFMD+DgZE6R29D4pOVDwi4=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-fpBG/Gx1/e+3X9BEfB0bsJGekqJU6O2xWA9UJQSTQyQ=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4225,12 +4225,12 @@
 
 
 
-<!-- build: 192c3fbcfaba -->
+<!-- build: 2c7a9025ac4e -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.8
+ * AEON -- Universal Dynamics Reactor v7.0.9
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7486,7 +7486,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.8';
+const APP_VERSION='7.0.9';
 
 
 
@@ -7495,8 +7495,8 @@ const APP_VERSION='7.0.8';
 
 
 
-const MISSION_BUILD_HASH='192c3fbcfaba';
-const MISSION_GIT_SHA='5263d6249c7982992257a5e0dd7cab8e8224ab7f';
+const MISSION_BUILD_HASH='2c7a9025ac4e';
+const MISSION_GIT_SHA='6a2407f5ed984f33b7d15b23d48708bbf9f14e07';
 
 const MISSION_RENDER_HASH='d036007248e6';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50308,6 +50308,16 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.9',
+date:'2026-10-07',
+headline:'A first visit says what to do.',
+items:[
+'One guide now sits beside the live picture from the first frame, with three moves to try: zoom in, try another form, change the colors. Each checks off as you do it, and Hide folds it to a Getting started chip.',
+'Watch the one-minute tour plays inside AEON, with captions, from the app’s own files, so it works offline.',
+'Catalog previews render where you are looking: cards you scrolled past no longer hold up the ones on screen.',
+],
+},
+{
 version:'7.0.8',
 date:'2026-10-07',
 headline:'Every line of a pattern now shows.',
@@ -50378,18 +50388,6 @@ items:[
 'A link that opens a seeded view keeps its framing, with no false "uniform color" notice.',
 'The inspector header fits on one row, and a long type name ends in an ellipsis.',
 'Shared links to the site show its picture and title, and "7th Frontier, Inc." links to the company site.',
-],
-},
-{
-version:'7.0.1',
-date:'2026-10-05',
-headline:'Smooth color climbs from the background to the set.',
-items:[
-'Every smooth-colored fractal climbs from the palette\'s first color in the far background to its last at the edge of the set, with no rings and no jump back.',
-'Biomorph draws Pickover\'s creature, and the Log Map and Domain-coloring log presets draw again.',
-'Collatz and the Pickover attractor open where their structure shows.',
-'The canvas is full-window from the first paint, and growth patterns show their finished state in thumbnails and layers.',
-'Known issue: where the browser refuses a preserved drawing buffer, the first Copy Image after a view change copies the opening view.',
 ],
 },
 ];
