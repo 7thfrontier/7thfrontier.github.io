@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-4ac9+u57rHtXCqv0us3VyXs34Q2SFujEeXEQ9YCWF+k=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-IdlRAGRjms2C14hUJi9lu1oegfWpEvvCJW8bT3uDRQc=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4225,12 +4225,12 @@
 
 
 
-<!-- build: d1b30f39e4e6 -->
+<!-- build: 737eb2a1c2dc -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.9
+ * AEON -- Universal Dynamics Reactor v7.0.10
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7486,7 +7486,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.9';
+const APP_VERSION='7.0.10';
 
 
 
@@ -7495,8 +7495,8 @@ const APP_VERSION='7.0.9';
 
 
 
-const MISSION_BUILD_HASH='d1b30f39e4e6';
-const MISSION_GIT_SHA='de0b42ae642f2a282d715c60e84eea5862d2b86f';
+const MISSION_BUILD_HASH='737eb2a1c2dc';
+const MISSION_GIT_SHA='482eb65ec7bd7af95956f63d1e77597c16d63286';
 
 const MISSION_RENDER_HASH='00c4eaef60cd';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50357,6 +50357,16 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.10',
+date:'2026-10-07',
+headline:'Drawings match their mathematics.',
+items:[
+'The Sri Yantra is drawn from its real construction, with every triple meeting point exact and the traditional 43 small triangles.',
+'Every Penrose tile is drawn whole, and the kite-and-dart tiling is a real one.',
+'Thirty-one pattern notes now describe what the picture shows.',
+],
+},
+{
 version:'7.0.9',
 date:'2026-10-07',
 headline:'A first visit says what to do.',
@@ -50426,17 +50436,6 @@ items:[
 "The Julia pad in the Inspector previews the set you are picking, with each type's own formula.",
 'Scrolling, pinching and dragging sliders keep up on 4K views, and the picture settles to full resolution when you stop.',
 'The landing page and service worker no longer ship their internal source comments.',
-],
-},
-{
-version:'7.0.2',
-date:'2026-10-05',
-headline:'Exports work in Brave, and seeded links keep their framing.',
-items:[
-'Exports work in Brave again. Its canvas privacy protection made the size check refuse every export.',
-'A link that opens a seeded view keeps its framing, with no false "uniform color" notice.',
-'The inspector header fits on one row, and a long type name ends in an ellipsis.',
-'Shared links to the site show its picture and title, and "7th Frontier, Inc." links to the company site.',
 ],
 },
 ];
