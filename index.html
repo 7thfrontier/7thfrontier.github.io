@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="author" content="© 2026 7th Frontier, Inc. All Rights Reserved.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data:; style-src 'self' 'sha256-cpsHMZ0oiiD/91kOhbFZ28xadZp+DyhBATzHWfXi17I=' 'sha256-y2NFRhd7HyG/oRaiwzZeUEfUPHr4o3NdBtofIfT7MQ4=' 'sha256-4EupS2ecbqBJmSSt3SHTBfIftBzlLgqJi7v8gVbCztk='; font-src 'self'; script-src 'self' 'sha256-pociHX2l5YVsGsRyjvTt+lnw7y9wMhaTuiRjQ2vtr5w='; connect-src 'none'; frame-src https://www.youtube-nocookie.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data:; style-src 'self' 'sha256-cpsHMZ0oiiD/91kOhbFZ28xadZp+DyhBATzHWfXi17I=' 'sha256-3ImuUu50zhG9ep+gvDTxpGDcfr6c5zBvakxlcr/pJug=' 'sha256-4EupS2ecbqBJmSSt3SHTBfIftBzlLgqJi7v8gVbCztk='; font-src 'self'; script-src 'self' 'sha256-Zne5Z6h7n4weyj6/vOklq9Nv5ZzEtvScXCA84XCnh0A='; connect-src 'none'; media-src 'self'">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AEON: Universal Dynamics Reactor</title>
 <meta name="description" content="AEON is a single-file fractal explorer and sacred-geometry studio. 58 fractal types, 183 patterns, zero dependencies. Open the file and create.">
@@ -746,23 +746,9 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 }
 
 
-.tour-video { margin-top: var(--sp-9); }
-.tour-video[hidden] { display: none; }
-.tour-video-frame {
-  position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0;
-  border: 1px solid var(--border-mid); border-radius: var(--r-3); overflow: hidden;
-  background: var(--surface); cursor: pointer;
-}
-.tour-video-frame img, .tour-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
-.tour-video-label {
-  position: absolute; left: var(--sp-6); bottom: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-1);
-  padding: var(--sp-4) var(--sp-6); border-radius: var(--r-2); background: var(--color-charcoal-950); color: var(--color-cream-50);
-  font-family: var(--font-ui); font-size: 15px; text-align: left;
-}
-.tour-video-label small { font-size: 12px; color: var(--color-cream-400); }
-.tour-video-frame:hover .tour-video-label, .tour-video-frame:focus-visible .tour-video-label { background: var(--accent); color: var(--color-charcoal-950); }
-.tour-video-frame:hover .tour-video-label small, .tour-video-frame:focus-visible .tour-video-label small { color: var(--color-charcoal-950); }
-.tour-video-frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.tour-video { margin: var(--sp-9) 0 0; }
+.tour-video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 1px solid var(--border-mid); border-radius: var(--r-3); background: var(--color-charcoal-950); }
+.tour-video figcaption { margin-top: var(--sp-3); font-family: var(--font-ui); font-size: 13px; color: var(--text-dim); }
 </style>
 <style>
 .render-hero { margin: 0; padding: 0 var(--sp-10); max-width: 1600px; margin-inline: auto; }
@@ -866,13 +852,13 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
     <h2 class="section-title">The Instrument</h2>
     <p class="section-lede">AEON is a program for looking at mathematical forms: fractals, tilings, polytopes and strange attractors. The canvas fills most of the screen, and the controls stay at the edges until you need them.</p>
   </header>
-  
-  <div class="tour-video" data-tour-id="" hidden>
-    <button type="button" class="tour-video-frame" aria-label="Watch the 1-minute tour. Plays from YouTube.">
-      <img src="./assets/tour-poster.jpg" alt="" width="1280" height="720" loading="lazy">
-      <span class="tour-video-label">Watch the 1-minute tour<small>Plays from YouTube when you press it</small></span>
-    </button>
-  </div>
+  <figure class="tour-video">
+    <video controls muted playsinline preload="none" poster="./assets/tour-poster.jpg" width="1280" height="720" aria-label="The one-minute tour of AEON">
+      <source src="./assets/tour.mp4" type="video/mp4">
+      <track kind="captions" src="./assets/tour.vtt" srclang="en" label="English">
+    </video>
+    <figcaption>The one-minute tour. It plays from this site and from the download, with no other service involved.</figcaption>
+  </figure>
 </section>
 
 
@@ -1303,27 +1289,6 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     else root.setAttribute('data-theme', 'light');
     try { localStorage.setItem(KEY, isLight ? 'dark' : 'light'); } catch (_e) {}
   });
-})();
-
-
-(function(){
-  const box = document.querySelector('.tour-video');
-  const id = box && box.getAttribute('data-tour-id');
-  if (!id || navigator.onLine === false) return;
-  box.hidden = false;
-  const btn = box.querySelector('.tour-video-frame');
-  btn.addEventListener('click', () => {
-    const f = document.createElement('iframe');
-    f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
-    f.title = 'AEON: the 1-minute tour';
-    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-    f.allowFullscreen = true;
-    const wrap = document.createElement('div');
-    wrap.className = 'tour-video-frame';
-    wrap.appendChild(f);
-    btn.replaceWith(wrap);
-    f.focus();
-  }, { once: true });
 })();
 </script>
 </body>

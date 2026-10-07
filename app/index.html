@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-nXIC9mGFnTL8R1c+WaEovFWgrQnqvCcWqLaPND2Mc3Y='; font-src 'self'; script-src 'self' 'sha256-N/3uF6ytCQ1vWjQLXhPPXpmEQcVAm4EzWehlxQ7LZDc=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-k7qXjJLBTwQYTIfo9eR2ssFMD+DgZE6R29D4pOVDwi4=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -80,6 +80,7 @@
     <meta name="twitter:title" content="AEON: Universal Dynamics Reactor">
     <meta name="twitter:description" content="Fractal explorer and sacred-geometry studio. 58 fractal types, 183 geometric patterns, deep zoom past 10⁶⁰.">
     <meta name="twitter:image" content="https://7thfrontier.github.io/icons/og-card.png">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
@@ -135,9 +136,6 @@
         .gl-error-banner.is-visible { opacity: 1; pointer-events: auto; }
         #cv-wrap.is-flashing { transition: opacity 180ms cubic-bezier(.4,0,.2,1); }
         #cv-wrap.is-flashing.is-flash-dim { opacity: 0.4; }
-        #welcome-overlay { opacity: 1; transition: opacity .3s; }
-        
-        #welcome-overlay.is-fading-out { opacity: 0; pointer-events: none; }
         .pi-modal-overlay { display: flex; }
         .kb-modal-overlay { display: flex; }
         #gallery-overlay.is-shown { display: flex; }
@@ -551,18 +549,51 @@
         .app{--lp-cur:0px;--rp-cur:calc(var(--insp-w) + var(--sp-6) * 2)}
         .catalog-corner{position:absolute;left:var(--sp-6);top:var(--sp-6);z-index:var(--z-panel);height:50px;display:flex;align-items:center;gap:var(--sp-3);padding:0 var(--sp-3) 0 var(--sp-5);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);max-width:calc(100% - var(--rp-cur) - var(--sp-6) * 2)}
         
-        .first-steps{position:fixed;top:calc(var(--sp-6) + 50px + var(--sp-3));left:var(--sp-6);z-index:var(--z-panel);width:min(300px,calc(100vw - var(--sp-6) * 2));padding:var(--sp-5) var(--sp-6);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);font-family:var(--font-ui);color:var(--text)}
-        .first-steps .fs-title{font-style:italic;font-weight:400;font-size:18px;line-height:1.2;margin:0 0 var(--sp-3)}
-        .first-steps .fs-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--sp-3)}
-        .first-steps .fs-step{display:flex;align-items:flex-start;gap:var(--sp-3);font-size:13px;line-height:1.4;color:var(--text-mid)}
-        .first-steps .fs-mark{flex:none;width:14px;height:14px;margin-top:var(--sp-0);border:1px solid var(--border-mid);border-radius:50%}
-        .first-steps .fs-step.is-done{color:var(--text)}
-        .first-steps .fs-step.is-done .fs-mark{background:var(--accent);border-color:var(--accent)}
-        .first-steps .fs-done-note{margin:var(--sp-5) 0 0;font-size:13px;line-height:1.4}
-        .first-steps .fs-actions{display:flex;gap:var(--sp-3);margin-top:var(--sp-5)}
-        .first-steps .fs-actions .btn{min-height:44px}
-        body.zen-mode .first-steps{display:none}
-        @media(max-width:860px){.first-steps{top:calc(var(--sp-5) + 50px + var(--sp-3));left:var(--sp-5)}body.fs-up .nav-hints{display:none}}
+        .guide{position:fixed;top:calc(var(--sp-6) + 50px + var(--sp-3));left:var(--sp-6);z-index:var(--z-panel);width:min(420px,calc(100vw - var(--sp-6) * 2));max-height:calc(100vh - 50px - 96px - var(--sp-6) * 3);overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:var(--sp-6);padding:var(--sp-8);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);font-family:var(--font-ui);color:var(--text)}
+        .guide .g-title{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:26px;line-height:1.12;letter-spacing:-.015em;margin:0;text-wrap:balance}
+        .guide .g-sub{margin:calc(var(--sp-3) * -1) 0 0;font-size:14px;line-height:1.45;color:var(--text-mid)}
+        .guide .g-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--sp-1)}
+        .guide .g-step{display:flex;align-items:center;gap:var(--sp-5);padding:var(--sp-4) var(--sp-5);border:1px solid transparent;border-radius:var(--r-2)}
+        .guide .g-ico{flex:none;width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--border-mid);border-radius:var(--r-2);color:var(--text-mid)}
+        .guide .g-ico .ic{width:16px;height:16px}
+        .guide .g-ico .g-check{display:none}
+        .guide .g-txt{display:flex;flex-direction:column;gap:var(--sp-0);min-width:0}
+        .guide .g-txt b{font-size:15px;font-weight:600;line-height:1.25}
+        .guide .g-txt .fs-text{font-size:13px;line-height:1.4;color:var(--text-dim)}
+        .guide .g-step.is-live{background:var(--accent-dim);border-color:var(--accent)}
+        .guide .g-step.is-live .g-ico{color:var(--accent);border-color:var(--accent)}
+        .guide .g-step.is-done .g-txt b{color:var(--text-mid)}
+        .guide .g-step.is-done .g-ico{border-color:transparent;color:var(--success)}
+        .guide .g-step.is-done .g-ico .g-mark{display:none}
+        .guide .g-step.is-done .g-ico .g-check{display:block}
+        .guide .g-video{display:flex;align-items:center;gap:var(--sp-5);width:100%;min-height:44px;padding:var(--sp-5) 0 0;border:0;border-top:1px solid var(--border);background:none;color:var(--text);font:inherit;text-align:left;cursor:pointer}
+        .guide .g-poster{flex:none;width:112px;height:63px;object-fit:cover;border-radius:var(--r-2);border:1px solid var(--border-mid)}
+        .guide .g-video b{display:block;font-size:14px;font-weight:600}
+        .guide .g-video span span{display:block;font-size:12px;color:var(--text-dim)}
+        .guide .g-video:hover b,.guide .g-video:focus-visible b{color:var(--accent)}
+        .guide .g-video:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-2)}
+        .guide .g-foot{display:flex;flex-wrap:wrap;gap:var(--sp-3)}
+        .guide .g-foot .btn{min-height:44px}
+        .guide .g-foot .g-hide{margin-left:auto}
+        .guide .g-next{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--sp-3)}
+        .guide .g-next li{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-5);font-size:14px}
+        .guide .g-note{margin:0;font-size:12px;color:var(--text-dim)}
+        .guide-chip{position:fixed;top:calc(var(--sp-6) + 50px + var(--sp-3));left:var(--sp-6);z-index:var(--z-panel);display:flex;align-items:center;background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-2);box-shadow:var(--shadow-md)}
+        .guide-chip button{min-height:44px;background:none;border:0;color:var(--text);font-family:var(--font-ui);font-size:13px;font-weight:500;display:flex;align-items:center;gap:var(--sp-3);padding:0 var(--sp-5);cursor:pointer}
+        .guide-chip button:hover,.guide-chip button:focus-visible{color:var(--accent)}
+        .guide-chip .gc-end{min-width:44px;justify-content:center;color:var(--text-dim);padding:0}
+        .guide-chip .gc-pips{display:flex;gap:var(--sp-1)}
+        .guide-chip .gc-pips i{width:8px;height:8px;border-radius:50%;border:1px solid var(--text-dim)}
+        .guide-chip .gc-pips i.on{background:var(--success);border-color:var(--success)}
+        .guide-chip .gc-n{font-family:var(--font-mono);font-size:11px;color:var(--text-dim)}
+        .guide-ring{position:fixed;z-index:var(--z-panel);pointer-events:none;border:2px solid var(--accent);border-radius:var(--r-3);box-shadow:0 0 0 4px var(--accent-dim)}
+        .guide-nudge{position:fixed;z-index:var(--z-panel);pointer-events:none;width:60px;height:60px;transform:translate(-50%,-50%);border:2px solid var(--accent);border-radius:50%;box-shadow:0 0 0 5px var(--accent-dim)}
+        .guide-nudge span{position:absolute;left:calc(100% + var(--sp-4));top:50%;transform:translateY(-50%);white-space:nowrap;background:var(--hud-bg);color:var(--text);border:1px solid var(--border-mid);border-radius:var(--r-2);box-shadow:var(--shadow-md);font-family:var(--font-ui);font-size:13px;font-weight:500;padding:var(--sp-3) var(--sp-4)}
+        @media (prefers-reduced-motion: no-preference){.guide-ring,.guide-nudge{animation:guidePulse var(--dur-slow) cubic-bezier(.22,1,.36,1) 1 both}}
+        @keyframes guidePulse{from{box-shadow:0 0 0 0 var(--accent-glow)}}
+        body.zen-mode .guide,body.zen-mode .guide-chip,body.zen-mode .guide-ring,body.zen-mode .guide-nudge{display:none}
+        @media(max-width:860px){.guide{left:10px;right:10px;width:auto;top:auto;bottom:var(--guide-bottom,200px);max-height:46vh;padding:var(--sp-6);gap:var(--sp-5)}.guide .g-sub,.guide .g-poster{display:none}.guide .g-title{font-size:20px}.guide-chip{top:calc(var(--sp-5) + 50px + var(--sp-3));left:var(--sp-5)}body.fs-up .nav-hints{display:none}}
+        .tours-menu-group:first-child{margin-top:0;padding-top:0;border-top:0}
         .catalog-corner .cc-logo{gap:var(--sp-2);margin-right:var(--sp-2)}
         .catalog-corner .lp-logo{font-size:22px;line-height:1}
         .catalog-corner .lp-logo-glyph{width:20px;height:20px}
@@ -591,6 +622,13 @@
         .app:has(.right-panel.rp-collapsed){--rp-cur:0px}
         body.zen-mode #app-shell{--lp-cur:0px;--rp-cur:0px}
         
+        #tour-video-overlay{position:fixed;inset:0;z-index:var(--z-overlay-top);display:none;place-items:center;padding:var(--sp-6);background:rgba(0,0,0,.78)}
+        #tour-video-overlay.open{display:grid}
+        #tour-video-overlay .tv-box{position:relative;width:min(100%,calc((100vh - var(--sp-6) * 2) * 16 / 9),1280px)}
+        #tour-video-overlay video{display:block;width:100%;height:auto;border-radius:var(--r-3);background:#000}
+        #tour-video-overlay .tv-close{position:absolute;top:var(--sp-3);right:var(--sp-3);z-index:1;width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;cursor:pointer}
+        #tour-video-overlay .tv-close:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+        #tour-video-overlay .tv-error{margin:var(--sp-4) 0 0;color:#fff;text-align:center}
         @property --vp-d{syntax:'<length>';inherits:false;initial-value:0px}
         body.vp-tile #cv-wrap{width:100%;margin-left:0}
         #cv-wrap.vp-snap{transition:none}
@@ -698,7 +736,6 @@
         
         @media (forced-colors: active) {
           .lp-logo,
-          .welcome-title,
           .foreword-title,
           .it-card-title {
             background: none !important;
@@ -1040,8 +1077,6 @@
           .hclose,.hcustomize,.man-begin,.man-close,
           .layer-del{min-height:44px}
           
-          #welcome-close{min-width:44px;min-height:44px;font-size:22px;padding:6px 10px}
-          #welcome-foreword,#welcome-showcase,#welcome-ui-tour{min-height:44px}
           
           .inspire-btn{min-height:44px;min-width:44px}
           .sc-card{min-height:44px}
@@ -1257,13 +1292,6 @@
           }
         }
 
-        #welcome-showcase,#welcome-ui-tour,#welcome-tour-video,#welcome-foreword,#welcome-whats-new,#welcome-references{background:none;border:1px solid var(--border-mid);color:var(--text-dim);min-height:44px;padding:var(--sp-3) var(--sp-6);border-radius:var(--r-2);cursor:pointer;font-size:12px;font-family:var(--font-ui);transition:all var(--dur-snappy);letter-spacing:.02em}
-        #welcome-showcase:hover,#welcome-showcase:focus-visible,
-        #welcome-ui-tour:hover,#welcome-ui-tour:focus-visible,
-        #welcome-tour-video:hover,#welcome-tour-video:focus-visible,
-        #welcome-whats-new:hover,#welcome-whats-new:focus-visible,
-        #welcome-references:hover,#welcome-references:focus-visible,
-        #welcome-foreword:hover,#welcome-foreword:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
         .export-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap-7);margin-bottom:16px}
         .format-btn{padding:8px 7px;border:1px solid var(--border-mid);border-radius:var(--r-3);background:var(--surface2);cursor:pointer;text-align:center;transition:all var(--dur-snappy);font-family:var(--font-ui)}
         .format-btn:hover,.format-btn.active{border-color:var(--accent);background:var(--accent-dim)}
@@ -1698,47 +1726,6 @@
         .undo-btn:hover:not(:disabled){background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
         .undo-btn:disabled{opacity:.25;cursor:default}
         #hist-badge{font-size:11px;color:var(--text-dim);font-family:var(--font-mono);padding-left:4px;user-select:none;opacity:.4}
-
-        #welcome-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:var(--z-overlay-high);
-          display:flex;align-items:center;justify-content:center;padding:var(--sp-7);
-          animation:wFadeIn .3s ease;
-          overscroll-behavior:contain;touch-action:pan-y}
-        @keyframes wFadeIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
-        #welcome-panel{background:var(--surface);border:1px solid var(--border-mid);
-          border-radius:var(--r-3);width:100%;max-width:560px;position:relative;
-          box-shadow:var(--shadow-md);max-height:92vh;display:flex;flex-direction:column;
-          overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
-        #welcome-head{padding:16px 24px 12px;border-bottom:1px solid var(--border-mid);flex-shrink:0}
-        #welcome-logo{display:flex;align-items:center;gap:var(--sp-4);color:var(--accent)}
-        
-        .welcome-logo-glyph{flex-shrink:0}
-        
-        .welcome-wordmark{font-family:var(--font-display);font-size:28px;font-weight:600;font-style:italic;font-variation-settings:'opsz' 144;letter-spacing:-.02em;line-height:1;padding:0 .12em 0 0;color:var(--text)}
-        #welcome-logo span:not(.welcome-wordmark){font-size:11px;font-weight:400;color:var(--text-dim);
-          font-family:var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
-        #welcome-tagline{font-size:11px;color:var(--text-dim);margin-top:4px;
-          font-family:var(--font-mono);letter-spacing:.04em}
-        
-        #welcome-close{position:absolute;top:12px;right:14px;background:none;border:none;
-          color:var(--text-dim);cursor:pointer;font-size:18px;
-          min-width:44px;min-height:44px;padding:4px 8px;
-          border-radius:var(--r-2);transition:color var(--dur-snappy);line-height:1}
-        #welcome-close:hover{color:var(--text)}
-        #welcome-foot{padding:20px 24px 24px;display:flex;flex-direction:column;align-items:center;gap:var(--sp-6);
-          border-top:1px solid var(--border);flex-shrink:0}
-        
-        #welcome-skip{min-height:44px;min-width:170px;font-size:12px;font-weight:600;color:var(--bg);cursor:pointer;
-          background:var(--accent);border:1px solid var(--accent);border-radius:var(--r-2);
-          transition:all var(--dur-snappy);font-family:var(--font-ui);
-          padding:var(--sp-3) var(--sp-8);letter-spacing:.04em}
-        #welcome-skip:hover{transform:translateY(-1px);filter:brightness(1.08)}
-        #welcome-skip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-        
-        #welcome-links{display:flex;flex-wrap:wrap;gap:var(--sp-4);justify-content:center}
-
-        @media(pointer:coarse){
-          #welcome-skip{min-height:44px}
-        }
 
         #pal-strip{display:flex;gap:var(--gap-3);padding:5px 10px 5px;border-bottom:1px solid var(--border);
           overflow-x:auto;scrollbar-width:none;flex-shrink:0}
@@ -2334,7 +2321,7 @@
 <body data-app-mode="fractal" class="vp-tile">
 
 <script id="boot-tile">(function(){try{var T=window.__bootTileTypes=['mandelbulb','mandelbox','menger','qjulia','sierp_tetra','custom_3d','mandelbrot','julia','burningship','tricorn','multibrot3','phoenix','celtic','newton3','newton_cayley','nova','magnet1','lyapunov','perp_mandelbrot','perp_burning','buffalo','lambda','collatz','biomorph','burningship_julia','exp_map','magnet2','newton_sin','tricorn_julia','formula'];var m='fractal',f='mandelbrot',h=location.hash,q=new URLSearchParams(location.search),j=null;if(h.indexOf('#state=')===0){try{j=JSON.parse(decodeURIComponent(escape(atob(h.slice(7).replace(/-/g,'+').replace(/_/g,'/')))));}catch(e){j=null;}}if(j&&typeof j==='object'){if(j.mode)m=j.mode;if(j.ft)f=j.ft;}else{if(q.get('fractal'))f=q.get('fractal');if(q.get('mode')==='geometry')m='geometry';}if(m!=='fractal'||T.indexOf(f)<0)document.body.classList.remove('vp-tile');}catch(e){}})();</script>
-<svg class="ic-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><symbol id="ic-compass" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M10.6 5.4L9.1 9.1 5.4 10.6 6.9 6.9z"/></symbol><symbol id="ic-eye" viewBox="0 0 16 16"><path d="M1.5 8S3.9 3.6 8 3.6 14.5 8 14.5 8 12.1 12.4 8 12.4 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></symbol><symbol id="ic-star" viewBox="0 0 16 16"><path d="M8 1.6l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.6 3.9 13.9l1-4.5L1.5 6.3l4.6-.5z"/></symbol><symbol id="ic-home" viewBox="0 0 16 16"><path d="M2 8l6-5.5L14 8M3.8 7v6.5h3V10h2.4v3.5h3V7"/></symbol><symbol id="ic-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></symbol><symbol id="ic-minus" viewBox="0 0 16 16"><path d="M3 8h10"/></symbol><symbol id="ic-check" viewBox="0 0 16 16"><path d="M2.5 8l3.5 3.5 7.5-8"/></symbol><symbol id="ic-warn" viewBox="0 0 16 16"><path d="M8 2.2L14.2 13.3H1.8Z"/><path d="M8 6.4v3.4"/><circle cx="8" cy="11.6" r=".6" fill="currentColor"/></symbol><symbol id="ic-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2v4.3"/><circle cx="8" cy="4.9" r=".6" fill="currentColor"/></symbol><symbol id="ic-menu" viewBox="0 0 16 16"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/></symbol><symbol id="ic-close" viewBox="0 0 16 16"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></symbol><symbol id="ic-grid" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M2.5 2.5h4.5v4.5h-4.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5h-4.5zM9 9h4.5v4.5H9z"/></symbol><symbol id="ic-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.3"/><path d="M10.2 10.2l3.6 3.6"/></symbol><symbol id="ic-chev-down" viewBox="0 0 16 16"><path d="M3.5 6l4.5 4.5L12.5 6"/></symbol><symbol id="ic-chev-up" viewBox="0 0 16 16"><path d="M3.5 10l4.5-4.5 4.5 4.5"/></symbol><symbol id="ic-pin" viewBox="0 0 16 16"><path d="M9.5 2.5l4 4-2.5 1L8.5 10l.5 3-6-6 3 .5L8.5 5z"/><path d="M5.5 10.5l-3 3"/></symbol><symbol id="ic-chev-right" viewBox="0 0 16 16"><path d="M6 3.5L10.5 8 6 12.5"/></symbol><symbol id="ic-chev-left" viewBox="0 0 16 16"><path d="M10 3.5L5.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-left" viewBox="0 0 16 16"><path d="M8.5 3.5L4 8l4.5 4.5M13 3.5L8.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-right" viewBox="0 0 16 16"><path d="M3 3.5L7.5 8 3 12.5M7.5 3.5L12 8l-4.5 4.5"/></symbol><symbol id="ic-gear" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.3"/><circle cx="8" cy="8" r="4.6"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></symbol><symbol id="ic-dot" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.4" fill="currentColor" stroke="none"/></symbol><symbol id="ic-circle" viewBox="0 0 16 16"><circle cx="8" cy="8" r="4.6"/></symbol><symbol id="ic-reset" viewBox="0 0 16 16"><path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v3h3"/></symbol><symbol id="ic-redo" viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.6-3.7M13 2.5v3h-3"/></symbol><symbol id="ic-download" viewBox="0 0 16 16"><path d="M8 2v8M4.5 7L8 10.5 11.5 7M3 13.5h10"/></symbol><symbol id="ic-upload" viewBox="0 0 16 16"><path d="M8 10.5v-8M4.5 6L8 2.5 11.5 6M3 13.5h10"/></symbol><symbol id="ic-contrast" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"/></symbol><symbol id="ic-dice" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2.2"/><circle cx="5.6" cy="5.6" r=".8" fill="currentColor" stroke="none"/><circle cx="10.4" cy="10.4" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r=".8" fill="currentColor" stroke="none"/></symbol><symbol id="ic-sparkle" viewBox="0 0 16 16"><path d="M8 1.5c.5 3.6 2.9 6 6.5 6.5-3.6.5-6 2.9-6.5 6.5-.5-3.6-2.9-6-6.5-6.5 3.6-.5 6-2.9 6.5-6.5z"/></symbol><symbol id="ic-infinity" viewBox="0 0 16 16"><path d="M8 8c-1.2-1.8-2.3-3-3.7-3a3 3 0 0 0 0 6c1.4 0 2.5-1.2 3.7-3s2.3-3 3.7-3a3 3 0 0 1 0 6c-1.4 0-2.5-1.2-3.7-3z"/></symbol><symbol id="ic-diamond" viewBox="0 0 16 16"><path d="M8 1.8l6.2 6.2L8 14.2 1.8 8z"/><path d="M8 5.2L10.8 8 8 10.8 5.2 8z"/></symbol><symbol id="ic-circle-x" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 5.2l5.6 5.6M10.8 5.2l-5.6 5.6"/></symbol><symbol id="ic-nabla" viewBox="0 0 16 16"><path d="M2.5 3h11L8 13.5z"/></symbol><symbol id="ic-circle-plus" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4.8v6.4M4.8 8h6.4"/></symbol><symbol id="ic-option" viewBox="0 0 16 16"><path d="M2 4h3.5l5 8H14M9.5 4H14"/></symbol><symbol id="ic-asterisk" viewBox="0 0 16 16"><path d="M8 2.5v11M3.2 5.2l9.6 5.6M12.8 5.2L3.2 10.8"/></symbol><symbol id="ic-circle-equals" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 6.6h5.6M5.2 9.4h5.6"/></symbol><symbol id="ic-arrows-down" viewBox="0 0 16 16"><path d="M5 2.5v9M2.5 9L5 11.5 7.5 9M11 2.5v9M8.5 9l2.5 2.5L13.5 9"/></symbol><symbol id="ic-swap-h" viewBox="0 0 16 16"><path d="M13.5 5h-11M5.5 2l-3 3 3 3M2.5 11h11M10.5 8l3 3-3 3"/></symbol></svg>
+<svg class="ic-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><symbol id="ic-compass" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M10.6 5.4L9.1 9.1 5.4 10.6 6.9 6.9z"/></symbol><symbol id="ic-eye" viewBox="0 0 16 16"><path d="M1.5 8S3.9 3.6 8 3.6 14.5 8 14.5 8 12.1 12.4 8 12.4 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></symbol><symbol id="ic-star" viewBox="0 0 16 16"><path d="M8 1.6l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.6 3.9 13.9l1-4.5L1.5 6.3l4.6-.5z"/></symbol><symbol id="ic-home" viewBox="0 0 16 16"><path d="M2 8l6-5.5L14 8M3.8 7v6.5h3V10h2.4v3.5h3V7"/></symbol><symbol id="ic-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></symbol><symbol id="ic-minus" viewBox="0 0 16 16"><path d="M3 8h10"/></symbol><symbol id="ic-check" viewBox="0 0 16 16"><path d="M2.5 8l3.5 3.5 7.5-8"/></symbol><symbol id="ic-warn" viewBox="0 0 16 16"><path d="M8 2.2L14.2 13.3H1.8Z"/><path d="M8 6.4v3.4"/><circle cx="8" cy="11.6" r=".6" fill="currentColor"/></symbol><symbol id="ic-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2v4.3"/><circle cx="8" cy="4.9" r=".6" fill="currentColor"/></symbol><symbol id="ic-menu" viewBox="0 0 16 16"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/></symbol><symbol id="ic-close" viewBox="0 0 16 16"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></symbol><symbol id="ic-palette" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M2.5 4h11v8h-11zM6.2 4v8M9.8 4v8"/></symbol><symbol id="ic-grid" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M2.5 2.5h4.5v4.5h-4.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5h-4.5zM9 9h4.5v4.5H9z"/></symbol><symbol id="ic-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.3"/><path d="M10.2 10.2l3.6 3.6"/></symbol><symbol id="ic-chev-down" viewBox="0 0 16 16"><path d="M3.5 6l4.5 4.5L12.5 6"/></symbol><symbol id="ic-chev-up" viewBox="0 0 16 16"><path d="M3.5 10l4.5-4.5 4.5 4.5"/></symbol><symbol id="ic-pin" viewBox="0 0 16 16"><path d="M9.5 2.5l4 4-2.5 1L8.5 10l.5 3-6-6 3 .5L8.5 5z"/><path d="M5.5 10.5l-3 3"/></symbol><symbol id="ic-chev-right" viewBox="0 0 16 16"><path d="M6 3.5L10.5 8 6 12.5"/></symbol><symbol id="ic-chev-left" viewBox="0 0 16 16"><path d="M10 3.5L5.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-left" viewBox="0 0 16 16"><path d="M8.5 3.5L4 8l4.5 4.5M13 3.5L8.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-right" viewBox="0 0 16 16"><path d="M3 3.5L7.5 8 3 12.5M7.5 3.5L12 8l-4.5 4.5"/></symbol><symbol id="ic-gear" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.3"/><circle cx="8" cy="8" r="4.6"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></symbol><symbol id="ic-dot" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.4" fill="currentColor" stroke="none"/></symbol><symbol id="ic-circle" viewBox="0 0 16 16"><circle cx="8" cy="8" r="4.6"/></symbol><symbol id="ic-reset" viewBox="0 0 16 16"><path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v3h3"/></symbol><symbol id="ic-redo" viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.6-3.7M13 2.5v3h-3"/></symbol><symbol id="ic-download" viewBox="0 0 16 16"><path d="M8 2v8M4.5 7L8 10.5 11.5 7M3 13.5h10"/></symbol><symbol id="ic-upload" viewBox="0 0 16 16"><path d="M8 10.5v-8M4.5 6L8 2.5 11.5 6M3 13.5h10"/></symbol><symbol id="ic-contrast" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"/></symbol><symbol id="ic-dice" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2.2"/><circle cx="5.6" cy="5.6" r=".8" fill="currentColor" stroke="none"/><circle cx="10.4" cy="10.4" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r=".8" fill="currentColor" stroke="none"/></symbol><symbol id="ic-sparkle" viewBox="0 0 16 16"><path d="M8 1.5c.5 3.6 2.9 6 6.5 6.5-3.6.5-6 2.9-6.5 6.5-.5-3.6-2.9-6-6.5-6.5 3.6-.5 6-2.9 6.5-6.5z"/></symbol><symbol id="ic-infinity" viewBox="0 0 16 16"><path d="M8 8c-1.2-1.8-2.3-3-3.7-3a3 3 0 0 0 0 6c1.4 0 2.5-1.2 3.7-3s2.3-3 3.7-3a3 3 0 0 1 0 6c-1.4 0-2.5-1.2-3.7-3z"/></symbol><symbol id="ic-diamond" viewBox="0 0 16 16"><path d="M8 1.8l6.2 6.2L8 14.2 1.8 8z"/><path d="M8 5.2L10.8 8 8 10.8 5.2 8z"/></symbol><symbol id="ic-circle-x" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 5.2l5.6 5.6M10.8 5.2l-5.6 5.6"/></symbol><symbol id="ic-nabla" viewBox="0 0 16 16"><path d="M2.5 3h11L8 13.5z"/></symbol><symbol id="ic-circle-plus" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4.8v6.4M4.8 8h6.4"/></symbol><symbol id="ic-option" viewBox="0 0 16 16"><path d="M2 4h3.5l5 8H14M9.5 4H14"/></symbol><symbol id="ic-asterisk" viewBox="0 0 16 16"><path d="M8 2.5v11M3.2 5.2l9.6 5.6M12.8 5.2L3.2 10.8"/></symbol><symbol id="ic-circle-equals" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 6.6h5.6M5.2 9.4h5.6"/></symbol><symbol id="ic-arrows-down" viewBox="0 0 16 16"><path d="M5 2.5v9M2.5 9L5 11.5 7.5 9M11 2.5v9M8.5 9l2.5 2.5L13.5 9"/></symbol><symbol id="ic-swap-h" viewBox="0 0 16 16"><path d="M13.5 5h-11M5.5 2l-3 3 3 3M2.5 11h11M10.5 8l3 3-3 3"/></symbol></svg>
 <a id="skip-link" href="#cv">Skip to canvas</a>
 
 <span id="slider-keys-hint" class="sr-only">Drag for coarse adjustment; arrow keys for sub-step adjustment; Shift+arrow for ×10 steps.</span>
@@ -2354,7 +2341,7 @@
 
 <header class="catalog-corner" id="catalog-corner" aria-label="AEON">
   <h1 class="sr-only">AEON</h1>
-  <a class="lp-logo-link cc-logo" data-tour-target="guide" href="#" data-action="openWelcome" aria-label="AEON: open welcome panel" aria-haspopup="dialog" aria-controls="welcome-overlay">
+  <a class="lp-logo-link cc-logo" data-tour-target="guide" href="#" data-action="openWelcome" aria-label="AEON: open the getting-started guide">
           <svg class="lp-logo-glyph" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
             <g fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round">
               <circle cx="12" cy="12" r="3.5"/>
@@ -2378,10 +2365,19 @@
     <div class="inline-51 cc-tours">
     <button class="cc-ib" id="tours-menu-btn" data-tour-target="tours" type="button" title="Guided tours" aria-label="Open guided tours menu" aria-haspopup="true" aria-expanded="false" aria-controls="tours-menu" data-action="toggleToursMenu"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-compass"/></svg></button>
     <div id="tours-menu" class="is-hidden" role="menu" aria-label="Guided tours">
+    <div role="group" aria-label="Learn" class="tours-menu-group">
+    <div class="tours-menu-label" aria-hidden="true">Learn</div>
+    <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="openWelcome">Getting started</button>
+    <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="openTourVideo" data-tour-video aria-haspopup="dialog">Watch the one-minute tour</button>
+    <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="startInteractiveTour">Tour the controls</button>
+    </div>
+    <div role="group" aria-label="Tours" class="tours-menu-group">
+    <div class="tours-menu-label" aria-hidden="true">Tours</div>
     <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="startTour" data-tour="mandelbrot">Mandelbrot Walk-through</button>
     <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="startTour" data-tour="julia">Julia Parameter Sweep</button>
     <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="startTour" data-tour="bifurcation">Logistic Bifurcation Cascade</button>
     <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="startTour" data-tour="sacred">Sacred Geometry Primer</button>
+    </div>
     <div role="group" aria-label="Expeditions" class="tours-menu-group">
     <div class="tours-menu-label" aria-hidden="true">Expeditions</div>
     <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="startExpedition" data-exp-id="mandelbrot-frontier">The Mandelbrot Frontier</button>
@@ -4229,7 +4225,7 @@
 
 
 
-<!-- build: 1c4ec6353ead -->
+<!-- build: 192c3fbcfaba -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7499,10 +7495,10 @@ const APP_VERSION='7.0.8';
 
 
 
-const MISSION_BUILD_HASH='1c4ec6353ead';
-const MISSION_GIT_SHA='a797d4d50830dea88412af3a42bf7b66bd609d03';
+const MISSION_BUILD_HASH='192c3fbcfaba';
+const MISSION_GIT_SHA='5263d6249c7982992257a5e0dd7cab8e8224ab7f';
 
-const MISSION_RENDER_HASH='693dd0ad1267';
+const MISSION_RENDER_HASH='d036007248e6';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -15649,13 +15645,9 @@ const help=document.getElementById('help-overlay');
 
 
 if(help && help.classList.contains('show')){if(typeof closeHelpOverlay==='function')closeHelpOverlay(); return true;}
-const welcome=document.getElementById('welcome-panel');
 
-
-
-if(welcome && welcome.offsetParent!==null){
-if(typeof closeWelcome==='function')closeWelcome(); return true;
-}
+const guide=document.getElementById('guide');
+if(guide && guide.contains(document.activeElement) && typeof guideFold==='function'){ guideFold(); return true; }
 const kb=document.getElementById('kb-modal');
 
 
@@ -19970,10 +19962,12 @@ if(items[0])try{items[0].focus();}catch(_e){_swallowed('toggleToursMenu', _e);}
 function _closeToursMenu(){
 const m=document.getElementById('tours-menu');
 const btn=document.getElementById('tours-menu-btn');
+
+
+if(m&&_openChromeMenu&&_openChromeMenu.menu===m)_openChromeMenu=null;
 if(!m||m.classList.contains('is-hidden'))return;
 m.classList.add('is-hidden');
 if(btn)btn.setAttribute('aria-expanded','false');
-if(_openChromeMenu&&_openChromeMenu.menu===m)_openChromeMenu=null;
 }
 
 
@@ -22549,7 +22543,7 @@ openWhatsNew,closeWhatsNew,
 openForeword,closeForeword,
 openCitations,closeCitations,
 openShowcase,closeShowcase,
-openTourVideo,
+openTourVideo, closeTourVideo,
 openCatalog,closeCatalog,
 inspireMe,
 forceRenderAnyway,
@@ -22640,8 +22634,7 @@ if(act==='mandalaRingsRandom'){mandalaRingsRandom();return;}
 if(act==='startTour'){
 const t=el.dataset.tour;
 if(t)startTour(t);
-const m=document.getElementById('tours-menu');if(m)m.classList.add('is-hidden');
-const tb=document.getElementById('tours-menu-btn');if(tb)tb.setAttribute('aria-expanded','false');
+_closeToursMenu();
 return;
 }
 
@@ -22649,8 +22642,7 @@ return;
 if(act==='startExpedition'){
 const id=el.dataset.expId;
 if(id && typeof startExpedition==='function')startExpedition(id);
-const m=document.getElementById('tours-menu');if(m)m.classList.add('is-hidden');
-const tb=document.getElementById('tours-menu-btn');if(tb)tb.setAttribute('aria-expanded','false');
+_closeToursMenu();
 return;
 }
 
@@ -22683,6 +22675,9 @@ if(!(typeof KEYFRAMES!=='undefined' && KEYFRAMES.length)){clearKeyframes();retur
 _confirmDestructive(el,{confirmLabel:'Confirm: clear all keyframes',confirmTitle:'Click again within 3 s to clear all keyframes',status:'Click again within 3 s to clear all keyframes',onConfirm:()=>clearKeyframes()});
 return;
 }
+
+
+if(el.closest('#tours-menu'))_closeToursMenu();
 const fn=_ACT[act];
 if(typeof fn==='function'){fn();return;}
 if(typeof window[act]==='function')window[act]();
@@ -25362,25 +25357,33 @@ en: {
 'explore.jx-unsupported':    'Julia explorer works on Mandelbrot, Burning Ship and Tricorn, switch to one of those to use it.',
 'explore.orbit-unsupported': 'Orbit view works on the escape-time fractals, switch to one (e.g. Mandelbrot) to use it.',
 
-'welcome.title':              'AEON',
-'welcome.subtitle':           'Universal Dynamics Reactor',
-'welcome.tagline':            'An instrument for the mathematics of form.',
-'welcome.open-canvas':        'Begin',
-'welcome.read-foreword':      'Read the foreword',
-'welcome.showcase':           'Showcase',
-'welcome.learn-controls':     'Tour the controls',
+'guide.region':               'Getting started',
+'guide.title':                'Every image here is a live equation.',
+'guide.sub':                  'Three moves make it yours. Each one checks off as you do it.',
+'guide.step-zoom':            'Zoom in',
+'guide.step-catalog':         'Try another form',
+'guide.step-palette':         'Change the colors',
+'guide.video':                'Prefer to watch first?',
+'guide.video-meta':           'The one-minute tour, with captions',
+'guide.tour':                 'Tour the controls',
+'guide.done-title':           'That\u2019s the basics.',
+'guide.done-save':            'Save an image or a video',
+'guide.done-keys':            'See every shortcut',
+'guide.close':                'Close',
+'guide.done-note':            'Guided tours keeps this guide as Getting started.',
+'guide.chip-progress':        '{n} of 3',
+'guide.end':                  'End the guide',
+'guide.nudge':                'Click here to zoom in',
 'welcome.tour-video':         'Watch the 1-minute tour',
-'welcome.whats-new':          "What's new",
-'welcome.references':         'References',
-'welcome.close':              'Close welcome',
-'firststeps.title':           'First steps',
-'firststeps.zoom':            'Click the picture to zoom in. Right-click zooms back out.',
-'firststeps.catalog':         'Press / or open Catalog to try another form.',
-'firststeps.palette':         'Click the palette at the bottom, then pick another one.',
+'tour.title':                 'The one-minute tour',
+'tour.close':                 'Close the tour',
+'tour.unavailable':           'The tour video could not be loaded here.',
+'firststeps.zoom':            'Click anywhere on the picture. Right-click zooms back out.',
+'firststeps.catalog':         'Open the Catalog, or press /, and pick one.',
+'firststeps.palette':         'Click the palette in the bottom bar, then pick another.',
 'firststeps.zoom-touch':      'Pinch the picture to zoom in and out.',
-'firststeps.catalog-touch':   'Tap the grid button at the top to try another form.',
-'firststeps.palette-touch':   'Tap the palette at the bottom, then pick another one.',
-'firststeps.tour':            'Show me around',
+'firststeps.catalog-touch':   'Tap the grid button at the top and pick one.',
+'firststeps.palette-touch':   'Tap the palette at the bottom, then pick another.',
 'firststeps.hide':            'Hide',
 'firststeps.todo':            'not done yet',
 'firststeps.done':            'done',
@@ -25410,8 +25413,8 @@ en: {
 'tour.ui.keys.body':          'Press ? at any time to see every shortcut. This menu opens the same list, where you can also change the keys.',
 'tour.ui.tours.title':        'Guided tours',
 'tour.ui.tours.body':         'Four narrated walks: a Mandelbrot walk-through, a Julia parameter sweep, the logistic bifurcation cascade, and a sacred-geometry primer.',
-'tour.ui.guide.title':        'Welcome guide',
-'tour.ui.guide.body':         'The wordmark reopens the welcome screen, the Showcase gallery, and the foreword.',
+'tour.ui.guide.title':        'Getting started',
+'tour.ui.guide.body':         'The wordmark reopens the getting-started guide: three moves to try and a one-minute video.',
 
 'gpu.webgpu-failed':          'The fast renderer hit an error, so this view switched to the standard one.',
 'gpu.no-webgl2':              'Domain Coloring is rendering in slower compatibility mode in this browser.',
@@ -48618,7 +48621,16 @@ try { veil.getContext('2d').drawImage(src, 0, 0); } catch (_) { return; }
 wrap.appendChild(veil);
 }
 
-function _catQueueThumb(el) {
+
+function _catNearView(el) {
+const body = document.getElementById('cat-body');
+if (!el.isConnected || !body) return false;
+const r = el.getBoundingClientRect(), b = body.getBoundingClientRect();
+return r.bottom >= b.top - 120 && r.top <= b.bottom + 120;
+}
+
+
+function _catQueueThumb(el, lazy) {
 const mode = _catMode, type = el.dataset.catThumb, gen = _catThumbGen, key = _catThumbKey(mode, type);
 if (!type || el.classList.contains('has-thumb')) return;
 if (_catThumbMem.has(key)) { _catShowThumb(el, _catThumbMem.get(key)); return; }
@@ -48626,6 +48638,7 @@ _catThumbBusy++;
 const run = _thumbRefreshChain.then(async () => {
 try {
 if (gen !== _catThumbGen || document.getElementById('catalog-sheet').hidden) return;
+if (lazy && !_catNearView(el)) { if (_catThumbObs && el.isConnected) _catThumbObs.observe(el); return; }
 let url = await _catDBGet(key);
 if (!url) {
 if (gen !== _catThumbGen || (typeof _exportInFlight === 'function' && _exportInFlight())) return;
@@ -48687,7 +48700,7 @@ setTimeout(done, 60);
 function _catObserveThumbs() {
 if (typeof IntersectionObserver === 'undefined' || typeof _renderLayerToCanvas !== 'function') return;
 if (!_catThumbObs) _catThumbObs = new IntersectionObserver((ents) => {
-for (const en of ents) if (en.isIntersecting) { _catThumbObs.unobserve(en.target); _catQueueThumb(en.target); }
+for (const en of ents) if (en.isIntersecting) { _catThumbObs.unobserve(en.target); _catQueueThumb(en.target, true); }
 }, { root: document.getElementById('cat-body'), rootMargin: '120px' });
 _catThumbObs.disconnect();
 document.querySelectorAll('#cat-body .cat-thumb[data-cat-thumb]:not([data-cat-thumb=""])').forEach((el) => {
@@ -50189,22 +50202,7 @@ margin:"An instrument\nis a gift\nto whoever\ntunes it next." },
 
 function openForeword(){
 
-
-
 if(typeof _captureModalFocusGuard==='function') _captureModalFocusGuard('foreword-overlay', null);
-
-
-
-{
-
-
-
-
-
-
-
-_closeWelcomeForHandoff('foreword-overlay');
-}
 let m=document.getElementById('foreword-overlay');
 if(!m){
 m=document.createElement('div');
@@ -50427,10 +50425,6 @@ function openWhatsNew(){
 let m=document.getElementById('whats-new-modal');
 
 if(typeof _captureModalFocusGuard==='function') _captureModalFocusGuard('whats-new-modal', m);
-
-
-
-_closeWelcomeForHandoff('whats-new-modal');
 if(!m){
 m=document.createElement('div');
 m.id='whats-new-modal';
@@ -50510,22 +50504,46 @@ const WELCOME_KEY = 'aeon-welcomed-v1';
 
 
 
-let TOUR_VIDEO_ID = '';
-function _tourVideoUrl(){
-if (!TOUR_VIDEO_ID) return null;
-if (typeof navigator !== 'undefined' && navigator.onLine === false) return null;
-try { if (localStorage.getItem('aeon-test-seed')) return null; } catch (_e) {}
-return 'https://www.youtube.com/watch?v=' + encodeURIComponent(TOUR_VIDEO_ID);
-}
-function _syncTourVideoLinks(){
-const on = !!_tourVideoUrl();
-document.querySelectorAll('[data-tour-video]').forEach(b => { b.hidden = !on; });
-}
 function openTourVideo(){
-const u = _tourVideoUrl();
-if (u) window.open(u, '_blank', 'noopener,noreferrer');
+if(typeof _captureModalFocusGuard==='function') _captureModalFocusGuard('tour-video-overlay', null);
+let m=document.getElementById('tour-video-overlay');
+if(!m){
+m=document.createElement('div');
+m.id='tour-video-overlay';
+m.setAttribute('role','dialog');
+m.setAttribute('aria-modal','true');
+m.setAttribute('aria-label',t('tour.title'));
+m.innerHTML=html.raw`<div class="tv-box">
+      <button type="button" class="tv-close" data-action="closeTourVideo" aria-label="${html`${t('tour.close')}`}"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-close"/></svg></button>
+      <video controls muted playsinline preload="metadata" poster="./assets/tour-poster.jpg">
+        <source src="./assets/tour.mp4" type="video/mp4">
+        <track kind="captions" src="./assets/tour.vtt" srclang="en" label="English">
+      </video>
+      <p class="tv-error" hidden>${html`${t('tour.unavailable')}`}</p>
+    </div>`;
+
+const v=m.querySelector('video'), err=m.querySelector('.tv-error'), src=m.querySelector('source');
+if(src) src.addEventListener('error',()=>{ if(err) err.hidden=false; });
+if(v) v.addEventListener('error',()=>{ if(err) err.hidden=false; });
+m.addEventListener('click',e=>{ if(e.target===m) closeTourVideo(); });
+document.body.appendChild(m);
 }
-if (typeof window !== 'undefined') { window.addEventListener('online', _syncTourVideoLinks); window.addEventListener('offline', _syncTourVideoLinks); }
+m.classList.add('open');
+const v=m.querySelector('video');
+if(v){ try{ v.currentTime=0; }catch(_e){} const p=v.play(); if(p && p.catch) p.catch(()=>{}); }
+const c=m.querySelector('.tv-close');
+if(c) c.focus({preventScroll:true});
+if(typeof trapFocus==='function') trapFocus(m, closeTourVideo);
+}
+function closeTourVideo(){
+const m=document.getElementById('tour-video-overlay');
+if(!m || !m.classList.contains('open')) return;
+const v=m.querySelector('video');
+if(v) v.pause();
+if(typeof releaseFocus==='function') releaseFocus(m);
+m.classList.remove('open');
+if(typeof _restoreModalFocusGuard==='function') _restoreModalFocusGuard('tour-video-overlay');
+}
 
 
 const WELCOME_PRESETS = [
@@ -50611,9 +50629,9 @@ const gen = ++_heroChainGen;
 if (gen !== _heroChainGen) return;
 const hero = WELCOME_PRESETS[_pickHeroIdx()];
 attempt++;
-if (!hero || !hero.snap) { if (attempt < WELCOME_PRESETS.length) tryNext(); else if (best) _galleryRestore(best.snap, undefined, undefined, undefined, true); return; }
+if (!hero || !hero.snap) { if (attempt < WELCOME_PRESETS.length) tryNext(); else if (best) { _galleryRestore(best.snap, undefined, undefined, undefined, true); _guideRebase(); }; return; }
 const seq0 = (typeof window !== 'undefined' && window._renderSeq) || 0;
-_galleryRestore(hero.snap, undefined, undefined, undefined, true);
+_galleryRestore(hero.snap, undefined, undefined, undefined, true); _guideRebase();
 
 
 
@@ -50629,15 +50647,12 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
 
 
 
-
-
-const _ov = document.getElementById('welcome-overlay');
-if (gen !== _heroChainGen || !_ov || _ov.classList.contains('is-hidden') || _safeGetItem(WELCOME_KEY)) return;
+if (gen !== _heroChainGen || !_fs) return;
 const mean = _heroCanvasMean();
 if (mean === null || mean >= _HERO_DARK_FLOOR) return;          
 if (!best || mean > best.mean) best = { snap: hero.snap, mean };
 if (attempt < WELCOME_PRESETS.length) tryNext();                
-else if (best) _galleryRestore(best.snap, undefined, undefined, undefined, true); 
+else if (best) { _galleryRestore(best.snap, undefined, undefined, undefined, true); _guideRebase(); }; 
 }));
 } else {
 requestAnimationFrame(settle);
@@ -50665,105 +50680,69 @@ return sum / n;
 }
 
 
+
+
+const GUIDE_NUDGE_MS = 15000;
+const _FS_KEY = 'aeon-first-steps-v1';            
+const _FS_SESSION = 'aeon-first-steps-session';   
+const _GUIDE_STATE = 'aeon-guide-state';          
+const _GUIDE_STEPS = ['zoom','catalog','palette'];
+let _heroChainGen = 0;
+let _fs = null;   
+
+function _fsTestBoot(){ try{ return !!localStorage.getItem('aeon-test-seed'); }catch(_e){ return false; } }
+function _fsFinished(){ const v=_safeGetItem(_FS_KEY); return v==='done' || v==='dismissed'; }
+function _fsSessionArmed(){ try{ return sessionStorage.getItem(_FS_SESSION)==='1'; }catch(_e){ return false; } }
+function _guideState(){
+try{
+const s=JSON.parse(sessionStorage.getItem(_GUIDE_STATE)||'{}');
+return { folded:!!s.folded, done:Array.isArray(s.done) ? s.done.filter(id=>_GUIDE_STEPS.includes(id)) : [] };
+}catch(_e){ return { folded:false, done:[] }; }
+}
+function _guideSave(){
+if(!_fs) return;
+try{ sessionStorage.setItem(_GUIDE_STATE, JSON.stringify({ folded:_fs.folded, done:[..._fs.done] })); }catch(_e){ _swallowed('_guideSave', _e); }
+}
+function _guideBase(){ return { zoom:S.zoom, palette:S.palette, type:S.fractalType, pattern:S.pattern, mode:S.mode }; }
+
+function _guideRebase(){ if(_fs) _fs.base=_guideBase(); }
+
+
 function _maybeWelcome(){
+let linked=false;
+try{
+linked=(location.hash||'').startsWith('#state=') || (!!location.search && /[?&](fractal|mode|pattern)=/.test(location.search));
+}catch(_e){  }
+if(_safeGetItem(WELCOME_KEY)){ _firstStepsMaybeShow(); return; }   
 
 
-
-
-try {
-const hasShareLink = (location.hash||'').startsWith('#state=');
-const hasUrlParams = !!location.search && /[?&](fractal|mode|pattern)=/.test(location.search);
-if (hasShareLink || hasUrlParams) {
+_safeSetItem(WELCOME_KEY,'1');
+_firstStepsArm();
+if(linked){
 
 _safeSetItem('reactor.onboarded','1');
-_safeSetItem(WELCOME_KEY,'1');
+try{ sessionStorage.setItem(_GUIDE_STATE, JSON.stringify({ folded:true, done:[] })); }catch(_e){ _swallowed('_maybeWelcome', _e); }
+_firstStepsMaybeShow();
 return;
 }
-} catch(_e) {  }
-
-
-
-
-
-
-if (!_safeGetItem(WELCOME_KEY)) {
-_firstStepsArm();
-try {
+try{
 _safeSetItem('reactor.onboarded','1');
 _applyBrightHero();
-} catch (_e) {  }
-openWelcome();
-} else {
-_firstStepsMaybeShow();   
-}
+}catch(_e){  }
+_firstStepsMaybeShow({ focus:true });
 }
 
 
 function openWelcome(){
-let ov=document.getElementById('welcome-overlay');
-if(!ov){ov=_buildWelcome();document.body.appendChild(ov);}
-clearTimeout(_welcomeCloseTimer);   
-
-
-if(typeof _captureModalFocusGuard==='function') _captureModalFocusGuard('welcome-overlay', ov);
-
-
-ov.classList.add('is-fading-out');
-ov.classList.remove('is-hidden');
-
-
-
-
-
-
-const _uiTourBtn=document.getElementById('welcome-ui-tour');
-if(_uiTourBtn && typeof _itHasBeenSeen==='function' && _itHasBeenSeen()){
-if(!_uiTourBtn.querySelector('.ic')) _uiTourBtn.insertAdjacentHTML('afterbegin', icon('check'));
-_uiTourBtn.title='You’ve completed the interactive walkthrough. Click to replay it.';
-}
-requestAnimationFrame(()=>{
-ov.classList.remove('is-fading-out');
-
-
-
-trapFocus(ov, ()=>closeWelcome(true));
-});
-}
-
-
-function _closeWelcomeForHandoff(modalId){
-const wel=document.getElementById('welcome-overlay');
-if(!wel || getComputedStyle(wel).display==='none') return;
-try{ _safeSetItem('reactor.onboarded','1'); }catch(_e){_swallowed('_closeWelcomeForHandoff', _e);}
-const opener=_modalFocusGuards.get('welcome-overlay');
-closeWelcome(false, true);
-if(opener && modalId) _modalFocusGuards.set(modalId, opener);
+if(_fs){ _guideUnfold(); return; }
+_firstStepsMaybeShow({ force:true, focus:true });
 }
 
 
 function closeWelcome(remember, skipFocusRestore){
-const ov=document.getElementById('welcome-overlay');
-if(!ov)return;
 _heroChainGen++;
-
-
-releaseFocus(ov, skipFocusRestore===true);
-if(skipFocusRestore===true) _modalFocusGuards.delete('welcome-overlay');
-else if(typeof _restoreModalFocusGuard==='function') _restoreModalFocusGuard('welcome-overlay');
-
-
-
-
 if(remember){ _safeSetItem(WELCOME_KEY,'1'); }
-ov.classList.add('is-fading-out');
-
-
-
-clearTimeout(_welcomeCloseTimer);
-_welcomeCloseTimer=setTimeout(()=>{ov.classList.add('is-hidden'); _firstStepsMaybeShow();},300);
-
-
-
+_firstStepsClose(skipFocusRestore===true);
 
 
 
@@ -50796,124 +50775,202 @@ if(typeof showToast==='function')showToast(t('welcome.inspire-failed'),'info');
 }
 
 
-function _buildWelcome(){
-const ov=document.createElement('div');
-ov.id='welcome-overlay';
-
-
-ov.setAttribute('role','dialog');
-ov.setAttribute('aria-modal','true');
-ov.setAttribute('aria-labelledby','welcome-title');
-
-ov.classList.add('is-hidden');
-ov.innerHTML=html.raw`
-<div id="welcome-panel">
-  <button type="button" id="welcome-close" data-action="closeWelcome" data-arg1="true" title="Close" aria-label="${t('welcome.close')}"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-close"/></svg></button>
-  <div id="welcome-head">
-    <!-- AEON brand mark: Flower-of-Life glyph + Fraunces wordmark. -->
-    <div id="welcome-logo">
-      <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" focusable="false" class="welcome-logo-glyph">
-        <g fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round">
-          <circle cx="12" cy="12" r="3.5"/>
-          <circle cx="12" cy="5"  r="3.5"/>
-          <circle cx="12" cy="19" r="3.5"/>
-          <circle cx="6.06"  cy="8.5"  r="3.5"/>
-          <circle cx="17.94" cy="8.5"  r="3.5"/>
-          <circle cx="6.06"  cy="15.5" r="3.5"/>
-          <circle cx="17.94" cy="15.5" r="3.5"/>
-        </g>
-      </svg>
-      <span class="welcome-wordmark" id="welcome-title" role="heading" aria-level="2">${t('welcome.title')}</span>
-      <span>${t('welcome.subtitle')}</span>
-    </div>
-    <div id="welcome-tagline">${t('welcome.tagline')}</div>
-  </div>
-  <div id="welcome-foot">
-    <button type="button" id="welcome-skip" data-action="closeWelcome" data-arg1="true" title="Dismiss this intro and start exploring">${t('welcome.open-canvas')}</button>
-    <nav id="welcome-links" aria-label="More">
-      <button id="welcome-showcase" data-action="openShowcase" type="button" title="Browse a curated gallery of named forms" aria-haspopup="dialog" aria-controls="showcase-overlay">${t('welcome.showcase')}</button>
-      <button id="welcome-ui-tour" data-action="startInteractiveTour" type="button" title="An interactive, spotlighted walkthrough of the main UI controls">${t('welcome.learn-controls')}</button>
-      <button id="welcome-tour-video" data-action="openTourVideo" data-tour-video type="button" hidden title="A one-minute video of the basics, on YouTube (opens a new tab)">${t('welcome.tour-video')}</button>
-      <button id="welcome-foreword" data-action="openForeword" type="button" title="Read the foreword" aria-haspopup="dialog" aria-controls="foreword-overlay">${t('welcome.read-foreword')}</button>
-      <button id="welcome-references" data-action="openCitations" type="button" title="The mathematics and sources behind the catalog" aria-haspopup="dialog" aria-controls="citations-overlay">${t('welcome.references')}</button>
-      <button id="welcome-whats-new" data-action="openWhatsNew" type="button" title="See what changed in this version" aria-haspopup="dialog" aria-controls="whats-new-modal">${t('welcome.whats-new')} · v${html`${APP_VERSION}`}</button>
-    </nav>
-  </div>
-</div>`;
-ov.addEventListener('click',e=>{if(e.target===ov)closeWelcome(true);});
-_syncTourVideoLinks();
-return ov;
-}
-
-
-
-
-
-let _welcomeCloseTimer = null;
-let _heroChainGen = 0;
-
-
-const _FS_KEY = 'aeon-first-steps-v1';   
-const _FS_SESSION = 'aeon-first-steps-session';   
-let _fs = null;   
-
-function _fsTestBoot(){ try{ return !!localStorage.getItem('aeon-test-seed'); }catch(_e){ return false; } }
-function _fsFinished(){ const v=_safeGetItem(_FS_KEY); return v==='done' || v==='dismissed'; }
-function _fsSessionArmed(){ try{ return sessionStorage.getItem(_FS_SESSION)==='1'; }catch(_e){ return false; } }
-
-
 function _firstStepsArm(){
 if(_fsTestBoot() || _fsFinished()) return;
 try{ sessionStorage.setItem(_FS_SESSION,'1'); }catch(_e){ _swallowed('_firstStepsArm', _e); }
 }
 
 
-function _firstStepsMaybeShow(){
-if(_fs || _fsTestBoot() || _fsFinished() || !_fsSessionArmed()) return;
-const el=document.createElement('section');
-el.id='first-steps';
-el.className='first-steps';
-el.setAttribute('aria-labelledby','first-steps-title');
-
-const _touch=typeof matchMedia==='function' && matchMedia('(pointer: coarse)').matches;
-
-const steps=_touch
-? [['zoom','firststeps.zoom-touch'],['catalog','firststeps.catalog-touch'],['palette','firststeps.palette-touch']]
-: [['zoom','firststeps.zoom'],['catalog','firststeps.catalog'],['palette','firststeps.palette']];
-el.innerHTML=html.raw`<h2 id="first-steps-title" class="fs-title">${t('firststeps.title')}</h2>
-    <ol class="fs-list">${steps.map(([id,key])=>html.raw`<li class="fs-step" data-fs-step="${id}"><span class="fs-mark" aria-hidden="true"></span><span class="fs-text">${t(key)}</span><span class="sr-only fs-state">${t('firststeps.todo')}</span></li>`).join('')}</ol>
-    <p class="fs-done-note" hidden>${t('firststeps.finished')}</p>
-    <div class="fs-actions">
-      <button type="button" class="btn ghost fs-tour" data-action="firstStepsTour">${t('firststeps.tour')}</button>
-      <button type="button" class="btn ghost fs-hide" data-action="firstStepsHide">${t('firststeps.hide')}</button>
-    </div>
-    <p class="sr-only" id="first-steps-live" aria-live="polite"></p>`;
-document.body.appendChild(el);
+function _firstStepsMaybeShow(opts){
+const o=opts||{};
+if(_fs || typeof S==='undefined') return;
+if(!o.force && (_fsTestBoot() || _fsFinished() || !_fsSessionArmed())) return;
+const st=o.force ? { folded:false, done:[] } : _guideState();
+_fs={ el:null, chip:null, base:_guideBase(), done:new Set(st.done), folded:st.folded, finished:false, nudgeTimer:0 };
 document.body.classList.add('fs-up');
-_fs={ el, base:{ zoom:S.zoom, palette:S.palette, type:S.fractalType, pattern:S.pattern, mode:S.mode }, done:new Set() };
+const wrap=document.getElementById('cv-wrap');
+if(wrap) wrap.addEventListener('pointerdown', _guideTouched, true);
+document.addEventListener('pointerdown', _guideEngaged, true);
+document.addEventListener('keydown', _guideEngaged, true);
+window.addEventListener('resize', _guidePlace);
+_guideRender();
+if(!_fs.folded){
+_guideArmNudge();
+if(o.focus){ const h=document.getElementById('guide-title'); if(h) h.focus({preventScroll:true}); }
+}
 }
 
+
+function _guideTouched(){ _guideClearNudge(); }
+
+function _guideEngaged(){
+_heroChainGen++;
+document.removeEventListener('pointerdown', _guideEngaged, true);
+document.removeEventListener('keydown', _guideEngaged, true);
+}
+
+function _guideStepHtml(id, key, desc){
+const icon=id==='zoom' ? 'ic-plus' : id==='catalog' ? 'ic-grid' : 'ic-palette';
+return html.raw`<li class="g-step" data-fs-step="${id}"><span class="g-ico" aria-hidden="true"><svg class="ic g-mark" focusable="false"><use href="#${icon}"/></svg><svg class="ic g-check" focusable="false"><use href="#ic-check"/></svg></span><span class="g-txt"><b>${t(key)}</b><span class="fs-text">${t(desc)}</span></span><span class="sr-only fs-state">${t('firststeps.todo')}</span></li>`;
+}
+
+function _guidePlateHtml(){
+
+const touch=typeof matchMedia==='function' && matchMedia('(pointer: coarse)').matches;
+
+return html.raw`<h2 id="guide-title" class="g-title" tabindex="-1">${t('guide.title')}</h2>
+    <p class="g-sub">${t('guide.sub')}</p>
+    <ol class="g-steps">${_guideStepHtml('zoom','guide.step-zoom',touch?'firststeps.zoom-touch':'firststeps.zoom')}${_guideStepHtml('catalog','guide.step-catalog',touch?'firststeps.catalog-touch':'firststeps.catalog')}${_guideStepHtml('palette','guide.step-palette',touch?'firststeps.palette-touch':'firststeps.palette')}</ol>
+    <button type="button" class="g-video" data-action="openTourVideo" data-tour-video aria-haspopup="dialog"><img class="g-poster" src="./assets/tour-poster.jpg" alt="" width="112" height="63" decoding="async"><span><b>${t('guide.video')}</b><span>${t('guide.video-meta')}</span></span></button>
+    <div class="g-foot"><button type="button" class="btn ghost" data-action="startInteractiveTour">${t('guide.tour')}</button><button type="button" class="btn ghost g-hide" data-action="guideFold">${t('firststeps.hide')}</button></div>
+    <p class="sr-only" id="first-steps-live" aria-live="polite"></p>`;
+}
+
+function _guideDoneHtml(){
+const exportKey=typeof _kbDisplay==='function' ? _kbDisplay('exportModal') : 'E';
+return html.raw`<h2 id="guide-title" class="g-title" tabindex="-1">${t('guide.done-title')}</h2>
+    <ul class="g-next"><li><span>${t('guide.done-save')}</span><kbd>${exportKey}</kbd></li><li><span>${t('guide.done-keys')}</span><kbd>?</kbd></li></ul>
+    <div class="g-foot"><button type="button" class="btn ghost" data-action="startInteractiveTour">${t('guide.tour')}</button><button type="button" class="btn ghost g-hide" data-action="firstStepsHide">${t('guide.close')}</button></div>
+    <p class="g-note">${t('guide.done-note')}</p>
+    <p class="sr-only" id="first-steps-live" aria-live="polite"></p>`;
+}
+
+
+function _guideRender(){
+if(!_fs) return;
+if(_fs.folded){
+if(_fs.el){ _fs.el.remove(); _fs.el=null; }
+if(!_fs.chip){
+const c=document.createElement('div');
+c.id='guide-chip';
+c.className='guide-chip';
+c.setAttribute('role','group');
+c.setAttribute('aria-label',t('guide.region'));
+document.body.appendChild(c);
+_fs.chip=c;
+}
+const n=_fs.done.size;
+_fs.chip.innerHTML=html.raw`<button type="button" class="gc-open" data-action="guideUnfold">${t('guide.region')}<span class="gc-pips" aria-hidden="true">${_GUIDE_STEPS.map(id=>html.raw`<i class="${_fs.done.has(id)?'on':''}"></i>`).join('')}</span><span class="gc-n">${t('guide.chip-progress',{n})}</span></button><button type="button" class="gc-end" data-action="firstStepsHide" aria-label="${html`${t('guide.end')}`}"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-close"/></svg></button>`;
+} else {
+if(_fs.chip){ _fs.chip.remove(); _fs.chip=null; }
+if(!_fs.el){
+const el=document.createElement('section');
+el.id='guide';
+el.className='guide';
+el.setAttribute('aria-labelledby','guide-title');
+el.innerHTML=_fs.finished ? _guideDoneHtml() : _guidePlateHtml();
+
+const img=el.querySelector('.g-poster');
+if(img) img.addEventListener('error',()=>img.remove());
+document.body.appendChild(el);
+_fs.el=el;
+}
+if(!_fs.finished){
+const live=_GUIDE_STEPS.find(id=>!_fs.done.has(id));
+_fs.el.querySelectorAll('.g-step').forEach(li=>{
+const id=li.dataset.fsStep, done=_fs.done.has(id);
+li.classList.toggle('is-done', done);
+li.classList.toggle('is-live', id===live);
+const st=li.querySelector('.fs-state'); if(st) st.textContent=t(done?'firststeps.done':'firststeps.todo');
+});
+}
+}
+_guidePlace();
+}
+
+
+function _guidePlace(){
+if(!_fs) return;
+if(_fs.el && matchMedia('(max-width: 860px)').matches){
+const strip=document.getElementById('eyepiece-strip');
+const r=strip && strip.getBoundingClientRect();
+if(r && r.height) _fs.el.style.setProperty('--guide-bottom', Math.round(window.innerHeight - r.top + 8) + 'px');
+}
+const live=(_fs.folded || _fs.finished) ? null : _GUIDE_STEPS.find(id=>!_fs.done.has(id));
+const target=live==='catalog' ? document.getElementById('catalog-btn') : live==='palette' ? document.getElementById('es-pal') : null;
+const tr=target && target.getBoundingClientRect();
+let ring=document.getElementById('guide-ring');
+if(!tr || !tr.width || !tr.height){ if(ring) ring.remove(); return; }
+if(!ring || ring.dataset.step!==live){
+if(ring) ring.remove();
+ring=document.createElement('div');
+ring.id='guide-ring';
+ring.className='guide-ring';
+ring.dataset.step=live;
+ring.setAttribute('aria-hidden','true');
+document.body.appendChild(ring);
+}
+ring.style.setProperty('left', Math.round(tr.left - 4) + 'px');
+ring.style.setProperty('top', Math.round(tr.top - 4) + 'px');
+ring.style.setProperty('width', Math.round(tr.width + 8) + 'px');
+ring.style.setProperty('height', Math.round(tr.height + 8) + 'px');
+}
+
+function _guideArmNudge(){
+if(!_fs || _fs.nudgeTimer || _fs.done.has('zoom')) return;
+_fs.nudgeTimer=setTimeout(()=>{
+if(!_fs || _fs.folded || _fs.done.has('zoom') || document.body.classList.contains('zen-mode')) return;
+const wrap=document.getElementById('cv-wrap');
+const r=wrap && wrap.getBoundingClientRect();
+if(!r || !r.width) return;
+const n=document.createElement('div');
+n.id='guide-nudge';
+n.className='guide-nudge';
+const label=document.createElement('span'); label.textContent=t('guide.nudge'); n.appendChild(label);
+n.style.setProperty('left', Math.round(r.left + r.width/2) + 'px');
+n.style.setProperty('top', Math.round(r.top + r.height/2) + 'px');
+document.body.appendChild(n);
+}, GUIDE_NUDGE_MS);
+}
+function _guideClearNudge(){
+if(_fs){ clearTimeout(_fs.nudgeTimer); }
+const n=document.getElementById('guide-nudge'); if(n) n.remove();
+}
+
+function guideFold(){
+if(!_fs || _fs.folded) return;
+const hadFocus=_fs.el && _fs.el.contains(document.activeElement);
+_fs.folded=true;
+_guideClearNudge();
+_guideSave();
+_guideRender();
+if(hadFocus && _fs.chip){ const b=_fs.chip.querySelector('.gc-open'); if(b) b.focus({preventScroll:true}); }
+}
+function _guideUnfold(){
+if(!_fs) return;
+if(_fs.folded){ _fs.folded=false; _guideSave(); _guideRender(); _guideArmNudge(); }
+const h=document.getElementById('guide-title'); if(h) h.focus({preventScroll:true});
+}
+function guideUnfold(){ _guideUnfold(); }
+
 function _firstStepsMark(id){
-if(!_fs || _fs.done.has(id)) return;
-const li=_fs.el.querySelector(`[data-fs-step="${id}"]`);
-if(!li) return;
+if(!_fs || _fs.finished || _fs.done.has(id)) return;
+_heroChainGen++;   
 _fs.done.add(id);
-li.classList.add('is-done');
-const st=li.querySelector('.fs-state'); if(st) st.textContent=t('firststeps.done');
+if(id==='zoom') _guideClearNudge();
+_guideSave();
+_guideRender();
+const li=_fs.el && _fs.el.querySelector(`[data-fs-step="${id}"]`);
 const live=document.getElementById('first-steps-live');
-if(live) live.textContent=t('firststeps.step-done',{step:li.querySelector('.fs-text').textContent});
-if(_fs.done.size===3){
-const note=_fs.el.querySelector('.fs-done-note'); if(note) note.hidden=false;
-if(live) live.textContent=t('firststeps.finished');
+if(live && li) live.textContent=t('firststeps.step-done',{step:li.querySelector('.g-txt b').textContent});
+if(_fs.done.size===_GUIDE_STEPS.length){
 _safeSetItem(_FS_KEY,'done');
-const el=_fs.el;
-setTimeout(()=>{ if(_fs && _fs.el===el) _firstStepsClose(); }, 6000);
+_fs.finished=true;
+if(_fs.el){
+const hadFocus=_fs.el.contains(document.activeElement);
+_fs.el.innerHTML=_guideDoneHtml();
+if(hadFocus){ const h=document.getElementById('guide-title'); if(h) h.focus({preventScroll:true}); }
+const l2=document.getElementById('first-steps-live'); if(l2) l2.textContent=t('firststeps.finished');
+}
+_guidePlace();
+const fs=_fs;
+setTimeout(()=>{ if(_fs===fs) _firstStepsClose(); }, 8000);
 }
 }
 
 
 function _firstStepsTick(){
-if(!_fs) return;
+if(!_fs || _fs.finished) return;
 const b=_fs.base;
 if(S.zoom && b.zoom && Math.abs(Math.log(S.zoom/b.zoom))>0.05) _firstStepsMark('zoom');
 if(S.mode!==b.mode || S.fractalType!==b.type || S.pattern!==b.pattern) _firstStepsMark('catalog');
@@ -50921,17 +50978,24 @@ if(S.mode!==b.mode || S.fractalType!==b.type || S.pattern!==b.pattern) _firstSte
 if(S.palette!==b.palette && !(typeof _palPreviewActive!=='undefined' && _palPreviewActive)) _firstStepsMark('palette');
 }
 
-function _firstStepsClose(){
+function _firstStepsClose(skipFocus){
 if(!_fs) return;
-const el=_fs.el; _fs=null;
+const fs=_fs; _fs=null;
+clearTimeout(fs.nudgeTimer);
 document.body.classList.remove('fs-up');
-const hadFocus=el.contains(document.activeElement);
-el.remove();
-if(hadFocus && typeof _focusFallbackTarget==='function'){ const f=_focusFallbackTarget(); if(f && f.focus) f.focus({preventScroll:true}); }
+const wrap=document.getElementById('cv-wrap');
+if(wrap) wrap.removeEventListener('pointerdown', _guideTouched, true);
+document.removeEventListener('pointerdown', _guideEngaged, true);
+document.removeEventListener('keydown', _guideEngaged, true);
+window.removeEventListener('resize', _guidePlace);
+['guide-ring','guide-nudge'].forEach(id=>{ const n=document.getElementById(id); if(n) n.remove(); });
+const hadFocus=[fs.el, fs.chip].some(n=>n && n.contains(document.activeElement));
+if(fs.el) fs.el.remove();
+if(fs.chip) fs.chip.remove();
+if(hadFocus && !skipFocus && typeof _focusFallbackTarget==='function'){ const f=_focusFallbackTarget(); if(f && f.focus) f.focus({preventScroll:true}); }
 }
 function firstStepsHide(){ if(!_fsFinished()) _safeSetItem(_FS_KEY,'dismissed'); _firstStepsClose(); }
-function firstStepsTourStarted(){ if(_fsSessionArmed() && !_fsFinished()) _safeSetItem(_FS_KEY,'done'); _firstStepsClose(); }
-function firstStepsTour(){ if(typeof startInteractiveTour==='function') startInteractiveTour(); }
+function firstStepsTourStarted(){ if(!_fsFinished()) _safeSetItem(_FS_KEY,'done'); _firstStepsClose(true); }
 
 
 
@@ -51273,13 +51337,12 @@ ov.innerHTML=
 aeonGlyph+
 '<h2 id="help-overlay-title" class="m-0">Keyboard Shortcuts</h2>'+
 '</header>'+
-'<div class="hsub">Press <kbd>Esc</kbd> to close · <kbd>?</kbd> to reopen · <button class="hcustomize" data-action="openKeybindingsModal" type="button" aria-haspopup="dialog" aria-controls="kb-modal">Customize…</button> · <button class="hcustomize" data-action="openCitations" type="button" aria-haspopup="dialog" aria-controls="citations-overlay">References</button><span data-tour-video hidden> · <button class="hcustomize" data-action="openTourVideo" type="button" title="Opens YouTube in a new tab">'+t('welcome.tour-video')+'</button></span></div>'+
+'<div class="hsub">Press <kbd>Esc</kbd> to close · <kbd>?</kbd> to reopen · <button class="hcustomize" data-action="openKeybindingsModal" type="button" aria-haspopup="dialog" aria-controls="kb-modal">Customize…</button> · <button class="hcustomize" data-action="openCitations" type="button" aria-haspopup="dialog" aria-controls="citations-overlay">References</button><span data-tour-video> · <button class="hcustomize" data-action="openTourVideo" type="button" title="A one-minute video of the basics" aria-haspopup="dialog">'+t('welcome.tour-video')+'</button></span></div>'+
 '<input class="hsearch" id="help-search" type="search" placeholder="Filter shortcuts…" aria-label="Filter shortcuts">'+
 '<div id="help-body"></div>'+
 '</div>';
 ov.addEventListener('click',e=>{ if(e.target===ov) closeHelpOverlay(); });
 document.body.appendChild(ov);
-_syncTourVideoLinks();
 _a11yWireModals();
 const search=document.getElementById('help-search');
 if(search){
@@ -51766,15 +51829,14 @@ function _a11yWireModals(){
 
 
 
-const ids=['welcome-overlay','help-overlay','gallery-overlay','export-modal',
+const ids=['help-overlay','gallery-overlay','export-modal',
 'kb-modal','whats-new-modal','pattern-info-modal',
 'foreword-overlay','bookmark-name-modal'];
 ids.forEach(id=>{
 const el=document.getElementById(id); if(!el) return;
 if(!el.getAttribute('role'))el.setAttribute('role','dialog');
 if(!el.getAttribute('aria-modal'))el.setAttribute('aria-modal','true');
-
-const labelMap={'welcome-overlay':'Welcome to AEON','help-overlay':'Keyboard shortcuts reference',
+const labelMap={'help-overlay':'Keyboard shortcuts reference',
 'gallery-overlay':'Saved works gallery','export-modal':'Export artwork',
 'kb-modal':'Customize keyboard shortcuts','whats-new-modal':"What's new",'pattern-info-modal':'Pattern information',
 'foreword-overlay':'Foreword','bookmark-name-modal':'Name bookmark'};
@@ -52042,13 +52104,6 @@ if(typeof closeWelcome==='function'){ closeWelcome(false); }
 
 
 if(typeof firstStepsTourStarted==='function') firstStepsTourStarted();
-
-
-
-
-
-const _wo=document.getElementById('welcome-overlay');
-if(_wo) _wo.classList.add('is-hidden');
 _itIdx=0;
 const ov=_itEnsureOverlay();
 ov.classList.remove('is-hidden');
@@ -52211,10 +52266,6 @@ if(fw && fw.classList.contains('open') && typeof closeForeword==='function') clo
 
 const help=document.getElementById('help-overlay');
 if(help && help.classList.contains('show') && typeof closeHelpOverlay==='function') closeHelpOverlay(true);
-
-
-
-_closeWelcomeForHandoff('citations-overlay');
 let m=document.getElementById('citations-overlay');
 if(!m){
 m=document.createElement('div');
@@ -52435,6 +52486,11 @@ const APP_ACTIONS = [
 { id:'edit-reset',    label:'Reset all',  group:'edit', run:()=>resetAll(), keybindingId:'reset' },
 
 { id:'help-shortcuts',label:'Keyboard shortcuts', group:'help', run:()=>openShortcutsModal() },
+
+{ id:'help-showcase', label:'Showcase',   group:'help', run:()=>openShowcase() },
+{ id:'help-foreword', label:'Foreword',   group:'help', run:()=>openForeword() },
+{ id:'help-references', label:'References', group:'help', run:()=>openCitations() },
+{ id:'help-whats-new', label:"What's new", group:'help', run:()=>openWhatsNew() },
 ];
 
 function getActionsByGroup(group){ return APP_ACTIONS.filter(a => a.group === group); }
