@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-nXIC9mGFnTL8R1c+WaEovFWgrQnqvCcWqLaPND2Mc3Y='; font-src 'self'; script-src 'self' 'sha256-FTBc+4chKR7+irQsQcGxwk/lKc57IdSvKBHw4CQz5YE='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-nXIC9mGFnTL8R1c+WaEovFWgrQnqvCcWqLaPND2Mc3Y='; font-src 'self'; script-src 'self' 'sha256-Jac5BA4G5PE82mAiKq8yR362MLSV6vsm4OmMZ326cpg=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -2332,6 +2332,8 @@
     </style>
 </head>
 <body data-app-mode="fractal" class="vp-tile">
+
+<script id="boot-tile">(function(){try{var T=window.__bootTileTypes=['mandelbulb','mandelbox','menger','qjulia','sierp_tetra','custom_3d','mandelbrot','julia','burningship','tricorn','multibrot3','phoenix','celtic','newton3','newton_cayley','nova','magnet1','lyapunov','perp_mandelbrot','perp_burning','buffalo','lambda','collatz','biomorph','burningship_julia','exp_map','magnet2','newton_sin','tricorn_julia','formula'];var m='fractal',f='mandelbrot',h=location.hash,q=new URLSearchParams(location.search),j=null;if(h.indexOf('#state=')===0){try{j=JSON.parse(decodeURIComponent(escape(atob(h.slice(7).replace(/-/g,'+').replace(/_/g,'/')))));}catch(e){j=null;}}if(j&&typeof j==='object'){if(j.mode)m=j.mode;if(j.ft)f=j.ft;}else{if(q.get('fractal'))f=q.get('fractal');if(q.get('mode')==='geometry')m='geometry';}if(m!=='fractal'||T.indexOf(f)<0)document.body.classList.remove('vp-tile');}catch(e){}})();</script>
 <svg class="ic-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><symbol id="ic-compass" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M10.6 5.4L9.1 9.1 5.4 10.6 6.9 6.9z"/></symbol><symbol id="ic-eye" viewBox="0 0 16 16"><path d="M1.5 8S3.9 3.6 8 3.6 14.5 8 14.5 8 12.1 12.4 8 12.4 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></symbol><symbol id="ic-star" viewBox="0 0 16 16"><path d="M8 1.6l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.6 3.9 13.9l1-4.5L1.5 6.3l4.6-.5z"/></symbol><symbol id="ic-home" viewBox="0 0 16 16"><path d="M2 8l6-5.5L14 8M3.8 7v6.5h3V10h2.4v3.5h3V7"/></symbol><symbol id="ic-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></symbol><symbol id="ic-minus" viewBox="0 0 16 16"><path d="M3 8h10"/></symbol><symbol id="ic-check" viewBox="0 0 16 16"><path d="M2.5 8l3.5 3.5 7.5-8"/></symbol><symbol id="ic-warn" viewBox="0 0 16 16"><path d="M8 2.2L14.2 13.3H1.8Z"/><path d="M8 6.4v3.4"/><circle cx="8" cy="11.6" r=".6" fill="currentColor"/></symbol><symbol id="ic-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2v4.3"/><circle cx="8" cy="4.9" r=".6" fill="currentColor"/></symbol><symbol id="ic-menu" viewBox="0 0 16 16"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/></symbol><symbol id="ic-close" viewBox="0 0 16 16"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></symbol><symbol id="ic-grid" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M2.5 2.5h4.5v4.5h-4.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5h-4.5zM9 9h4.5v4.5H9z"/></symbol><symbol id="ic-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.3"/><path d="M10.2 10.2l3.6 3.6"/></symbol><symbol id="ic-chev-down" viewBox="0 0 16 16"><path d="M3.5 6l4.5 4.5L12.5 6"/></symbol><symbol id="ic-chev-up" viewBox="0 0 16 16"><path d="M3.5 10l4.5-4.5 4.5 4.5"/></symbol><symbol id="ic-pin" viewBox="0 0 16 16"><path d="M9.5 2.5l4 4-2.5 1L8.5 10l.5 3-6-6 3 .5L8.5 5z"/><path d="M5.5 10.5l-3 3"/></symbol><symbol id="ic-chev-right" viewBox="0 0 16 16"><path d="M6 3.5L10.5 8 6 12.5"/></symbol><symbol id="ic-chev-left" viewBox="0 0 16 16"><path d="M10 3.5L5.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-left" viewBox="0 0 16 16"><path d="M8.5 3.5L4 8l4.5 4.5M13 3.5L8.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-right" viewBox="0 0 16 16"><path d="M3 3.5L7.5 8 3 12.5M7.5 3.5L12 8l-4.5 4.5"/></symbol><symbol id="ic-gear" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.3"/><circle cx="8" cy="8" r="4.6"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></symbol><symbol id="ic-dot" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.4" fill="currentColor" stroke="none"/></symbol><symbol id="ic-circle" viewBox="0 0 16 16"><circle cx="8" cy="8" r="4.6"/></symbol><symbol id="ic-reset" viewBox="0 0 16 16"><path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v3h3"/></symbol><symbol id="ic-redo" viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.6-3.7M13 2.5v3h-3"/></symbol><symbol id="ic-download" viewBox="0 0 16 16"><path d="M8 2v8M4.5 7L8 10.5 11.5 7M3 13.5h10"/></symbol><symbol id="ic-upload" viewBox="0 0 16 16"><path d="M8 10.5v-8M4.5 6L8 2.5 11.5 6M3 13.5h10"/></symbol><symbol id="ic-contrast" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"/></symbol><symbol id="ic-dice" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2.2"/><circle cx="5.6" cy="5.6" r=".8" fill="currentColor" stroke="none"/><circle cx="10.4" cy="10.4" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r=".8" fill="currentColor" stroke="none"/></symbol><symbol id="ic-sparkle" viewBox="0 0 16 16"><path d="M8 1.5c.5 3.6 2.9 6 6.5 6.5-3.6.5-6 2.9-6.5 6.5-.5-3.6-2.9-6-6.5-6.5 3.6-.5 6-2.9 6.5-6.5z"/></symbol><symbol id="ic-infinity" viewBox="0 0 16 16"><path d="M8 8c-1.2-1.8-2.3-3-3.7-3a3 3 0 0 0 0 6c1.4 0 2.5-1.2 3.7-3s2.3-3 3.7-3a3 3 0 0 1 0 6c-1.4 0-2.5-1.2-3.7-3z"/></symbol><symbol id="ic-diamond" viewBox="0 0 16 16"><path d="M8 1.8l6.2 6.2L8 14.2 1.8 8z"/><path d="M8 5.2L10.8 8 8 10.8 5.2 8z"/></symbol><symbol id="ic-circle-x" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 5.2l5.6 5.6M10.8 5.2l-5.6 5.6"/></symbol><symbol id="ic-nabla" viewBox="0 0 16 16"><path d="M2.5 3h11L8 13.5z"/></symbol><symbol id="ic-circle-plus" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4.8v6.4M4.8 8h6.4"/></symbol><symbol id="ic-option" viewBox="0 0 16 16"><path d="M2 4h3.5l5 8H14M9.5 4H14"/></symbol><symbol id="ic-asterisk" viewBox="0 0 16 16"><path d="M8 2.5v11M3.2 5.2l9.6 5.6M12.8 5.2L3.2 10.8"/></symbol><symbol id="ic-circle-equals" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 6.6h5.6M5.2 9.4h5.6"/></symbol><symbol id="ic-arrows-down" viewBox="0 0 16 16"><path d="M5 2.5v9M2.5 9L5 11.5 7.5 9M11 2.5v9M8.5 9l2.5 2.5L13.5 9"/></symbol><symbol id="ic-swap-h" viewBox="0 0 16 16"><path d="M13.5 5h-11M5.5 2l-3 3 3 3M2.5 11h11M10.5 8l3 3-3 3"/></symbol></svg>
 <a id="skip-link" href="#cv">Skip to canvas</a>
 
@@ -3027,11 +3029,6 @@
         <div class="rp-sub-head">Vesica Piscis</div>
         <label class="row-meta-clickable"><input type="checkbox" id="vesicaCanonical" checked aria-label="Vesica Piscis canonical proportions (strict √3:1 lens)"> Canonical (strict √3:1 lens)</label>
         <div class="ctrl-hint mt-2">Off = nested rosette of S.layers pairs (decorative)</div>
-      </div>
-      <div id="sri-panel" class="is-hidden">
-        <div class="rp-sub-head">Sri Yantra</div>
-        <label class="row-meta-clickable"><input type="checkbox" id="sriRigor"> Rigorous (Kulaichev concurrence)</label>
-        <div class="ctrl-hint mt-2">On = nine triangles satisfy the canonical 43-sub-triangle constraint</div>
       </div>
       <div id="hyper-panel" class="is-hidden">
         <div class="rp-sub-head">Hyperbolic {p,q}</div>
@@ -4232,7 +4229,7 @@
 
 
 
-<!-- build: 3dfed9f48c13 -->
+<!-- build: 7a2b2b241ae2 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7502,10 +7499,10 @@ const APP_VERSION='7.0.7';
 
 
 
-const MISSION_BUILD_HASH='3dfed9f48c13';
-const MISSION_GIT_SHA='080e92cea9d7aaaee0026929ea88a5f9f6c4876f';
+const MISSION_BUILD_HASH='7a2b2b241ae2';
+const MISSION_GIT_SHA='4dae48ed8151141c078520a7ba4e263c32c72c38';
 
-const MISSION_RENDER_HASH='bdbaa779cad3';
+const MISSION_RENDER_HASH='693dd0ad1267';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11526,6 +11523,28 @@ const GEO_3D_TYPES=new Set([
 
 function isGeo3D(){return GEO_3D_TYPES.has(S.pattern)}
 
+
+function _legibleTable(bg){
+const lin=(v)=>{v/=255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4);};
+const L=(c)=>0.2126*lin(c[0])+0.7152*lin(c[1])+0.0722*lin(c[2]);
+const b=hexRgb(bg), Lb=L(b), N=256, ok=new Uint8Array(N);
+let any=false;
+for(let k=0;k<N;k++){const a=L(palRGBA((k+0.5)/N)),hi=Math.max(a,Lb),lo=Math.min(a,Lb);if((hi+0.05)/(lo+0.05)>=3){ok[k]=1;any=true;}}
+const to=new Float32Array(N).fill(-1);
+if(any)for(let k=0;k<N;k++){if(ok[k])continue;for(let d=1;d<N;d++){if(k+d<N&&ok[k+d]){to[k]=(k+d+0.5)/N;break;}if(k-d>=0&&ok[k-d]){to[k]=(k-d+0.5)/N;break;}}}
+return {bg,to,Lb};
+}
+function _legibleT(t){
+const c=PALS[S.palette]||PALS[Object.keys(PALS)[0]], rgb=_palCacheRgb(c), bg=(S&&S.bgColor)||'#090909';
+let tab=rgb._legible;
+if(!tab||tab.bg!==bg){tab=_legibleTable(bg);rgb._legible=tab;}
+
+const lin=(v)=>{v/=255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4);};
+const p=palRGBA(t), a=0.2126*lin(p[0])+0.7152*lin(p[1])+0.0722*lin(p[2]), hi=Math.max(a,tab.Lb), lo=Math.min(a,tab.Lb);
+if((hi+0.05)/(lo+0.05)>=3)return t;
+const N=tab.to.length, m=tab.to[Math.max(0,Math.min(N-1,Math.floor(t*N)))];
+return m>=0?m:t;
+}
 function geoElemColor(idx,total,dist,maxDist,opts){
 const field0=geoColorFieldActive();
 if(field0==='mono'){
@@ -11537,7 +11556,8 @@ if(sa>=0.999)return accentColor();
 const c=hexRgb(accentColor());
 return`rgba(${c[0]},${c[1]},${c[2]},${sa.toFixed(4)})`;
 }
-const t=_resolveColorT(idx,total,dist,maxDist,field0,opts);
+
+const t0=_resolveColorT(idx,total,dist,maxDist,field0,opts), t=(opts&&opts.field)?t0:_legibleT(t0);
 
 
 const[r,g,b,pa]=palRGBA(t);
@@ -13513,7 +13533,7 @@ const PATTERN_CONFIG={
 'flower-of-life':{layers:'Rings',hint:'Concentric hex rings',sym:false,rot:true},
 'fruit-of-life':{layers:false,sym:false,rot:true},
 'metatrons-cube':{layers:false,sym:false,rot:true},
-'sri-yantra':{layers:'Depth',hint:'Triangle layer depth (1–4)',sym:false,rot:true,maxLayers:4},
+'sri-yantra':{layers:'Depth',hint:'Triangle layer depth (1–4)',sym:false,rot:true,defaultLayers:4,maxLayers:4},
 'mandala':{layers:'Rings',hint:'Number of concentric rings',sym:true,rot:true},
 'reuleaux':{layers:'Copies',hint:'Nested constant-width curves',sym:true,rot:true,symOdd:true,symHint:'Odd fold count only: a Reuleaux curve of constant width needs an odd vertex count',maxSym:11},
 'golden-spiral':{layers:'Turns',hint:'Number of spiral turns',sym:false,rot:true},
@@ -13989,14 +14009,6 @@ if(vc)vc.checked=S.vesicaCanonical!==false;
 
 const _vlc=document.getElementById('layers-ctrl');
 if(_vlc){const _vfade=S.pattern==='vesica-piscis' && S.vesicaCanonical!==false; _vlc.classList.toggle('is-faded',_vfade); const _vin=_vlc.querySelector('input'); if(_vin)_vin.setAttribute('aria-disabled',_vfade?'true':'false');}   
-const sp=document.getElementById('sri-panel');
-if(sp){
-sp.classList.toggle('is-hidden',S.pattern!=='sri-yantra');
-if(S.pattern==='sri-yantra'){
-const sr=document.getElementById('sriRigor');
-if(sr)sr.checked=S.sriRigor===true;
-}
-}
 const hp=document.getElementById('hyper-panel');
 if(hp){
 hp.classList.toggle('is-hidden',S.pattern!=='hyperbolic-tiling');
@@ -21581,6 +21593,8 @@ geoFillColor,
 
 rot3D,project,getDashArray,applyStrokeStyle,wrapGeoFill,isGeo3D,geoColorFieldActive,geoElemColor,
 
+_legibleTable,_legibleT,
+
 
 _lwK,
 
@@ -22799,7 +22813,6 @@ _syncExportTransparentUI();
 
 document.addEventListener('change',e=>{
 if(e.target.id==='vesicaCanonical'){S.vesicaCanonical=!!e.target.checked;const _vlc=document.getElementById('layers-ctrl');if(_vlc){const _vfade=S.vesicaCanonical!==false;_vlc.classList.toggle('is-faded',_vfade);const _vin=_vlc.querySelector('input');if(_vin)_vin.setAttribute('aria-disabled',_vfade?'true':'false');}scheduleRender();return;}
-if(e.target.id==='sriRigor'){S.sriRigor=!!e.target.checked;scheduleRender();return;}
 
 if(e.target.id==='fruitOfLife3D'){S.fruitOfLife3D=!!e.target.checked;scheduleRender();return;}
 if(e.target.id==='eggOfLife3D'){S.eggOfLife3D=!!e.target.checked;scheduleRender();return;}
@@ -31895,35 +31908,12 @@ c.stroke();
 c.restore();
 if(S.glow&&gi>0){c.shadowBlur=S.lineWeight*6*gi*_lwK();c.shadowColor=accentColor()}
 
-const rigorous=(S.sriRigor===true);
 const iR=R*.78;
-let triangles=[];
-if(rigorous){
-
-
-
-
-
-
-
-const upApexY  = [-0.940, -0.726, -0.402, -0.182];      
-const upBaseY  = [ 0.512,  0.276, -0.034, -0.218];
-const upWidth  = [ 0.940,  0.726,  0.402,  0.182];      
-const dnApexY  = [ 0.940,  0.764,  0.484,  0.232,  0.090];
-const dnBaseY  = [-0.516, -0.286, -0.054,  0.108,  0.040];
-const dnWidth  = [ 0.940,  0.594,  0.346,  0.180,  0.066];
-for(let i=0;i<Math.min(depth,4);i++){
-triangles.push({dir:'up',ay:upApexY[i],by:upBaseY[i],w:upWidth[i]});
-}
-for(let i=0;i<Math.min(depth+1,5);i++){
-triangles.push({dir:'dn',ay:dnApexY[i],by:dnBaseY[i],w:dnWidth[i]});
-}
-}else{
+const triangles=[];
 const up=[{a:-.92,b:.76,w:.88},{a:-.64,b:.46,w:.56},{a:-.36,b:.18,w:.28},{a:-.12,b:.01,w:.08}];
 const dn=[{a:.92,b:-.76,w:.88},{a:.72,b:-.54,w:.64},{a:.48,b:-.30,w:.40},{a:.24,b:-.10,w:.18},{a:.06,b:-.02,w:.04}];
 for(let i=0;i<Math.min(depth,4);i++)triangles.push({dir:'up',ay:up[i].a,by:up[i].b,w:up[i].w});
 for(let i=0;i<Math.min(depth+1,5);i++)triangles.push({dir:'dn',ay:dn[i].a,by:dn[i].b,w:dn[i].w});
-}
 for(const t of triangles){
 c.strokeStyle=geoElemColor(idx++,total*2,Math.abs(t.ay)*R,R);
 if(S.fill)c.fillStyle=geoFillColor(idx,total*2,Math.abs(t.ay)*R,R);
@@ -50565,8 +50555,8 @@ maxIter:128,palette:'lava',colorCycle:1.5,colorOffset:0}
 
 
 {
-title:'Sri Yantra (Rigorous)',
-snap:{mode:'geometry',pattern:'sri-yantra',layers:4,symmetry:9,sriRigor:true,
+title:'Sri Yantra',
+snap:{mode:'geometry',pattern:'sri-yantra',layers:4,symmetry:9,
 palette:'autumn',colorCycle:1.4,colorOffset:0.08}
 },
 {
@@ -50957,7 +50947,7 @@ const PATTERN_INFO={
 'fruit-of-life':{title:'Fruit of Life',body:'13 disjoint circles selected from the Flower of Life lattice nodes (1 central + 6 inner + 6 outer). Each circle\'s center lies on a triangular-lattice node within a hexagonal patch. When the 13 centers are connected with all C(13,2) = 78 line segments, the result is Metatron\'s Cube. Thirteen-circle reduction labeled by Drunvalo Melchizedek (1990).'},
 
 'metatrons-cube':{title:"Metatron's Cube",body:'All 78 line segments connecting the 13 centers of the Fruit of Life. The figure encodes 2D projections of all five Platonic solids. The modern name comes from the Jewish-mystical archangel Metatron (Sefer Yetzirah, Talmudic tradition); the geometric construction predates the name. Thirteen-vertex graph drawn over the Fruit of Life; the modern name is attributable to Melchizedek (1990); the Metatron angel-figure traces to the Talmudic Hagigah (c. 500 CE).'},
-'sri-yantra':{title:'Sri Yantra',body:'Hindu Tantric diagram of nine interlocking triangles (4 upward Shiva, 5 downward Shakti) superimposed on a common center (the bindu). Intersections form 43 smaller triangles in five concentric levels. Surrounded by 16- and 8-petal lotuses, three concentric rings, and a square bhupura with four T-gates. Rigorous mode in this app uses the Kulaichev (1984) one-parameter solution that satisfies the canonical concurrence condition.'},
+'sri-yantra':{title:'Sri Yantra',body:'Hindu Tantric diagram of nine interlocking triangles (4 upward Shiva, 5 downward Shakti) superimposed on a common center (the bindu). Intersections form 43 smaller triangles in five concentric levels. Surrounded by 16- and 8-petal lotuses, three concentric rings, and a square bhupura with four T-gates. The figure drawn here is a stylized version: its nine triangles are placed for balance and do not meet in the exact concurrences of the canonical form.'},
 'mandala':{title:'Mandala',body:'Sanskrit "circle". A geometric ritual diagram, typically circular, of cosmological structure. First appears in the Rig Veda (c. 1500–1100 BCE). In Tibetan Vajrayana the mandala becomes a square-within-circle floor plan of a deity\'s celestial palace. Sand mandalas, made then ritually destroyed, are documented in Tibet from the 11th century onward. The figure carries an n-fold rotational symmetry C_n (the symmetry order is the S.symmetry parameter; the catalog renders n = 3..24) plus the full dihedral D_n when reflections through the spokes are admitted.'},
 
 'golden-spiral':{title:'Golden Spiral',body:'Logarithmic spiral r = a·e^(θ·ln(φ)/(π/2)) with growth factor φ = (1+√5)/2 ≈ 1.618 per quarter turn. Jacob Bernoulli, "Spira mirabilis" (1692). Often approximated by quarter-circle arcs in golden rectangles. Note: nautilus shells are NOT golden spirals. They are logarithmic with average ratio ≈ 1.31 (Smithsonian survey of 80 specimens). The "nautilus is golden" claim is a 20th-century misattribution (Keith Devlin retracted his original statement after it was rebroadcast without context, 2007).'},
@@ -52163,7 +52153,7 @@ entries:[
 { who:"Ludwig Schläfli", year:"written 1850–1852, published 1901", work:"Theorie der vielfachen Kontinuität", where:"Denkschriften der Schweizerischen Naturforschenden Gesellschaft", what:"Enumerated the regular polytopes in every dimension, including the six convex regular 4-polytopes, and introduced the Schläfli symbol." },
 { who:"David Hilbert", year:"1891", work:"Über die stetige Abbildung einer Linie auf ein Flächenstück", where:"Mathematische Annalen 38", what:"The Hilbert space-filling curve: a continuous map of an interval onto a square, visiting every cell of a grid exactly once." },
 { who:"Eugène Catalan", year:"1865", work:"Mémoire sur la théorie des polyèdres", where:"Journal de l’École Polytechnique 24", what:"The thirteen Catalan solids, the isohedral duals of the Archimedean solids." },
-{ who:"A. P. Kulaichev", year:"1984", work:"Sriyantra and its mathematical properties", where:"Indian Journal of History of Science 19(3)", what:"The constraint analysis of the Sri Yantra: producing one in which all nine triangles meet in exact concurrence is a hard geometric problem with a specific solution." },
+{ who:"A. P. Kulaichev", year:"1984", work:"Sriyantra and its mathematical properties", where:"Indian Journal of History of Science 19(3)", what:"The constraint analysis of the Sri Yantra: the conditions under which all nine triangles meet in exact concurrence. The figure in this app is a stylized drawing and does not solve them." },
 { who:"Albert E. Bosman", year:"conceived 1942, published 1957", work:"Het wondere onderzoekingsveld der vlakke meetkunde", where:"Breda: Parcival", what:"The Pythagoras tree, a self-similar tiling of squares that is a visual proof of a² + b² = c²." },
 { who:"Roger Penrose", year:"1974", work:"The role of aesthetics in pure and applied mathematical research", where:"Bulletin of the Institute of Mathematics and its Applications 10", what:"The aperiodic Penrose tilings (P1/P2/P3); popularized by Martin Gardner in Scientific American, January 1977." },
 { who:"D. Smith, J. S. Myers, C. S. Kaplan & C. Goodman-Strauss", year:"2023", work:"An aperiodic monotile · A chiral aperiodic monotile", where:"arXiv:2303.10798 (the Hat) · arXiv:2305.17743 (the Spectre)", what:"The first single tiles that tile the plane only aperiodically, the “einstein” problem, open for half a century, resolved twice in one spring." },
@@ -53937,7 +53927,7 @@ for(let t=0;t<rows;t++){
 for(let i=0;i<cols;i++){
 if(grid[t*cols+i]){
 const dist=Math.sqrt((i-cols/2)**2+(t-rows/2)**2);
-c.fillStyle=geoElemColor(t*cols+i,rows*cols,dist,Math.max(rows,cols));
+c.fillStyle=geoElemColor(t*cols+i,rows*cols,dist,Math.max(rows,cols),{field:true});
 c.fillRect(ox+i*cellSize, oy+t*cellSize, cellSize+0.5, cellSize+0.5);
 }
 }
@@ -54067,7 +54057,7 @@ const cell=bR*3.4/N, ox=-N/2*cell, oy=-N/2*cell;
 c.save();
 for(let y=0;y<N;y++)for(let x=0;x<N;x++){
 const s=cur[y*N+x];
-c.fillStyle=geoElemColor(s,K,s/K*bR,bR);
+c.fillStyle=geoElemColor(s,K,s/K*bR,bR,{field:true});
 c.fillRect(ox+x*cell, oy+y*cell, cell*1.02, cell*1.02);
 }
 c.restore();
@@ -54083,7 +54073,7 @@ const a=accum[y*N+x];
 if(a>0){
 const dist=Math.sqrt((x-N/2)**2+(y-N/2)**2);
 c.globalAlpha=a*S.strokeOpacity;
-c.fillStyle=geoElemColor(y*N+x,N*N,dist,N*Math.SQRT1_2);
+c.fillStyle=geoElemColor(y*N+x,N*N,dist,N*Math.SQRT1_2,{field:true});
 c.fillRect(ox+x*cellSize, oy+y*cellSize, cellSize+0.5, cellSize+0.5);
 }
 }
@@ -54179,7 +54169,7 @@ const t=(v[y*N+x]-mn)/range;
 if(t<0.05)continue;
 const dist=Math.sqrt((x-N/2)**2+(y-N/2)**2);
 c.globalAlpha=Math.min(1,t*1.4)*S.strokeOpacity;
-c.fillStyle=geoElemColor(Math.round(t*1000),1000,dist,N*Math.SQRT1_2);
+c.fillStyle=geoElemColor(Math.round(t*1000),1000,dist,N*Math.SQRT1_2,{field:true});
 c.fillRect(ox+x*cellSize, oy+y*cellSize, cellSize+0.5, cellSize+0.5);
 }
 }
@@ -54302,7 +54292,7 @@ const x=(pts[i][0]-cx)*scale, y=(pts[i][1]-cy)*scale;
 const dist=Math.hypot(x,y);
 if(dist>R*1.7)continue;
 c.globalAlpha=Math.min(1,0.25+0.5*S.strokeOpacity);
-c.fillStyle=geoElemColor(i, pts.length, dist, R);
+c.fillStyle=geoElemColor(i, pts.length, dist, R,{field:true});
 c.fillRect(x, y, mark, mark);
 }
 c.globalAlpha=S.strokeOpacity;
@@ -54330,7 +54320,7 @@ const x=(pts[i*2]-cx)*scale, y=(pts[i*2+1]-cy)*scale;
 const dist=Math.hypot(x,y);
 if(dist>R*1.7)continue;
 c.globalAlpha=Math.min(1, 0.25+0.5*S.strokeOpacity);
-c.fillStyle=geoElemColor(i, count, dist, R);
+c.fillStyle=geoElemColor(i, count, dist, R,{field:true});
 c.fillRect(x, y, mark, mark);
 }
 c.globalAlpha=S.strokeOpacity;
@@ -54422,7 +54412,7 @@ const ox=-grid*cellSize/2, oy=-grid*cellSize/2;
 for(let i=0;i<cells.length;i++){
 const [x,y]=cells[i];
 const dist=Math.hypot(x-cx,y-cy);
-c.fillStyle=geoElemColor(i,cells.length,dist,grid/2);
+c.fillStyle=geoElemColor(i,cells.length,dist,grid/2,{field:true});
 c.fillRect(ox+x*cellSize, oy+y*cellSize, cellSize+0.5, cellSize+0.5);
 }
 }
@@ -54435,7 +54425,7 @@ const ox=-grid*cellSize/2, oy=-grid*cellSize/2;
 for(let i=0;i<count;i++){
 const x=cellsX[i], y=cellsY[i];
 const dist=Math.hypot(x-cx,y-cy);
-c.fillStyle=geoElemColor(i, count, dist, grid/2);
+c.fillStyle=geoElemColor(i, count, dist, grid/2,{field:true});
 c.fillRect(ox+x*cellSize, oy+y*cellSize, cellSize+0.5, cellSize+0.5);
 }
 }
@@ -54484,7 +54474,7 @@ for(let x=0;x<N;x++){
 const t=(heights[y*N+x]-mn)/range;
 const dist=Math.hypot(x-N/2,y-N/2);
 c.globalAlpha=S.strokeOpacity;
-c.fillStyle=geoElemColor(Math.round(t*1000),1000,dist,N*Math.SQRT1_2);
+c.fillStyle=geoElemColor(Math.round(t*1000),1000,dist,N*Math.SQRT1_2,{field:true});
 c.fillRect(ox+x*cellSize, oy+y*cellSize, cellSize+0.5, cellSize+0.5);
 }
 }
@@ -54552,7 +54542,7 @@ const a=accum[y*N+x];
 if(a>0){
 const dist=Math.hypot(x-N/2,y-N/2);
 c.globalAlpha=(a/255)*S.strokeOpacity;
-c.fillStyle=geoElemColor(y*N+x, N*N, dist, N*Math.SQRT1_2);
+c.fillStyle=geoElemColor(y*N+x, N*N, dist, N*Math.SQRT1_2,{field:true});
 c.fillRect(ox+x*cellSize, oy+y*cellSize, cellSize+0.5, cellSize+0.5);
 }
 }
@@ -54627,7 +54617,7 @@ const a=accum[y*N+x];
 if(a>0){
 const dist=Math.hypot(x-N/2,y-N/2);
 c.globalAlpha=a*S.strokeOpacity;
-c.fillStyle=geoElemColor(y*N+x, N*N, dist, N*Math.SQRT1_2);
+c.fillStyle=geoElemColor(y*N+x, N*N, dist, N*Math.SQRT1_2,{field:true});
 c.fillRect(ox+x*cellSize, oy+y*cellSize, cellSize+0.5, cellSize+0.5);
 }
 }
@@ -54737,7 +54727,7 @@ const a=A[y*N+x];
 if(a<0.02)continue;
 const dist=Math.hypot(x-N/2, y-N/2);
 c.globalAlpha=Math.min(1, a)*S.strokeOpacity;
-c.fillStyle=geoElemColor(Math.round(a*1000), 1000, dist, N*Math.SQRT1_2);
+c.fillStyle=geoElemColor(Math.round(a*1000), 1000, dist, N*Math.SQRT1_2,{field:true});
 c.fillRect(ox+x*cellSize, oy+y*cellSize, cellSize+0.5, cellSize+0.5);
 }
 }
@@ -54810,7 +54800,7 @@ const t=(a[y*N+x]-mn)/range;
 if(t<0.05)continue;
 const dist=Math.hypot(x-N/2, y-N/2);
 c.globalAlpha=Math.min(1, t*1.2)*S.strokeOpacity;
-c.fillStyle=geoElemColor(Math.round(t*1000), 1000, dist, N*Math.SQRT1_2);
+c.fillStyle=geoElemColor(Math.round(t*1000), 1000, dist, N*Math.SQRT1_2,{field:true});
 c.fillRect(ox+x*cellSize, oy+y*cellSize, cellSize+0.5, cellSize+0.5);
 }
 }
