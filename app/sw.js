@@ -25,7 +25,7 @@ const CACHE_PREFIX = 'reactor-v';
 
 
 
-const HTML_POISON_EXT_RE = /\.(?:m?js|json|png|svg|woff2?|webmanifest)$/i;
+const HTML_POISON_EXT_RE = /\.(?:m?js|json|png|svg|ico|woff2?|webmanifest)$/i;
 function isCachePoisoningRisk(url, response) {
   if (response.type === 'opaque' || response.type === 'opaqueredirect') return true;
   const contentType = (response.headers.get('Content-Type') || '').split(';')[0].trim().toLowerCase();
@@ -39,6 +39,15 @@ const SHELL_ASSETS = [
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',
+  './icons/icon-maskable-192.png',
+  './icons/icon-maskable-512.png',
+  './icons/apple-touch-icon.png',
+  './icons/favicon.ico',
+  './icons/favicon.svg',
+  './icons/favicon-32.png',
+  './icons/favicon-48.png',
+  './icons/safari-pinned-tab.svg',
+  './icons/og-card.png',
   
   './assets/fonts/inter-tight-v9-latin-regular.woff2',
   './assets/fonts/fraunces-v38-latin-regular.woff2',

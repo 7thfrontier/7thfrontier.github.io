@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-dXWNg984VNHYd6tZEWflWEhpwXJ2CH4ly15kqXiVIbw='; font-src 'self'; script-src 'self' 'sha256-3ylL883dhg68GySaC4vNsSKhdm6uQ3lduqaPgknmYnk=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-Yz2koqlbDJkMgxwzTzuD/HTTX9EuBLXGuyjxRCoMYes='; font-src 'self'; script-src 'self' 'sha256-twvQhPbKV41XaJvdwf52A+RX/opoI8gGVXah/YWfjsA=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -58,15 +58,16 @@
          --font-display / --font-mono so the cascade resolves correctly. -->
 
     <link rel="manifest" href="./manifest.json">
-    <!-- v6.23.50 — AEON glyph as browser favicon. SVG is primary (vector,
-         crisp at any tab size); 192/512 PNG sidecars cover legacy chrome
-         and the iOS "apple-touch-icon" surface. All three are the AEON
-         Seed-of-Life glyph in copper (#C68642) — same assets the PWA
-         install + OS adaptive-icon already point at. -->
-    <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
-    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png">
-    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+    <!-- Tab icons (ico, png, svg) are the copper glyph alone on transparency:
+         Safari backs a dark opaque favicon on its dark tab bar with a white
+         plate that reads as a border. The tiled icons are for the
+         home screen and the manifest only. bin/gen-icons.js makes every PNG. -->
+    <link rel="icon" href="./icons/favicon.ico" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="./icons/favicon-48.png">
+    <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
+    <link rel="mask-icon" href="./icons/safari-pinned-tab.svg" color="#C68642">
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
     <meta name="theme-color" content="#0F0E0C">
     <meta name="description" content="AEON: fractal explorer and sacred-geometry studio. 58 fractal types, 183 geometric patterns, deep zoom past 10⁶⁰, 51 curated palettes.">
     <meta property="og:type" content="website">
@@ -2168,7 +2169,9 @@
         .chrome-menu{position:fixed;left:var(--cm-x,0);top:var(--cm-y,0);z-index:var(--z-overlay-mid);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);padding:6px;min-width:200px;box-shadow:var(--shadow-md)}
         .chrome-menu.is-hidden{display:none}
         .chrome-menu-item{display:block;width:100%;text-align:left;padding:8px 10px;font-size:12px}
-        .chrome-menu-item[role=menuitemcheckbox]>.ic{visibility:hidden;color:var(--accent)}
+        .chrome-menu-item[role=menuitemcheckbox]{display:flex;align-items:center;gap:8px}
+        .chrome-menu-item[role=menuitemcheckbox]>.ic{visibility:hidden;color:var(--accent);order:1;margin-left:auto}
+        .chrome-menu-item[role=menuitemcheckbox]>.menu-accel{order:2;margin-left:0}
         .chrome-menu-item[aria-checked="true"]>.ic{visibility:visible}
         .chrome-menu-item.has-accel{display:flex;align-items:center;gap:8px}
         .menu-accel{margin-left:auto;flex-shrink:0;background:var(--surface3);border:1px solid var(--surface4);border-radius:var(--r-2);padding:1px 6px;font-family:var(--font-mono,monospace);font-size:11px;color:var(--text-dim);text-transform:uppercase;line-height:1.4}
@@ -4226,7 +4229,7 @@
 
 
 
-<!-- build: 98e6adf16794 -->
+<!-- build: 950a948273e9 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7496,10 +7499,10 @@ const APP_VERSION='7.0.12';
 
 
 
-const MISSION_BUILD_HASH='98e6adf16794';
-const MISSION_GIT_SHA='fc6c4d44207c1ecdacf8ea7916ade82de6f55e55';
+const MISSION_BUILD_HASH='950a948273e9';
+const MISSION_GIT_SHA='d5c3e2a476151b531ee6d9b9b55b45df079d7a88';
 
-const MISSION_RENDER_HASH='29433179b70e';
+const MISSION_RENDER_HASH='449956cad1b8';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -8035,7 +8038,6 @@ cxLift3D:false,
 cxCustomBody:'return cmul(z, z) + vec2(0.0, 0.5);', 
 
 vesicaCanonical:true, 
-sriRigor:false,       
 
 hyperP:7,             
 hyperQ:3,
@@ -14505,6 +14507,8 @@ const _solid=((S&&S.dashPattern)||'solid')==='solid';
 _t('ctrl-dashLen',_solid);_t('ctrl-dashGap',_solid);_t('ctrl-dashOffset',_solid);
 const inert=(S.mode==='geometry')&&!patternSupportsFill(S.pattern);
 _t('fill-inert-hint',!inert);
+
+_t('seg-fill-desc',inert);
 document.querySelectorAll('#seg-fill .seg-opt').forEach(b=>{
 
 
@@ -18501,7 +18505,9 @@ if(!anti && orbLen < _minOrb) continue;
 
 
 
-for(let i=0; i<orbLen; i++){
+
+
+for(let i=1; i<orbLen; i++){
 const ox=orbX[i], oy=orbY[i];
 const px=Math.round((ox-S.centerX)/sc+_viewCenterPx())|0;   
 if(px<0||px>=W) continue;
@@ -27041,7 +27047,8 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
     let hMax = f32(p.height - 1u);
     let fx = (zx - p.cx) * scl + f32(p.width) * 0.5;
     let fy = (zy - p.cy) * scl + f32(p.height) * 0.5;
-    if (fx >= 0.0 && fx < f32(p.width) && fy >= 0.0 && fy < f32(p.height)) {
+    
+    if (i > 0u && fx >= 0.0 && fx < f32(p.width) && fy >= 0.0 && fy < f32(p.height)) {
       let px = u32(min(round(fx), wMax));
       let py = u32(min(round(fy), hMax));
       let idx = py * p.width + px;
@@ -35968,7 +35975,8 @@ return G.els.map((_,i)=>vecs.map(u=>u[i]));
 
 function drawGenus4Polygon(c, bR){
 const n=16;
-const R=bR*1.0;
+
+const R=bR*1.6;
 c.save();
 c.lineWidth=Math.max(2, S.lineWeight*_lwK());
 const verts=[];
@@ -36010,7 +36018,8 @@ c.restore();
 
 function drawKleinQuartic(c, bR){
 const n=14;
-const R=bR*0.92;
+
+const R=bR*1.6;
 c.save();
 c.lineWidth=Math.max(2, S.lineWeight*_lwK());
 
@@ -36235,7 +36244,8 @@ const surfaces=[
 {n:4, label:'Klein bottle K²',        pattern:['a','b','a','b'],     dirs:[1,1,1,-1]},
 ];
 const surf=surfaces[which];
-const R=bR*1.0;
+
+const R=bR*1.6;
 c.save();
 c.lineWidth=Math.max(2, S.lineWeight*_lwK());
 const verts=[];
@@ -41080,7 +41090,6 @@ lpr:typeof S.lsysPreset==='string'?S.lsysPreset.slice(0,48):undefined,
 cpi:typeof S.compoundInner==='string'?S.compoundInner.slice(0,48):undefined,
 cpo:typeof S.compoundOuter==='string'?S.compoundOuter.slice(0,48):undefined,
 smf:S.showMandelbrotFeatures?true:undefined,
-srr:S.sriRigor?1:0,
 vsc:S.vesicaCanonical?1:0,
 cis:+(S.compoundInnerScale??0.5).toFixed(3),
 
@@ -41598,7 +41607,6 @@ lw:   { type:'number', min:0,    max:100 },
 ifsi: { type:'int',    min:0,    max:1e9 },       
 pfl:  { type:'bool' },                            
 lsca: { type:'number', min:-3600,max:3600 },      
-srr:  { type:'bool' },                            
 vsc:  { type:'bool' },                            
 cis:  { type:'number', min:0,    max:100 },       
 
@@ -41858,7 +41866,6 @@ lineWeight: _HASH_SCHEMA.lw,
 ifsIter: _HASH_SCHEMA.ifsi,
 polyFill: _HASH_SCHEMA.pfl,
 lsysCustomAngle: _HASH_SCHEMA.lsca,
-sriRigor: _HASH_SCHEMA.srr,
 vesicaCanonical: _HASH_SCHEMA.vsc,
 compoundInnerScale: _HASH_SCHEMA.cis,
 
@@ -42615,7 +42622,6 @@ if(snap.lpr!=null)S.lsysPreset=snap.lpr;
 if(snap.cpi!=null)S.compoundInner=snap.cpi;
 if(snap.cpo!=null)S.compoundOuter=snap.cpo;
 if(snap.smf!=null)S.showMandelbrotFeatures=!!snap.smf;
-if(snap.srr!=null)S.sriRigor=!!snap.srr;
 if(snap.vsc!=null)S.vesicaCanonical=!!snap.vsc;
 if(snap.cis!=null)S.compoundInnerScale=snap.cis;
 
@@ -50342,7 +50348,7 @@ m.setAttribute('aria-modal','true');
 m.setAttribute('aria-label',t('tour.title'));
 m.innerHTML=html.raw`<div class="tv-box">
       <button type="button" class="tv-close" data-action="closeTourVideo" aria-label="${html`${t('tour.close')}`}"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-close"/></svg></button>
-      <video controls muted playsinline preload="metadata" poster="./assets/tour-poster.jpg">
+      <video controls playsinline preload="metadata" poster="./assets/tour-poster.jpg">
         <source src="./assets/tour.mp4" type="video/mp4">
         <track kind="captions" src="./assets/tour.vtt" srclang="en" label="English">
       </video>
@@ -62690,7 +62696,9 @@ await _tileRenderFractal(rCtx,rW,rH,bar,status,signal);
 
 function _buddhaExportSamples(base, printArea, screenArea, budgetScale){
 base = (base | 0) || 800000;
-const scaled = Math.round(base * Math.max(1, printArea / Math.max(1, screenArea)));
+
+
+const scaled = Math.max(1000, Math.round(base * printArea / Math.max(1, screenArea)));
 
 
 

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="AEON">
+  <!--
+    Browser-tab favicon: the Seed of Life alone on transparency, heavier strokes,
+    no tile and no balance ring. A dark tile on a dark tab bar is what Safari
+    backs with a white plate. bin/gen-icons.js rasterizes the same
+    shape to favicon-16/32.png; icons/icon.svg stays the tiled app icon.
+  -->
+  <g transform="translate(256 256) scale(1.18) translate(-256 -256)"
+     fill="none" stroke="#C68642" stroke-width="36">
+    <circle cx="256" cy="256" r="64"/>
+    <circle cx="256" cy="128" r="64"/>
+    <circle cx="256" cy="384" r="64"/>
+    <circle cx="145.13" cy="192" r="64"/>
+    <circle cx="366.87" cy="192" r="64"/>
+    <circle cx="145.13" cy="320" r="64"/>
+    <circle cx="366.87" cy="320" r="64"/>
+  </g>
+</svg>

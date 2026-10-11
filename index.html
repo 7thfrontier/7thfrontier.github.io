@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="author" content="© 2026 7th Frontier, Inc. All Rights Reserved.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data:; style-src 'self' 'sha256-cpsHMZ0oiiD/91kOhbFZ28xadZp+DyhBATzHWfXi17I=' 'sha256-3ImuUu50zhG9ep+gvDTxpGDcfr6c5zBvakxlcr/pJug=' 'sha256-4EupS2ecbqBJmSSt3SHTBfIftBzlLgqJi7v8gVbCztk='; font-src 'self'; script-src 'self' 'sha256-Zne5Z6h7n4weyj6/vOklq9Nv5ZzEtvScXCA84XCnh0A='; connect-src 'none'; media-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data:; style-src 'self' 'sha256-cpsHMZ0oiiD/91kOhbFZ28xadZp+DyhBATzHWfXi17I=' 'sha256-qw6VpvNBbT7szSBnze7Yn9fiONr/BEutezFN5DSbA/8=' 'sha256-4EupS2ecbqBJmSSt3SHTBfIftBzlLgqJi7v8gVbCztk='; font-src 'self'; script-src 'self' 'sha256-Zne5Z6h7n4weyj6/vOklq9Nv5ZzEtvScXCA84XCnh0A='; connect-src 'none'; media-src 'self'">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AEON: Universal Dynamics Reactor</title>
 <meta name="description" content="AEON is a single-file fractal explorer and sacred-geometry studio. 58 fractal types, 183 patterns, zero dependencies. Open the file and create.">
@@ -20,10 +20,12 @@
 <meta name="twitter:description" content="AEON is a single-file fractal explorer and sacred-geometry studio. 58 fractal types, 183 patterns, zero dependencies.">
 <meta name="twitter:image" content="https://7thfrontier.github.io/icons/og-card.png">
 
-<link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
-<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="icon" href="./icons/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="./icons/favicon-48.png">
+<link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
+<link rel="mask-icon" href="./icons/safari-pinned-tab.svg" color="#C68642">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
 <style>
 
 @font-face {
@@ -490,6 +492,10 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   transition: transform .6s cubic-bezier(.2,.8,.3,1);
 }
 .tile:hover .tile-img { transform: scale(1.04); }
+.tile-link { position: absolute; inset: 0; display: block; color: inherit; text-decoration: none; border-radius: inherit; }
+.tile-link:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.tile:focus-within { border-color: var(--accent); }
+.tile:focus-within .tile-img { transform: scale(1.04); }
 .tile-cap {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -853,7 +859,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
     <p class="section-lede">AEON is a program for looking at mathematical forms: fractals, tilings, polytopes and strange attractors. The canvas fills most of the screen, and the controls stay at the edges until you need them.</p>
   </header>
   <figure class="tour-video">
-    <video controls muted playsinline preload="none" poster="./assets/tour-poster.jpg" width="1280" height="720" aria-label="The one-minute tour of AEON">
+    <video controls playsinline preload="none" poster="./assets/tour-poster.jpg" width="1280" height="720" aria-label="The one-minute tour of AEON">
       <source src="./assets/tour.mp4" type="video/mp4">
       <track kind="captions" src="./assets/tour.vtt" srclang="en" label="English">
     </video>
@@ -870,28 +876,40 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
   </header>
   <div class="gallery">
     <article class="tile">
-      <img class="tile-img" src="./assets/landing/seed-of-life.webp" alt="The Seed of Life: seven equal circles in hexagonal symmetry" width="720" height="720" loading="lazy" decoding="async">
-      <div class="tile-cap"><em>Seed of Life</em>Seven circles, hex symmetry</div>
+      <a class="tile-link" href="./?mode=geometry&amp;pattern=seed-of-life">
+        <img class="tile-img" src="./assets/landing/seed-of-life.webp" alt="The Seed of Life: seven equal circles in hexagonal symmetry" width="720" height="720" loading="lazy" decoding="async">
+        <div class="tile-cap"><em>Seed of Life</em>Seven circles, hex symmetry</div>
+      </a>
     </article>
     <article class="tile">
-      <img class="tile-img" src="./assets/landing/sri-yantra.webp" alt="The Sri Yantra: nine interlocking triangles around a central point" width="720" height="720" loading="lazy" decoding="async">
-      <div class="tile-cap"><em>Sri Yantra</em>Nine triangles, central bindu</div>
+      <a class="tile-link" href="./?mode=geometry&amp;pattern=sri-yantra">
+        <img class="tile-img" src="./assets/landing/sri-yantra.webp" alt="The Sri Yantra: nine interlocking triangles around a central point" width="720" height="720" loading="lazy" decoding="async">
+        <div class="tile-cap"><em>Sri Yantra</em>Nine triangles, central bindu</div>
+      </a>
     </article>
     <article class="tile">
-      <img class="tile-img" src="./assets/landing/maurer-rose.webp" alt="A Maurer rose, n=6, d=71: chords stepping 71 degrees around a six-petal rose" width="720" height="720" loading="lazy" decoding="async">
-      <div class="tile-cap"><em>Maurer Rose</em>n=6 d=71</div>
+      <a class="tile-link" href="./?mode=geometry&amp;pattern=maurer-rose">
+        <img class="tile-img" src="./assets/landing/maurer-rose.webp" alt="A Maurer rose, n=6, d=71: chords stepping 71 degrees around a six-petal rose" width="720" height="720" loading="lazy" decoding="async">
+        <div class="tile-cap"><em>Maurer Rose</em>n=6 d=71</div>
+      </a>
     </article>
     <article class="tile">
-      <img class="tile-img" src="./assets/landing/penrose-tiling.webp" alt="A Penrose tiling of kites and darts with fivefold symmetry" width="720" height="720" loading="lazy" decoding="async">
-      <div class="tile-cap"><em>Penrose Tiling</em>Kites and darts, fivefold</div>
+      <a class="tile-link" href="./?mode=geometry&amp;pattern=penrose-p-two">
+        <img class="tile-img" src="./assets/landing/penrose-tiling.webp" alt="A Penrose tiling of kites and darts with fivefold symmetry" width="720" height="720" loading="lazy" decoding="async">
+        <div class="tile-cap"><em>Penrose Tiling</em>Kites and darts, fivefold</div>
+      </a>
     </article>
     <article class="tile">
-      <img class="tile-img" src="./assets/landing/mandelbrot.webp" alt="The Mandelbrot set" width="720" height="720" loading="lazy" decoding="async">
-      <div class="tile-cap"><em>Mandelbrot</em>z² + c, |z| ≤ 2</div>
+      <a class="tile-link" href="./?fractal=mandelbrot">
+        <img class="tile-img" src="./assets/landing/mandelbrot.webp" alt="The Mandelbrot set" width="720" height="720" loading="lazy" decoding="async">
+        <div class="tile-cap"><em>Mandelbrot</em>z² + c, |z| ≤ 2</div>
+      </a>
     </article>
     <article class="tile">
-      <img class="tile-img" src="./assets/landing/tesseract.webp" alt="A tesseract, the four-dimensional cube, projected into three dimensions" width="720" height="720" loading="lazy" decoding="async">
-      <div class="tile-cap"><em>Tesseract</em>4-cube, 3D-projected</div>
+      <a class="tile-link" href="./?mode=geometry&amp;pattern=tesseract">
+        <img class="tile-img" src="./assets/landing/tesseract.webp" alt="A tesseract, the four-dimensional cube, projected into three dimensions" width="720" height="720" loading="lazy" decoding="async">
+        <div class="tile-cap"><em>Tesseract</em>4-cube, 3D-projected</div>
+      </a>
     </article>
   </div>
 </section>
