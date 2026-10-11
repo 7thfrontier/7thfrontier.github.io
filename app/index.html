@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-dXWNg984VNHYd6tZEWflWEhpwXJ2CH4ly15kqXiVIbw='; font-src 'self'; script-src 'self' 'sha256-RCzBgkIO3iLOLmrsMfrhLi+s8ZbgBVYDjrkWZDj2qNs=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-dXWNg984VNHYd6tZEWflWEhpwXJ2CH4ly15kqXiVIbw='; font-src 'self'; script-src 'self' 'sha256-3ylL883dhg68GySaC4vNsSKhdm6uQ3lduqaPgknmYnk=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4226,12 +4226,12 @@
 
 
 
-<!-- build: da2222ff86a2 -->
+<!-- build: 98e6adf16794 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.11
+ * AEON -- Universal Dynamics Reactor v7.0.12
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7487,7 +7487,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.11';
+const APP_VERSION='7.0.12';
 
 
 
@@ -7496,8 +7496,8 @@ const APP_VERSION='7.0.11';
 
 
 
-const MISSION_BUILD_HASH='da2222ff86a2';
-const MISSION_GIT_SHA='1f06e05eb1183d4d0c2e105b14b16f71e7f92827';
+const MISSION_BUILD_HASH='98e6adf16794';
+const MISSION_GIT_SHA='fc6c4d44207c1ecdacf8ea7916ade82de6f55e55';
 
 const MISSION_RENDER_HASH='29433179b70e';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50141,6 +50141,16 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.12',
+date:'2026-10-11',
+headline:'Groups and symmetries drawn true.',
+items:[
+'The 17 wallpaper groups each show their own turns, mirrors and glides, and the Cayley graphs are built from the groups they name.',
+'Gray-Scott reaches its U-skate and labyrinth settings, and the kolam and sona draw each line once.',
+'The projective plane and the Exponential Map open centered and filling the frame, and the app menu shows its Help heading.',
+],
+},
+{
 version:'7.0.11',
 date:'2026-10-07',
 headline:'Aperiodic tilings drawn true.',
@@ -50207,17 +50217,6 @@ items:[
 'Closing a dialog opened from a menu, or canceling New or Reset all, returns keyboard focus to the menu button.',
 'Opening a section from the palette chip or the catalog no longer scrolls the Inspector\'s title bar and tabs out of view.',
 'The Foreword and the landing page were rewritten in plainer language, and four wrong facts in them are fixed.',
-],
-},
-{
-version:'7.0.4',
-date:'2026-10-06',
-headline:'Quick export keeps the whole view, and the 3D types draw only what you see.',
-items:[
-'A Quick export whose shape differs from the canvas now shows the whole view on bars, as Print does, instead of cropping it. Choose Extend to fill the frame instead.',
-'With the Inspector open, the six 3D types render the window alone, 4 to 25% faster per frame, and the picture does not move.',
-'The landing page and the poster now run only their own scripts and styles, and load nothing from other sites.',
-'No page can submit a form, so content slipped into a page cannot post anywhere.',
 ],
 },
 ];
