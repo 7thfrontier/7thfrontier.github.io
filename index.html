@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.12</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.13</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.0.12</h2>
+    <h2>AEON · v7.0.13</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1162,25 +1162,24 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.0.12.</h2>
-    <p class="section-lede">Groups and symmetries drawn true · 2026-10-11</p>
+    <h2 class="section-title">What's new<br>in 7.0.13.</h2>
+    <p class="section-lede">The Buddhabrot shows its orbits · 2026-10-11</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Gray-Scott reaches all four of its listed settings.</strong> The feed slider now goes down to 0.014, so the self-replicating U-skate (F 0.014, k 0.054) and the labyrinths (F 0.022, k 0.051) can be set, along with spots and stripes. At low feed the kill rate is held just under the point where the pattern dies out, and the k slider moves down with it, so no setting gives a blank canvas.</li>
-    <li><strong>Kolam and sona draw each line once.</strong> Every thread was drawn twice, once in each direction and in two colors, which showed as a doubled, two-tone line. Each thread is now one line in one color: a single line for the sona, and one or three threads for the kolam as the grid size decides.</li>
-    <li><strong>The wallpaper groups have their real symmetries.</strong> All 17 groups used to sit on a square grid with a motif that was a mirror image of itself, so the three-fold and six-fold groups showed no three-fold turn at all and several others gained mirrors they do not have. Each group is now drawn on its own lattice with a letter F, which has no symmetry of its own, so every turn, mirror and glide in the picture belongs to the group.</li>
-    <li><strong>The Cayley graphs draw the groups they name.</strong> S₃, Q₈, A₄, A₅ and PSL₂(7) are now built from their generators, with an element at every vertex and an edge for every multiplication by a generator. Arrows show which way each generator of order greater than two turns. A₄ and A₅ come out as the truncated tetrahedron and truncated icosahedron. The Mathieu graphs on 11 and 12 points use the standard generators, which produce M₁₁ and M₁₂ themselves. The notes describe what is drawn.</li>
-    <li><strong>The app menu shows its Help heading, and the Foreword has its own entry.</strong> When the welcome dialog went in 7.0.10, Showcase, Foreword, References and What’s new moved to the end of the app menu, but they showed as a plain run of items with no heading. They now sit under a Help heading, and the guided tours menu beside the catalog gains Read the foreword, so the Foreword opens without the app menu.</li>
-    <li><strong>The installed app carries the current name.</strong> Installed as an app, AEON still called itself AEON: Fractal &amp; Sacred Geometry on its splash screen and in the app switcher, with the old feature list as its description. It is now AEON: Universal Dynamics Reactor, the name the page already used, and a check keeps the two the same. The home-screen label stays AEON.</li>
-    <li><strong>The projective plane fills the frame.</strong> Boy’s surface opened small and left of center, about half the size of the other figures. It now opens centered and at their size.</li>
-    <li><strong>The Exponential Map opens on its structure.</strong> Its first view was mostly two flat dark half-planes with a thin seam between them. It now opens closer in, centered on the cusp of the main region, with the branching filaments along its edge filling the frame.</li>
+    <li><strong>The one-minute tour has a voiceover.</strong> Each narrated line starts with its caption, and the captions are unchanged. The picture is the same cut, frame for frame. The tour now plays with sound, in the app and on the landing page, and only starts when you press play.</li>
+    <li><strong>The Fill note shows once.</strong> On a pattern that only draws strokes, the Inspector printed &quot;This pattern draws strokes only, so fill has no effect on it.&quot; twice under Fill. It now shows once.</li>
+    <li><strong>Buddhabrot renders and exports show the orbits, without a flat field or a hard rectangle.</strong> Each orbit was drawn from its starting point, so the box the starting points are picked from showed as a flat olive field with straight edges, on screen and in every export. Orbits are now drawn from their second step, on the CPU and the GPU, for the Buddhabrot and the anti-Buddhabrot. Separately, an export smaller than the screen kept the screen's full sample count, which made it run hotter and pinker than the screen; the count now scales down with the picture as it already scaled up. An export shaped differently from the screen still shows the whole view on bars, as before.</li>
+    <li><strong>The landing page's gallery opens AEON on each form.</strong> Clicking any of the six pictures under Forms shipped in this box now opens AEON on the form it shows: Seed of Life, Sri Yantra, Maurer Rose, the kite-and-dart Penrose tiling, the Mandelbrot set and the tesseract.</li>
+    <li><strong>The Klein quartic and the other surface polygons open at full size.</strong> The Klein quartic, the genus-four polygon and the fundamental polygon drew at about a third of the size of the figures around them. All three now open at the same, larger size.</li>
+    <li><strong>The theme and contrast rows line up in the app menu.</strong> Their labels sat one icon to the right of every other row, because the check mark kept its place in front even when hidden. The check now sits at the end of the row, just before the shortcut key.</li>
+    <li><strong>The tab icon has no border in Safari.</strong> Safari puts a white plate behind a favicon that is hard to see on its tab bar, and the old icon was a dark square on a dark bar, so it showed a white frame. The tab now shows the copper Seed of Life on its own, from a favicon.ico, small PNGs and an SVG, with a pinned-tab mask for Safari. The home-screen and installed-app icons keep their charcoal tile, as separate rounded and full-bleed versions for each platform.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.12</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.13</p>
 </footer>
 
 <script>

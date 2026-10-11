@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-Yz2koqlbDJkMgxwzTzuD/HTTX9EuBLXGuyjxRCoMYes='; font-src 'self'; script-src 'self' 'sha256-twvQhPbKV41XaJvdwf52A+RX/opoI8gGVXah/YWfjsA=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-Yz2koqlbDJkMgxwzTzuD/HTTX9EuBLXGuyjxRCoMYes='; font-src 'self'; script-src 'self' 'sha256-WrtKp1ilOdsCM6MdpGABbMWESFexLKUCn6i1kzKprqM=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4229,12 +4229,12 @@
 
 
 
-<!-- build: 950a948273e9 -->
+<!-- build: c1b4c2c3381d -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.12
+ * AEON -- Universal Dynamics Reactor v7.0.13
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7490,7 +7490,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.12';
+const APP_VERSION='7.0.13';
 
 
 
@@ -7499,8 +7499,8 @@ const APP_VERSION='7.0.12';
 
 
 
-const MISSION_BUILD_HASH='950a948273e9';
-const MISSION_GIT_SHA='d5c3e2a476151b531ee6d9b9b55b45df079d7a88';
+const MISSION_BUILD_HASH='c1b4c2c3381d';
+const MISSION_GIT_SHA='b8cf6a4403c3f32b59fe2f03efe48b94fe702b98';
 
 const MISSION_RENDER_HASH='449956cad1b8';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50147,6 +50147,16 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.13',
+date:'2026-10-11',
+headline:'The Buddhabrot shows its orbits, and the tour has a voice.',
+items:[
+'Buddhabrot renders and exports show the orbits, with no flat field or hard rectangle around them.',
+'The one-minute tour has a voiceover, and the landing page gallery opens AEON on each form it shows.',
+'The Klein quartic opens at full size, the app menu rows line up, and the Safari tab has no white border.',
+],
+},
+{
 version:'7.0.12',
 date:'2026-10-11',
 headline:'Groups and symmetries drawn true.',
@@ -50213,16 +50223,6 @@ headline:'A first visit now shows you where to start.',
 items:[
 'After the welcome, a small card at the top left lists three things to try: zoom into the picture, open the catalog, and change the palette.',
 'Each one ticks off as you do it. Show me around starts the controls tour, and Hide puts the card away for good.',
-],
-},
-{
-version:'7.0.5',
-date:'2026-10-06',
-headline:'Dialogs opened from a menu hand focus back to it, and the Inspector keeps its title bar.',
-items:[
-'Closing a dialog opened from a menu, or canceling New or Reset all, returns keyboard focus to the menu button.',
-'Opening a section from the palette chip or the catalog no longer scrolls the Inspector\'s title bar and tabs out of view.',
-'The Foreword and the landing page were rewritten in plainer language, and four wrong facts in them are fixed.',
 ],
 },
 ];
