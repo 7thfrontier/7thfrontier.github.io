@@ -1,7 +1,7 @@
 {
-  "name": "AEON: Fractal & Sacred Geometry",
+  "name": "AEON: Universal Dynamics Reactor",
   "short_name": "AEON",
-  "description": "AEON: fractal explorer and sacred-geometry studio. 58 fractal types, 183 geometric patterns, 51 curated palettes. Flame Studio, Motion Studio, Layer Studio, Post-FX, 8K/16K tile render.",
+  "description": "An instrument for the mathematics of form. Mathematicians found every figure here, some of them centuries ago, and AEON draws them as exactly as their proofs allow: 58 fractal types and 183 geometric patterns, explored and exported offline.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

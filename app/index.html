@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-z3jQLoUO2lkteEIJY0qSoDIsiuZqFKkfx2oXDaOXkqw='; font-src 'self'; script-src 'self' 'sha256-UTnWdPi4wBqXBaO/X9BKfyKlMdra5YzES/XIksLK9Yo=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-dXWNg984VNHYd6tZEWflWEhpwXJ2CH4ly15kqXiVIbw='; font-src 'self'; script-src 'self' 'sha256-RCzBgkIO3iLOLmrsMfrhLi+s8ZbgBVYDjrkWZDj2qNs=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -593,7 +593,7 @@
         @keyframes guidePulse{from{box-shadow:0 0 0 0 var(--accent-glow)}}
         body.zen-mode .guide,body.zen-mode .guide-chip,body.zen-mode .guide-ring,body.zen-mode .guide-nudge{display:none}
         @media(max-width:860px){.guide{left:10px;right:10px;width:auto;top:auto;bottom:var(--guide-bottom,200px);max-height:46vh;padding:var(--sp-6);gap:var(--sp-5)}.guide .g-sub,.guide .g-poster{display:none}.guide .g-title{font-size:20px}.guide-chip{top:calc(var(--sp-5) + 50px + var(--sp-3));left:var(--sp-5)}body.fs-up .nav-hints{display:none}}
-        .tours-menu-group:first-child{margin-top:0;padding-top:0;border-top:0}
+        .tours-menu-group:first-child,.chrome-menu-group:first-child{margin-top:0;padding-top:0;border-top:0}
         .catalog-corner .cc-logo{gap:var(--sp-2);margin-right:var(--sp-2)}
         .catalog-corner .lp-logo{font-size:22px;line-height:1}
         .catalog-corner .lp-logo-glyph{width:20px;height:20px}
@@ -668,8 +668,8 @@
         .exp-navbtn,.exp-exit{font-size:12px;padding:4px 10px;border:1px solid var(--border-mid);border-radius:var(--r-2);background:var(--surface2);color:var(--text);cursor:pointer;font-family:inherit}
         .exp-navbtn:disabled{opacity:.4;cursor:default}
         .exp-exit{border:none;background:none;color:var(--text-dim);padding:4px 6px}
-        .tours-menu-group{margin-top:4px;padding-top:4px;border-top:1px solid var(--border)}
-        .tours-menu-label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);padding:4px 10px 2px}
+        .tours-menu-group,.chrome-menu-group{margin-top:4px;padding-top:4px;border-top:1px solid var(--border)}
+        .tours-menu-label,.chrome-menu-label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);padding:4px 10px 2px}
         @media(prefers-reduced-motion:reduce){.exp-card{transition:none}}
         
         #pill-cancel{display:none;background:none;border:none;color:rgba(255,255,255,.7);font-size:12px;line-height:1;padding:1px 4px;margin-left:2px;cursor:pointer;border-radius:var(--r-1);transition:color var(--dur-snappy),background var(--dur-snappy)}
@@ -2370,6 +2370,7 @@
     <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="openWelcome">Getting started</button>
     <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="openTourVideo" data-tour-video aria-haspopup="dialog">Watch the one-minute tour</button>
     <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="startInteractiveTour">Tour the controls</button>
+    <button type="button" role="menuitem" class="btn ghost tours-menu-item" data-action="openForeword" aria-haspopup="dialog">Read the foreword</button>
     </div>
     <div role="group" aria-label="Tours" class="tours-menu-group">
     <div class="tours-menu-label" aria-hidden="true">Tours</div>
@@ -3180,7 +3181,7 @@
       </div>
       <div id="gs-panel" class="is-hidden">
         <div class="rp-sub-head">Gray-Scott Parameters</div>
-        <div class="ctrl"><label for="grayScottF">F (feed) <span class="badge" id="grayScottF-v">0.0540</span></label><div class="slider-row"><input type="range" id="grayScottF" min="0.025" max="0.08" step="0.0005" value="0.054" aria-describedby="slider-keys-hint"></div></div>
+        <div class="ctrl"><label for="grayScottF">F (feed) <span class="badge" id="grayScottF-v">0.0540</span></label><div class="slider-row"><input type="range" id="grayScottF" min="0.014" max="0.08" step="0.0005" value="0.054" aria-describedby="slider-keys-hint"></div></div>
         <div class="ctrl"><label for="grayScottK">k (kill) <span class="badge" id="grayScottK-v">0.062</span></label><div class="slider-row"><input type="range" id="grayScottK" min="0.03" max="0.062" step="0.0005" value="0.062" aria-describedby="slider-keys-hint"></div></div>
         <details class="ctrl-hint-toggle mt-2"><summary>Feed and kill rates shape spots, stripes, or other reaction-diffusion textures.</summary><div class="ctrl-hint">F=0.037, k=0.060 = spots · F=0.029, k=0.057 = stripes · F=0.014, k=0.054 = u-skate</div></details>
       </div>
@@ -4225,7 +4226,7 @@
 
 
 
-<!-- build: fec792788238 -->
+<!-- build: da2222ff86a2 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -4345,7 +4346,7 @@ desc:{f:'(|Re|+i|Im|)² + c, c fixed',d:'Julia variant of the Burning Ship. Fixe
 
 
 
-exp_map:{glType:23,family:'escape',juliaMode:false,label:'Exp. Map',fd:{cx:0,cy:0,zoom:0.3},escR:256,
+exp_map:{glType:23,family:'escape',juliaMode:false,label:'Exp. Map',fd:{cx:-0.5,cy:0,zoom:1.2},escR:256,
 info:{name:'Exponential Map',formula:'f(z) = eᶻ + c'},
 desc:{f:'z → eᶻ + c',d:'Exponential map, followed from c: the exponential has no critical points, and c is the one value its orbits can approach, so its orbit decides each point. Adding 2πi to c shifts the whole orbit by 2πi, so the detail repeats in horizontal bands of height 2π.'}},
 
@@ -7495,10 +7496,10 @@ const APP_VERSION='7.0.11';
 
 
 
-const MISSION_BUILD_HASH='fec792788238';
-const MISSION_GIT_SHA='ced4f4879db622409cb70573113f3ccc3667272c';
+const MISSION_BUILD_HASH='da2222ff86a2';
+const MISSION_GIT_SHA='1f06e05eb1183d4d0c2e105b14b16f71e7f92827';
 
-const MISSION_RENDER_HASH='e4bc831a6bf4';
+const MISSION_RENDER_HASH='29433179b70e';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -14089,8 +14090,10 @@ if(S.pattern==='gray-scott'){
 const f=document.getElementById('grayScottF'),k=document.getElementById('grayScottK');
 if(f){f.value=S.grayScottF!=null?S.grayScottF:0.054;
 document.getElementById('grayScottF-v').textContent=(+(S.grayScottF!=null?S.grayScottF:0.054)).toFixed(4);}
-if(k){k.value=S.grayScottK!=null?S.grayScottK:0.062;
-document.getElementById('grayScottK-v').textContent=(+(S.grayScottK!=null?S.grayScottK:0.062)).toFixed(4);}
+
+const kEff=_gsEffFK(S.grayScottF!=null?S.grayScottF:0.054, S.grayScottK!=null?S.grayScottK:0.062)[1];
+if(k){k.value=kEff;
+document.getElementById('grayScottK-v').textContent=(+kEff).toFixed(4);}
 }
 }
 const lenp=document.getElementById('lenia-panel');
@@ -21594,7 +21597,7 @@ _legibleTable,_legibleT,
 
 _lwK,
 
-_geoFrameExt,_geoGrowLevels,_geoCullTris,_geoPolyKey,_geoGrowSun,_penroseJoin,_penrosePath,_boyPoint,
+_geoFrameExt,_wallpaperGroup,_geoGrowLevels,_geoCullTris,_geoPolyKey,_geoGrowSun,_penroseJoin,_penrosePath,_boyPoint,
 
 
 _mirrorConfigs,_drawGeomWithMirrors,_withCompositedGlow,_glowSelfManaged,
@@ -32927,7 +32930,7 @@ c.stroke();
 function _mirrorCurveLoops(cols,rows){
 const startStates=[];
 for(let i=0;i<cols;i++){startStates.push([i+0.5,0,1,1]);startStates.push([i+0.5,0,-1,1]);}
-const seen=new Set(), loops=[];
+const seen=new Set(), segSeen=new Set(), loops=[];
 const key=s=>s.join('|');
 for(const s0 of startStates){
 if(seen.has(key(s0)))continue;
@@ -32944,6 +32947,11 @@ if(ty<=tx)dy=-dy;
 if(Math.abs(x-s0[0])<1e-9&&Math.abs(y-s0[1])<1e-9&&dx===s0[2]&&dy===s0[3])break;
 pts.push([x,y]);
 }
+
+
+const segKey=i=>{const a=pts[i].join(','),b=pts[(i+1)%pts.length].join(',');return a<b?a+'|'+b:b+'|'+a;};
+if(segSeen.has(segKey(0)))continue;
+for(let i=0;i<pts.length;i++)segSeen.add(segKey(i));
 loops.push(pts);
 }
 return loops;
@@ -35222,100 +35230,67 @@ c.restore();
 }
 
 
+
+
+
+function _wallpaperGroup(grp){
+const H=Math.sqrt(3)/2;
+const lat={obl:[[1,0],[0.32,0.88]], rect:[[1,0],[0,0.72]], crect:[[1,0],[0,1.3]], sq:[[1,0],[0,1]], hex:[[1,0],[-0.5,H]]};
+const I=[1,0,0,1,0,0], R2=[-1,0,0,-1,0,0];
+const C=ops=>ops.concat(ops.map(o=>[o[0],o[1],o[2],o[3],o[4]+0.5,o[5]+0.5]));
+const p4=[I,R2,[0,-1,1,0,0,0],[0,1,-1,0,0,0]];
+const p3=[I,[0,-1,1,-1,0,0],[-1,1,-1,0,0,0]];
+const p6=p3.concat([R2,[0,1,-1,1,0,0],[1,-1,1,0,0,0]]);
+const m3a=[[0,-1,-1,0,0,0],[-1,1,0,1,0,0],[1,0,1,-1,0,0]];   
+const m3b=[[0,1,1,0,0,0],[1,-1,0,-1,0,0],[-1,0,-1,1,0,0]];   
+const G={
+p1:['obl',[I]], p2:['obl',[I,R2]],
+pm:['rect',[I,[-1,0,0,1,0,0]]], pg:['rect',[I,[-1,0,0,1,0,0.5]]], cm:['crect',C([I,[-1,0,0,1,0,0]])],
+pmm:['rect',[I,R2,[-1,0,0,1,0,0],[1,0,0,-1,0,0]]],
+pmg:['rect',[I,R2,[-1,0,0,1,0.5,0],[1,0,0,-1,0.5,0]]],
+pgg:['rect',[I,R2,[-1,0,0,1,0.5,0.5],[1,0,0,-1,0.5,0.5]]],
+cmm:['crect',C([I,R2,[-1,0,0,1,0,0],[1,0,0,-1,0,0]])],
+p4:['sq',p4], p4m:['sq',p4.concat([[-1,0,0,1,0,0],[1,0,0,-1,0,0],[0,1,1,0,0,0],[0,-1,-1,0,0,0]])],
+p4g:['sq',p4.concat([[-1,0,0,1,0.5,0.5],[1,0,0,-1,0.5,0.5],[0,1,1,0,0.5,0.5],[0,-1,-1,0,0.5,0.5]])],
+p3:['hex',p3], p3m1:['hex',p3.concat(m3a)], p31m:['hex',p3.concat(m3b)],
+p6:['hex',p6], p6m:['hex',p6.concat(m3a,m3b)],
+};
+const g=G[grp]||G.p1;
+return {basis:lat[g[0]], ops:g[1]};
+}
+
+
 function drawWallpaper(c, bR){
-
 const groups=['p1','p2','pm','pg','cm','pmm','pmg','pgg','cmm','p4','p4m','p4g','p3','p3m1','p31m','p6','p6m'];
-const idx=((S.layers||7)-1)%17;
-const grp=groups[idx];
-const cell=bR*0.55;
+const grp=groups[((S.layers||7)-1)%17];
+const {basis, ops}=_wallpaperGroup(grp);
+const unit=bR*0.55;
+const [[ax,ay],[bx,by]]=basis, det=ax*by-ay*bx;
+const toFrac=(x,y)=>[(by*x-bx*y)/det, (-ay*x+ax*y)/det];
 
 
-const _ext=_geoFrameExt(bR), cols=Math.ceil(_ext/cell)+1, rows=cols;
+const F=[[0,0],[0.28,0],[0.28,0.42],[0.7,0.42],[0.7,0.62],[0.28,0.62],[0.28,0.8],[0.85,0.8],[0.85,1],[0,1]];
+const motif=F.map(([u,v])=>toFrac(0.24+u*0.18, 0.035+v*0.18));
+
+const ext=_geoFrameExt(bR)/unit+1.5;
+const span=Math.ceil(ext/Math.min(Math.abs(det)/Math.hypot(bx,by), Math.abs(det)/Math.hypot(ax,ay)))+1;
 c.save();
 c.lineWidth=Math.max(1, S.lineWeight*0.7*_lwK());
-
-function motif(ctx, sx, sy){
-const s=Math.min(sx, sy)*0.8;
-ctx.beginPath();
-ctx.moveTo(0, 0);
-ctx.lineTo(s*0.7, 0);
-ctx.lineTo(s*0.7, s*0.25);
-ctx.lineTo(s*0.25, s*0.25);
-ctx.lineTo(s*0.25, s*0.7);
-ctx.lineTo(0, s*0.7);
-ctx.closePath();
-ctx.stroke();
-if(S.fill){ctx.fillStyle=geoFillColor(0, 1, s, bR); ctx.fill();}
-}
-
-
-
-const orbits={
-'p1':[[1,0,0,1,0,0]],
-'p2':[[1,0,0,1,0,0],[-1,0,0,-1,1,1]],
-'pm':[[1,0,0,1,0,0],[-1,0,0,1,1,0]],
-'pg':[[1,0,0,1,0,0],[-1,0,0,1,1,0.5]],
-'cm':[[1,0,0,1,0,0],[-1,0,0,1,1,0],[1,0,0,1,0.5,0.5],[-1,0,0,1,0.5,0.5]],
-'pmm':[[1,0,0,1,0,0],[-1,0,0,1,1,0],[1,0,0,-1,0,1],[-1,0,0,-1,1,1]],
-'pmg':[[1,0,0,1,0,0],[1,0,0,-1,0,1],[-1,0,0,1,0.5,0],[-1,0,0,-1,0.5,1]],
-'pgg':[[1,0,0,1,0,0],[-1,0,0,-1,1,1],[1,0,0,-1,0.5,0.5],[-1,0,0,1,0.5,0.5]],
-'cmm':[[1,0,0,1,0,0],[-1,0,0,-1,1,1],[-1,0,0,1,1,0],[1,0,0,-1,0,1],
-[1,0,0,1,0.5,0.5],[-1,0,0,-1,0.5,0.5],[-1,0,0,1,0.5,0.5],[1,0,0,-1,0.5,0.5]],
-'p4':[[1,0,0,1,0,0],[0,-1,1,0,0,1],[-1,0,0,-1,1,1],[0,1,-1,0,1,0]],
-'p4m':[[1,0,0,1,0,0],[0,-1,1,0,0,1],[-1,0,0,-1,1,1],[0,1,-1,0,1,0],
-[-1,0,0,1,1,0],[0,-1,-1,0,1,1],[1,0,0,-1,0,1],[0,1,1,0,0,0]],
-'p4g':[[1,0,0,1,0,0],[0,-1,1,0,0,1],[-1,0,0,-1,1,1],[0,1,-1,0,1,0],
-[-1,0,0,1,1.5,0.5],[0,-1,-1,0,1.5,1.5],[1,0,0,-1,0.5,1.5],[0,1,1,0,0.5,0.5]],
-'p3':[[1,0,0,1,0,0],[-0.5,-0.866,0.866,-0.5,1,0],[-0.5,0.866,-0.866,-0.5,0.5,0.866]],
-'p3m1':[[1,0,0,1,0,0],[-0.5,-0.866,0.866,-0.5,1,0],[-0.5,0.866,-0.866,-0.5,0.5,0.866],
-[-1,0,0,1,1,0],[0.5,0.866,0.866,-0.5,0,0],[0.5,-0.866,-0.866,-0.5,0.5,0.866]],
-'p31m':[[1,0,0,1,0,0],[-0.5,-0.866,0.866,-0.5,1,0],[-0.5,0.866,-0.866,-0.5,0.5,0.866],
-[1,0,0,-1,0,0.5],[-0.5,0.866,0.866,0.5,1,0.5],[-0.5,-0.866,-0.866,0.5,0.5,1.366]],
-'p6':[[1,0,0,1,0,0],[0.5,-0.866,0.866,0.5,0,0],[-0.5,-0.866,0.866,-0.5,0.5,0.866],
-[-1,0,0,-1,1,0.866*2],[-0.5,0.866,-0.866,-0.5,1.5,0.866],[0.5,0.866,-0.866,0.5,1,0]],
-'p6m':[[1,0,0,1,0,0],[0.5,-0.866,0.866,0.5,0,0],[-0.5,-0.866,0.866,-0.5,0.5,0.866],
-[-1,0,0,-1,1,0.866*2],[-0.5,0.866,-0.866,-0.5,1.5,0.866],[0.5,0.866,-0.866,0.5,1,0],
-[-1,0,0,1,1,0],[-0.5,0.866,0.866,0.5,1,0],[0.5,0.866,0.866,-0.5,0.5,0.866],
-[1,0,0,-1,0,0.866*2],[0.5,-0.866,-0.866,-0.5,1.5,0.866],[-0.5,-0.866,-0.866,0.5,1,0]]
-};
-const orbit=orbits[grp]||orbits['p1'];
-
-const getTransform=c.getTransform;
-const m=c.canvas && typeof getTransform==='function' && !(c.shadowBlur>0) &&
-!c.shadowOffsetX && !c.shadowOffsetY && (!c.filter || c.filter==='none') &&
-(!S.fill || ['source-over','multiply','screen','overlay','lighten','darken',
-'color-dodge','color-burn','difference','exclusion'].includes(S.fillBlend||'source-over')) &&
-c.globalCompositeOperation==='source-over' ? getTransform.call(c) : null;
-let radius2=0;
-if(m){
-let radius=0;
-for(const o of orbit) radius=Math.max(radius,
-Math.hypot(o[4]+0.28*(o[0]+o[2])-0.5,o[5]+0.28*(o[1]+o[3])-0.5)+0.28*Math.SQRT2);
-const a=m.a*m.a+m.b*m.b, b=m.c*m.c+m.d*m.d, d=m.a*m.c+m.b*m.d;
-const scale=Math.sqrt((a+b+Math.hypot(a-b,2*d))/2);
-const stroke=c.lineWidth*(c.lineJoin==='miter'?Math.max(1,c.miterLimit):Math.SQRT2);
-radius2=(scale*(radius*cell+stroke)+2)**2;
-}
-for(let cy=-rows;cy<=rows;cy++)for(let cx=-cols;cx<=cols;cx++){
-if(m){
-const x=(cx+0.5)*cell, y=(cy+0.5)*cell;
-const px=m.a*x+m.c*y+m.e, py=m.b*x+m.d*y+m.f;
-const dx=Math.max(0,-px,px-c.canvas.width), dy=Math.max(0,-py,py-c.canvas.height);
-if(dx*dx+dy*dy>radius2)continue;
-}
-for(let oi=0;oi<orbit.length;oi++){
-const o=orbit[oi];
-c.save();
-c.translate((cx + o[4])*cell, (cy + o[5])*cell);
-c.transform(o[0]*cell*0.001, o[1]*cell*0.001, o[2]*cell*0.001, o[3]*cell*0.001, 0, 0);
-
-c.restore();
-c.save();
-c.translate((cx + o[4])*cell, (cy + o[5])*cell);
-c.transform(o[0], o[1], o[2], o[3], 0, 0);
-c.strokeStyle=geoElemColor(oi, orbit.length, cell, bR);
-motif(c, cell, cell);
-c.restore();
+for(let j=-span;j<=span;j++)for(let i=-span;i<=span;i++){
+const ox=i*ax+j*bx, oy=i*ay+j*by;
+if(Math.hypot(ox,oy)>ext+1)continue;
+for(let k=0;k<ops.length;k++){
+const o=ops[k];
+c.beginPath();
+motif.forEach(([x,y],n)=>{
+const fx=o[0]*x+o[1]*y+o[4]+i, fy=o[2]*x+o[3]*y+o[5]+j;
+const X=(fx*ax+fy*bx)*unit, Y=(fx*ay+fy*by)*unit;
+if(n)c.lineTo(X,Y); else c.moveTo(X,Y);
+});
+c.closePath();
+c.strokeStyle=geoElemColor(k, ops.length, unit, bR);
+c.stroke();
+if(S.fill){c.fillStyle=geoFillColor(k, ops.length, unit, bR); c.fill();}
 }
 }
 c.restore();
@@ -35500,10 +35475,12 @@ const cosX=Math.cos(S.rotX||0), sinX=Math.sin(S.rotX||0), cosY=Math.cos(S.rotY||
 c.save();
 c.lineWidth=Math.max(1, S.lineWeight*0.6*_lwK());
 
-const sc=R*0.55;
+
+
+const sc=R*1.05, cx=0.018, cy=-0.121, cz=-0.700;
 const trace=(pts, col)=>{
 c.strokeStyle=col; c.beginPath();
-pts.forEach(([x,y,z],i)=>{ const p=_geoRot3D(x*sc,y*sc,z*sc,cosX,sinX,cosY,sinY), pp=3.5/(3.5+p.z/R); if(i===0) c.moveTo(p.x*pp, p.y*pp); else c.lineTo(p.x*pp, p.y*pp); });
+pts.forEach(([x,y,z],i)=>{ const p=_geoRot3D((x-cx)*sc,(y-cy)*sc,(z-cz)*sc,cosX,sinX,cosY,sinY), pp=3.5/(3.5+p.z/R); if(i===0) c.moveTo(p.x*pp, p.y*pp); else c.lineTo(p.x*pp, p.y*pp); });
 c.stroke();
 };
 
@@ -35735,55 +35712,97 @@ function drawSphericalDodecahedron(c, bR){_drawSphericalTiling(c, bR, 'dodecahed
 
 
 
-function drawCayleyS3(c, bR){
-const R=bR*1.0;
-const verts=[];
-const labels=['e','σ','σ²','τ','στ','σ²τ'];
-for(let i=0;i<6;i++){
-const a=i*TAU/6 - Math.PI/2;
-verts.push([R*Math.cos(a), R*Math.sin(a)]);
+
+
+function _cayleyBuild(gens, mul, key, id){
+const els=[id], idx=new Map([[key(id),0]]);
+for(let q=0;q<els.length;q++)for(const s of gens){
+const y=mul(els[q],s), k=key(y);
+if(!idx.has(k)){idx.set(k,els.length);els.push(y);}
+}
+const edges=gens.map(s=>els.map((g,i)=>[i, idx.get(key(mul(g,s)))]));
+const invol=gens.map(s=>key(mul(s,s))===key(id));
+return {els, idx, edges, invol};
 }
 
-
-c.save();
-c.lineWidth=Math.max(2, S.lineWeight*_lwK());
-
-c.strokeStyle=geoElemColor(0, 2, bR, bR);
-for(const cyc of [[0,1,2],[3,4,5]]){
-for(let i=0;i<3;i++){
-const A=verts[cyc[i]], B=verts[cyc[(i+1)%3]];
-c.beginPath(); c.moveTo(A[0], A[1]); c.lineTo(B[0], B[1]); c.stroke();
-
-const dx=B[0]-A[0], dy=B[1]-A[1], len=Math.sqrt(dx*dx+dy*dy);
-const ux=dx/len, uy=dy/len;
-const tip=[A[0]+0.65*dx, A[1]+0.65*dy];
-const ah=12;
+function _cayleyArrow(c, A, B, size){
+const dx=B[0]-A[0], dy=B[1]-A[1], L=Math.hypot(dx,dy)||1, ux=dx/L, uy=dy/L;
+const t=[A[0]+0.6*dx, A[1]+0.6*dy];
 c.beginPath();
-c.moveTo(tip[0], tip[1]);
-c.lineTo(tip[0] - ah*ux + ah*0.5*uy, tip[1] - ah*uy - ah*0.5*ux);
-c.moveTo(tip[0], tip[1]);
-c.lineTo(tip[0] - ah*ux - ah*0.5*uy, tip[1] - ah*uy + ah*0.5*ux);
+c.moveTo(t[0],t[1]); c.lineTo(t[0]-size*ux+size*0.5*uy, t[1]-size*uy-size*0.5*ux);
+c.moveTo(t[0],t[1]); c.lineTo(t[0]-size*ux-size*0.5*uy, t[1]-size*uy+size*0.5*ux);
 c.stroke();
 }
+
+
+function _cayleyProject(pts3, scale){
+const cosX=Math.cos(S.rotX||0), sinX=Math.sin(S.rotX||0), cosY=Math.cos(S.rotY||0), sinY=Math.sin(S.rotY||0);
+const m=Math.max(1e-9,...pts3.map(p=>Math.hypot(p[0],p[1],p[2])));
+return pts3.map(p=>{const q=_geoRot3D(p[0]/m,p[1]/m,p[2]/m,cosX,sinX,cosY,sinY), k=3.5/(3.5+q.z);return [scale*q.x*k, scale*q.y*k, q.z];});
 }
 
-c.strokeStyle=geoElemColor(1, 2, bR, bR);
-for(const pair of [[0,3],[1,4],[2,5]]){
-const A=verts[pair[0]], B=verts[pair[1]];
-c.beginPath(); c.moveTo(A[0], A[1]); c.lineTo(B[0], B[1]); c.stroke();
-}
 
-c.fillStyle=accentColor();
-c.font=`${Math.max(13,bR*0.1|0)}px `+(window.UI_FONT_FAMILY||'sans-serif'); 
-c.textAlign='center'; c.textBaseline='middle';
-for(let i=0;i<6;i++){
-const [x,y]=verts[i];
-c.beginPath(); c.arc(x, y, Math.max(8,bR*0.062|0), 0, TAU); c.fill();
-c.fillStyle='#fff';
-c.fillText(labels[i], x, y);
-c.fillStyle=accentColor();
+function _cayleyDraw(c, bR, pos, G, opts){
+const o=opts||{}, dotR=o.dotR||4, arrow=o.arrow||8, width=o.width||1, labels=o.labels||null, alpha=o.alpha||1;
+c.save();
+c.lineWidth=Math.max(0.5, S.lineWeight*width*_lwK());
+c.globalAlpha=alpha;
+
+
+const directed=new Set();
+G.edges.forEach((list,k)=>{ if(!G.invol[k]) for(const [i,j] of list) directed.add(Math.min(i,j)+','+Math.max(i,j)); });
+G.edges.forEach((list,k)=>{
+c.strokeStyle=geoElemColor(k, G.edges.length, bR, bR);
+for(const [i,j] of list){
+if(i===j || (G.invol[k] && i>j)) continue;
+const A=pos[i], B=pos[j];
+c.beginPath(); c.moveTo(A[0],A[1]);
+if(G.invol[k] && directed.has(i+','+j)){
+const mx=(A[0]+B[0])/2, my=(A[1]+B[1])/2, dx=B[0]-A[0], dy=B[1]-A[1];
+c.quadraticCurveTo(mx-dy*0.25, my+dx*0.25, B[0], B[1]);
+} else c.lineTo(B[0],B[1]);
+c.stroke();
+if(!G.invol[k]) _cayleyArrow(c, A, B, arrow);
 }
+});
+c.globalAlpha=1;
+c.fillStyle=accentColor();
+if(labels){c.font=`${Math.max(12,dotR*1.1|0)}px `+(window.UI_FONT_FAMILY||'sans-serif'); c.textAlign='center'; c.textBaseline='middle';}
+pos.forEach(([x,y],i)=>{
+c.beginPath(); c.arc(x, y, dotR, 0, TAU); c.fill();
+if(labels){c.fillStyle='#fff'; c.fillText(labels[i], x, y); c.fillStyle=accentColor();}
+});
 c.restore();
+}
+const _permMul=(a,b)=>a.map(v=>b[v]), _permKey=p=>p.join(',');
+
+
+const _matMul=(A,B)=>A.map((r,i)=>[0,1,2].map(j=>r[0]*B[0][j]+r[1]*B[1][j]+r[2]*B[2][j]));
+const _matKey=A=>A.map(r=>r.map(v=>Math.round(v*1e6)).join(',')).join(';');
+const _matApply=(A,p)=>A.map(r=>r[0]*p[0]+r[1]*p[1]+r[2]*p[2]);
+function _rotAxis(ax, ang){
+const L=Math.hypot(...ax), [x,y,z]=ax.map(v=>v/L), c=Math.cos(ang), s=Math.sin(ang), t=1-c;
+return [[t*x*x+c, t*x*y-s*z, t*x*z+s*y],[t*x*y+s*z, t*y*y+c, t*y*z-s*x],[t*x*z-s*y, t*y*z+s*x, t*z*z+c]];
+}
+
+
+
+function _cayleyTwoRings(G, R, r, turn){
+const pos=new Array(G.els.length), ring=[0];
+for(let x=G.edges[0][0][1]; x!==0; x=G.edges[0][x][1]) ring.push(x);
+ring.forEach((e,n)=>{const a=n*TAU/ring.length-Math.PI/2; pos[e]=[R*Math.cos(a), R*Math.sin(a)];});
+ring.forEach((e,n)=>{const a=n*TAU/ring.length-Math.PI/2+(turn||0); pos[G.edges[1][e][1]]=[r*Math.cos(a), r*Math.sin(a)];});
+return pos;
+}
+
+
+function drawCayleyS3(c, bR){
+const G=_cayleyBuild([[1,2,0],[1,0,2]], _permMul, _permKey, [0,1,2]);
+const pos=_cayleyTwoRings(G, bR*1.0, bR*0.5);
+const name=new Map([[0,'e']]);
+let x=0; for(const n of ['σ','σ²']){x=G.edges[0][x][1]; name.set(x,n);}
+for(const [y,n] of [...name]) name.set(G.edges[1][y][1], n==='e'?'τ':n+'τ');
+_cayleyDraw(c, bR, pos, G, {dotR:Math.max(8,bR*0.062|0), arrow:12, width:1, labels:G.els.map((_,i)=>name.get(i))});
 }
 
 
@@ -35816,82 +35835,23 @@ c.restore();
 
 
 function drawCayleyQ8(c, bR){
-const R=bR*1.0;
-const labels=['1','i','-1','-i','j','k','-j','-k'];
+const qm=(a,b)=>[a[0]*b[0]-a[1]*b[1]-a[2]*b[2]-a[3]*b[3], a[0]*b[1]+a[1]*b[0]+a[2]*b[3]-a[3]*b[2],
+a[0]*b[2]-a[1]*b[3]+a[2]*b[0]+a[3]*b[1], a[0]*b[3]+a[1]*b[2]-a[2]*b[1]+a[3]*b[0]];
+const G=_cayleyBuild([[0,1,0,0],[0,0,1,0]], qm, q=>q.join(','), [1,0,0,0]);
 
 
-const verts=[];
-for(let m=0;m<2;m++){
-for(let n=0;n<4;n++){
-const a=n*TAU/4 - Math.PI/2;
-const r=R*(0.5 + m*0.5);
-verts.push([r*Math.cos(a + m*TAU/8), r*Math.sin(a + m*TAU/8)]);
-}
-}
-c.save();
-c.lineWidth=Math.max(2, S.lineWeight*0.8*_lwK());
-
-c.strokeStyle=geoElemColor(0, 3, bR, bR);
-for(const cyc of [[0,1,2,3],[4,5,6,7]]){
-for(let i=0;i<4;i++){
-const A=verts[cyc[i]], B=verts[cyc[(i+1)%4]];
-c.beginPath(); c.moveTo(A[0],A[1]); c.lineTo(B[0],B[1]); c.stroke();
-}
-}
-
-c.strokeStyle=geoElemColor(1, 3, bR, bR);
-for(const pair of [[0,4],[1,5],[2,6],[3,7]]){
-const A=verts[pair[0]], B=verts[pair[1]];
-c.beginPath(); c.moveTo(A[0],A[1]); c.lineTo(B[0],B[1]); c.stroke();
-}
-
-c.fillStyle=accentColor();
-c.font=`${Math.max(12,bR*0.093|0)}px `+(window.UI_FONT_FAMILY||'sans-serif'); 
-c.textAlign='center'; c.textBaseline='middle';
-for(let i=0;i<8;i++){
-const [x,y]=verts[i];
-c.beginPath(); c.arc(x, y, Math.max(9,bR*0.07|0), 0, TAU); c.fill();
-c.fillStyle='#fff';
-c.fillText(labels[i], x, y);
-c.fillStyle=accentColor();
-}
-c.restore();
+const pos=_cayleyTwoRings(G, bR*1.0, bR*0.5, Math.PI/4);
+const label=q=>{const k=q.findIndex(v=>v!==0);return (q[k]<0?'-':'')+['1','i','j','k'][k];};
+_cayleyDraw(c, bR, pos, G, {dotR:Math.max(9,bR*0.07|0), arrow:11, width:0.8, labels:G.els.map(label)});
 }
 
 
 function drawCayleyA4(c, bR){
-const R=bR*1.0;
-
-const verts=[];
-const corners=[[0,0]];
-for(let k=0;k<4;k++){
-const a=k*TAU/4 - Math.PI/4;
-const cx=R*0.7*Math.cos(a), cy=R*0.7*Math.sin(a);
-for(let n=0;n<3;n++){
-const ang=n*TAU/3 + a;
-verts.push([cx + R*0.25*Math.cos(ang), cy + R*0.25*Math.sin(ang)]);
-}
-}
-c.save();
-c.lineWidth=Math.max(2, S.lineWeight*0.8*_lwK());
-
-c.strokeStyle=geoElemColor(0, 2, bR, bR);
-for(let k=0;k<4;k++){
-for(let n=0;n<3;n++){
-const A=verts[k*3 + n], B=verts[k*3 + (n+1)%3];
-c.beginPath(); c.moveTo(A[0],A[1]); c.lineTo(B[0],B[1]); c.stroke();
-}
-}
-
-c.strokeStyle=geoElemColor(1, 2, bR, bR);
-for(let k=0;k<4;k++){
-const A=verts[k*3], B=verts[((k+1)%4)*3];
-c.beginPath(); c.moveTo(A[0],A[1]); c.lineTo(B[0],B[1]); c.stroke();
-}
-
-c.fillStyle=accentColor();
-for(const [x,y] of verts){c.beginPath(); c.arc(x, y, 5, 0, TAU); c.fill()}
-c.restore();
+const a=[[0,1,0],[0,0,1],[1,0,0]], b=[[1,0,0],[0,-1,0],[0,0,-1]], I=[[1,0,0],[0,1,0],[0,0,1]];
+const G=_cayleyBuild([a,b], _matMul, _matKey, I);
+const p0=[1,1/3,1/3];
+const pos=_cayleyProject(G.els.map(g=>_matApply(g,p0)), bR*1.0);
+_cayleyDraw(c, bR, pos, G, {dotR:5, arrow:10, width:0.8});
 }
 
 
@@ -35964,106 +35924,44 @@ c.restore();
 
 
 function drawCayleyA5(c, bR){
-
-
-
-
-
-
-const N=60;
-const verts=[];
 const phi=(1+Math.sqrt(5))/2;
-const goldAngle=GOLDEN_ANGLE_RAD;
-for(let i=0;i<N;i++){
-const y=1 - (i/(N-1))*2; 
-const r=Math.sqrt(1 - y*y);
-const theta=goldAngle*i;
-verts.push([r*Math.cos(theta), y, r*Math.sin(theta)]);
-}
-const R=bR*0.85;
-const cosX=Math.cos(S.rotX||0), sinX=Math.sin(S.rotX||0), cosY=Math.cos(S.rotY||0), sinY=Math.sin(S.rotY||0);
-c.save();
-c.lineWidth=Math.max(1, S.lineWeight*0.4*_lwK());
-
-
-
-const dists=[];
-for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
-const a=verts[i], b=verts[j];
-const d=Math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2]-b[2])**2);
-dists.push({i, j, d});
-}
-dists.sort((a,b)=>a.d-b.d);
-
-const edges=dists.slice(0, 120);
-c.strokeStyle=geoElemColor(0, 1, R, R);
-c.globalAlpha=0.8;
-for(const e of edges){
-const a=verts[e.i], b=verts[e.j];
-const pa=_geoRot3D(a[0],a[1],a[2],cosX,sinX,cosY,sinY),_ppa=3.5/(3.5+pa.z),ax=R*pa.x*_ppa,ay=R*pa.y*_ppa; 
-const pb=_geoRot3D(b[0],b[1],b[2],cosX,sinX,cosY,sinY),_ppb=3.5/(3.5+pb.z),bx=R*pb.x*_ppb,by=R*pb.y*_ppb;
-c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke();
-}
-c.globalAlpha=1;
-c.fillStyle=accentColor();
-for(const v of verts){
-const pv=_geoRot3D(v[0],v[1],v[2],cosX,sinX,cosY,sinY),_ppv=3.5/(3.5+pv.z),x=R*pv.x*_ppv,y=R*pv.y*_ppv;
-c.beginPath(); c.arc(x, y, 3, 0, TAU); c.fill();
-}
-c.restore();
+const v=[0,1,phi], w=[0,-1,phi];
+const r=_rotAxis(v, TAU/5), s=_rotAxis([0,0,1], Math.PI), I=[[1,0,0],[0,1,0],[0,0,1]];
+const G=_cayleyBuild([r,s], _matMul, _matKey, I);
+const p0=[v[0]+(w[0]-v[0])/3, v[1]+(w[1]-v[1])/3, v[2]+(w[2]-v[2])/3];
+const pos=_cayleyProject(G.els.map(g=>_matApply(g,p0)), bR*0.95);
+_cayleyDraw(c, bR, pos, G, {dotR:3, arrow:6, width:0.5, alpha:0.85});
 }
 
 
+let _psl27Layout=null;
 function drawCayleyPSL27(c, bR){
-const N=168;
-
-const verts=[];
-for(let s=0;s<14;s++){
-for(let r=0;r<12;r++){
-const radius=bR*0.15 + r*bR*0.06;
-const angle=s*TAU/14 + (r%2)*TAU/28;
-verts.push([radius*Math.cos(angle), radius*Math.sin(angle)]);
+const P=7, mul=(x,y)=>[(x[0]*y[0]+x[1]*y[2])%P,(x[0]*y[1]+x[1]*y[3])%P,(x[2]*y[0]+x[3]*y[2])%P,(x[2]*y[1]+x[3]*y[3])%P];
+const key=m=>{const f=m.find(v=>v!==0);return (f>3?m.map(v=>(P-v)%P):m).join(',');}; 
+const G=_cayleyBuild([[0,6,1,0],[0,6,1,1]], mul, key, [1,0,0,1]);
+if(!_psl27Layout) _psl27Layout=_cayleyMDS(G, 3);
+const pos=_cayleyProject(_psl27Layout, bR*0.95);
+_cayleyDraw(c, bR, pos, G, {dotR:2, arrow:4, width:0.35, alpha:0.75});
 }
-}
-c.save();
-c.lineWidth=Math.max(0.5, S.lineWeight*0.3*_lwK());
 
 
-
-
-c.strokeStyle=geoElemColor(0, 3, bR, bR);
-c.globalAlpha=0.7;
-for(let s=0;s<14;s++){
-for(let r=0;r<12;r++){
-const i=s*12 + r;
-
-const j=((s+1)%14)*12 + r;
-const a=verts[i], b=verts[j];
-c.beginPath(); c.moveTo(a[0],a[1]); c.lineTo(b[0],b[1]); c.stroke();
+function _cayleyMDS(G, d){
+const n=G.els.length, adj=G.els.map(()=>[]);
+for(const list of G.edges)for(const [i,j] of list)if(i!==j){adj[i].push(j);adj[j].push(i);}
+const D=G.els.map((_,s)=>{const dist=new Array(n).fill(-1);dist[s]=0;const q=[s];for(let h=0;h<q.length;h++)for(const t of adj[q[h]])if(dist[t]<0){dist[t]=dist[q[h]]+1;q.push(t);}return dist;});
+const B=D.map(r=>r.map(v=>-0.5*v*v)), rm=B.map(r=>r.reduce((a,b)=>a+b,0)/n), gm=rm.reduce((a,b)=>a+b,0)/n;
+for(let i=0;i<n;i++)for(let j=0;j<n;j++)B[i][j]+=gm-rm[i]-rm[j];
+const vecs=[];
+for(let k=0;k<d;k++){
+let x=Array.from({length:n},(_,i)=>Math.sin(1+i*(k+1)*0.7));
+for(let it=0;it<300;it++){
+let y=B.map(r=>r.reduce((a,v,j)=>a+v*x[j],0));
+for(const u of vecs){const dot=y.reduce((a,v,i)=>a+v*u[i],0);y=y.map((v,i)=>v-dot*u[i]);}
+const L=Math.hypot(...y)||1; x=y.map(v=>v/L);
 }
+vecs.push(x);
 }
-c.strokeStyle=geoElemColor(1, 3, bR, bR);
-for(let s=0;s<14;s++){
-for(let r=0;r<11;r++){
-const i=s*12 + r;
-const j=s*12 + (r+1);
-const a=verts[i], b=verts[j];
-c.beginPath(); c.moveTo(a[0],a[1]); c.lineTo(b[0],b[1]); c.stroke();
-}
-}
-c.strokeStyle=geoElemColor(2, 3, bR, bR);
-c.globalAlpha=0.4;
-
-for(let i=0;i<N;i+=2){
-const a=verts[i], b=verts[(i+84)%N];
-c.beginPath(); c.moveTo(a[0],a[1]); c.lineTo(b[0],b[1]); c.stroke();
-}
-c.globalAlpha=1;
-c.fillStyle=accentColor();
-for(const [x,y] of verts){
-c.beginPath(); c.arc(x, y, 1.6, 0, TAU); c.fill();
-}
-c.restore();
+return G.els.map((_,i)=>vecs.map(u=>u[i]));
 }
 
 
@@ -36221,90 +36119,19 @@ c.restore();
 }
 
 
-function drawCayleyM11(c, bR){
-const N=11;
+function drawCayleyM11(c, bR){ _drawMathieuSchreier(c, bR, 11, [[[2,10],[4,11],[5,7],[8,9]], [[1,4,3,8],[2,5,6,9]]]); }
+
+function _drawMathieuSchreier(c, bR, N, cycles){
+const perm=cs=>{const p=[...Array(N).keys()];for(const cy of cs)for(let i=0;i<cy.length;i++)p[cy[i]-1]=cy[(i+1)%cy.length]-1;return p;};
+const gens=cycles.map(perm);
+const G={els:[...Array(N).keys()], edges:gens.map(p=>p.map((t,i)=>[i,t])), invol:gens.map(p=>p.every((t,i)=>p[t]===i))};
 const R=bR*0.95;
-const verts=[];
-for(let i=0;i<N;i++){
-const a=i*TAU/N - Math.PI/2;
-verts.push([R*Math.cos(a), R*Math.sin(a)]);
-}
-c.save();
-c.lineWidth=Math.max(2, S.lineWeight*0.7*_lwK());
-
-
-c.strokeStyle=geoElemColor(0, 3, bR, bR);
-for(let i=0;i<N;i++){
-const A=verts[i], B=verts[(i+1)%N];
-c.beginPath(); c.moveTo(A[0],A[1]); c.lineTo(B[0],B[1]); c.stroke();
-}
-c.strokeStyle=geoElemColor(1, 3, bR, bR);
-for(let i=0;i<N;i++){
-const A=verts[i], B=verts[(2*i)%N];
-if(i!==(2*i)%N){c.beginPath(); c.moveTo(A[0],A[1]); c.lineTo(B[0],B[1]); c.stroke()}
-}
-c.strokeStyle=geoElemColor(2, 3, bR, bR);
-c.globalAlpha=0.6;
-for(let i=0;i<N;i++){
-const A=verts[i], B=verts[((N-i)%N)];
-if(i!==(N-i)%N){c.beginPath(); c.moveTo(A[0],A[1]); c.lineTo(B[0],B[1]); c.stroke()}
-}
-c.globalAlpha=1;
-
-c.fillStyle=accentColor();
-c.font=`${Math.max(12,bR*0.093|0)}px `+(window.UI_FONT_FAMILY||'sans-serif'); 
-c.textAlign='center'; c.textBaseline='middle';
-for(let i=0;i<N;i++){
-const [x,y]=verts[i];
-c.beginPath(); c.arc(x, y, Math.max(10,bR*0.078|0), 0, TAU); c.fill();
-c.fillStyle='#fff';
-c.fillText(String(i), x, y);
-c.fillStyle=accentColor();
-}
-c.restore();
+const pos=G.els.map(i=>{const a=i*TAU/N-Math.PI/2;return [R*Math.cos(a), R*Math.sin(a)];});
+_cayleyDraw(c, bR, pos, G, {dotR:Math.max(10,bR*0.078|0), arrow:12, width:0.7, labels:G.els.map(i=>String(i+1))});
 }
 
 
-function drawCayleyM12(c, bR){
-const N=12;
-const R=bR*0.95;
-const verts=[];
-for(let i=0;i<N;i++){
-const a=i*TAU/N - Math.PI/2;
-verts.push([R*Math.cos(a), R*Math.sin(a)]);
-}
-c.save();
-c.lineWidth=Math.max(2, S.lineWeight*0.7*_lwK());
-
-c.strokeStyle=geoElemColor(0, 3, bR, bR);
-for(let i=0;i<N;i++){
-const A=verts[i], B=verts[(i+1)%N];
-c.beginPath(); c.moveTo(A[0],A[1]); c.lineTo(B[0],B[1]); c.stroke();
-}
-c.strokeStyle=geoElemColor(1, 3, bR, bR);
-for(let i=0;i<N;i++){
-const A=verts[i], B=verts[(i+5)%N];
-c.beginPath(); c.moveTo(A[0],A[1]); c.lineTo(B[0],B[1]); c.stroke();
-}
-c.strokeStyle=geoElemColor(2, 3, bR, bR);
-c.globalAlpha=0.6;
-for(let i=0;i<N;i++){
-const A=verts[i], B=verts[(i*5)%N];
-if(i!==(i*5)%N){c.beginPath(); c.moveTo(A[0],A[1]); c.lineTo(B[0],B[1]); c.stroke()}
-}
-c.globalAlpha=1;
-c.fillStyle=accentColor();
-c.font=`${Math.max(12,bR*0.093|0)}px `+(window.UI_FONT_FAMILY||'sans-serif'); 
-c.textAlign='center'; c.textBaseline='middle';
-for(let i=0;i<N;i++){
-const [x,y]=verts[i];
-c.beginPath(); c.arc(x, y, Math.max(10,bR*0.078|0), 0, TAU); c.fill();
-c.fillStyle='#fff';
-c.fillText(String(i), x, y);
-c.fillStyle=accentColor();
-}
-c.restore();
-}
+function drawCayleyM12(c, bR){ _drawMathieuSchreier(c, bR, 12, [[[1,4],[3,10],[5,11],[6,12]], [[1,8,9],[2,3,4],[5,12,11],[6,10,7]]]); }
 
 
 function drawHopfFibration(c, bR){
@@ -41631,7 +41458,7 @@ spd:  { type:'number', min:0,     max:1.5 },
 car:  { type:'int',    min:0,     max:255 },                           
 hp:   { type:'int',    min:3,     max:12 },                            
 hq:   { type:'int',    min:3,     max:12 },                            
-gsf:  { type:'number', min:0.025, max:0.08 },                          
+gsf:  { type:'number', min:0.014, max:0.08 },                          
 gsk:  { type:'number', min:0.03,  max:0.062 },                         
 lnm:  { type:'number', min:0.05,  max:0.2 },                           
 lns:  { type:'number', min:0.02,  max:0.1 },                           
@@ -45095,7 +44922,7 @@ side:()=>{ _workerComputeCache.clear(); } },
 'kleinianMuIm':    { s:'kleinianMuIm',    parse:'float', badge:'kleinianMuIm-v',    fmt:'fixed2',  render:true,
 side:()=>{ _workerComputeCache.clear(); } },
 'polytope4dWRate': { s:'polytope4dWRate', parse:'float', badge:'polytope4dWRate-v', fmt:'fixed2',  render:true },
-'grayScottF':      { s:'grayScottF',      parse:'float', badge:'grayScottF-v',      fmt:'fixed4',  render:true },
+'grayScottF':      { s:'grayScottF',      parse:'float', badge:'grayScottF-v',      fmt:'fixed4',  render:true, side:()=>_gsSyncK() },
 'grayScottK':      { s:'grayScottK',      parse:'float', badge:'grayScottK-v',      fmt:'fixed4',  render:true },
 
 'leniaMu':         { s:'leniaMu',         parse:'float', badge:'leniaMu-v',         fmt:'fixed3',  render:true },
@@ -51128,7 +50955,7 @@ const PATTERN_INFO={
 'enneper':{title:'Enneper Surface',body:'A minimal surface described by Alfred Enneper in 1864, given in closed parametric form: x = u − u³/3 + uv², y = v − v³/3 + vu², z = u² − v². Unlike the catenoid or helicoid it is not embedded, the surface passes through itself as the parameter domain grows, but it is a clean example of a complete minimal surface with a simple Weierstrass-Enneper representation (g = z, dh = z dz). Its umbilic-free saddle geometry and four-fold appearance make it a standard textbook illustration of minimal-surface theory.'},
 'scherk':{title:'Scherk Surface',body:'Heinrich Scherk\'s first surface (1834), the earliest minimal surface found after the plane, catenoid, and helicoid. It is doubly periodic and given explicitly as a graph z = ln(cos y / cos x), defined over a checkerboard of squares where cos x and cos y share a sign. Where two such towers meet, the surface bridges them with saddles, so it reads as a lattice of square chimneys joined edge to edge. Scherk\'s second (singly-periodic) surface is its conjugate. Both arise as limits of more general minimal-surface families.'},
 'geodesic-polyhedron':{title:'Geodesic Polyhedron',body:'A convex polyhedron approximating a sphere, built by subdividing each face of an icosahedron into a triangular grid of frequency ν and projecting every new vertex onto the circumscribed sphere. The result has 10ν² + 2 vertices and near-equal edge lengths, distributing them more evenly than latitude-longitude meshes. Walther Bauersfeld used the principle for the first projection planetarium dome (Jena, 1922); Buckminster Fuller patented and popularized the geodesic dome in 1954. The dual is a Goldberg polyhedron of hexagons and twelve pentagons, the soccer-ball / fullerene family.'},
-'wallpaper':{title:'Wallpaper Group',body:'The 17 plane crystallographic groups, discrete subgroups of the Euclidean motion group containing two linearly independent translations. Classified by Yevgraf Fyodorov (1891) and independently by George Pólya (1924); Pólya\'s exposition inspired M. C. Escher. Notation: p1, p2, pm, pg, cm, pmm, pmg, pgg, cmm, p4, p4m, p4g, p3, p3m1, p31m, p6, p6m (IUC). All 17 are realized in the Alhambra (Granada, ~1350 CE), a fact Escher discovered on his 1936 visit. Adjust S.layers (1-17) to cycle groups.'},
+'wallpaper':{title:'Wallpaper Group',body:'The 17 plane crystallographic groups, discrete subgroups of the Euclidean motion group containing two linearly independent translations. Classified by Yevgraf Fyodorov (1891) and independently by George Pólya (1924); Pólya\'s exposition inspired M. C. Escher. Notation: p1, p2, pm, pg, cm, pmm, pmg, pgg, cmm, p4, p4m, p4g, p3, p3m1, p31m, p6, p6m (IUC). All 17 are realized in the Alhambra (Granada, ~1350 CE), a fact Escher discovered on his 1936 visit. Each group is drawn on its own lattice (oblique, rectangular, centered, square or hexagonal) with a letter F, which has no symmetry of its own, so every turn, mirror and glide in the picture belongs to the group: three-fold turns in p3, p3m1 and p31m, six-fold in p6 and p6m. Adjust S.layers (1-17) to cycle groups.'},
 'quasicrystal':{title:'Quasicrystal',body:'Long-range ordered but non-periodic structure with classically-forbidden rotational symmetries (5-, 8-, 10-, 12-fold). Mathematically modeled by de Bruijn\'s cut-and-project from a higher-dimensional periodic lattice (1981) and by Penrose tilings (1974). Physically discovered by Dan Shechtman (1982; Nobel 2011) in rapidly-cooled Al-Mn alloys despite Linus Pauling\'s public dismissal. The visualization here sums 5 plane waves at angles k·π/5, contouring bright fringes to expose the 10-fold quasiperiodic order.'},
 
 'five-cell':{title:'5-cell {3,3,3} (4-Simplex)',body:'The 4-dimensional analogue of the tetrahedron, 5 vertices, 10 edges, 10 triangular faces, 5 tetrahedral cells. Self-dual (its dual is also a 5-cell). Schläfli symbol {3,3,3}. Discovered by Ludwig Schläfli (1850s, posthumous publication 1901). Stereographic projection from S³ to ℝ³ shown here; rotation in the so(4) Lie algebra.'},
@@ -51177,19 +51004,19 @@ const PATTERN_INFO={
 'pinwheel':{title:'Pinwheel',body:'Charles Radin\'s pinwheel tiling (Annals of Mathematics 139, 1994), based on a construction of John Conway. The single prototile is the right triangle with legs 1 and 2 and hypotenuse √5. Each triangle subdivides into five copies scaled by 1/√5: four meet at the midpoint of the long leg and the fifth sits rotated at the center. Because the substitution turns children by arctan(1/2), an irrational multiple of π, the tiles occur in infinitely many orientations, the first tiling shown to have this property. Its statistical roundness later informed quasicrystal and acoustic-scattering studies.'},
 'voderberg':{title:'Voderberg Spiral',body:'Heinz Voderberg (invented 1936 in his doctoral dissertation; published as "Zur Zerlegung des Umgebungsraumes in kongruente Zellen", Jahresbericht der Deutschen Mathematiker-Vereinigung 47 (1937), 159–160). The first known monohedral tiling that tiles the plane in a spiral pattern. The single tile is a 9-vertex enneagon whose specific edge angles permit two copies to rotate around their shared vertex. The spiral has no translational symmetry. Famously presented in Heesch & Kienzle\'s 1963 monograph. The rendering here is a simplified representation that conveys the tiling\'s character rather than constructing it from the rules described above.'},
 
-'cayley-s-three':{title:'Cayley Graph of S₃',body:'S₃ is the symmetric group on 3 letters: 6 elements (the 6 permutations of {1,2,3}). Generators σ = (1 2 3) (3-cycle) and τ = (1 2) (transposition). The Cayley graph has 6 vertices arranged on a hexagon; σ-edges form two cyclic triangles (red) and τ-edges flip top-half to bottom-half (blue). S₃ is the smallest non-abelian group. Source: Cayley, A., "On the theory of groups", Amer. J. Math. 11 (1878), 139–157.'},
-'cayley-a-four':{title:'Cayley Graph of A₄',body:'A₄ is the alternating group on 4 letters: 12 elements (even permutations of {1,2,3,4}), the rotation group of the regular tetrahedron. Drawn here as four cyclic 3-cycles (one per axis-rotation triple) linked by double-transpositions, A₄ contains no single transpositions because those are odd permutations. A₄ is the smallest counter-example to the converse of Lagrange\'s theorem: |A₄| = 12 is divisible by 6, yet A₄ has no subgroup of order 6. Arthur Cayley, "Desiderata and suggestions: No. 2" (Amer. J. Math. 1878).'},
+'cayley-s-three':{title:'Cayley Graph of S₃',body:'S₃ is the symmetric group on 3 letters: 6 elements (the 6 permutations of {1,2,3}). Generators σ = (1 2 3) (3-cycle) and τ = (1 2) (transposition). The 6 elements sit on two triangles: σ-edges run around each one (arrows) and τ-edges join each element to its partner. The inner triangle turns the opposite way because τσ = σ²τ, which is what tells S₃ apart from the cyclic group of order 6. S₃ is the smallest non-abelian group. Source: Cayley, A., "On the theory of groups", Amer. J. Math. 11 (1878), 139–157.'},
+'cayley-a-four':{title:'Cayley Graph of A₄',body:'A₄ is the alternating group on 4 letters: 12 elements (even permutations of {1,2,3,4}), the rotation group of the regular tetrahedron. Drawn with a 3-cycle a and a double transposition b, its Cayley graph is the truncated tetrahedron: four directed triangles of a, joined in pairs by the six edges of b. A₄ contains no single transpositions because those are odd permutations. A₄ is the smallest counter-example to the converse of Lagrange\'s theorem: |A₄| = 12 is divisible by 6, yet A₄ has no subgroup of order 6. Arthur Cayley, "Desiderata and suggestions: No. 2" (Amer. J. Math. 1878).'},
 'cayley-d-six':{title:'Cayley Graph of D₆',body:'D₆ is the dihedral group of order 12, the symmetries of a regular hexagon. 6 rotations + 6 reflections = 12 elements. Drawn as two concentric hexagons connected by reflection edges. Generators: r (rotation by 60°) and s (reflection), with relations r⁶ = s² = e, srs = r⁻¹. The dihedral groups Dₙ are the simplest non-abelian groups for n ≥ 3. Arthur Cayley (1878).'},
-'cayley-q-eight':{title:'Cayley Graph of Q₈',body:'Q₈ is the quaternion group: {±1, ±i, ±j, ±k} with i² = j² = k² = ijk = -1. 8 elements with non-commutative multiplication (ij = k but ji = -k). Discovered by William Rowan Hamilton on 16 October 1843 (Brougham Bridge, Dublin), the inscription "i² = j² = k² = ijk = -1" still appears on the bridge. Q₈ is the smallest example of a Hamiltonian (= every subgroup is normal) non-abelian group.'},
+'cayley-q-eight':{title:'Cayley Graph of Q₈',body:'Q₈ is the quaternion group: {±1, ±i, ±j, ±k} with i² = j² = k² = ijk = -1. 8 elements with non-commutative multiplication (ij = k but ji = -k). Discovered by William Rowan Hamilton on 16 October 1843 (Brougham Bridge, Dublin), the inscription "i² = j² = k² = ijk = -1" still appears on the bridge. Q₈ is the smallest example of a Hamiltonian (= every subgroup is normal) non-abelian group. Drawn with generators i and j, both of order 4: two directed 4-cycles of i, and j-edges that land where ij = k and ji = −k put them.'},
 'fundamental-polygon':{title:'Fundamental Polygon',body:'A closed surface can be constructed by edge-identification on a polygon. Torus T² (genus 1): square with relator aba⁻¹b⁻¹ (the commutator). Genus-g surface: 4g-gon with the standard relator a₁b₁a₁⁻¹b₁⁻¹...a_g b_g a_g⁻¹ b_g⁻¹. Klein bottle K²: square with abab⁻¹ (one identification reverses orientation, giving non-orientability). The Bolza surface is a genus-2 hyperbolic surface with the maximum-symmetry octagonal fundamental domain. Source: Beardon, "The Geometry of Discrete Groups" (1983), §10.'},
 
 'cayley-s-four':{title:'Cayley Graph of S₄',body:'S₄ is the symmetric group on 4 letters: 24 elements (the 24 permutations of {1,2,3,4}), the rotation group of the cube. Drawn as the truncated octahedron, the permutohedron of order 4, whose 24 vertices are exactly the 24 permutations of (0,1,2,3) embedded in ℝ³ on the hyperplane x+y+z+w = 6. Edges correspond to adjacent transpositions. Arthur Cayley (1878).'},
-'cayley-a-five':{title:'Cayley Graph of A₅',body:'A₅ is the alternating group on 5 letters: 60 elements, the rotation group of the icosahedron. The smallest non-abelian simple group. Galois (1832) proved that A_n is simple for n ≥ 5; this is the foundation of his proof that the general quintic equation cannot be solved by radicals. Visualized here as 60 points on the unit sphere via the Fibonacci-sphere construction with 4-regular generator-edge connectivity.'},
-'cayley-psl-two-seven':{title:'Cayley Graph of PSL₂(7) (Klein Quartic Group)',body:'PSL₂(7) is the projective special linear group of degree 2 over ℤ/7. 168 elements; the second-smallest non-abelian simple group (after A₅). Acts as the orientation-preserving symmetry group of the Klein quartic surface, a genus-3 Riemann surface that achieves the Hurwitz upper bound of 84(g-1) = 168 automorphisms (Hurwitz 1893). The (2,3,7)-triangle group structure determines the visualization. Klein, F., "Über die Transformation siebenter Ordnung" (1879).'},
+'cayley-a-five':{title:'Cayley Graph of A₅',body:'A₅ is the alternating group on 5 letters: 60 elements, the rotation group of the icosahedron. The smallest non-abelian simple group. Galois (1832) proved that A_n is simple for n ≥ 5; this is the foundation of his proof that the general quintic equation cannot be solved by radicals. Drawn with a 72° turn r about a vertex and a half turn s about the midpoint of an edge, its Cayley graph is the truncated icosahedron: 12 directed pentagons of r joined by the 30 edges of s.'},
+'cayley-psl-two-seven':{title:'Cayley Graph of PSL₂(7) (Klein Quartic Group)',body:'PSL₂(7) is the projective special linear group of degree 2 over ℤ/7. 168 elements; the second-smallest non-abelian simple group (after A₅). Acts as the orientation-preserving symmetry group of the Klein quartic surface, a genus-3 Riemann surface that achieves the Hurwitz upper bound of 84(g-1) = 168 automorphisms (Hurwitz 1893). Drawn from generators a of order 2 and b of order 3 whose product has order 7, the (2,3,7) generators: 168 vertices, 56 directed triangles of b and 84 edges of a, laid out in 3D so that elements close in the group sit close together (rotate the view to look around it). Klein, F., "Über die Transformation siebenter Ordnung" (1879).'},
 'cayley-d-eight':{title:'Cayley Graph of D₈',body:'D₈ is the dihedral group of order 16: the symmetries of the regular octagon. 8 rotations + 8 reflections. Generators: r (rotation by 45°) and s (reflection), with relations r⁸ = s² = e, srs = r⁻¹. Drawn as two concentric octagons with reflection edges connecting them. Arthur Cayley (1878).'},
 
-'cayley-m-eleven':{title:'Mathieu M₁₁ Cayley Graph',body:'M₁₁ is the smallest of the 5 Mathieu sporadic finite simple groups: |G| = 7920 = 2⁴·3²·5·11. Acts sharply 4-transitively on 11 letters; the stabilizer of one point is M₁₀ of order 720 = 7920/11. Discovered by Émile Mathieu, "Mémoire sur l\'étude des fonctions de plusieurs quantités" (1861, 1873). The full 7920-vertex Cayley graph is too dense to render legibly; this visualization plots the 11-vertex Cayley graph of the quotient action on cosets of M₁₀, the canonical 4-transitive 11-letter action. M₁₁ also has a separate transitive action on 12 letters with point-stabilizer PSL₂(11) of order 660 = 7920/12. Three color-coded generators: rotation, doubling, inversion mod 11.'},
-'cayley-m-twelve':{title:'Mathieu M₁₂ Cayley Graph',body:'M₁₂ is the second-smallest Mathieu sporadic group: |G| = 95040 = 2⁶·3³·5·11. Acts sharply 5-transitively on 12 letters, the Steiner system S(5,6,12) has automorphism group exactly M₁₂. Mathieu (1873). The 95040-vertex Cayley graph is too dense to render legibly; this visualization plots the 12-vertex Cayley graph of the quotient action on cosets of M₁₁, the canonical 5-transitive 12-letter action. Three color-coded generators: rotation, +5, ×5 mod 12.'},
+'cayley-m-eleven':{title:'Mathieu M₁₁ Cayley Graph',body:'M₁₁ is the smallest of the 5 Mathieu sporadic finite simple groups: |G| = 7920 = 2⁴·3²·5·11. Acts sharply 4-transitively on 11 letters; the stabilizer of one point is M₁₀ of order 720 = 7920/11. Discovered by Émile Mathieu, "Mémoire sur l\'étude des fonctions de plusieurs quantités" (1861, 1873). The full 7920-vertex Cayley graph is too dense to render legibly; this visualization plots the 11-point Schreier graph of its action on cosets of M₁₀, the canonical 4-transitive 11-letter action. M₁₁ also has a separate transitive action on 12 letters with point-stabilizer PSL₂(11) of order 660 = 7920/12. Drawn with the two standard generators of the ATLAS of Finite Groups (1985): a, of order 2, swaps four pairs of points, and b, of order 4, turns two 4-cycles; together they generate all of M₁₁.'},
+'cayley-m-twelve':{title:'Mathieu M₁₂ Cayley Graph',body:'M₁₂ is the second-smallest Mathieu sporadic group: |G| = 95040 = 2⁶·3³·5·11. Acts sharply 5-transitively on 12 letters, the Steiner system S(5,6,12) has automorphism group exactly M₁₂. Mathieu (1873). The 95040-vertex Cayley graph is too dense to render legibly; this visualization plots the 12-point Schreier graph of its action on cosets of M₁₁, the canonical 5-transitive 12-letter action, drawn with the two standard ATLAS generators: a of order 2 and b of order 3, which together generate all of M₁₂.'},
 'hopf-fibration':{title:'Hopf Fibration',body:'The fiber bundle S¹ → S³ → S² discovered by Heinz Hopf in 1931 ("Über die Abbildungen der dreidimensionalen Sphäre auf die Kugelfläche", Math. Ann. 104). Each point of the base S² lifts to a great circle of S³; in stereographic projection these great circles become LINKED CIRCLES in ℝ³, the Hopf-link signature. The Hopf invariant (Hopf 1931) classifies these maps; the Hopf fibration has invariant 1, the smallest positive value. Standard example in algebraic topology and quantum-information theory (the Bloch sphere is exactly the base S² of the Hopf fibration of a qubit\'s state space).'},
 
 'genus-four-polygon':{title:'Genus-4 Fundamental Polygon',body:'A 16-gon with the standard relator a₁b₁a₁⁻¹b₁⁻¹a₂b₂a₂⁻¹b₂⁻¹a₃b₃a₃⁻¹b₃⁻¹a₄b₄a₄⁻¹b₄⁻¹. Edge identification yields a closed orientable surface of genus 4 (a quadruple-handle torus), Euler characteristic χ = 2 - 2g = -6. Hyperbolic surfaces of this genus have moduli space of complex dimension 3g - 3 = 9. They form a 9-complex-dimensional family. Fundamental polygon for the Bolza surface (genus 2 / area 4π) and higher-genus analogues; canonical edge-pairing in Beardon (1983).'},
@@ -52565,6 +52392,8 @@ return combo ? String(combo).toUpperCase() : '';
 
 const _APP_MENU_GROUPS = ['file','edit','view','render','help'];
 
+const _APP_MENU_GROUP_LABELS = { help:'Help' };
+
 
 function _buildAppMenu(){
 const menu = document.getElementById('app-menu');
@@ -52573,6 +52402,20 @@ const frag = document.createDocumentFragment();
 for (const group of _APP_MENU_GROUPS){
 const actions = getActionsByGroup(group);
 if (!actions.length) continue;
+const heading = _APP_MENU_GROUP_LABELS[group];
+let host = frag;
+if (heading){
+host = document.createElement('div');
+host.setAttribute('role', 'group');
+host.setAttribute('aria-label', heading);
+host.className = 'chrome-menu-group';
+const h = document.createElement('div');
+h.className = 'chrome-menu-label';
+h.setAttribute('aria-hidden', 'true');
+h.textContent = heading;
+host.appendChild(h);
+frag.appendChild(host);
+}
 for (const a of actions){
 const b = document.createElement('button');
 b.type = 'button';
@@ -52598,7 +52441,7 @@ b.textContent = a.label;
 }
 if (a.checked) b.insertAdjacentHTML('afterbegin', icon('check'));
 _syncActionEnabledEl(b, a);
-frag.appendChild(b);
+host.appendChild(b);
 }
 }
 menu.appendChild(frag);
@@ -54143,14 +53986,30 @@ c.strokeRect(ox,oy,N*cellSize,N*cellSize);c.restore();
 }
 
 
+
+
+
+function _gsKMax(F){ return F>=0.024 ? 0.062 : Math.min(0.062, 0.054+0.7*(F-0.014)); }
+function _gsEffFK(f,k){
+const F=Math.max(0.014,Math.min(0.08,f));
+return [F, Math.max(0.03,Math.min(_gsKMax(F),k))];
+}
+
+function _gsSyncK(){
+const kMax=_gsKMax(Math.max(0.014,Math.min(0.08,S.grayScottF!=null?S.grayScottF:0.054)));
+if((S.grayScottK!=null?S.grayScottK:0.062)<=kMax) return;
+S.grayScottK=+kMax.toFixed(4);
+const el=document.getElementById('grayScottK'), b=document.getElementById('grayScottK-v');
+if(el) el.value=S.grayScottK;
+if(b) b.textContent=S.grayScottK.toFixed(4);
+}
 function drawGrayScott(c,bR){
 const N=Math.round(96+(Math.max(1,Math.min(5,S.layers||3))-1)*32);
 
 
 
 
-const F=Math.max(0.025,Math.min(0.08,S.grayScottF!=null?S.grayScottF:0.054));
-const k=Math.max(0.03,Math.min(0.062,S.grayScottK!=null?S.grayScottK:0.062));
+const [F,k]=_gsEffFK(S.grayScottF!=null?S.grayScottF:0.054, S.grayScottK!=null?S.grayScottK:0.062);
 
 const _legacyGsSteps=Math.max(40,Math.min(1500,400+(S.layers||3)*120));
 const steps=(S.ceIter|0)>0?Math.max(1,Math.min(3000,S.ceIter|0)):_legacyGsSteps;
@@ -57880,8 +57739,12 @@ _4DPolytopeEdgeCache.set(cacheKey, edges);
 
 edges.sort((p,q)=>(pts2D[p[0]][2]+pts2D[p[1]][2])-(pts2D[q[0]][2]+pts2D[q[1]][2]));
 c.save();
-if(star)_drawStarFaces(c, star, rotated, pts2D);
+const hiFaces=star?_drawStarFaces(c, star, rotated, pts2D):null;
 c.lineWidth=Math.max(1, S.lineWeight*0.7*_lwK());
+
+
+const ga=c.globalAlpha;
+if(hiFaces)c.globalAlpha=ga*0.45;
 
 
 
@@ -57916,6 +57779,12 @@ if(path){
 c.strokeStyle=geoElemColor(runBucket, 32, runBucket, 31);  
 c.stroke(path);
 }
+if(hiFaces){
+c.globalAlpha=ga;
+c.lineWidth=Math.max(2, S.lineWeight*1.6*_lwK());
+c.strokeStyle=accentColor();
+for(const i of hiFaces){const f=star.faces[i];c.beginPath();c.moveTo(pts2D[f[0]][0],pts2D[f[0]][1]);for(let k=1;k<f.length;k++)c.lineTo(pts2D[f[k]][0],pts2D[f[k]][1]);c.closePath();c.stroke();}
+}
 
 if(S.fill){
 const dotR=Math.max(1.2, S.lineWeight*0.4);
@@ -57943,6 +57812,7 @@ c.restore();
 
 
 
+
 function _drawStarFaces(c, star, rotated, pts2D){
 const {faces, cells, cellVerts}=star;
 const depth=(f)=>{let z=0;for(const v of f)z+=pts2D[v][2];return z/f.length;};
@@ -57961,8 +57831,7 @@ c.globalAlpha=ga*0.55;
 const hiFaces=cells[hi].slice().sort((a,b)=>depth(faces[a])-depth(faces[b]));
 hiFaces.forEach((i,k)=>{c.fillStyle=geoFillColor(k,hiFaces.length,k,Math.max(1,hiFaces.length-1));outline(faces[i]);c.fill();});
 c.globalAlpha=ga;
-c.strokeStyle=accentColor();
-for(const i of hiFaces){outline(faces[i]);c.stroke();}
+return hiFaces;
 }
 
 
