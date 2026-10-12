@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.0.14</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.1.0</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.0.14</h2>
+    <h2>AEON · v7.1.0</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1162,19 +1162,25 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.0.14.</h2>
-    <p class="section-lede">The app keeps its name · 2026-10-12</p>
+    <h2 class="section-title">What's new<br>in 7.1.0.</h2>
+    <p class="section-lede">The Catalog opens instantly, and a Variation sheet · 2026-10-12</p>
   </header>
   <ul class="prose changes">
-    <li><strong>The installed app keeps its full name.</strong> Installed from the browser on a Mac, the app showed as &quot;AEON Universal Dynamics Reactor&quot; in the Dock and the app switcher, without the colon in the name the page used: macOS app names cannot hold one, so the browser dropped it. The name is now AEON Universal Dynamics Reactor everywhere, in the page title, the installed app and link previews, so it reads the same before and after install. The home-screen label stays AEON.</li>
-    <li><strong>The six shape tiles on the website open AEON again.</strong> On the published site, clicking a tile under &quot;Forms shipped in this box&quot; reloaded the landing page instead of opening the app on that shape. Each tile now opens the app on the shape it shows, as it already did from the downloaded copy.</li>
+    <li><strong>The Catalog opens instantly.</strong> Every type's opening view now ships with the app as a pre-rendered preview, so opening the Catalog paints from files instead of drawing 241 full-size pictures on the live canvas. A first open on a fresh install draws nothing, the live view no longer has to be frozen behind a copy of itself while the sheet fills, and the previews are in the download so the sheet looks the same offline. A view with no shipped preview still draws live, now with a time limit: past it the card keeps its type icon rather than holding the queue.</li>
+    <li><strong>Variation sheet.</strong> A new File entry, also on the command palette, lays the current picture out beside five named variants of itself: three neighbouring palettes and two moves of a knob that matters in the current mode, each parked in its own cell of one sheet. The sheet is an ordinary project, so it saves and reopens as .aeon with the cells and their names intact, and it exports at any size through the usual export panel. Nothing new renders: the cells are layers, drawn by the compositor the app already uses.</li>
+    <li><strong>Buddhabrot, attractor, IFS and flame exports keep the screen's brightness at any size.</strong> Each image was scaled to its own brightest pixel, and a larger export resolves a brighter peak than the screen does, so a big export came out darker than what you saw and a small one lighter: a 16384-wide Buddhabrot print was 18% darker. Exports now take the peak the screen would see. Small attractor, IFS and flame exports also scale their point count down with the picture, as the Buddhabrot already did. An attractor export too big for the point budget now says so instead of quietly coming out darker.</li>
+    <li><strong>Big attractor exports get the points they need.</strong> An attractor export was held to 5 million points however large it was, so a poster-sized export came out sparse, with most of the orbit missing. Exports now draw up to 200 million points, enough for a 9216x16384 export of a full-screen view, and the progress pill counts them as they go. Past that, the notice says the export was capped.</li>
+    <li><strong>Reopening a Lorenz or Chen-Lee attractor keeps the view you saved, and right-click zooms out again.</strong> Those two attractors sit further out than the 3D fractals do, and the zoom floor the ray-marched 3D fractals need was being applied to them too. Reopening a saved project, a bookmark or a share link pulled the camera in to that floor, and a right-click or scroll zoom-out from the default framing hit the floor and moved the camera the wrong way. Each 3D attractor now has room to sit at its own default framing, so a saved view reopens exactly as it was and zooming out moves outward. Ray-marched 3D fractals keep their own range.</li>
+    <li><strong>Density layers in a multi-layer export match the screen's brightness too.</strong> The brightness fix for Buddhabrot, attractor, IFS and flame exports did not reach a density layer that was not the active one, so a multi-layer export came out darker when larger. Those layers now take the screen's peak as well, and their point count also scales down for an export smaller than the screen.</li>
+    <li><strong>A notice no longer blocks the button under it.</strong> A notice left on screen from one export sat over the Export button the next time the export panel opened, and a click on Export landed on the notice instead, so nothing happened. Clicks now pass through a notice to whatever is under it; its close button still works.</li>
+    <li><strong>The app name has its colon back.</strong> The page title, the installed app's name and link previews read AEON: Universal Dynamics Reactor again. On a Mac, the Dock and the app switcher still show the name without the colon: the browser writes that label itself, and macOS app names cannot hold one. The home-screen label stays AEON.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.0.14</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.1.0</p>
 </footer>
 
 <script>

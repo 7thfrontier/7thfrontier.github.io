@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-ibN5/akhqC6bmLNLjtwZvLwKVYeb80RZI7snOFp76Hw='; font-src 'self'; script-src 'self' 'sha256-5Fp2uRbQ/QutaGmYb0kdQdMPnHb8OTF7Ti5I1otDR8Q=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-ibN5/akhqC6bmLNLjtwZvLwKVYeb80RZI7snOFp76Hw='; font-src 'self'; script-src 'self' 'sha256-9CBwtU5PzILD2cNtx5yuyEGHLbAOOkct9wimsVMD2Hs=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4230,12 +4230,12 @@
 
 
 
-<!-- build: 701226ac4e87 -->
+<!-- build: 2367f1e6a5dd -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.14
+ * AEON -- Universal Dynamics Reactor v7.1.0
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7491,7 +7491,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.14';
+const APP_VERSION='7.1.0';
 
 
 
@@ -7500,8 +7500,8 @@ const APP_VERSION='7.0.14';
 
 
 
-const MISSION_BUILD_HASH='701226ac4e87';
-const MISSION_GIT_SHA='1e4176ddfddf98f14c3dde10dbcedcb57ec4d887';
+const MISSION_BUILD_HASH='2367f1e6a5dd';
+const MISSION_GIT_SHA='8cd20cf32ba88a1db68f1883d9d02aac10b13c89';
 
 const MISSION_RENDER_HASH='595d85bf096a';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50351,6 +50351,17 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.1.0',
+date:'2026-10-12',
+headline:'The Catalog opens instantly, and the Variation sheet lays out five takes on your picture.',
+items:[
+'The Catalog opens on previews that ship with the app, so the sheet fills at once, offline too.',
+'File, Variation sheet places the current picture beside five named variants of itself, ready to save or export.',
+'Buddhabrot, attractor, IFS and flame exports keep the brightness you see on screen at any size, and big attractor exports get the points they need.',
+'A notice left over from an export no longer blocks the button under it, and the app name has its colon back.',
+],
+},
+{
 version:'7.0.14',
 date:'2026-10-12',
 headline:'The installed app keeps its full name, and the website tiles open AEON.',
@@ -50417,16 +50428,6 @@ items:[
 'Sacred-geometry lines no longer vanish into the background: the Seed of Life shows all seven circles, and Metatron’s Cube, the mandala and the Penrose tiling draw in full on a dark or a light canvas.',
 'The Sri Yantra draws all nine of its triangles.',
 'A shared link to an IFS, geometry or density view opens at its final size instead of widening after the app loads.',
-],
-},
-{
-version:'7.0.7',
-date:'2026-10-06',
-headline:'Fractals now draw only what you can see.',
-items:[
-'With the Inspector open, Mandelbrot, Julia and the other escape-time fractals no longer draw the strip hidden under it, so slow views finish sooner. The picture does not move.',
-'Post-FX such as the vignette and grain now show on deep zooms past the GPU\'s precision.',
-'The Catalog redraws the picture behind it once, when you close it, instead of while you scroll.',
 ],
 },
 ];
