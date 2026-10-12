@@ -38,8 +38,8 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-Yz2koqlbDJkMgxwzTzuD/HTTX9EuBLXGuyjxRCoMYes='; font-src 'self'; script-src 'self' 'sha256-pIEenfYy5W+X5vEPSC5E7U4IAzUF6CDSIdiTww75+QI=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
-    <title>AEON Universal Dynamics Reactor</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-ibN5/akhqC6bmLNLjtwZvLwKVYeb80RZI7snOFp76Hw='; font-src 'self'; script-src 'self' 'sha256-5Fp2uRbQ/QutaGmYb0kdQdMPnHb8OTF7Ti5I1otDR8Q=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
          degrade to platform serif/sans-serif fallbacks declared in the
@@ -72,13 +72,13 @@
     <meta name="description" content="AEON: fractal explorer and sacred-geometry studio. 58 fractal types, 183 geometric patterns, deep zoom past 10⁶⁰, 51 curated palettes.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://7thfrontier.github.io/app/">
-    <meta property="og:title" content="AEON Universal Dynamics Reactor">
+    <meta property="og:title" content="AEON: Universal Dynamics Reactor">
     <meta property="og:description" content="Fractal explorer and sacred-geometry studio. 58 fractal types, 183 geometric patterns, deep zoom past 10⁶⁰, 51 palettes.">
     <meta property="og:image" content="https://7thfrontier.github.io/icons/og-card.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AEON Universal Dynamics Reactor">
+    <meta name="twitter:title" content="AEON: Universal Dynamics Reactor">
     <meta name="twitter:description" content="Fractal explorer and sacred-geometry studio. 58 fractal types, 183 geometric patterns, deep zoom past 10⁶⁰.">
     <meta name="twitter:image" content="https://7thfrontier.github.io/icons/og-card.png">
     <meta name="mobile-web-app-capable" content="yes">
@@ -162,7 +162,8 @@
           
           max-width: min(calc(100vw - 32px), var(--toast-maxw, 100vw)); overflow-wrap: anywhere; white-space: normal;
         }
-        #reactor-toast.is-visible { opacity: 1; pointer-events: auto; }
+        #reactor-toast.is-visible { opacity: 1; }
+        #reactor-toast.is-visible .toast-close { pointer-events: auto; }
         
         #reactor-toast.is-dismissed { opacity: 0 !important; transition: none; }
         #reactor-toast .toast-text { display: inline-block; }
@@ -4229,7 +4230,7 @@
 
 
 
-<!-- build: 628e102e668f -->
+<!-- build: 701226ac4e87 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7499,10 +7500,10 @@ const APP_VERSION='7.0.14';
 
 
 
-const MISSION_BUILD_HASH='628e102e668f';
-const MISSION_GIT_SHA='358d5461a6978540e6fe6e3ee95ac963e3fc4d2f';
+const MISSION_BUILD_HASH='701226ac4e87';
+const MISSION_GIT_SHA='1e4176ddfddf98f14c3dde10dbcedcb57ec4d887';
 
-const MISSION_RENDER_HASH='b6b214eda2a8';
+const MISSION_RENDER_HASH='595d85bf096a';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -9462,11 +9463,22 @@ const ZOOM_MAX_NAV = 1e72;
 
 
 
+
+
+
+
+
+
+
+const ZOOM_MIN_3D_ATTRACTOR = .05;
+function _zoom3DFloor(ft){
+return (typeof IS_3D_ATTRACTORS!=='undefined' && IS_3D_ATTRACTORS.has(ft)) ? ZOOM_MIN_3D_ATTRACTOR : .1;
+}
 function _clampZoom(z){
 const is3D = (S.mode==='fractal') && (typeof _isFractal3D==='function'
 ? _isFractal3D(S.fractalType)
 : (typeof GL_3D_TYPES!=='undefined' && GL_3D_TYPES.has(S.fractalType)));
-return is3D ? Math.max(.1, Math.min(50, z)) : Math.max(.05, Math.min(ZOOM_MAX_NAV, z));
+return is3D ? Math.max(_zoom3DFloor(S.fractalType), Math.min(50, z)) : Math.max(.05, Math.min(ZOOM_MAX_NAV, z));
 }
 function _chooseDeepZoomTier(zoom) {
 if (zoom > SERIES_TIER_3_MIN_ZOOM) return 'series3';
@@ -10847,7 +10859,7 @@ let _ifsImgData=null;
 function renderIFSFrame(density,colorAcc,maxD){
 
 
-const d=_u8cAcquire(W*H*4),bg=hexRgb(S.bgColor),logMax=Math.log(maxD+1);
+const d=_u8cAcquire(W*H*4),bg=hexRgb(S.bgColor),logMax=Math.log((typeof _densityScreenPeak==='function'?_densityScreenPeak:(_b,_w,_h,m)=>m)(density,W,H,maxD)+1);   
 
 
 
@@ -10859,7 +10871,7 @@ const opacField=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
 for(let i=0;i<W*H;i++){
 const cnt=density[i];
 if(cnt===0){if(_exportTransparentAlpha){d[i*4+3]=0;continue}d[i*4]=bg[0];d[i*4+1]=bg[1];d[i*4+2]=bg[2];d[i*4+3]=255;continue}
-const brt=Math.pow(Math.log(cnt+1)/logMax,IFS_GAMMA);
+const brt=Math.min(1,Math.pow(Math.log(cnt+1)/logMax,IFS_GAMMA));
 let raw=colorAcc[i]/cnt;
 
 
@@ -11869,6 +11881,7 @@ window._renderSeq = (window._renderSeq || 0) + 1;
 if (typeof _firstStepsTick === 'function') _firstStepsTick();   
 
 if (typeof _xfadeRelease === 'function') _xfadeRelease();
+if (typeof _refreshRenderStatusCell === 'function') _refreshRenderStatusCell();   
 
 
 
@@ -11897,6 +11910,89 @@ el.classList.add('show');
 clearTimeout(_showHeavyHint._t);
 _showHeavyHint._t = setTimeout(() => { try { el.classList.remove('show'); } catch (_) {_swallowed('_showHeavyHint', _);} }, 2500);
 } catch (_) {  }
+}
+
+
+
+
+
+
+let _renderStatusDismissed = false;
+function _rsWgpuActive(){
+if (typeof _wgpuAvailable === 'undefined' || !_wgpuAvailable) return false;
+if (typeof _wgpuLost !== 'undefined' && _wgpuLost) return false;
+if (typeof S === 'undefined' || !S || !S.useWebGPU) return false;
+if (typeof _wgpuSupportsType === 'function' && !_wgpuSupportsType(S.fractalType)) return false;
+if (typeof _wgpuColorGateReason === 'function' && _wgpuColorGateReason()) return false;
+return !(typeof _wgpu !== 'undefined' && _wgpu && _wgpu.dispatchFailed);
+}
+
+function _renderStatusFacts(){
+const mode = (typeof S !== 'undefined' && S && S.mode) || 'fractal';
+const settled = (typeof _renderSettled !== 'function') || _renderSettled();
+let engine, precision = 'standard', fellBack = false;
+if (mode === 'geometry') {
+engine = ((typeof _isWorkerSafePattern === 'function' && _isWorkerSafePattern())
+&& !(typeof _geoWorkerDisabled !== 'undefined' && _geoWorkerDisabled)) ? 'worker' : 'cpu';
+} else {
+const deep = (typeof _dzNeedsCpu === 'function' && _dzNeedsCpu())
+|| (typeof _f64NeedsCpu === 'function' && _f64NeedsCpu());
+
+
+if (deep) engine = ((typeof _cpuFracWorkerDisabled === 'undefined' || !_cpuFracWorkerDisabled)
+&& (typeof _cpuFracWorker === 'undefined' || !!_cpuFracWorker)) ? 'worker' : 'cpu';
+else engine = _rsWgpuActive() ? 'webgpu' : 'webgl2';
+if (typeof _centerPrecisionLimited === 'function' && _centerPrecisionLimited()) precision = 'limited';
+else if (deep) precision = 'deep';
+else if (typeof _f32PrecisionExhausted === 'function' && _f32PrecisionExhausted()) precision = 'fallback';
+fellBack = (typeof _wgpu !== 'undefined' && _wgpu && !!_wgpu.dispatchFailed)
+|| (typeof _wgpuLost !== 'undefined' && !!_wgpuLost);
+}
+return { engine, precision, progress: !settled ? 'refining'
+: (precision === 'limited' || precision === 'fallback' || fellBack) ? 'limited' : 'finished' };
+}
+const _RS_ENGINE = {
+webgpu: ['graphics card · WebGPU', 'This picture is computed on your graphics card through WebGPU.'],
+webgl2: ['graphics card · WebGL2', 'This picture is computed on your graphics card through WebGL2.'],
+worker: ['background thread', 'This picture is computed in a background thread so the controls stay responsive.'],
+cpu:    ['processor', 'This picture is computed on your processor.'],
+};
+const _RS_PRECISION = {
+deep:     ['extra-precision zoom', 'The view is deeper than ordinary number precision reaches, so it is drawn with extra-precision arithmetic.'],
+limited:  ['past this center precision', 'The view is deeper than this center coordinate has true digits for, so the fine detail is no longer trustworthy.'],
+fallback: ['reduced precision', 'No higher-precision path covers this view, so it is drawn at ordinary precision and is visibly coarsening.'],
+standard: ['', ''],
+};
+const _RS_PROGRESS = {
+refining: ['still refining', 'Still working: the picture will keep sharpening.'],
+limited:  ['as sharp as this view gets', 'Finished, and this is as sharp as the available precision allows here.'],
+finished: ['finished', 'Finished.'],
+};
+
+function _renderStatusLine(f){
+const eng = _RS_ENGINE[f.engine] || _RS_ENGINE.cpu, prec = _RS_PRECISION[f.precision] || _RS_PRECISION.standard;
+const prog = _RS_PROGRESS[f.progress] || _RS_PROGRESS.finished;
+return { label: [eng[0], prec[0], prog[0]].filter(Boolean).join(' · '),
+title: [eng[1], prec[1], prog[1]].filter(Boolean).join(' ') + ' Click to hide this until the next reload.' };
+}
+function _renderStatusCellHTML(){
+try {
+if (_renderStatusDismissed) return '';
+const { label, title } = _renderStatusLine(_renderStatusFacts()), q = s => s.replace(/"/g, '&quot;');
+return '<div class="ci ci-badge--info" id="render-status-cell" role="button" tabindex="0" title="'
++ q(title) + '" aria-label="Render status: ' + q(label) + '">' + label + '</div>';
+} catch (_e) { return ''; }
+}
+
+
+function _refreshRenderStatusCell(){
+try {
+const el = document.getElementById('render-status-cell');
+if (!el) return;
+const { label, title } = _renderStatusLine(_renderStatusFacts());
+if (el.textContent !== label) { el.textContent = label; el.setAttribute('aria-label', 'Render status: ' + label); }
+if (el.getAttribute('title') !== title) el.setAttribute('title', title);
+} catch (_e) {  }
 }
 
 function scheduleRender(){
@@ -12965,6 +13061,7 @@ const role = isLost ? 'status' : 'button';
 const _apAttr = isLost ? html.raw`` : html.raw` aria-pressed="${html`${isActive ? 'true' : 'false'}`}"`;
 _wgpuBadgeHTML = html.raw`<div id="webgpu-badge" class="${html`${cls.join(' ')}`}" role="${html`${role}`}" tabindex="${html`${tabindex}`}" title="${html`${title}`}" aria-label="${html`${ariaLabel}`}"${_apAttr}>WebGPU ${glyph}</div>`;
 }
+const _rsCell = _renderStatusCellHTML();
 
 
 
@@ -12989,7 +13086,7 @@ if(S.mode==='fractal'){
 if(GL_3D_TYPES.has(S.fractalType)){
 const tlbl=FTYPE_LABELS[S.fractalType]||S.fractalType;
 
-_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div><div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div>${_wgpuBadgeHTML}`;
+_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div><div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div>${_wgpuBadgeHTML}${_rsCell}`;
 _newHintsHTML='<span class="nh"><kbd>Drag</kbd> Rotate 3D</span><span class="nh"><kbd>Scroll</kbd> Zoom in / out</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span>';
 }else{
 const re=S.centerX.toFixed(6),im=(S.centerY>=0?'+':'')+S.centerY.toFixed(6)+'i';
@@ -13068,7 +13165,7 @@ attrBadge='<div class="ci ci-badge--warn" title="Strange-attractor density: orbi
 const tlbl2D=FTYPE_LABELS[S.fractalType]||S.fractalType;
 const albl=ALGO_LABELS[S.colorAlgo]||S.colorAlgo;
 
-_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl2D}`}</span></div><div class="ci" data-coord-edit="center" tabindex="0" role="button" title="Click to edit center coordinates"><span class="lbl">Center</span><span class="v">${html`${re} ${im}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div><div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div><div class="ci"><span class="lbl">Algo</span><span class="v">${html`${albl}`}</span></div>${iterHint}${deepBadge}${precBadge}${capBadge}${attrBadge}${_wgpuBadgeHTML}`;
+_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl2D}`}</span></div><div class="ci" data-coord-edit="center" tabindex="0" role="button" title="Click to edit center coordinates"><span class="lbl">Center</span><span class="v">${html`${re} ${im}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div><div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div><div class="ci"><span class="lbl">Algo</span><span class="v">${html`${albl}`}</span></div>${iterHint}${deepBadge}${precBadge}${capBadge}${attrBadge}${_wgpuBadgeHTML}${_rsCell}`;
 _newHintsHTML='<span class="nh"><kbd>Left-click</kbd> Zoom in</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span><span class="nh"><kbd>Drag</kbd> Pan view</span>';}
 } else {
 
@@ -13089,7 +13186,7 @@ if(typeof FOUR_D_POLYTOPE_PATTERNS!=='undefined' && FOUR_D_POLYTOPE_PATTERNS.has
 const projName=S.use4DSchlegel?'Schlegel':'stereographic';
 projBadge='<div class="ci ci-badge--info" title="4D-polytope projection: '+projName+' (toggle via ?schlegel=1 URL flag)">'+icon('circle-plus')+' '+projName+'</div>';
 }
-_newBarHTML=html.raw`<div class="ci"><span class="lbl">Pattern</span><span class="v">${html`${plbl}`}</span></div><div class="ci"><span class="lbl">${html`${_geoLayerLbl}`}</span><span class="v">${html`${_geoLayerVal}`}</span></div><div class="ci"><span class="lbl">Rotation</span><span class="v">${html`${S.geoRotation.toFixed(1)+'°'}`}</span></div><div class="ci"><span class="lbl">Scale</span><span class="v">${html`${S.geoScale.toFixed(1)+'×'}`}</span></div>${projBadge}${_wgpuBadgeHTML}`;
+_newBarHTML=html.raw`<div class="ci"><span class="lbl">Pattern</span><span class="v">${html`${plbl}`}</span></div><div class="ci"><span class="lbl">${html`${_geoLayerLbl}`}</span><span class="v">${html`${_geoLayerVal}`}</span></div><div class="ci"><span class="lbl">Rotation</span><span class="v">${html`${S.geoRotation.toFixed(1)+'°'}`}</span></div><div class="ci"><span class="lbl">Scale</span><span class="v">${html`${S.geoScale.toFixed(1)+'×'}`}</span></div>${projBadge}${_wgpuBadgeHTML}${_rsCell}`;
 _newHintsHTML='<span class="nh"><kbd>Drag</kbd> Rotate pattern</span><span class="nh"><kbd>Scroll</kbd> Zoom in / out</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span>';
 }
 
@@ -14285,6 +14382,7 @@ if(cxCT && typeof S.cxCustomBody==='string')cxCT.value=S.cxCustomBody;
 const cxAR=document.getElementById('cxAnimRot');
 if(cxAR)cxAR.checked=!!S.cxAnimRot;
 _syncSlider('cxAnimSpeed', S.cxAnimSpeed??0.4, v=>(+v).toFixed(2));
+_syncCxAnimSpeedRow();
 const cxL3=document.getElementById('cxLift3D');
 if(cxL3)cxL3.checked=!!S.cxLift3D;
 }
@@ -14436,6 +14534,33 @@ scheduleRender();
 }
 
 
+
+
+
+
+
+const _mirrorDeadCache=new Map();
+function _mirrorControlsDead(){
+try{
+const p=S.pattern;
+const tog=(typeof PATTERN_3D_DRAWERS!=='undefined')?PATTERN_3D_DRAWERS.get(p):null;
+const use3D=!!(tog&&S[tog[0]]);
+const key=p+'|'+(use3D?'3d':'2d');
+if(_mirrorDeadCache.has(key))return _mirrorDeadCache.get(key);
+const fn=use3D?tog[1]:((typeof PATTERN_DRAWERS!=='undefined')?PATTERN_DRAWERS.get(p):null);
+const src=fn?String(fn):'';
+const dead=!!src&&/setTransform\s*\(/.test(src)&&!/S\.mirror/.test(src);
+_mirrorDeadCache.set(key,dead);
+return dead;
+}catch(_e){ return false; }
+}
+
+
+
+function _syncCxAnimSpeedRow(){
+const row=document.getElementById('cx-anim-speed-row');
+if(row)row.classList.toggle('is-hidden',!(typeof S!=='undefined'&&S&&S.cxAnimRot));
+}
 function syncMirrorUI(){
 const k=S.mirrorK||1,mH=!!S.mirrorH,mV=!!S.mirrorV;
 
@@ -14451,6 +14576,9 @@ const sl=document.getElementById('mirrorK');
 const badge=document.getElementById('mirrorK-v');
 if(sl)sl.value=k;
 if(badge)badge.textContent=k>1?k+'×':'Off';
+
+const sec=document.getElementById('sec-geo-mirror');
+if(sec&&S.mode==='geometry')sec.classList.toggle('is-hidden',_mirrorControlsDead());
 }
 
 
@@ -14499,13 +14627,18 @@ return ok;
 function _syncFillRows(){
 const on=!!S.fill;
 const _t=(id,hide)=>{const e=document.getElementById(id);if(e)e.classList.toggle('is-hidden',hide);};
-_t('opacity-ctrl',!on);_t('ctrl-fillrule',!on);_t('ctrl-fillblend',!on);
+const inert=(S.mode==='geometry')&&!patternSupportsFill(S.pattern);
+
+
+
+
+
+_t('opacity-ctrl',!on||inert);_t('ctrl-fillrule',!on||inert);_t('ctrl-fillblend',!on||inert);
 
 
 
 const _solid=((S&&S.dashPattern)||'solid')==='solid';
 _t('ctrl-dashLen',_solid);_t('ctrl-dashGap',_solid);_t('ctrl-dashOffset',_solid);
-const inert=(S.mode==='geometry')&&!patternSupportsFill(S.pattern);
 _t('fill-inert-hint',!inert);
 
 _t('seg-fill-desc',inert);
@@ -15027,6 +15160,20 @@ document.addEventListener('keydown',(e)=>{
 if(e.key!=='Enter'&&e.key!==' ')return;
 const ae=document.activeElement;
 if(!ae||ae.id!=='webgpu-badge')return;
+e.preventDefault();
+ae.click();
+});
+
+
+document.addEventListener('click',(e)=>{
+if(!e.target.closest('#render-status-cell'))return;
+_renderStatusDismissed=true;
+if(typeof updateCoordBar==='function')updateCoordBar();
+});
+document.addEventListener('keydown',(e)=>{
+if(e.key!=='Enter'&&e.key!==' ')return;
+const ae=document.activeElement;
+if(!ae||ae.id!=='render-status-cell')return;
 e.preventDefault();
 ae.click();
 });
@@ -18394,15 +18541,17 @@ const bg=hexRgb(S.bgColor), gamma=0.42;
 
 
 const _dc=(typeof _buddhaDensityComp==='number'&&_buddhaDensityComp>1)?_buddhaDensityComp:1;
-const lmR=Math.log(maxR*_dc+1), lmG=Math.log(maxG*_dc+1), lmB=Math.log(maxB*_dc+1);
+
+const _sp=(typeof _densityScreenPeak==='function')?_densityScreenPeak:(_b,_w,_h,m)=>m;
+const lmR=Math.log(_sp(rBuf,W,H,maxR)*_dc+1), lmG=Math.log(_sp(gBuf,W,H,maxG)*_dc+1), lmB=Math.log(_sp(bBuf,W,H,maxB)*_dc+1);
 for(let i=0; i<W*H; i++){
 if(rBuf[i]===0&&gBuf[i]===0&&bBuf[i]===0){
 if(_exportTransparentAlpha){d[i*4+3]=0;continue;}
 d[i*4]=bg[0];d[i*4+1]=bg[1];d[i*4+2]=bg[2];d[i*4+3]=255;continue;
 }
-const rv=lmR>0?Math.pow(Math.log(rBuf[i]*_dc+1)/lmR,gamma):0;
-const gv=lmG>0?Math.pow(Math.log(gBuf[i]*_dc+1)/lmG,gamma):0;
-const bv=lmB>0?Math.pow(Math.log(bBuf[i]*_dc+1)/lmB,gamma):0;
+const rv=lmR>0?Math.min(1,Math.pow(Math.log(rBuf[i]*_dc+1)/lmR,gamma)):0;
+const gv=lmG>0?Math.min(1,Math.pow(Math.log(gBuf[i]*_dc+1)/lmG,gamma)):0;
+const bv=lmB>0?Math.min(1,Math.pow(Math.log(bBuf[i]*_dc+1)/lmB,gamma)):0;
 let _rv=rv;
 
 
@@ -25555,6 +25704,7 @@ en: {
 'layer.layers-capped':        'Capped at {cap} layers (had {had})',
 'file.saved':                 'Saved {name}',
 'file.save-failed':           'Could not save the project.',
+'varsheet.made':              '{n} variants on one sheet. Save it to keep the sheet, or Export to get the picture.',
 'file.save-busy':             'A composite or export is running. Save when it finishes.',
 'layer.flatten-busy':         'Compositing layers. Try again when it finishes.',
 'file.open-failed':           'Could not open that project file.',
@@ -25630,6 +25780,7 @@ en: {
 'motion.frame-stale':         'Frame {n} may be stale or duplicated (render did not confirm in time) · continuing the export.',
 'export.print-defaults-reset': '↺ Print settings reset to defaults',
 'export.wgpu-limit':          'A {w}×{h} export needs {need} MB GPU buffers and this GPU\'s {name} is {max} MB, so it renders on the CPU instead (much slower).',
+'export.attractor-capped':    'Attractor capped to {m}M points at this resolution so the export completes. It is darker and sparser than on screen.',
 'export.density-capped':      'Density capped to {m}M samples at this resolution so the export completes. Brightness is compensated; the image is grainier than on screen.',
 'export.recording-in-progress': 'Stop the screen recording first. It shares the canvas with this export.',
 'export.equirect-aspect-forced': 'Equirectangular forces a 2:1 aspect · exporting at {w}×{h}',
@@ -27154,9 +27305,9 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
   let lmR = p.logPeakR;   
   let lmG = p.logPeakG;
   let lmB = p.logPeakB;
-  let rv = select(0.0, pow(log(f32(dR) * p.densComp + 1.0) / lmR, p.gamma), lmR > 0.0);
-  let gv = select(0.0, pow(log(f32(dG) * p.densComp + 1.0) / lmG, p.gamma), lmG > 0.0);
-  let bv = select(0.0, pow(log(f32(dB) * p.densComp + 1.0) / lmB, p.gamma), lmB > 0.0);
+  let rv = select(0.0, min(pow(log(f32(dR) * p.densComp + 1.0) / lmR, p.gamma), 1.0), lmR > 0.0);
+  let gv = select(0.0, min(pow(log(f32(dG) * p.densComp + 1.0) / lmG, p.gamma), 1.0), lmG > 0.0);
+  let bv = select(0.0, min(pow(log(f32(dB) * p.densComp + 1.0) / lmB, p.gamma), 1.0), lmB > 0.0);
   
   
   
@@ -28056,6 +28207,10 @@ if (r > 0 || g > 0 || b > 0) nonZeroCells++;
 
 
 const densSample = Array.from(densViewR.subarray(0, 8));
+
+
+const _sp = (typeof _densityScreenPeak === 'function') ? _densityScreenPeak : (_b, _w, _h, m) => m;
+const tonePeakR = _sp(densViewR, w, h, peakR), tonePeakG = _sp(densViewG, w, h, peakG), tonePeakB = _sp(densViewB, w, h, peakB);
 _wgpu.bbDensityStagingR.unmap();
 _wgpu.bbDensityStagingG.unmap();
 _wgpu.bbDensityStagingB.unmap();
@@ -28106,9 +28261,9 @@ cv2.setFloat32(40,  _bg[2],                 true);
 
 const _densComp = (opts && typeof opts.densityComp === 'number' && opts.densityComp > 1)
 ? opts.densityComp : 1;
-cv2.setFloat32(44, Math.log(peakR * _densComp + 1), true);  
-cv2.setFloat32(48, Math.log(peakG * _densComp + 1), true);  
-cv2.setFloat32(52, Math.log(peakB * _densComp + 1), true);  
+cv2.setFloat32(44, Math.log(tonePeakR * _densComp + 1), true);  
+cv2.setFloat32(48, Math.log(tonePeakG * _densComp + 1), true);  
+cv2.setFloat32(52, Math.log(tonePeakB * _densComp + 1), true);  
 cv2.setFloat32(56, _densComp, true);  
 cv2.setUint32 (60, 0, true);
 
@@ -45430,7 +45585,7 @@ _dcEvictPrograms(k=>k.startsWith('custom:'));
 if(typeof scheduleRender==='function')scheduleRender();
 break;}
 case 'cxSupersample':    {const nv=parseInt(v,10)|0; S.cxSupersample=(nv===2||nv===4)?nv:1; if(typeof scheduleRender==='function')scheduleRender(); break;}
-case 'cxAnimRot':        {S.cxAnimRot=!!e.target.checked; if(typeof scheduleRender==='function')scheduleRender(); break;}
+case 'cxAnimRot':        {S.cxAnimRot=!!e.target.checked; if(typeof _syncCxAnimSpeedRow==='function')_syncCxAnimSpeedRow(); if(typeof scheduleRender==='function')scheduleRender(); break;}
 case 'cxLift3D':         {S.cxLift3D=!!e.target.checked; if(typeof scheduleRender==='function')scheduleRender(); break;}
 }
 });
@@ -46069,7 +46224,7 @@ if(drag.active)return;
 if(typeof _cancelViewAnims==='function')_cancelViewAnims();
 if(S.mode==='fractal'){
 if(_isFractal3D(S.fractalType)){
-S.zoom=Math.max(.1,Math.min(50,S.zoom*0.5));updateZoomUI();scheduleRender();if(typeof pushView==='function')pushView();
+S.zoom=Math.max(_zoom3DFloor(S.fractalType),Math.min(50,S.zoom*0.5));updateZoomUI();scheduleRender();if(typeof pushView==='function')pushView();
 }else{
 const rect=cv.getBoundingClientRect(),
 sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom),
@@ -46128,7 +46283,7 @@ const factor=Math.pow(WHEEL_ZOOM_IN,Math.abs(norm)/100);
 if(S.mode==='fractal' && _isFractal3D(S.fractalType)){ 
 e.preventDefault();
 const d=norm>0?factor:1/factor;
-S.zoom=Math.max(.1,Math.min(50,S.zoom*d));updateZoomUI();
+S.zoom=Math.max(_zoom3DFloor(S.fractalType),Math.min(50,S.zoom*d));updateZoomUI();
 
 
 
@@ -46325,7 +46480,7 @@ _userHasInteractedWithCamera = true;
 if (S.mode === 'fractal') {
 if (_isFractal3D(S.fractalType)) {
 
-S.zoom = Math.max(0.1, Math.min(50, _pinchInitialZoom * ratio));
+S.zoom = Math.max(_zoom3DFloor(S.fractalType), Math.min(50, _pinchInitialZoom * ratio));
 updateZoomUI();
 
 
@@ -48397,6 +48552,47 @@ const _catThumbMem = new Map();
 let _catPickT = -Infinity;
 let _catThumbGen = 0, _catThumbObs = null, _catThumbBusy = 0, _catThumbDB = null;
 
+
+
+
+
+const _CAT_PREVIEW_DIR = 'assets/previews';
+let _catLiveBudgetMs = 3000, _catLiveOverBudget = false;
+
+let _catPreviewsOff = false;
+
+
+
+
+const _CAT_ID_SAFE = /^[a-z0-9_][a-z0-9_-]*$/i;
+function _catPreviewURL(mode, type) {
+if (!_CAT_ID_SAFE.test(String(type))) return null;
+return `${_CAT_PREVIEW_DIR}/${mode}-${type}.jpg`;
+}
+
+function _catTryPreview(el, mode, type) {
+const url = _catPreviewsOff ? null : _catPreviewURL(mode, type);
+if (!url) return false;
+const img = document.createElement('img');
+img.className = 'cat-img'; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
+
+
+
+
+
+
+el.dataset.catPreview = 'pending';
+img.onload = () => { delete el.dataset.catPreview; el.classList.add('has-thumb'); };
+img.onerror = () => {
+delete el.dataset.catPreview;
+img.remove(); el.classList.remove('has-thumb');
+if (_catThumbObs && el.isConnected) _catThumbObs.observe(el);
+};
+img.src = url;
+el.appendChild(img);
+return true;
+}
+
 function _catThumbKey(mode, type) {
 return (typeof MISSION_RENDER_HASH !== 'undefined' ? MISSION_RENDER_HASH : 'dev') + ':' + mode + ':' + type;
 }
@@ -48471,7 +48667,7 @@ return r.bottom >= b.top - 120 && r.top <= b.bottom + 120;
 
 function _catQueueThumb(el, lazy) {
 const mode = _catMode, type = el.dataset.catThumb, gen = _catThumbGen, key = _catThumbKey(mode, type);
-if (!type || el.classList.contains('has-thumb')) return;
+if (!type || el.classList.contains('has-thumb') || el.dataset.catPreview === 'pending') return;
 if (_catThumbMem.has(key)) { _catShowThumb(el, _catThumbMem.get(key)); return; }
 _catThumbBusy++;
 const run = _thumbRefreshChain.then(async () => {
@@ -48481,6 +48677,8 @@ if (lazy && !_catNearView(el)) { if (_catThumbObs && el.isConnected) _catThumbOb
 let url = await _catDBGet(key);
 if (!url) {
 if (gen !== _catThumbGen || (typeof _exportInFlight === 'function' && _exportInFlight())) return;
+if (_catLiveOverBudget) return;   
+const t0 = performance.now();
 _catFreeze(true);
 
 
@@ -48491,6 +48689,10 @@ const s = Math.max(_CAT_THUMB_W / full.width, _CAT_THUMB_H / full.height), w = f
 tc.getContext('2d').drawImage(full, (_CAT_THUMB_W - w) / 2, (_CAT_THUMB_H - h) / 2, w, h);
 if (typeof _freeCanvas === 'function') _freeCanvas(full);
 url = tc.toDataURL('image/jpeg', 0.8);
+
+
+
+if (performance.now() - t0 > _catLiveBudgetMs) _catLiveOverBudget = true;
 await _catDBPut(key, url);
 _catThumbsDrewLive = true;
 }
@@ -48542,9 +48744,11 @@ if (!_catThumbObs) _catThumbObs = new IntersectionObserver((ents) => {
 for (const en of ents) if (en.isIntersecting) { _catThumbObs.unobserve(en.target); _catQueueThumb(en.target, true); }
 }, { root: document.getElementById('cat-body'), rootMargin: '120px' });
 _catThumbObs.disconnect();
+_catLiveOverBudget = false;   
 document.querySelectorAll('#cat-body .cat-thumb[data-cat-thumb]:not([data-cat-thumb=""])').forEach((el) => {
 const url = _catThumbMem.get(_catThumbKey(_catMode, el.dataset.catThumb));
-if (url) _catShowThumb(el, url); else _catThumbObs.observe(el);
+if (url) _catShowThumb(el, url);
+else if (!_catTryPreview(el, _catMode, el.dataset.catThumb)) _catThumbObs.observe(el);
 });
 }
 
@@ -52307,6 +52511,7 @@ const APP_ACTIONS = [
 { id:'file-open',     label:'Open…',      group:'file', run:()=>fileOpen() },
 { id:'file-save',     label:'Save',       group:'file', run:()=>fileSave() },
 { id:'file-save-as',  label:'Save As…',   group:'file', run:()=>fileSaveAs() },
+{ id:'file-variation-sheet', label:'Variation sheet', group:'file', run:()=>makeVariationSheet() },
 
 { id:'view-gallery',  label:'Gallery',    group:'view', run:()=>toggleGallery(), keybindingId:'gallery' },
 { id:'view-command',  label:'Command Palette…', group:'view', run:()=>openCommandPalette() },
@@ -52925,6 +53130,71 @@ pals: (typeof _collectCustomPalettes === 'function')
 
 project._stamp = _stampChecksum(project);
 return project;
+}
+
+
+
+
+
+
+const _VARSHEET_COLS = 3;
+
+const _VARSHEET_KNOBS = {
+fractal: [{ key: 'maxIter', mul: 2, name: 'More detail' }, { key: 'zoom', mul: 2.5, name: 'Closer in' }],
+geometry: [{ key: 'layers', add: 2, name: 'More layers' }, { key: 'symmetry', add: 4, name: 'More symmetry' }],
+};
+
+
+function _varsheetTitle(s) { return String(s).charAt(0).toUpperCase() + String(s).slice(1); }
+
+
+function _varsheetVariants(base) {
+const out = [{ name: 'Original', params: structuredClone(base) }];
+const pals = (typeof PALS !== 'undefined') ? Object.keys(PALS) : [];
+const at = pals.indexOf(base.palette);
+for (let k = 1; k <= 3 && pals.length > 1; k++) {
+const nm = pals[((at < 0 ? 0 : at) + k) % pals.length];
+out.push({ name: _varsheetTitle(nm), params: Object.assign(structuredClone(base), { palette: nm }) });
+}
+for (const kn of (_VARSHEET_KNOBS[base.mode === 'geometry' ? 'geometry' : 'fractal'])) {
+const cur = Number(base[kn.key]);
+if (!Number.isFinite(cur)) continue;
+const next = kn.mul != null ? cur * kn.mul : cur + kn.add;
+out.push({ name: kn.name, params: Object.assign(structuredClone(base), { [kn.key]: next }) });
+}
+return out;
+}
+
+
+function _varsheetTransform(i, n) {
+const cols = Math.min(_VARSHEET_COLS, n), rows = Math.ceil(n / cols), sc = 1 / cols;
+const col = i % cols, row = Math.floor(i / cols);
+return { x: (col - (cols - 1) / 2) * sc, y: (row - (rows - 1) / 2) * sc, scale: sc, rot: 0 };
+}
+
+
+function makeVariationSheet() {
+
+const project = _buildProjectObject();
+if (!project) return;
+const variants = _varsheetVariants(project.state);
+project.layers = variants.map((v, i) => ({
+id: (typeof _uid === 'function' ? _uid() : `vs${i}`), name: v.name, visible: true, opacity: 1,
+blend: 'source-over',
+
+
+transparentBg: true,
+transform: _varsheetTransform(i, variants.length), params: v.params, thumb: null,
+}));
+project.activeLayerIdx = 0;
+project.state = structuredClone(variants[0].params);
+
+
+project._stamp = _stampChecksum(project);
+_loadProject(project);
+if (typeof _histRebase === 'function') _histRebase();
+_setDocDirty(true);
+if (typeof showToast === 'function') showToast(t('varsheet.made', { n: project.layers.length }), 'success');
 }
 
 function _docTitleFor(name, dirty){
@@ -55858,7 +56128,7 @@ try{
 
 
 
-_rdMotion=_scaleDensitySamples(Math.max(1,(W*H)/Math.max(1,(o.liveW||W)*(o.liveH||H))));
+_rdMotion=_scaleDensitySamples((W*H)/Math.max(1,(o.liveW||W)*(o.liveH||H)));
 
 
 
@@ -55898,7 +56168,7 @@ glcv.classList.remove('is-shown'); if(typeof cv!=='undefined'&&cv)cv.classList.r
 
 
 let _fpAttractorOk=true;
-try{ if(typeof _beginExportPaint==='function')_beginExportPaint();
+try{ if(typeof _beginExportPaint==='function')_beginExportPaint((o.liveW||W)*(o.liveH||H));
 
 
 
@@ -55924,7 +56194,7 @@ _fpLastGoodAttractor.width=cv.width; _fpLastGoodAttractor.height=cv.height;
 try{ _fpLastGoodAttractor.getContext('2d').drawImage(cv,0,0); }catch(_e){ _fpLastGoodAttractor=null;  }
 }
 } else {
-try{ if(typeof _beginExportPaint==='function')_beginExportPaint();
+try{ if(typeof _beginExportPaint==='function')_beginExportPaint((o.liveW||W)*(o.liveH||H));
 try{ await renderFractal(); }
 finally{ if(typeof _endExportPaint==='function')_endExportPaint(); }
 if(typeof pfxAdvanceGrainFrame==='function')pfxAdvanceGrainFrame(); if(typeof _applyPostFXOnScreen==='function')_applyPostFXOnScreen(); }   
@@ -56221,7 +56491,7 @@ let writeFailed=false;
 
 
 
-_rdPngMotion=_scaleDensitySamples(Math.max(1,(_pngExpW*_pngExpH)/Math.max(1,_pngOrigGW*_pngOrigGH)));
+_rdPngMotion=_scaleDensitySamples((_pngExpW*_pngExpH)/Math.max(1,_pngOrigGW*_pngOrigGH));
 
 
 if(typeof _prepLayerCachesForMotionExport==='function')await _prepLayerCachesForMotionExport(_pngOrigGW,_pngOrigGH);
@@ -56265,7 +56535,7 @@ glcv.classList.remove('is-shown'); if(typeof cv!=='undefined'&&cv)cv.classList.r
 
 
 let _pngAttractorOk=true;
-try{ if(typeof _beginExportPaint==='function')_beginExportPaint();
+try{ if(typeof _beginExportPaint==='function')_beginExportPaint(_pngOrigGW*_pngOrigGH);
 
 
 
@@ -56298,7 +56568,7 @@ if(typeof showToast==='function')showToast(t('motion.frame-skipped-blank',{n:(i+
 continue;
 }
 } else {
-try{ if(typeof _beginExportPaint==='function')_beginExportPaint();
+try{ if(typeof _beginExportPaint==='function')_beginExportPaint(_pngOrigGW*_pngOrigGH);
 
 
 
@@ -59350,7 +59620,7 @@ Object.assign(S, layer.params);
 
 
 const _budExport = !!signal && /^buddhabrot(_anti)?$/.test(S.fractalType || '');
-if(_densScale>1 && !_budExport && typeof _scaleDensitySamples==='function') _scaleDensitySamples(_densScale);
+if(_densScale>0 && !_budExport && typeof _scaleDensitySamples==='function') _scaleDensitySamples(_densScale);
 const swappedIn = {}; for (const k of Object.keys(S)) swappedIn[k] = JSON.stringify(S[k]);   
 
 
@@ -59508,13 +59778,14 @@ const _letterbox = W2 !== H2 && ((S.exportFractalCompose || 'letterbox') === 'le
 const _dW = _letterbox ? _fW : W2, _dH = _letterbox ? _fH : H2;
 const _offX = _letterbox ? Math.round((W2 - _fW) / 2) : 0, _offY = _letterbox ? Math.round((H2 - _fH) / 2) : 0;
 const oCvW = cv.width, oCvH = cv.height, oW = W, oH = H;
-const _densScale = Math.max(1, (_dW * _dH) / Math.max(1, oW * oH));   
+const _densScale = (_dW * _dH) / Math.max(1, oW * oH);   
 cv.width = _dW; cv.height = _dH; W = _dW; H = _dH;    
 
 
 
 const _prevTA = _exportTransparentAlpha;
 _exportTransparentAlpha = !!alphaCapable && (typeof exportTransparent !== 'undefined' && !!exportTransparent);
+if (typeof _beginExportPaint === 'function') _beginExportPaint(oW * oH);   
 try {
 for (const layer of visible) {
 
@@ -59534,6 +59805,7 @@ _drawLayerTransformed(octx, tmp, layer.transform, _offX, _offY, _dW, _dH);
 _freeCanvas(tmp);
 }
 } finally {
+if (typeof _endExportPaint === 'function') _endExportPaint();
 _exportTransparentAlpha = _prevTA;               
 octx.globalAlpha = 1;
 octx.globalCompositeOperation = 'source-over';
@@ -59567,13 +59839,16 @@ _motionExportCacheSave = new Map();
 
 
 
-const _mdens = Math.max(1, (cv.width * cv.height) / Math.max(1, (liveW || CANVAS_SIZE) * (liveH || CANVAS_SIZE)));
+const _mdens = (cv.width * cv.height) / Math.max(1, (liveW || CANVAS_SIZE) * (liveH || CANVAS_SIZE));
+if (typeof _beginExportPaint === 'function') _beginExportPaint((liveW || CANVAS_SIZE) * (liveH || CANVAS_SIZE));   
+try {
 for (const layer of visible) {
 if (layer === active) continue;                  
 _motionExportCacheSave.set(layer, layer.cache || null);
 try { layer.cache = await _renderLayerToCanvas(layer, _mdens, true); }   
 catch (_e) {  }
 }
+} finally { if (typeof _endExportPaint === 'function') _endExportPaint(); }
 }
 function _restoreLayerCachesAfterMotionExport() {
 if (!_motionExportCacheSave) return;
@@ -62203,8 +62478,37 @@ c.width=0;c.height=0;
 
 
 
-function _beginExportPaint(){ window._renderingForExport=(window._renderingForExport||0)+1; }
-function _endExportPaint(){ window._renderingForExport=Math.max(0,(window._renderingForExport||0)-1); }
+
+let _exportScreenPx=0;
+function _beginExportPaint(screenPx){ if(!(window._renderingForExport>0))_exportScreenPx=screenPx>0?screenPx:0; window._renderingForExport=(window._renderingForExport||0)+1; }
+function _endExportPaint(){ window._renderingForExport=Math.max(0,(window._renderingForExport||0)-1); if(!window._renderingForExport)_exportScreenPx=0; }
+
+
+
+
+function _densityScreenPeak(buf,w,h,max){
+const sp=window._renderingForExport>0?_exportScreenPx:0;
+if(!(sp>0)||!(max>0)||!buf)return max;
+const g=Math.sqrt(w*h/sp);
+
+if(g>=1){
+
+const L=Math.log2(g),k=Math.floor(L),f=L-k,lo=1<<k;
+const pLo=lo===1?max:_densityBlockPeak(buf,w,h,lo);
+if(!(f>0))return Math.min(max,pLo);
+const pHi=_densityBlockPeak(buf,w,h,lo*2);
+return Math.min(max,Math.exp((1-f)*Math.log(Math.max(1e-9,pLo))+f*Math.log(Math.max(1e-9,pHi))));
+}
+
+const r=max/Math.max(1e-9,_densityBlockPeak(buf,w,h,2));
+return max*Math.pow(Math.max(1,r),Math.log2(1/g));
+}
+function _densityBlockPeak(buf,w,h,b){
+const bw=Math.ceil(w/b),s=new Float64Array(bw*Math.ceil(h/b));
+for(let y=0;y<h;y++){const o=((y/b)|0)*bw,r=y*w;for(let x=0;x<w;x++)s[o+((x/b)|0)]+=buf[r+x];}
+let m=0;for(let i=0;i<s.length;i++)if(s[i]>m)m=s[i];
+return m/(b*b);
+}
 function _equirectExportActive(){
 return typeof S!=='undefined' && S.mode==='fractal' && S.projection3D==='equirect'
 && typeof GL_3D_TYPES!=='undefined' && !!GL_3D_TYPES.has && GL_3D_TYPES.has(S.fractalType);
@@ -62522,6 +62826,10 @@ doExport();
 
 
 
+function _attractorCapNotice(){
+if(typeof ATTRACTOR_EXPORT_MAX_ITER==='number'&&S.chaosIter>ATTRACTOR_EXPORT_MAX_ITER&&typeof showToast==='function')
+showToast(t('export.attractor-capped',{m:(ATTRACTOR_EXPORT_MAX_ITER/1e6).toFixed(0)}),'info',6000);
+}
 function _scaleDensitySamples(scale){
 const t=(typeof S!=='undefined'&&S.fractalType)||'';
 let key=null,dflt=0;
@@ -62529,7 +62837,7 @@ if(t==='buddhabrot'||t==='buddhabrot_anti'){key='buddhabrotSamples';dflt=800000;
 else if(t.indexOf('ifs_')===0){key='ifsIter';dflt=0;}                 
 else if(t.indexOf('attractor_')===0){key='chaosIter';dflt=500000;}
 else if(t==='fractal_flame'){key='flameIter';dflt=1000000;}
-if(!key||!(scale>1))return ()=>{};
+if(!key||!(scale>0)||scale===1)return ()=>{};
 const orig=S[key],base=orig||dflt;
 if(base>0)S[key]=Math.round(base*scale);
 return ()=>{S[key]=orig;};
@@ -62614,13 +62922,14 @@ if(await _renderDeepZoomForExport(rCtx,rW,rH,bar,status,signal))return;
 
 if(/^(buddhabrot|buddhabrot_anti|attractor_|fractal_flame|ifs_)/.test(S.fractalType)){
 bar&&bar.style.setProperty('--progress','30%');status.textContent='Native rendering…';await new Promise(r=>setTimeout(r,10));
-_beginExportPaint();   
+_beginExportPaint(W*H);   
 const oW=W,oH=H;
 
 
 
 const _oBudSamp=S.buddhabrotSamples,_oIfsIter=S.ifsIter,_oChaosIter=S.chaosIter,_oFlameIter=S.flameIter;
-const _densScale=Math.max(1,(rW*rH)/Math.max(1,oW*oH));
+
+const _densScale=(rW*rH)/Math.max(1,oW*oH);
 try{
 cv.width=rW;cv.height=rH;if(glcv){glcv.width=rW;glcv.height=rH;}
 W=rW;H=rH;
@@ -62633,9 +62942,9 @@ W=rW;H=rH;
 
 _exportTransparentAlpha=(exportTransparent&&alphaCapable);
 if(S.fractalType.startsWith('attractor_')){
-S.chaosIter=Math.round((_oChaosIter||500000)*_densScale);   
+S.chaosIter=Math.round((_oChaosIter||500000)*_densScale);_attractorCapNotice();   
 ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,rW,rH);
-if(await _exportRenderRetryOnce(t=>renderAttractor(t,signal)))rCtx.drawImage(cv,0,0,rW,rH);   
+if(await _exportRenderRetryOnce(t=>renderAttractor(t,signal,{onProgress:_densityExportProgress(bar,status,'Attractor')})))rCtx.drawImage(cv,0,0,rW,rH);   
 } else if(S.fractalType==='buddhabrot'||S.fractalType==='buddhabrot_anti'){
 const _bx=_buddhaExportSamples(_oBudSamp,rW*rH,oW*oH);   
 S.buddhabrotSamples=_bx.samples;
@@ -63672,7 +63981,7 @@ if(_dzNeedsCpu(W2)&&await _renderDeepZoomForExport(octx,W2,H2,bar,status,signal)
 
 const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
 const _oIfs=S.ifsIter;if(_oIfs)S.ifsIter=Math.round(_oIfs*((W2*H2)/Math.max(1,oW*oH)));   
-_beginExportPaint();
+_beginExportPaint(oW*oH);
 try{ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderIFS(t,{signal,onProgress:_densityExportProgress(bar,status,'IFS')})))octx.drawImage(cv,0,0);}   
 finally{_endExportPaint();_exportTransparentAlpha=false;S.ifsIter=_oIfs;cv.width=oW;cv.height=oH;W=oW;H=oH;render();}
 } else if(S.fractalType.startsWith('attractor_')){
@@ -63680,9 +63989,9 @@ finally{_endExportPaint();_exportTransparentAlpha=false;S.ifsIter=_oIfs;cv.width
 
 bar.style.setProperty('--progress','20%');status.textContent='Computing attractor…';await new Promise(r=>setTimeout(r,10));
 const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
-const _rdAttr=_scaleDensitySamples(Math.max(1,(W2*H2)/Math.max(1,oW*oH)));   
-_beginExportPaint();
-try{ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderAttractor(t,signal)))octx.drawImage(cv,0,0);}   
+const _rdAttr=_scaleDensitySamples((W2*H2)/Math.max(1,oW*oH));_attractorCapNotice();   
+_beginExportPaint(oW*oH);
+try{ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderAttractor(t,signal,{onProgress:_densityExportProgress(bar,status,'Attractor')})))octx.drawImage(cv,0,0);}   
 finally{_endExportPaint();_exportTransparentAlpha=false;_rdAttr();cv.width=oW;cv.height=oH;W=oW;H=oH;render();}
 } else if(S.fractalType==='fractal_flame'){
 
@@ -63693,8 +64002,8 @@ finally{_endExportPaint();_exportTransparentAlpha=false;_rdAttr();cv.width=oW;cv
 
 bar.style.setProperty('--progress','20%');status.textContent='Computing flame…';await new Promise(r=>setTimeout(r,10));
 const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
-const _rdFlame=_scaleDensitySamples(Math.max(1,(W2*H2)/Math.max(1,oW*oH)));   
-_beginExportPaint();
+const _rdFlame=_scaleDensitySamples((W2*H2)/Math.max(1,oW*oH));   
+_beginExportPaint(oW*oH);
 try{ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderFractalFlame(t,signal)))octx.drawImage(cv,0,0);}   
 finally{_endExportPaint();_exportTransparentAlpha=false;_rdFlame();cv.width=oW;cv.height=oH;W=oW;H=oH;render();}
 } else if(S.useWebGPU && typeof _wgpuAvailable!=='undefined' && _wgpuAvailable
@@ -63741,7 +64050,7 @@ let _cvSnapWgpu = null;
 try { _cvSnapWgpu = ctx.getImageData(0, 0, oW, oH); } catch (_e) {_swallowed('doExport', _e);}
 cv.width=W2;cv.height=H2;W=W2;H=H2;
 let _wgpuExportOk=false, _bbLim=null;
-_beginExportPaint();
+_beginExportPaint(oW*oH);
 try{
 
 
@@ -63805,7 +64114,7 @@ if(S.fractalType==='buddhabrot'||S.fractalType==='buddhabrot_anti'){
 
 const oW2=W,oH2=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
 const _oBudSamp2=S.buddhabrotSamples;
-_beginExportPaint();
+_beginExportPaint(oW*oH);
 try{const _bxF=_buddhaExportSamples(_oBudSamp2,W2*H2,oW*oH);S.buddhabrotSamples=_bxF.samples;_buddhaDensityComp=_bxF.comp;ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderBuddhabrot(t,S.fractalType==='buddhabrot_anti',signal,_densityExportProgress(bar,status,'Buddhabrot'))))octx.drawImage(cv,0,0);}   
 finally{
 _endExportPaint();
@@ -63847,7 +64156,7 @@ S.buddhabrotSamples = _bxNoGpu.samples;
 if(_bxNoGpu.capped && typeof showToast==='function')
 showToast(t('export.density-capped',{m:(_bxNoGpu.samples/1e6).toFixed(0)}),'info',6000);
 cv.width=W2;cv.height=H2;W=W2;H=H2;
-_beginExportPaint();
+_beginExportPaint(oW*oH);
 try{_buddhaDensityComp=_bxNoGpu.comp;ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderBuddhabrot(t,S.fractalType==='buddhabrot_anti',signal,_densityExportProgress(bar,status,'Buddhabrot'))))octx.drawImage(cv,0,0);}   
 finally{
 _endExportPaint();
@@ -64998,7 +65307,7 @@ tAcc[idx]+=tc*om;
 
 if(maxH>0&&_dueForProgressivePaint(signal,end>=nIter)){
 const img=ctx.createImageData(W,H),id=img.data,bg=hexRgb(S.bgColor);
-const gam=S.flameGamma||2.2,lm=Math.log(maxH+1);
+const gam=S.flameGamma||2.2,lm=Math.log((typeof _densityScreenPeak==='function'?_densityScreenPeak:(_b,_w,_h,m)=>m)(hist,W,H,maxH)+1);   
 const bright=Math.min((S.flameBrightness||4)/4,6);
 const vib=S.flameVibrancy!==undefined?S.flameVibrancy:1;
 
@@ -66195,6 +66504,12 @@ return{density:_attrDensity,colorAcc:_attrColorAcc};
 }
 
 
+
+const ATTRACTOR_MAX_ITER=5000000;
+
+
+const ATTRACTOR_EXPORT_MAX_ITER=200000000;
+
 async function renderAttractor(t,signal,opts={}){
 document.getElementById('pill').classList.add('show');
 _setPillProgress('ATTRACTOR',null);
@@ -66212,7 +66527,7 @@ await new Promise(r=>setTimeout(r,0));
 
 
 
-const nIter=Math.min(5000000,Math.max(100000,S.chaosIter||500000)),CHUNK=opts.animate?Math.min(40000,Math.max(5000,Math.ceil(nIter/90))):50000;
+const nIter=Math.min((typeof window!=='undefined'&&window._renderingForExport>0)?200000000:5000000,Math.max(100000,S.chaosIter||500000)),CHUNK=opts.animate?Math.min(40000,Math.max(5000,Math.ceil(nIter/90))):50000;
 const sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);  
 const a=S.chaosA,b=S.chaosB,c=S.chaosC,d=S.chaosD;
 const {density,colorAcc}=_getAttrBuffers(W*H);
@@ -66362,6 +66677,7 @@ if(t!==tok){document.getElementById('pill').classList.remove('show');return}
 
 _checkAbort(signal);
 _setPillProgress('ATTRACTOR',((base/1e6).toFixed(1))+'M / '+((nIter/1e6).toFixed(1))+'M');
+if(opts.onProgress)opts.onProgress(base,nIter);
 const end=Math.min(base+CHUNK,nIter);
 for(let i=base;i<end;i++){
 
@@ -66440,7 +66756,7 @@ if(density[idx]>maxD)maxD=density[idx];
 
 
 if(maxD>0&&_dueForProgressivePaint(signal,end>=nIter)){
-const img=ctx.createImageData(W,H),id=img.data,bg=hexRgb(S.bgColor),lm=Math.log(maxD+1);
+const img=ctx.createImageData(W,H),id=img.data,bg=hexRgb(S.bgColor),lm=Math.log((typeof _densityScreenPeak==='function'?_densityScreenPeak:(_b,_w,_h,m)=>m)(density,W,H,maxD)+1);   
 
 
 
@@ -66453,7 +66769,7 @@ if(density[i]===0){if(_exportTransparentAlpha){id[i*4+3]=0;continue}id[i*4]=bg[0
 
 
 
-const brt=Math.pow(Math.log(density[i]+1)/lm,0.5);
+const brt=Math.min(1,Math.pow(Math.log(density[i]+1)/lm,0.5));
 const raw=colorAcc[i]/density[i];
 
 

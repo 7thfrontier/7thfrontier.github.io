@@ -51,11 +51,18 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Zip the published app and create the release
+      - name: Zip the published app and publish the release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           v="${GITHUB_REF_NAME#v}"
           (cd app && zip -qr "../aeon-web-v$v.zip" .)
           cp "aeon-web-v$v.zip" aeon-web.zip
-          gh release create "$GITHUB_REF_NAME" "aeon-web-v$v.zip" aeon-web.zip --title "AEON $v" --notes-file release-notes.md
+          # A re-mirror of a tag that already has a release must refresh it: `create` fails on an
+          # existing tag, which left v7.0.1's first body (nine ticket ids) published for good.
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release edit "$GITHUB_REF_NAME" --title "AEON $v" --notes-file release-notes.md
+            gh release upload "$GITHUB_REF_NAME" "aeon-web-v$v.zip" aeon-web.zip --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "aeon-web-v$v.zip" aeon-web.zip --title "AEON $v" --notes-file release-notes.md
+          fi

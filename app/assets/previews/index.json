@@ -1,0 +1,1457 @@
+{
+  "_doc": "AEON-2105: written by bin/record-catalog-previews.mjs. Do not hand-edit; re-record instead.",
+  "tile": [
+    192,
+    120
+  ],
+  "canvas": "1440x900",
+  "totalBytes": 749645,
+  "entries": [
+    {
+      "mode": "fractal",
+      "type": "attractor_aizawa",
+      "file": "fractal-attractor_aizawa.jpg",
+      "bytes": 2242
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_chen_lee",
+      "file": "fractal-attractor_chen_lee.jpg",
+      "bytes": 1671
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_chua",
+      "file": "fractal-attractor_chua.jpg",
+      "bytes": 2319
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_clifford",
+      "file": "fractal-attractor_clifford.jpg",
+      "bytes": 2281
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_dadras",
+      "file": "fractal-attractor_dadras.jpg",
+      "bytes": 1869
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_dejong",
+      "file": "fractal-attractor_dejong.jpg",
+      "bytes": 3653
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_duffing",
+      "file": "fractal-attractor_duffing.jpg",
+      "bytes": 1834
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_gumowski_mira",
+      "file": "fractal-attractor_gumowski_mira.jpg",
+      "bytes": 2142
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_halvorsen",
+      "file": "fractal-attractor_halvorsen.jpg",
+      "bytes": 2700
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_henon",
+      "file": "fractal-attractor_henon.jpg",
+      "bytes": 1572
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_hopalong",
+      "file": "fractal-attractor_hopalong.jpg",
+      "bytes": 3541
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_ikeda",
+      "file": "fractal-attractor_ikeda.jpg",
+      "bytes": 1809
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_lorenz",
+      "file": "fractal-attractor_lorenz.jpg",
+      "bytes": 2406
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_pickover",
+      "file": "fractal-attractor_pickover.jpg",
+      "bytes": 1564
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_rossler",
+      "file": "fractal-attractor_rossler.jpg",
+      "bytes": 1921
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_sprott_b",
+      "file": "fractal-attractor_sprott_b.jpg",
+      "bytes": 3493
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_thomas",
+      "file": "fractal-attractor_thomas.jpg",
+      "bytes": 3289
+    },
+    {
+      "mode": "fractal",
+      "type": "attractor_tinkerbell",
+      "file": "fractal-attractor_tinkerbell.jpg",
+      "bytes": 1212
+    },
+    {
+      "mode": "fractal",
+      "type": "biomorph",
+      "file": "fractal-biomorph.jpg",
+      "bytes": 2368
+    },
+    {
+      "mode": "fractal",
+      "type": "buddhabrot",
+      "file": "fractal-buddhabrot.jpg",
+      "bytes": 10126
+    },
+    {
+      "mode": "fractal",
+      "type": "buddhabrot_anti",
+      "file": "fractal-buddhabrot_anti.jpg",
+      "bytes": 2807
+    },
+    {
+      "mode": "fractal",
+      "type": "buffalo",
+      "file": "fractal-buffalo.jpg",
+      "bytes": 2835
+    },
+    {
+      "mode": "fractal",
+      "type": "burningship",
+      "file": "fractal-burningship.jpg",
+      "bytes": 2183
+    },
+    {
+      "mode": "fractal",
+      "type": "burningship_julia",
+      "file": "fractal-burningship_julia.jpg",
+      "bytes": 1238
+    },
+    {
+      "mode": "fractal",
+      "type": "celtic",
+      "file": "fractal-celtic.jpg",
+      "bytes": 3265
+    },
+    {
+      "mode": "fractal",
+      "type": "collatz",
+      "file": "fractal-collatz.jpg",
+      "bytes": 1412
+    },
+    {
+      "mode": "fractal",
+      "type": "custom_3d",
+      "file": "fractal-custom_3d.jpg",
+      "bytes": 3240
+    },
+    {
+      "mode": "fractal",
+      "type": "exp_map",
+      "file": "fractal-exp_map.jpg",
+      "bytes": 2564
+    },
+    {
+      "mode": "fractal",
+      "type": "formula",
+      "file": "fractal-formula.jpg",
+      "bytes": 2683
+    },
+    {
+      "mode": "fractal",
+      "type": "fractal_flame",
+      "file": "fractal-fractal_flame.jpg",
+      "bytes": 1709
+    },
+    {
+      "mode": "fractal",
+      "type": "ifs_cantor_dust",
+      "file": "fractal-ifs_cantor_dust.jpg",
+      "bytes": 2102
+    },
+    {
+      "mode": "fractal",
+      "type": "ifs_carpet",
+      "file": "fractal-ifs_carpet.jpg",
+      "bytes": 4668
+    },
+    {
+      "mode": "fractal",
+      "type": "ifs_dragon",
+      "file": "fractal-ifs_dragon.jpg",
+      "bytes": 1685
+    },
+    {
+      "mode": "fractal",
+      "type": "ifs_fern",
+      "file": "fractal-ifs_fern.jpg",
+      "bytes": 2003
+    },
+    {
+      "mode": "fractal",
+      "type": "ifs_levy",
+      "file": "fractal-ifs_levy.jpg",
+      "bytes": 2757
+    },
+    {
+      "mode": "fractal",
+      "type": "ifs_polygon",
+      "file": "fractal-ifs_polygon.jpg",
+      "bytes": 2730
+    },
+    {
+      "mode": "fractal",
+      "type": "ifs_sierpinski",
+      "file": "fractal-ifs_sierpinski.jpg",
+      "bytes": 1584
+    },
+    {
+      "mode": "fractal",
+      "type": "julia",
+      "file": "fractal-julia.jpg",
+      "bytes": 3558
+    },
+    {
+      "mode": "fractal",
+      "type": "lambda",
+      "file": "fractal-lambda.jpg",
+      "bytes": 3366
+    },
+    {
+      "mode": "fractal",
+      "type": "lyapunov",
+      "file": "fractal-lyapunov.jpg",
+      "bytes": 3836
+    },
+    {
+      "mode": "fractal",
+      "type": "magnet1",
+      "file": "fractal-magnet1.jpg",
+      "bytes": 4274
+    },
+    {
+      "mode": "fractal",
+      "type": "magnet2",
+      "file": "fractal-magnet2.jpg",
+      "bytes": 4227
+    },
+    {
+      "mode": "fractal",
+      "type": "mandelbox",
+      "file": "fractal-mandelbox.jpg",
+      "bytes": 11054
+    },
+    {
+      "mode": "fractal",
+      "type": "mandelbrot",
+      "file": "fractal-mandelbrot.jpg",
+      "bytes": 1587
+    },
+    {
+      "mode": "fractal",
+      "type": "mandelbulb",
+      "file": "fractal-mandelbulb.jpg",
+      "bytes": 2354
+    },
+    {
+      "mode": "fractal",
+      "type": "menger",
+      "file": "fractal-menger.jpg",
+      "bytes": 2341
+    },
+    {
+      "mode": "fractal",
+      "type": "multibrot3",
+      "file": "fractal-multibrot3.jpg",
+      "bytes": 2343
+    },
+    {
+      "mode": "fractal",
+      "type": "newton3",
+      "file": "fractal-newton3.jpg",
+      "bytes": 4070
+    },
+    {
+      "mode": "fractal",
+      "type": "newton_cayley",
+      "file": "fractal-newton_cayley.jpg",
+      "bytes": 3182
+    },
+    {
+      "mode": "fractal",
+      "type": "newton_sin",
+      "file": "fractal-newton_sin.jpg",
+      "bytes": 9196
+    },
+    {
+      "mode": "fractal",
+      "type": "nova",
+      "file": "fractal-nova.jpg",
+      "bytes": 4457
+    },
+    {
+      "mode": "fractal",
+      "type": "perp_burning",
+      "file": "fractal-perp_burning.jpg",
+      "bytes": 2940
+    },
+    {
+      "mode": "fractal",
+      "type": "perp_mandelbrot",
+      "file": "fractal-perp_mandelbrot.jpg",
+      "bytes": 1853
+    },
+    {
+      "mode": "fractal",
+      "type": "phoenix",
+      "file": "fractal-phoenix.jpg",
+      "bytes": 2050
+    },
+    {
+      "mode": "fractal",
+      "type": "qjulia",
+      "file": "fractal-qjulia.jpg",
+      "bytes": 2855
+    },
+    {
+      "mode": "fractal",
+      "type": "sierp_tetra",
+      "file": "fractal-sierp_tetra.jpg",
+      "bytes": 2723
+    },
+    {
+      "mode": "fractal",
+      "type": "tricorn",
+      "file": "fractal-tricorn.jpg",
+      "bytes": 1943
+    },
+    {
+      "mode": "fractal",
+      "type": "tricorn_julia",
+      "file": "fractal-tricorn_julia.jpg",
+      "bytes": 1789
+    },
+    {
+      "mode": "geometry",
+      "type": "ammann-beenker",
+      "file": "geometry-ammann-beenker.jpg",
+      "bytes": 10578
+    },
+    {
+      "mode": "geometry",
+      "type": "antipodal-id",
+      "file": "geometry-antipodal-id.jpg",
+      "bytes": 1344
+    },
+    {
+      "mode": "geometry",
+      "type": "apollonian",
+      "file": "geometry-apollonian.jpg",
+      "bytes": 3375
+    },
+    {
+      "mode": "geometry",
+      "type": "astroid",
+      "file": "geometry-astroid.jpg",
+      "bytes": 1165
+    },
+    {
+      "mode": "geometry",
+      "type": "bagua",
+      "file": "geometry-bagua.jpg",
+      "bytes": 4870
+    },
+    {
+      "mode": "geometry",
+      "type": "bezout-cubic-cubic",
+      "file": "geometry-bezout-cubic-cubic.jpg",
+      "bytes": 1541
+    },
+    {
+      "mode": "geometry",
+      "type": "borromean-rings",
+      "file": "geometry-borromean-rings.jpg",
+      "bytes": 2653
+    },
+    {
+      "mode": "geometry",
+      "type": "brians-brain",
+      "file": "geometry-brians-brain.jpg",
+      "bytes": 4749
+    },
+    {
+      "mode": "geometry",
+      "type": "butterfly-curve",
+      "file": "geometry-butterfly-curve.jpg",
+      "bytes": 2681
+    },
+    {
+      "mode": "geometry",
+      "type": "cardioid",
+      "file": "geometry-cardioid.jpg",
+      "bytes": 1377
+    },
+    {
+      "mode": "geometry",
+      "type": "cassini-ovals",
+      "file": "geometry-cassini-ovals.jpg",
+      "bytes": 1027
+    },
+    {
+      "mode": "geometry",
+      "type": "cayley-a-five",
+      "file": "geometry-cayley-a-five.jpg",
+      "bytes": 1513
+    },
+    {
+      "mode": "geometry",
+      "type": "cayley-a-four",
+      "file": "geometry-cayley-a-four.jpg",
+      "bytes": 1372
+    },
+    {
+      "mode": "geometry",
+      "type": "cayley-d-eight",
+      "file": "geometry-cayley-d-eight.jpg",
+      "bytes": 1648
+    },
+    {
+      "mode": "geometry",
+      "type": "cayley-d-six",
+      "file": "geometry-cayley-d-six.jpg",
+      "bytes": 1584
+    },
+    {
+      "mode": "geometry",
+      "type": "cayley-m-eleven",
+      "file": "geometry-cayley-m-eleven.jpg",
+      "bytes": 1601
+    },
+    {
+      "mode": "geometry",
+      "type": "cayley-m-twelve",
+      "file": "geometry-cayley-m-twelve.jpg",
+      "bytes": 1644
+    },
+    {
+      "mode": "geometry",
+      "type": "cayley-psl-two-seven",
+      "file": "geometry-cayley-psl-two-seven.jpg",
+      "bytes": 1359
+    },
+    {
+      "mode": "geometry",
+      "type": "cayley-q-eight",
+      "file": "geometry-cayley-q-eight.jpg",
+      "bytes": 1530
+    },
+    {
+      "mode": "geometry",
+      "type": "cayley-s-four",
+      "file": "geometry-cayley-s-four.jpg",
+      "bytes": 1533
+    },
+    {
+      "mode": "geometry",
+      "type": "cayley-s-three",
+      "file": "geometry-cayley-s-three.jpg",
+      "bytes": 1334
+    },
+    {
+      "mode": "geometry",
+      "type": "celtic-knot",
+      "file": "geometry-celtic-knot.jpg",
+      "bytes": 1220
+    },
+    {
+      "mode": "geometry",
+      "type": "chladni",
+      "file": "geometry-chladni.jpg",
+      "bytes": 5396
+    },
+    {
+      "mode": "geometry",
+      "type": "composite-poly",
+      "file": "geometry-composite-poly.jpg",
+      "bytes": 2564
+    },
+    {
+      "mode": "geometry",
+      "type": "compound-five-cubes",
+      "file": "geometry-compound-five-cubes.jpg",
+      "bytes": 3195
+    },
+    {
+      "mode": "geometry",
+      "type": "compound-five-tetrahedra",
+      "file": "geometry-compound-five-tetrahedra.jpg",
+      "bytes": 2754
+    },
+    {
+      "mode": "geometry",
+      "type": "conic-section",
+      "file": "geometry-conic-section.jpg",
+      "bytes": 1090
+    },
+    {
+      "mode": "geometry",
+      "type": "cube",
+      "file": "geometry-cube.jpg",
+      "bytes": 1802
+    },
+    {
+      "mode": "geometry",
+      "type": "cuboctahedron",
+      "file": "geometry-cuboctahedron.jpg",
+      "bytes": 2344
+    },
+    {
+      "mode": "geometry",
+      "type": "cyclic-ca",
+      "file": "geometry-cyclic-ca.jpg",
+      "bytes": 3782
+    },
+    {
+      "mode": "geometry",
+      "type": "cycloid",
+      "file": "geometry-cycloid.jpg",
+      "bytes": 1297
+    },
+    {
+      "mode": "geometry",
+      "type": "day-and-night",
+      "file": "geometry-day-and-night.jpg",
+      "bytes": 4990
+    },
+    {
+      "mode": "geometry",
+      "type": "delaunay",
+      "file": "geometry-delaunay.jpg",
+      "bytes": 2369
+    },
+    {
+      "mode": "geometry",
+      "type": "deltoid",
+      "file": "geometry-deltoid.jpg",
+      "bytes": 1127
+    },
+    {
+      "mode": "geometry",
+      "type": "deltoidal-hexecontahedron",
+      "file": "geometry-deltoidal-hexecontahedron.jpg",
+      "bytes": 3149
+    },
+    {
+      "mode": "geometry",
+      "type": "deltoidal-icositetrahedron",
+      "file": "geometry-deltoidal-icositetrahedron.jpg",
+      "bytes": 2763
+    },
+    {
+      "mode": "geometry",
+      "type": "disdyakis-dodecahedron",
+      "file": "geometry-disdyakis-dodecahedron.jpg",
+      "bytes": 3034
+    },
+    {
+      "mode": "geometry",
+      "type": "disdyakis-triacontahedron",
+      "file": "geometry-disdyakis-triacontahedron.jpg",
+      "bytes": 3485
+    },
+    {
+      "mode": "geometry",
+      "type": "divisor-plot",
+      "file": "geometry-divisor-plot.jpg",
+      "bytes": 4900
+    },
+    {
+      "mode": "geometry",
+      "type": "dla",
+      "file": "geometry-dla.jpg",
+      "bytes": 3062
+    },
+    {
+      "mode": "geometry",
+      "type": "dodecahedron",
+      "file": "geometry-dodecahedron.jpg",
+      "bytes": 2313
+    },
+    {
+      "mode": "geometry",
+      "type": "domain-coloring",
+      "file": "geometry-domain-coloring.jpg",
+      "bytes": 7548
+    },
+    {
+      "mode": "geometry",
+      "type": "egg-of-life",
+      "file": "geometry-egg-of-life.jpg",
+      "bytes": 3677
+    },
+    {
+      "mode": "geometry",
+      "type": "elementary-ca",
+      "file": "geometry-elementary-ca.jpg",
+      "bytes": 2451
+    },
+    {
+      "mode": "geometry",
+      "type": "elliptic-curve",
+      "file": "geometry-elliptic-curve.jpg",
+      "bytes": 1327
+    },
+    {
+      "mode": "geometry",
+      "type": "enneagram",
+      "file": "geometry-enneagram.jpg",
+      "bytes": 4589
+    },
+    {
+      "mode": "geometry",
+      "type": "enneper",
+      "file": "geometry-enneper.jpg",
+      "bytes": 3124
+    },
+    {
+      "mode": "geometry",
+      "type": "epicycloid",
+      "file": "geometry-epicycloid.jpg",
+      "bytes": 1679
+    },
+    {
+      "mode": "geometry",
+      "type": "fbm-landscape",
+      "file": "geometry-fbm-landscape.jpg",
+      "bytes": 5573
+    },
+    {
+      "mode": "geometry",
+      "type": "fermat-spiral",
+      "file": "geometry-fermat-spiral.jpg",
+      "bytes": 4837
+    },
+    {
+      "mode": "geometry",
+      "type": "fibonacci-lattice",
+      "file": "geometry-fibonacci-lattice.jpg",
+      "bytes": 4867
+    },
+    {
+      "mode": "geometry",
+      "type": "five-cell",
+      "file": "geometry-five-cell.jpg",
+      "bytes": 1317
+    },
+    {
+      "mode": "geometry",
+      "type": "flower-of-life",
+      "file": "geometry-flower-of-life.jpg",
+      "bytes": 7377
+    },
+    {
+      "mode": "geometry",
+      "type": "ford-circles",
+      "file": "geometry-ford-circles.jpg",
+      "bytes": 2367
+    },
+    {
+      "mode": "geometry",
+      "type": "fruit-of-life",
+      "file": "geometry-fruit-of-life.jpg",
+      "bytes": 5176
+    },
+    {
+      "mode": "geometry",
+      "type": "fundamental-polygon",
+      "file": "geometry-fundamental-polygon.jpg",
+      "bytes": 1657
+    },
+    {
+      "mode": "geometry",
+      "type": "game-of-life",
+      "file": "geometry-game-of-life.jpg",
+      "bytes": 5216
+    },
+    {
+      "mode": "geometry",
+      "type": "genus-four-polygon",
+      "file": "geometry-genus-four-polygon.jpg",
+      "bytes": 1679
+    },
+    {
+      "mode": "geometry",
+      "type": "geodesic-polyhedron",
+      "file": "geometry-geodesic-polyhedron.jpg",
+      "bytes": 2325
+    },
+    {
+      "mode": "geometry",
+      "type": "gierer-meinhardt",
+      "file": "geometry-gierer-meinhardt.jpg",
+      "bytes": 6586
+    },
+    {
+      "mode": "geometry",
+      "type": "girih",
+      "file": "geometry-girih.jpg",
+      "bytes": 5734
+    },
+    {
+      "mode": "geometry",
+      "type": "golden-spiral",
+      "file": "geometry-golden-spiral.jpg",
+      "bytes": 1409
+    },
+    {
+      "mode": "geometry",
+      "type": "grand-one-twenty-cell",
+      "file": "geometry-grand-one-twenty-cell.jpg",
+      "bytes": 2351
+    },
+    {
+      "mode": "geometry",
+      "type": "grand-six-hundred-cell",
+      "file": "geometry-grand-six-hundred-cell.jpg",
+      "bytes": 2184
+    },
+    {
+      "mode": "geometry",
+      "type": "grand-stellated-one-twenty-cell",
+      "file": "geometry-grand-stellated-one-twenty-cell.jpg",
+      "bytes": 2168
+    },
+    {
+      "mode": "geometry",
+      "type": "gray-scott",
+      "file": "geometry-gray-scott.jpg",
+      "bytes": 1558
+    },
+    {
+      "mode": "geometry",
+      "type": "great-dodecahedron",
+      "file": "geometry-great-dodecahedron.jpg",
+      "bytes": 2465
+    },
+    {
+      "mode": "geometry",
+      "type": "great-grand-one-twenty-cell",
+      "file": "geometry-great-grand-one-twenty-cell.jpg",
+      "bytes": 2392
+    },
+    {
+      "mode": "geometry",
+      "type": "great-icosahedral-one-twenty-cell",
+      "file": "geometry-great-icosahedral-one-twenty-cell.jpg",
+      "bytes": 2164
+    },
+    {
+      "mode": "geometry",
+      "type": "great-icosahedron",
+      "file": "geometry-great-icosahedron.jpg",
+      "bytes": 2712
+    },
+    {
+      "mode": "geometry",
+      "type": "great-one-twenty-cell",
+      "file": "geometry-great-one-twenty-cell.jpg",
+      "bytes": 2334
+    },
+    {
+      "mode": "geometry",
+      "type": "great-six-hundred-cell",
+      "file": "geometry-great-six-hundred-cell.jpg",
+      "bytes": 2634
+    },
+    {
+      "mode": "geometry",
+      "type": "great-stellated-dodecahedron",
+      "file": "geometry-great-stellated-dodecahedron.jpg",
+      "bytes": 2739
+    },
+    {
+      "mode": "geometry",
+      "type": "great-stellated-one-twenty-cell",
+      "file": "geometry-great-stellated-one-twenty-cell.jpg",
+      "bytes": 2175
+    },
+    {
+      "mode": "geometry",
+      "type": "gyroid",
+      "file": "geometry-gyroid.jpg",
+      "bytes": 2066
+    },
+    {
+      "mode": "geometry",
+      "type": "harmonograph",
+      "file": "geometry-harmonograph.jpg",
+      "bytes": 3138
+    },
+    {
+      "mode": "geometry",
+      "type": "hat-monotile",
+      "file": "geometry-hat-monotile.jpg",
+      "bytes": 9799
+    },
+    {
+      "mode": "geometry",
+      "type": "hilbert-curve",
+      "file": "geometry-hilbert-curve.jpg",
+      "bytes": 4354
+    },
+    {
+      "mode": "geometry",
+      "type": "hopf-fibration",
+      "file": "geometry-hopf-fibration.jpg",
+      "bytes": 2015
+    },
+    {
+      "mode": "geometry",
+      "type": "hyperbolic-tiling",
+      "file": "geometry-hyperbolic-tiling.jpg",
+      "bytes": 3770
+    },
+    {
+      "mode": "geometry",
+      "type": "hyperelliptic-g-three",
+      "file": "geometry-hyperelliptic-g-three.jpg",
+      "bytes": 1507
+    },
+    {
+      "mode": "geometry",
+      "type": "hyperelliptic-g-two",
+      "file": "geometry-hyperelliptic-g-two.jpg",
+      "bytes": 1342
+    },
+    {
+      "mode": "geometry",
+      "type": "hypocycloid",
+      "file": "geometry-hypocycloid.jpg",
+      "bytes": 1218
+    },
+    {
+      "mode": "geometry",
+      "type": "i-ching",
+      "file": "geometry-i-ching.jpg",
+      "bytes": 7368
+    },
+    {
+      "mode": "geometry",
+      "type": "icosahedral-one-twenty-cell",
+      "file": "geometry-icosahedral-one-twenty-cell.jpg",
+      "bytes": 2333
+    },
+    {
+      "mode": "geometry",
+      "type": "icosahedron",
+      "file": "geometry-icosahedron.jpg",
+      "bytes": 2465
+    },
+    {
+      "mode": "geometry",
+      "type": "icosidodecahedron",
+      "file": "geometry-icosidodecahedron.jpg",
+      "bytes": 2839
+    },
+    {
+      "mode": "geometry",
+      "type": "islamic-star",
+      "file": "geometry-islamic-star.jpg",
+      "bytes": 3270
+    },
+    {
+      "mode": "geometry",
+      "type": "just-intonation",
+      "file": "geometry-just-intonation.jpg",
+      "bytes": 5699
+    },
+    {
+      "mode": "geometry",
+      "type": "klein-bottle",
+      "file": "geometry-klein-bottle.jpg",
+      "bytes": 3303
+    },
+    {
+      "mode": "geometry",
+      "type": "klein-quartic",
+      "file": "geometry-klein-quartic.jpg",
+      "bytes": 1650
+    },
+    {
+      "mode": "geometry",
+      "type": "klein-sextic",
+      "file": "geometry-klein-sextic.jpg",
+      "bytes": 1220
+    },
+    {
+      "mode": "geometry",
+      "type": "kleinian",
+      "file": "geometry-kleinian.jpg",
+      "bytes": 1328
+    },
+    {
+      "mode": "geometry",
+      "type": "kolam",
+      "file": "geometry-kolam.jpg",
+      "bytes": 2933
+    },
+    {
+      "mode": "geometry",
+      "type": "l-system",
+      "file": "geometry-l-system.jpg",
+      "bytes": 2046
+    },
+    {
+      "mode": "geometry",
+      "type": "lemniscate",
+      "file": "geometry-lemniscate.jpg",
+      "bytes": 2115
+    },
+    {
+      "mode": "geometry",
+      "type": "lenia",
+      "file": "geometry-lenia.jpg",
+      "bytes": 5294
+    },
+    {
+      "mode": "geometry",
+      "type": "lissajous-knot",
+      "file": "geometry-lissajous-knot.jpg",
+      "bytes": 1711
+    },
+    {
+      "mode": "geometry",
+      "type": "lissajous",
+      "file": "geometry-lissajous.jpg",
+      "bytes": 1901
+    },
+    {
+      "mode": "geometry",
+      "type": "lo-shu",
+      "file": "geometry-lo-shu.jpg",
+      "bytes": 3894
+    },
+    {
+      "mode": "geometry",
+      "type": "mandala",
+      "file": "geometry-mandala.jpg",
+      "bytes": 3342
+    },
+    {
+      "mode": "geometry",
+      "type": "maurer-rose",
+      "file": "geometry-maurer-rose.jpg",
+      "bytes": 3549
+    },
+    {
+      "mode": "geometry",
+      "type": "metatrons-cube",
+      "file": "geometry-metatrons-cube.jpg",
+      "bytes": 5402
+    },
+    {
+      "mode": "geometry",
+      "type": "mobius-strip",
+      "file": "geometry-mobius-strip.jpg",
+      "bytes": 3263
+    },
+    {
+      "mode": "geometry",
+      "type": "octahedron",
+      "file": "geometry-octahedron.jpg",
+      "bytes": 1943
+    },
+    {
+      "mode": "geometry",
+      "type": "one-twenty-cell",
+      "file": "geometry-one-twenty-cell.jpg",
+      "bytes": 3513
+    },
+    {
+      "mode": "geometry",
+      "type": "parabolic-art",
+      "file": "geometry-parabolic-art.jpg",
+      "bytes": 2624
+    },
+    {
+      "mode": "geometry",
+      "type": "penrose-p-one",
+      "file": "geometry-penrose-p-one.jpg",
+      "bytes": 9243
+    },
+    {
+      "mode": "geometry",
+      "type": "penrose-p-three",
+      "file": "geometry-penrose-p-three.jpg",
+      "bytes": 9527
+    },
+    {
+      "mode": "geometry",
+      "type": "penrose-p-two",
+      "file": "geometry-penrose-p-two.jpg",
+      "bytes": 9293
+    },
+    {
+      "mode": "geometry",
+      "type": "penrose",
+      "file": "geometry-penrose.jpg",
+      "bytes": 9212
+    },
+    {
+      "mode": "geometry",
+      "type": "pentagonal-hexecontahedron",
+      "file": "geometry-pentagonal-hexecontahedron.jpg",
+      "bytes": 3180
+    },
+    {
+      "mode": "geometry",
+      "type": "pentagonal-icositetrahedron",
+      "file": "geometry-pentagonal-icositetrahedron.jpg",
+      "bytes": 2544
+    },
+    {
+      "mode": "geometry",
+      "type": "pentakis-dodecahedron",
+      "file": "geometry-pentakis-dodecahedron.jpg",
+      "bytes": 3225
+    },
+    {
+      "mode": "geometry",
+      "type": "phyllotaxis",
+      "file": "geometry-phyllotaxis.jpg",
+      "bytes": 1697
+    },
+    {
+      "mode": "geometry",
+      "type": "pinwheel",
+      "file": "geometry-pinwheel.jpg",
+      "bytes": 10238
+    },
+    {
+      "mode": "geometry",
+      "type": "poincare-disk",
+      "file": "geometry-poincare-disk.jpg",
+      "bytes": 1734
+    },
+    {
+      "mode": "geometry",
+      "type": "projective-plane",
+      "file": "geometry-projective-plane.jpg",
+      "bytes": 2809
+    },
+    {
+      "mode": "geometry",
+      "type": "pythagoras-tree",
+      "file": "geometry-pythagoras-tree.jpg",
+      "bytes": 1946
+    },
+    {
+      "mode": "geometry",
+      "type": "quasicrystal",
+      "file": "geometry-quasicrystal.jpg",
+      "bytes": 10564
+    },
+    {
+      "mode": "geometry",
+      "type": "recaman",
+      "file": "geometry-recaman.jpg",
+      "bytes": 3725
+    },
+    {
+      "mode": "geometry",
+      "type": "reuleaux",
+      "file": "geometry-reuleaux.jpg",
+      "bytes": 2422
+    },
+    {
+      "mode": "geometry",
+      "type": "rhombic-dodecahedron",
+      "file": "geometry-rhombic-dodecahedron.jpg",
+      "bytes": 2199
+    },
+    {
+      "mode": "geometry",
+      "type": "rhombic-triacontahedron",
+      "file": "geometry-rhombic-triacontahedron.jpg",
+      "bytes": 2758
+    },
+    {
+      "mode": "geometry",
+      "type": "rhombicosidodecahedron",
+      "file": "geometry-rhombicosidodecahedron.jpg",
+      "bytes": 3245
+    },
+    {
+      "mode": "geometry",
+      "type": "rhombicuboctahedron",
+      "file": "geometry-rhombicuboctahedron.jpg",
+      "bytes": 2686
+    },
+    {
+      "mode": "geometry",
+      "type": "riemann-branch-cuts",
+      "file": "geometry-riemann-branch-cuts.jpg",
+      "bytes": 1233
+    },
+    {
+      "mode": "geometry",
+      "type": "riemann-sphere",
+      "file": "geometry-riemann-sphere.jpg",
+      "bytes": 1513
+    },
+    {
+      "mode": "geometry",
+      "type": "robinson-tiles",
+      "file": "geometry-robinson-tiles.jpg",
+      "bytes": 7362
+    },
+    {
+      "mode": "geometry",
+      "type": "rose-curve",
+      "file": "geometry-rose-curve.jpg",
+      "bytes": 4875
+    },
+    {
+      "mode": "geometry",
+      "type": "rose-window",
+      "file": "geometry-rose-window.jpg",
+      "bytes": 4010
+    },
+    {
+      "mode": "geometry",
+      "type": "sacks-spiral",
+      "file": "geometry-sacks-spiral.jpg",
+      "bytes": 3703
+    },
+    {
+      "mode": "geometry",
+      "type": "scherk",
+      "file": "geometry-scherk.jpg",
+      "bytes": 1767
+    },
+    {
+      "mode": "geometry",
+      "type": "schwarz-d",
+      "file": "geometry-schwarz-d.jpg",
+      "bytes": 2174
+    },
+    {
+      "mode": "geometry",
+      "type": "schwarz-p",
+      "file": "geometry-schwarz-p.jpg",
+      "bytes": 1997
+    },
+    {
+      "mode": "geometry",
+      "type": "seed-of-life",
+      "file": "geometry-seed-of-life.jpg",
+      "bytes": 4113
+    },
+    {
+      "mode": "geometry",
+      "type": "six-hundred-cell",
+      "file": "geometry-six-hundred-cell.jpg",
+      "bytes": 2900
+    },
+    {
+      "mode": "geometry",
+      "type": "sixteen-cell",
+      "file": "geometry-sixteen-cell.jpg",
+      "bytes": 1273
+    },
+    {
+      "mode": "geometry",
+      "type": "small-stellated-dodecahedron",
+      "file": "geometry-small-stellated-dodecahedron.jpg",
+      "bytes": 2712
+    },
+    {
+      "mode": "geometry",
+      "type": "small-stellated-one-twenty-cell",
+      "file": "geometry-small-stellated-one-twenty-cell.jpg",
+      "bytes": 2414
+    },
+    {
+      "mode": "geometry",
+      "type": "snub-cube",
+      "file": "geometry-snub-cube.jpg",
+      "bytes": 2981
+    },
+    {
+      "mode": "geometry",
+      "type": "snub-dodecahedron",
+      "file": "geometry-snub-dodecahedron.jpg",
+      "bytes": 3446
+    },
+    {
+      "mode": "geometry",
+      "type": "sona",
+      "file": "geometry-sona.jpg",
+      "bytes": 3645
+    },
+    {
+      "mode": "geometry",
+      "type": "spectre-monotile",
+      "file": "geometry-spectre-monotile.jpg",
+      "bytes": 5861
+    },
+    {
+      "mode": "geometry",
+      "type": "spherical-dodecahedron",
+      "file": "geometry-spherical-dodecahedron.jpg",
+      "bytes": 1383
+    },
+    {
+      "mode": "geometry",
+      "type": "spherical-icosahedron",
+      "file": "geometry-spherical-icosahedron.jpg",
+      "bytes": 1458
+    },
+    {
+      "mode": "geometry",
+      "type": "spirograph",
+      "file": "geometry-spirograph.jpg",
+      "bytes": 1152
+    },
+    {
+      "mode": "geometry",
+      "type": "sri-yantra",
+      "file": "geometry-sri-yantra.jpg",
+      "bytes": 4575
+    },
+    {
+      "mode": "geometry",
+      "type": "star-of-david",
+      "file": "geometry-star-of-david.jpg",
+      "bytes": 1363
+    },
+    {
+      "mode": "geometry",
+      "type": "steiner-chain",
+      "file": "geometry-steiner-chain.jpg",
+      "bytes": 2397
+    },
+    {
+      "mode": "geometry",
+      "type": "stella-octangula",
+      "file": "geometry-stella-octangula.jpg",
+      "bytes": 2006
+    },
+    {
+      "mode": "geometry",
+      "type": "sufi-nine-star",
+      "file": "geometry-sufi-nine-star.jpg",
+      "bytes": 4178
+    },
+    {
+      "mode": "geometry",
+      "type": "superformula",
+      "file": "geometry-superformula.jpg",
+      "bytes": 1855
+    },
+    {
+      "mode": "geometry",
+      "type": "tesseract",
+      "file": "geometry-tesseract.jpg",
+      "bytes": 2446
+    },
+    {
+      "mode": "geometry",
+      "type": "tetrahedron",
+      "file": "geometry-tetrahedron.jpg",
+      "bytes": 1444
+    },
+    {
+      "mode": "geometry",
+      "type": "tetrakis-hexahedron",
+      "file": "geometry-tetrakis-hexahedron.jpg",
+      "bytes": 2688
+    },
+    {
+      "mode": "geometry",
+      "type": "tonnetz",
+      "file": "geometry-tonnetz.jpg",
+      "bytes": 4993
+    },
+    {
+      "mode": "geometry",
+      "type": "torus-knot",
+      "file": "geometry-torus-knot.jpg",
+      "bytes": 1719
+    },
+    {
+      "mode": "geometry",
+      "type": "tractrix",
+      "file": "geometry-tractrix.jpg",
+      "bytes": 1065
+    },
+    {
+      "mode": "geometry",
+      "type": "tree-of-life",
+      "file": "geometry-tree-of-life.jpg",
+      "bytes": 1829
+    },
+    {
+      "mode": "geometry",
+      "type": "trefoil-knot",
+      "file": "geometry-trefoil-knot.jpg",
+      "bytes": 2067
+    },
+    {
+      "mode": "geometry",
+      "type": "triakis-icosahedron",
+      "file": "geometry-triakis-icosahedron.jpg",
+      "bytes": 3114
+    },
+    {
+      "mode": "geometry",
+      "type": "triakis-octahedron",
+      "file": "geometry-triakis-octahedron.jpg",
+      "bytes": 2383
+    },
+    {
+      "mode": "geometry",
+      "type": "triakis-tetrahedron",
+      "file": "geometry-triakis-tetrahedron.jpg",
+      "bytes": 1822
+    },
+    {
+      "mode": "geometry",
+      "type": "triquetra",
+      "file": "geometry-triquetra.jpg",
+      "bytes": 2697
+    },
+    {
+      "mode": "geometry",
+      "type": "truchet",
+      "file": "geometry-truchet.jpg",
+      "bytes": 8846
+    },
+    {
+      "mode": "geometry",
+      "type": "truncated-cube",
+      "file": "geometry-truncated-cube.jpg",
+      "bytes": 2202
+    },
+    {
+      "mode": "geometry",
+      "type": "truncated-cuboctahedron",
+      "file": "geometry-truncated-cuboctahedron.jpg",
+      "bytes": 2730
+    },
+    {
+      "mode": "geometry",
+      "type": "truncated-dodecahedron",
+      "file": "geometry-truncated-dodecahedron.jpg",
+      "bytes": 2631
+    },
+    {
+      "mode": "geometry",
+      "type": "truncated-icosahedron",
+      "file": "geometry-truncated-icosahedron.jpg",
+      "bytes": 2953
+    },
+    {
+      "mode": "geometry",
+      "type": "truncated-icosidodecahedron",
+      "file": "geometry-truncated-icosidodecahedron.jpg",
+      "bytes": 3222
+    },
+    {
+      "mode": "geometry",
+      "type": "truncated-octahedron",
+      "file": "geometry-truncated-octahedron.jpg",
+      "bytes": 2381
+    },
+    {
+      "mode": "geometry",
+      "type": "truncated-tetrahedron",
+      "file": "geometry-truncated-tetrahedron.jpg",
+      "bytes": 1940
+    },
+    {
+      "mode": "geometry",
+      "type": "twelve-tone",
+      "file": "geometry-twelve-tone.jpg",
+      "bytes": 2986
+    },
+    {
+      "mode": "geometry",
+      "type": "twenty-four-cell",
+      "file": "geometry-twenty-four-cell.jpg",
+      "bytes": 1967
+    },
+    {
+      "mode": "geometry",
+      "type": "ulam-spiral",
+      "file": "geometry-ulam-spiral.jpg",
+      "bytes": 5301
+    },
+    {
+      "mode": "geometry",
+      "type": "vesica-piscis",
+      "file": "geometry-vesica-piscis.jpg",
+      "bytes": 2150
+    },
+    {
+      "mode": "geometry",
+      "type": "voderberg",
+      "file": "geometry-voderberg.jpg",
+      "bytes": 1455
+    },
+    {
+      "mode": "geometry",
+      "type": "voronoi",
+      "file": "geometry-voronoi.jpg",
+      "bytes": 2724
+    },
+    {
+      "mode": "geometry",
+      "type": "wallpaper",
+      "file": "geometry-wallpaper.jpg",
+      "bytes": 9940
+    },
+    {
+      "mode": "geometry",
+      "type": "watt-curve",
+      "file": "geometry-watt-curve.jpg",
+      "bytes": 1033
+    },
+    {
+      "mode": "geometry",
+      "type": "witch-of-agnesi",
+      "file": "geometry-witch-of-agnesi.jpg",
+      "bytes": 1169
+    },
+    {
+      "mode": "geometry",
+      "type": "zellij-rosette",
+      "file": "geometry-zellij-rosette.jpg",
+      "bytes": 3961
+    }
+  ]
+}
