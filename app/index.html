@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-Yz2koqlbDJkMgxwzTzuD/HTTX9EuBLXGuyjxRCoMYes='; font-src 'self'; script-src 'self' 'sha256-kt5BRf0Mm0tmqIrfRDD2EAs3tlxL2/owxW63XgW5PzQ=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-Yz2koqlbDJkMgxwzTzuD/HTTX9EuBLXGuyjxRCoMYes='; font-src 'self'; script-src 'self' 'sha256-pIEenfYy5W+X5vEPSC5E7U4IAzUF6CDSIdiTww75+QI=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4229,12 +4229,12 @@
 
 
 
-<!-- build: c1b4c2c3381d -->
+<!-- build: 628e102e668f -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.0.13
+ * AEON -- Universal Dynamics Reactor v7.0.14
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7490,7 +7490,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.0.13';
+const APP_VERSION='7.0.14';
 
 
 
@@ -7499,8 +7499,8 @@ const APP_VERSION='7.0.13';
 
 
 
-const MISSION_BUILD_HASH='c1b4c2c3381d';
-const MISSION_GIT_SHA='e6d4718112c6b70b65733d9f915f6fbc17933ed1';
+const MISSION_BUILD_HASH='628e102e668f';
+const MISSION_GIT_SHA='358d5461a6978540e6fe6e3ee95ac963e3fc4d2f';
 
 const MISSION_RENDER_HASH='b6b214eda2a8';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50147,6 +50147,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.0.14',
+date:'2026-10-12',
+headline:'The installed app keeps its full name, and the website tiles open AEON.',
+items:[
+'Installed from the browser on a Mac, the app is named AEON Universal Dynamics Reactor in the Dock and the app switcher, the same as the page title and link previews.',
+'Each of the six shape tiles on the published website opens AEON on the shape it shows again, instead of reloading the landing page.',
+],
+},
+{
 version:'7.0.13',
 date:'2026-10-11',
 headline:'The Buddhabrot shows its orbits, and the tour has a voice.',
@@ -50214,15 +50223,6 @@ items:[
 'With the Inspector open, Mandelbrot, Julia and the other escape-time fractals no longer draw the strip hidden under it, so slow views finish sooner. The picture does not move.',
 'Post-FX such as the vignette and grain now show on deep zooms past the GPU\'s precision.',
 'The Catalog redraws the picture behind it once, when you close it, instead of while you scroll.',
-],
-},
-{
-version:'7.0.6',
-date:'2026-10-06',
-headline:'A first visit now shows you where to start.',
-items:[
-'After the welcome, a small card at the top left lists three things to try: zoom into the picture, open the catalog, and change the palette.',
-'Each one ticks off as you do it. Show me around starts the controls tour, and Hide puts the card away for good.',
 ],
 },
 ];
