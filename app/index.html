@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-xarmO7ru8dbZHPdOcWiqQSqvh0Hhus6ZmOVF6ZPkGTE='; font-src 'self'; script-src 'self' 'sha256-2T9C5K2to2hgNESBxvq5rXPQ1QyQ/ckP+Y45s8HgaWg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-xarmO7ru8dbZHPdOcWiqQSqvh0Hhus6ZmOVF6ZPkGTE='; font-src 'self'; script-src 'self' 'sha256-q2OBha2IFB/JrwcbfL2JjUbCsryPapKT4JQVQh7HdKo=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4232,7 +4232,7 @@
 
 
 
-<!-- build: de860cf13a38 -->
+<!-- build: c757fb26ae59 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7502,10 +7502,10 @@ const APP_VERSION='7.1.2';
 
 
 
-const MISSION_BUILD_HASH='de860cf13a38';
-const MISSION_GIT_SHA='080697b15c64e771a1c7e37f5f40b1ebf0c35395';
+const MISSION_BUILD_HASH='c757fb26ae59';
+const MISSION_GIT_SHA='63125f10051fb1d33a092719da284ecc8f031482';
 
-const MISSION_RENDER_HASH='f5a820d3db30';
+const MISSION_RENDER_HASH='39dc36fa586e';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -14541,21 +14541,24 @@ scheduleRender();
 
 
 
+
+
 const _mirrorDeadCache=new Map();
-function _mirrorControlsDead(){
+function _rasterDrawerIgnores(sKey){
 try{
 const p=S.pattern;
 const tog=(typeof PATTERN_3D_DRAWERS!=='undefined')?PATTERN_3D_DRAWERS.get(p):null;
 const use3D=!!(tog&&S[tog[0]]);
-const key=p+'|'+(use3D?'3d':'2d');
+const key=p+'|'+(use3D?'3d':'2d')+'|'+sKey;
 if(_mirrorDeadCache.has(key))return _mirrorDeadCache.get(key);
 const fn=use3D?tog[1]:((typeof PATTERN_DRAWERS!=='undefined')?PATTERN_DRAWERS.get(p):null);
 const src=fn?String(fn):'';
-const dead=!!src&&/setTransform\s*\(/.test(src)&&!/S\.mirror/.test(src);
+const dead=!!src&&/setTransform\s*\(/.test(src)&&!new RegExp('S\\.'+sKey).test(src);
 _mirrorDeadCache.set(key,dead);
 return dead;
 }catch(_e){ return false; }
 }
+function _mirrorControlsDead(){ return _rasterDrawerIgnores('mirror'); }
 
 
 
@@ -14581,6 +14584,10 @@ if(badge)badge.textContent=k>1?k+'×':'Off';
 
 const sec=document.getElementById('sec-geo-mirror');
 if(sec&&S.mode==='geometry')sec.classList.toggle('is-hidden',_mirrorControlsDead());
+if(S.mode==='geometry')for(const id of ['geoScale','lineWeight','strokeOpacity','glowIntensity']){
+const row=document.getElementById(id)?.closest('.ctrl');
+if(row)row.classList.toggle('is-hidden',_rasterDrawerIgnores(id));
+}
 }
 
 
@@ -14597,7 +14604,9 @@ let ok=true;
 try{
 const fn=use3D?tog[1]:((typeof PATTERN_DRAWERS!=='undefined')?PATTERN_DRAWERS.get(p):null);
 if(typeof fn==='function'){
-const scan=(s)=>/\bS\.fill\b/.test(s)||/geoFillColor/.test(s)||/\.fill\s*\(/.test(s);
+
+
+const scan=(s)=>/\bS\.fill\b/.test(s)||/geoFillColor/.test(s);
 const src=String(fn);
 ok=scan(src);
 
@@ -15911,6 +15920,10 @@ const msgs=[];
 if(fmt==='gif' && typeof _GIF_MAX_DIM!=='undefined' && dim>_GIF_MAX_DIM){
 msgs.push(`GIF exports are capped at ${_GIF_MAX_DIM}px, so this will be downscaled from ${w}×${h}.`);
 }
+if(fmt==='webp' && dim>_WEBP_MAX_DIM){
+const [fw,fh]=_webpFit(w,h);
+msgs.push(`WebP allows at most ${_WEBP_MAX_DIM}px per side, so this will export at ${fw}×${fh}.`);
+}
 if(fmt==='tiff' && dim>=4096){
 msgs.push('TIFF is uncompressed: expect a large file (100+ MB at this size).');
 }
@@ -16161,6 +16174,14 @@ triggerDownload(url,fn+'.tif');
 
 
 const _GIF_MAX_DIM=640; 
+
+const _WEBP_MAX_DIM=16383;
+function _webpFit(w,h,twoToOne){
+if(Math.max(w,h)<=_WEBP_MAX_DIM)return [w,h];
+if(twoToOne){const fh=Math.floor(_WEBP_MAX_DIM/2);return [2*fh,fh];}
+const sc=_WEBP_MAX_DIM/Math.max(w,h);
+return [Math.max(1,Math.floor(w*sc)),Math.max(1,Math.floor(h*sc))];
+}
 
 
 
@@ -25795,6 +25816,7 @@ en: {
 'attractor.ic-settles.duffing': 'Duffing settles onto the same figure from any starting x, so x₀ is not shown.',
 'attractor.ic-settles.thomas': 'Thomas settles onto the same figure from any starting x and y, so x₀ and y₀ are not shown.',
 'export.equirect-aspect-forced': 'Equirectangular forces a 2:1 aspect · exporting at {w}×{h}',
+'export.webp-clamped': 'WebP allows at most {m} px per side · exporting at {w}×{h}',
 'export.phys-size-capped':    'Physical size capped to fit the 32K pixel limit · exporting at {w}×{h} ({dpi} DPI)',
 'export.supersample-adjusted': 'Supersample × {ss} → × {ss2} for density renderer at this resolution: would peak ~{peak} GB working canvas vs {headroom} GB headroom{note}',
 'export.size-capped':         'Export capped at {w}×{h} (32K canvas limit; aspect preserved)',
@@ -34783,7 +34805,7 @@ const dist=Math.hypot(x, y);
 c.fillStyle=geoElemColor(i, total, dist, N/2);
 c.fillRect(px-cell/2, py-cell/2, cell, cell);
 } else if(S.fill){
-c.globalAlpha=0.08*S.strokeOpacity;
+c.globalAlpha=Math.min(1,0.08*S.fillOpacity/0.15)*S.strokeOpacity;   
 c.fillStyle=_bgIsDark()?'#444':'#bbb';   
 c.fillRect(px-cell/2, py-cell/2, cell, cell);
 c.globalAlpha=S.strokeOpacity;
@@ -35667,11 +35689,11 @@ c.restore();
 function drawAntipodalIdentification(c, bR){
 const R=bR*0.85;
 const cosX=Math.cos(S.rotX||0), sinX=Math.sin(S.rotX||0), cosY=Math.cos(S.rotY||0), sinY=Math.sin(S.rotY||0);
-c.save();
+c.save();   
 c.lineWidth=Math.max(1, S.lineWeight*0.5*_lwK());
 
 c.strokeStyle=geoElemColor(0, 2, R, R);
-c.globalAlpha=0.4;
+c.globalAlpha=0.4*(S.strokeOpacity??1);
 for(let j=1;j<8;j++){
 const phi=j*Math.PI/8 - Math.PI/2;
 c.beginPath();
@@ -35698,7 +35720,7 @@ if(j===0)c.moveTo(px, py); else c.lineTo(px, py);
 }
 c.stroke();
 }
-c.globalAlpha=1;
+c.globalAlpha=(S.strokeOpacity??1);
 
 const seed=S.layers||5;
 const N=12;
@@ -35919,7 +35941,8 @@ function _cayleyDraw(c, bR, pos, G, opts){
 const o=opts||{}, dotR=o.dotR||4, arrow=o.arrow||8, width=o.width||1, labels=o.labels||null, alpha=o.alpha||1;
 c.save();
 c.lineWidth=Math.max(0.5, S.lineWeight*width*_lwK());
-c.globalAlpha=alpha;
+const so=S.strokeOpacity??1;   
+c.globalAlpha=alpha*so;
 
 
 const directed=new Set();
@@ -35938,7 +35961,7 @@ c.stroke();
 if(!G.invol[k]) _cayleyArrow(c, A, B, arrow);
 }
 });
-c.globalAlpha=1;
+c.globalAlpha=so;
 c.fillStyle=accentColor();
 if(labels){c.font=`${Math.max(12,dotR*1.1|0)}px `+(window.UI_FONT_FAMILY||'sans-serif'); c.textAlign='center'; c.textBaseline='middle';}
 pos.forEach(([x,y],i)=>{
@@ -36186,13 +36209,13 @@ function drawKleinQuartic(c, bR){
 const n=14;
 
 const R=bR*1.6;
-c.save();
+c.save();   
 c.lineWidth=Math.max(2, S.lineWeight*_lwK());
 
 c.strokeStyle=geoElemColor(0, 3, bR, bR);
-c.globalAlpha=0.4;
+c.globalAlpha=0.4*(S.strokeOpacity??1);
 c.beginPath(); c.arc(0, 0, R, 0, TAU); c.stroke();
-c.globalAlpha=1;
+c.globalAlpha=(S.strokeOpacity??1);
 
 
 
@@ -36231,11 +36254,11 @@ c.restore();
 function drawRiemannBranchCuts(c, bR){
 const R=bR*0.85;
 const cosX=Math.cos(S.rotX||0), sinX=Math.sin(S.rotX||0), cosY=Math.cos(S.rotY||0), sinY=Math.sin(S.rotY||0);
-c.save();
+c.save();   
 c.lineWidth=Math.max(1, S.lineWeight*0.6*_lwK());
 
 c.strokeStyle=geoElemColor(0, 3, bR, bR);
-c.globalAlpha=0.35;
+c.globalAlpha=0.35*(S.strokeOpacity??1);
 for(let j=1;j<8;j++){
 const phi=j*Math.PI/8 - Math.PI/2;
 c.beginPath();
@@ -36262,7 +36285,7 @@ if(j===0)c.moveTo(px, py); else c.lineTo(px, py);
 }
 c.stroke();
 }
-c.globalAlpha=1;
+c.globalAlpha=(S.strokeOpacity??1);
 
 
 c.strokeStyle=geoElemColor(1, 3, bR, bR);
@@ -63189,6 +63212,7 @@ return;
 
 const oc=_trackCanvas(document.createElement('canvas'));oc.width=W2;oc.height=H2;
 const octx=oc.getContext('2d');_exportBgFill(octx,W2,H2,_pfmtAlpha);
+let _pfxOnArtP=false;
 
 
 
@@ -63270,14 +63294,18 @@ if (fractalLetterbox) {
 
 const xoff = Math.round((W2 - renderW) / 2);
 const yoff = Math.round((H2 - renderH) / 2);
+
+if(_pfxAnyActive()){status.textContent='Post-FX…';bar.style.setProperty('--progress','85%');await new Promise(r=>setTimeout(r,10));await applyPostFXAsync(renderCtx,renderW,renderH,bar,status,signal);_pfxOnArtP=true;}
 octx.drawImage(subCanvas, xoff, yoff);
 }
 }
 }
 
 
+if(!_pfxOnArtP){
 status.textContent='Post-FX…';bar.style.setProperty('--progress','85%');await new Promise(r=>setTimeout(r,10));
 if(_pfxAnyActive())await applyPostFXAsync(octx,W2,H2,bar,status,signal);
+}
 
 
 
@@ -63921,6 +63949,7 @@ if(_pendingCloseModalTimer){clearTimeout(_pendingCloseModalTimer);_pendingCloseM
 _exportAbortController = new AbortController();
 const signal = _exportAbortController.signal;
 let W2=exportSize,H2=exportSize;
+let _pfxOnArt=false;
 
 
 
@@ -63943,6 +63972,10 @@ H2=Math.min(H2,16384); W2=2*H2;
 
 if((W2!==_preW||H2!==_preH) && typeof showToast==='function')
 showToast(t('export.equirect-aspect-forced',{w:W2,h:H2}),'info',5000);
+}
+if(_fmt==='webp' && Math.max(W2,H2)>_WEBP_MAX_DIM){
+[W2,H2]=_webpFit(W2,H2,_equirectExportActive());
+if(typeof showToast==='function') showToast(t('export.webp-clamped',{m:_WEBP_MAX_DIM,w:W2,h:H2}),'info',6000);
 }
 const btn=document.getElementById('export-btn'),prog=document.getElementById('export-progress');
 const bar=document.getElementById('export-bar'),status=document.getElementById('export-status');
@@ -64236,9 +64269,13 @@ const _opacField=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
 const _itFnQ=(typeof IT_DISPATCH!=='undefined'&&IT_DISPATCH.get(S.fractalType))||itMandelbrot;   
 for(let py=0;py<H2;py+=CHUNK){if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');for(let row=py;row<Math.min(py+CHUNK,H2);row++){for(let px=0;px<W2;px++){let rA=0,gA=0,bA=0,lastT=0;for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){const spx=px+(sx+.5)/aa-.5,spy=row+(sy+.5)/aa-.5,cx=S.centerX+(spx-W2/2)*sc,cy=S.centerY+(spy-H2/2)*sc;const res=_itFnQ(cx,cy,mi,er2);const[iter,zx,zy]=res;let r,g,b;if(isNewton){[r,g,b]=newtonRGB(iter,zx,zy);if(typeof _newtonOpacT==='function')lastT=_newtonOpacT(zx,zy,iter);}else if(iter>=S.maxIter){[r,g,b]=interiorRGB(zx,zy,iter);if(typeof _interiorOpacT==='function')lastT=_interiorOpacT(zx,zy);}else{const tc=colorT(iter,zx,zy);lastT=tc;const rgba=palRGBA(tc);r=rgba[0];g=rgba[1];b=rgba[2];const a=rgba[3];if(a<0.999){r=_bgFR[0]*(1-a)+r*a|0;g=_bgFR[1]*(1-a)+g*a|0;b=_bgFR[2]*(1-a)+b*a|0;}}rA+=r;gA+=g;bA+=b;}const n=aa*aa,i4=(row*W2+px)*4;let mr=rA/n|0,mg=gA/n|0,mb=bA/n|0;if(_opacField){const fa=_pixelAlphaField(px,H2-1-row,W2,H2,lastT);if(fa<0.999){mr=_bgFR[0]*(1-fa)+mr*fa|0;mg=_bgFR[1]*(1-fa)+mg*fa|0;mb=_bgFR[2]*(1-fa)+mb*fa|0;}}d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255;}}octx.putImageData(img,0,0);bar.style.setProperty('--progress',Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)+'%');status.textContent=`Rendering… ${Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)}%`;await new Promise(r=>setTimeout(r,0));}}
 } finally { if(_lbFit){ octx=_lbOut; W2=_lbW; H2=_lbH; } }
-if(_lbFit){ _exportBgFill(octx,W2,H2,_lbAlpha); octx.drawImage(_lbSub,Math.round((W2-_lbSub.width)/2),Math.round((H2-_lbSub.height)/2)); }
+if(_lbFit){
+
+if(_pfxAnyActive()){status.textContent='Post-FX…';bar.style.setProperty('--progress','92%');await new Promise(r=>setTimeout(r,10));await applyPostFXAsync(_lbSub.getContext('2d'),_lbSub.width,_lbSub.height,bar,status,signal);_pfxOnArt=true;}
+_exportBgFill(octx,W2,H2,_lbAlpha); octx.drawImage(_lbSub,Math.round((W2-_lbSub.width)/2),Math.round((H2-_lbSub.height)/2));
 }
-if(_pfxAnyActive()){status.textContent='Post-FX…';bar.style.setProperty('--progress','92%');await new Promise(r=>setTimeout(r,10));await applyPostFXAsync(octx,W2,H2,bar,status,signal);}
+}
+if(_pfxAnyActive()&&!_pfxOnArt){status.textContent='Post-FX…';bar.style.setProperty('--progress','92%');await new Promise(r=>setTimeout(r,10));await applyPostFXAsync(octx,W2,H2,bar,status,signal);}
 bar.style.setProperty('--progress','100%');status.textContent='Encoding…';await new Promise(r=>setTimeout(r,30));
 
 
