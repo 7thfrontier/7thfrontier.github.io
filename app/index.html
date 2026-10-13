@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-xarmO7ru8dbZHPdOcWiqQSqvh0Hhus6ZmOVF6ZPkGTE='; font-src 'self'; script-src 'self' 'sha256-+6fGb7A6A6nlMjtPPar4IK+5wjTOnEmGiGY6wqS5ZyU=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-xarmO7ru8dbZHPdOcWiqQSqvh0Hhus6ZmOVF6ZPkGTE='; font-src 'self'; script-src 'self' 'sha256-a9RuSUdEav10QLaBsnG/TEQepK1OZynMpdkXNgNINFs=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4232,7 +4232,7 @@
 
 
 
-<!-- build: 87ea48724451 -->
+<!-- build: a0c2b36b84b0 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7502,10 +7502,10 @@ const APP_VERSION='7.1.1';
 
 
 
-const MISSION_BUILD_HASH='87ea48724451';
-const MISSION_GIT_SHA='56dea68683bc2a2af94030cc12e465d73890f03f';
+const MISSION_BUILD_HASH='a0c2b36b84b0';
+const MISSION_GIT_SHA='a3c56132306cd82588df9c9a0552df508b155a39';
 
-const MISSION_RENDER_HASH='15ddf798df7c';
+const MISSION_RENDER_HASH='f5a820d3db30';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -67333,7 +67333,7 @@ if (_histTimer) return;
 const _fire = () => {
 _histTimer = null;
 
-if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(_fire)) return;
+if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(_fire, 'histDebounce')) return;
 const remaining = _histCooldown - Date.now();
 if (remaining > 0) { _histTimer = setTimeout(_fire, remaining); return; }
 if (_histIdx >= 0 && _histStateEquals(HIST[_histIdx]?.S)) return;
