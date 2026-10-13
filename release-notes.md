@@ -1,8 +1,5 @@
-Large exports keep every tile · 2026-10-13
+Gate and lock tooling refuses on a failed read · 2026-10-13
 
-- **Start sliders that do nothing are gone on Duffing and Thomas.** These two attractors settle onto the same figure from any starting point, so their x₀ slider (and Thomas's y₀) moved nothing. Those sliders are now hidden on those two types, with a short note saying why. Every other attractor keeps all of its start sliders.
-- **The 7.0.14 What's New card no longer says the Dock name matches the page title.** Since the colon came back to the page title in 7.1.0, the two differ: macOS drops the colon from an installed app's name.
-- **Large GPU exports no longer save with a missing tile.** A 4K print at 3x supersample of a high-iteration view drew each GPU tile as one 4560 px piece. The tile over the slowest part of the picture took about five seconds to draw and was copied into the image before the GPU had finished it, so it came out as plain background, a block about 1500 px square in the saved file, and the export reported success. Each tile is now copied only once the GPU has drawn it, and one that never lands stops the export with a message instead of saving a partly empty image. Tiles are also sized to the iteration count, so no single draw runs that long. Exports made while the tests ran also stop landing in the Downloads folder.
-- **The first frame is already the final layout for more ways in.** A link with a type this version does not know, an old share link for a type that has since been merged, or a share link the app turns away laid the canvas out for the wrong type and then jumped. The canvas now stays hidden until the link has been read. A folded inspector from your last visit only folded after the first frame, so the canvas resized a moment after it appeared. Both are now settled before anything is drawn.
+- A maintenance release with no change you can see in AEON.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.
