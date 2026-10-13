@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.1.3</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.1.4</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.1.3</h2>
+    <h2>AEON · v7.1.4</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1162,20 +1162,20 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.1.3.</h2>
-    <p class="section-lede">Controls that do something, and exports that match their size · 2026-10-13</p>
+    <h2 class="section-title">What's new<br>in 7.1.4.</h2>
+    <p class="section-lede">Buddhabrot frames keep their brightness, and Fog Distance works everywhere · 2026-10-13</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Geometry controls that changed nothing now either work or step aside.</strong> Fill and Fill Opacity showed on twenty-two patterns that never draw a fill, among them the music diagrams, Lo Shu and several Cayley graphs; they are now hidden there. On the Ulam spiral, Fill Opacity now sets how strongly the non-prime cells show. Stroke Opacity now fades the Cayley graphs, the Klein quartic, the branch cuts and the antipodal map. On domain coloring, Scale, Line Weight, Stroke Opacity and Glow are hidden, since the colored plane covers them.</li>
-    <li><strong>Post-FX in an export stays on the picture, not the bars.</strong> When an export's shape differs from the screen, the picture sits centred on plain bars, but Post-FX ran over the whole page, so a vignette was centred on the page and darkened the bars. Post-FX now grades the picture first and the bars stay the background color, in Quick and Print.</li>
-    <li><strong>WebP exports above 16383 pixels say what size they really are.</strong> WebP stores at most 16383 pixels per side, so a 16384 export came out one pixel short while the filename and the finished notice still said 16384. A WebP export past the limit is now scaled to fit before it renders, the export panel says so when you pick the size, a notice names the size it exports at, and the filename carries that size.</li>
+    <li><strong>Buddhabrot PNG sequences keep their brightness.</strong> The first frame of a PNG sequence from Motion Studio could be written before its render finished, because a redraw queued by rewinding to the first keyframe started on top of it. A Buddhabrot frame then came out almost black. Video and frame-exact exports drop that queued redraw the same way.</li>
+    <li><strong>Frame-exact video export saves its file again.</strong> The export rendered and encoded every frame, then failed while naming the file, so nothing was saved and the status stayed on its progress line.</li>
+    <li><strong>Fog Distance works on Quaternion Julia and Mandelbox.</strong> On both types the fog began beyond the farthest surface of the opening view, so the default picture had no fog and moving Fog Distance changed nothing. The fog now begins just in front of each type's own surface, as it already did on Mandelbulb, so the default shows a little depth haze and the control moves it both ways.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.1.3</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.1.4</p>
 </footer>
 
 <script>
