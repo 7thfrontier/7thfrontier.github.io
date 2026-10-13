@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-r7TGx81CCxuqvS1kqemYaQrCSvx4vdtEHhGhAZLKARg='; font-src 'self'; script-src 'self' 'sha256-w88P8ABQKHPPadjIGb29UWYIbtAru+3oMX6jkYNUfRE=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-r7TGx81CCxuqvS1kqemYaQrCSvx4vdtEHhGhAZLKARg='; font-src 'self'; script-src 'self' 'sha256-T46Z5O3CC2BOJcugBHyejIRsbIKpQ5KIr3TAQhmWclk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4232,12 +4232,12 @@
 
 
 
-<!-- build: 07f634dbb9ae -->
+<!-- build: 3578aca4b7c0 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.1.4
+ * AEON -- Universal Dynamics Reactor v7.1.5
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7493,7 +7493,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.1.4';
+const APP_VERSION='7.1.5';
 
 
 
@@ -7502,10 +7502,10 @@ const APP_VERSION='7.1.4';
 
 
 
-const MISSION_BUILD_HASH='07f634dbb9ae';
-const MISSION_GIT_SHA='aa79faf86b8278645bfb69c7137fd4e5f7f54775';
+const MISSION_BUILD_HASH='3578aca4b7c0';
+const MISSION_GIT_SHA='dc78e4c3c797ede7b71afc9bec6b57e01b0c5892';
 
-const MISSION_RENDER_HASH='d854d77d03c5';
+const MISSION_RENDER_HASH='7cec574e9e12';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -38317,7 +38317,9 @@ const p=S.pattern;
 const tog=PATTERN_3D_DRAWERS.get(p);
 
 
-const composite=WORKER_SAFE_PATTERNS.has(p) && !_glowSelfManaged(p);
+
+
+const composite=(WORKER_SAFE_PATTERNS.has(p) || (typeof _4D_PATTERN_SET!=='undefined' && _4D_PATTERN_SET.has(p))) && !_glowSelfManaged(p);
 if(tog && S[tog[0]]){if(composite)_withCompositedGlow(c,(t)=>tog[1](t,bR));else tog[1](c,bR);return;}
 const fn=PATTERN_DRAWERS.get(p);
 if(fn){
@@ -50387,6 +50389,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.1.5',
+date:'2026-10-13',
+headline:'Focus on a phone clears the whole screen, and 4D polytopes tumble faster with glow.',
+items:[
+'In Focus on a phone, the Inspector handle no longer stays along the bottom edge under the Exit button. It hides with the rest of the interface and comes back when you leave Focus.',
+'With glow on, 4D polytopes animate about 1.6 times faster: the glow is drawn once per frame instead of once per edge.',
+],
+},
+{
 version:'7.1.4',
 date:'2026-10-13',
 headline:'Buddhabrot frames keep their brightness, and Fog Distance works on every 3D fractal.',
@@ -50454,16 +50465,6 @@ items:[
 'The 17 wallpaper groups each show their own turns, mirrors and glides, and the Cayley graphs are built from the groups they name.',
 'Gray-Scott reaches its U-skate and labyrinth settings, and the kolam and sona draw each line once.',
 'The projective plane and the Exponential Map open centered and filling the frame, and the app menu shows its Help heading.',
-],
-},
-{
-version:'7.0.11',
-date:'2026-10-07',
-headline:'Aperiodic tilings drawn true.',
-items:[
-'The Hat and the Spectre draw patches of their real tilings, every tile fitting its neighbors with no gaps or overlaps.',
-'Penrose P1 draws the pentagon tiling across the frame, with a Depth control.',
-'All nine star 4-polytopes draw their true edges and faces, with one whole cell solid.',
 ],
 },
 ];
