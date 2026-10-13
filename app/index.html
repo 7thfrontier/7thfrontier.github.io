@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-xarmO7ru8dbZHPdOcWiqQSqvh0Hhus6ZmOVF6ZPkGTE='; font-src 'self'; script-src 'self' 'sha256-gDMtycYu4B/YJ4DlCq6uYd6nyykmZ9HB9jAeR4JLCS4=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-xarmO7ru8dbZHPdOcWiqQSqvh0Hhus6ZmOVF6ZPkGTE='; font-src 'self'; script-src 'self' 'sha256-Lan3V8ijipnO697Nipd30vbkF+Sv/FORYsHb6oPTjBg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4232,7 +4232,7 @@
 
 
 
-<!-- build: 771e2941bfdd -->
+<!-- build: cfd85cc06e0f -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7502,10 +7502,10 @@ const APP_VERSION='7.1.3';
 
 
 
-const MISSION_BUILD_HASH='771e2941bfdd';
-const MISSION_GIT_SHA='f9998183cb8bfa8f727f4140b3c6fb5b4622fae2';
+const MISSION_BUILD_HASH='cfd85cc06e0f';
+const MISSION_GIT_SHA='09cdafe38bce0986c6355d4b392078bccf45adcb';
 
-const MISSION_RENDER_HASH='39dc36fa586e';
+const MISSION_RENDER_HASH='d854d77d03c5';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -27073,7 +27073,7 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
     
     
     
-    let fogStart3D = select(4.0, 1.5, p.type3d == 0u) * p.fogStart;
+    let fogStart3D = select(select(4.0, 0.07, p.type3d == 1u), 1.5, p.type3d == 0u || p.type3d == 3u) * p.fogStart;
     let fogRate3D  = select(0.1, 0.2, p.type3d == 0u);
     let fogD = max(t - fogStart3D, 0.0) * fogRate3D;
     color = mix(vec3<f32>(0.005), color, exp(-fogD));
@@ -29617,7 +29617,9 @@ void main(){
     col=pow(col,vec3(.8));
     
     if(u_type3d==0)col*=1.3;
-    float fogStart3D = (u_type3d==0?1.5:4.0) * u_fogStart;
+    
+    
+    float fogStart3D = (u_type3d==0||u_type3d==3?1.5:u_type3d==1?0.07:4.0) * u_fogStart;
     float fogRate3D  = (u_type3d==0?0.2:0.1);
     float fogD=max(t-fogStart3D,0.)*fogRate3D;
     col=mix(vec3(.005),col,exp(-fogD));
@@ -55969,6 +55971,10 @@ wrap.setAttribute('aria-valuetext',elapsed.toFixed(1)+' s of '+total.toFixed(1)+
 
 
 
+
+
+function _cancelScheduledRender(){ if(_renderRafId){ cancelAnimationFrame(_renderRafId); _renderRafId=0; } }
+
 function _frameSeqBefore(){
 return {
 renderSeq: window._renderSeq||0,
@@ -56178,6 +56184,7 @@ if(o.shouldAbort&&o.shouldAbort()){aborted=true;break;}
 
 const elapsed=(f===o.totalFrames-1)?o.totalSec:f*dt;
 _animInterpolate(elapsed);
+_cancelScheduledRender();
 
 
 
@@ -56549,6 +56556,7 @@ if(st)st.textContent=`Rendering ${i+1}/${totalFrames}…`;
 
 const _pngFrameT=(i===totalFrames-1)?totalSec:i/fps;
 _animInterpolate(_pngFrameT);
+_cancelScheduledRender();
 
 
 if(totalSec>0)S.flameMotionTime=Math.min(1, _pngFrameT/totalSec);
@@ -57070,8 +57078,11 @@ _motionBusy='frames';
 let progressBar=null,bar=null,st=null,btn=null;
 let origW=null,origH=null,origGlW=null,origGlH=null,origGW=null,origGH=null;
 let result=null;
+
+
+let fps=30;
 try {
-const fps=Math.max(1,Math.min(60,S.animFps||30));
+fps=Math.max(1,Math.min(60,S.animFps||30));
 const [expW,expH]=_ANIM_RES[_animResKey]||[CANVAS_SIZE,CANVAS_SIZE];
 const total=_animTotalDuration();
 const totalFrames=_animFrameCount(total,fps);   
@@ -63629,213 +63640,6 @@ if (typeof window !== 'undefined') window._renderSeq = (window._renderSeq||0) + 
 
 
 
-const PLOTTER_SIZES={a4:[210,297],a3:[297,420],letter:[215.9,279.4],square:[200,200]};
-
-
-
-
-
-
-
-
-function _makeSVGCtxPrint(isPlotter,isMono,unitsPerMm){
-return{
-_paths:[],_current:'',_penDown:false,_stroke:'#fff',_fill:false,_fillStyle:'none',
-_lw:S.lineWeight,_opacity:S.strokeOpacity,_dash:getDashArray(S.dashPattern,S.lineWeight).join(','),
-
-
-_cap:S.lineCap||'round',_join:S.lineJoin||'round',_dashOff:0,
-set strokeStyle(v){this._stroke=isMono?'#000000':v},
-set fillStyle(v){this._fillStyle=isPlotter?'none':isMono?'#000000':v},
-set lineWidth(v){this._lw=isPlotter?(0.25*(unitsPerMm||1)):v},
-set globalAlpha(v){this._opacity=v},
-get strokeStyle(){return this._stroke},get fillStyle(){return this._fillStyle},
-get lineWidth(){return this._lw},get globalAlpha(){return this._opacity},
-set shadowBlur(v){},set shadowColor(v){},set lineCap(v){this._cap=v},set lineJoin(v){this._join=v},
-get lineCap(){return this._cap},get lineJoin(){return this._join},
-beginPath(){this._current='';this._penDown=false;},
-moveTo(x,y){_svgMoveTo(this,x,y);},
-lineTo(x,y){_svgLineTo(this,x,y);},
-arc(cx,cy,r,sa,ea,ccw){
-if(!_svgAllFinite(cx,cy,r,sa,ea)){this._penDown=false;return;}
-
-
-
-
-if(Math.abs(Math.abs(ea-sa)-TAU)<.01){
-this._current+=`M${(cx+r).toFixed(2)},${cy.toFixed(2)}A${r.toFixed(2)},${r.toFixed(2)} 0 1,1 ${(cx-r).toFixed(2)},${cy.toFixed(2)}A${r.toFixed(2)},${r.toFixed(2)} 0 1,1 ${(cx+r).toFixed(2)},${cy.toFixed(2)}`;
-} else {
-const sx=cx+r*Math.cos(sa),sy=cy+r*Math.sin(sa),ex=cx+r*Math.cos(ea),ey=cy+r*Math.sin(ea);
-let span=ccw?(sa-ea):(ea-sa); span=((span%TAU)+TAU)%TAU;
-const lg=span>Math.PI?1:0, sw=ccw?0:1;
-this._current+=`M${sx.toFixed(2)},${sy.toFixed(2)}A${r.toFixed(2)},${r.toFixed(2)} 0 ${lg},${sw} ${ex.toFixed(2)},${ey.toFixed(2)}`;
-}
-this._penDown=true;
-},
-quadraticCurveTo(cpx,cpy,x,y){
-if(!_svgAllFinite(cpx,cpy,x,y)){this._penDown=false;return;}
-this._current+=`Q${cpx.toFixed(2)},${cpy.toFixed(2)} ${x.toFixed(2)},${y.toFixed(2)}`;this._penDown=true;
-},
-bezierCurveTo(c1x,c1y,c2x,c2y,x,y){
-if(!_svgAllFinite(c1x,c1y,c2x,c2y,x,y)){this._penDown=false;return;}
-this._current+=`C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${x.toFixed(2)},${y.toFixed(2)}`;this._penDown=true;
-},
-ellipse(cx,cy,rx,ry,rot,sa,ea){
-if(!_svgAllFinite(cx,cy,rx,ry,rot)){this._penDown=false;return;}
-this._current+=`M${(cx+rx).toFixed(2)},${cy.toFixed(2)}A${rx.toFixed(2)},${ry.toFixed(2)} ${(rot*180/Math.PI).toFixed(1)} 1,1 ${(cx-rx).toFixed(2)},${cy.toFixed(2)}A${rx.toFixed(2)},${ry.toFixed(2)} ${(rot*180/Math.PI).toFixed(1)} 1,1 ${(cx+rx).toFixed(2)},${cy.toFixed(2)}`;
-this._penDown=true;
-},
-closePath(){this._current+='Z'},
-
-
-
-rect(x,y,w,h){
-if(!_svgAllFinite(x,y,w,h)){this._penDown=false;return;}
-this._current+=`M${x.toFixed(2)},${y.toFixed(2)}h${w.toFixed(2)}v${h.toFixed(2)}h${(-w).toFixed(2)}Z`;this._penDown=true;
-},
-
-stroke(p){if(p&&p._ops)_replaySVGRecPath(this,p);if(this._current)this._paths.push(`<path d="${this._current}" fill="none" stroke="${this._stroke}" stroke-width="${this._lw.toFixed(2)}" opacity="${this._opacity.toFixed(2)}"${this._dash?' stroke-dasharray="'+this._dash+'"':''}${(this._dash&&this._dashOff)?' stroke-dashoffset="'+(+this._dashOff).toFixed(2)+'"':''}${this._cap!=='butt'?' stroke-linecap="'+this._cap+'"':''}${this._join!=='miter'?' stroke-linejoin="'+this._join+'"':''}${_svgXf(this._m)}/>`)},
-
-
-fill(p){if(p&&p._ops)_replaySVGRecPath(this,p);if(!isPlotter&&this._current){const _fr=(S.mode==='geometry'&&S.fillRule==='evenodd')?' fill-rule="evenodd"':'';const _bl=(S.mode==='geometry')?_blendToCSS(S.fillBlend):'normal';this._paths.push(`<path d="${this._current}" fill="${this._fillStyle}" stroke="none" opacity="${this._opacity.toFixed(2)}"${_fr}${_bl!=='normal'?' style="mix-blend-mode:'+_bl+'"':''}${_svgXf(this._m)}/>`)}},
-
-
-
-strokeRect(x,y,w,h){if(!_svgAllFinite(x,y,w,h))return;this._paths.push(`<rect x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${w.toFixed(2)}" height="${h.toFixed(2)}" fill="none" stroke="${this._stroke}" stroke-width="${this._lw.toFixed(2)}" opacity="${this._opacity.toFixed(2)}"${this._dash?' stroke-dasharray="'+this._dash+'"':''}${(this._dash&&this._dashOff)?' stroke-dashoffset="'+(+this._dashOff).toFixed(2)+'"':''}${this._cap!=='butt'?' stroke-linecap="'+this._cap+'"':''}${this._join!=='miter'?' stroke-linejoin="'+this._join+'"':''}${_svgXf(this._m)}/>`)},
-fillRect(x,y,w,h){if(isPlotter||!_svgAllFinite(x,y,w,h))return;this._paths.push(`<rect x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${w.toFixed(2)}" height="${h.toFixed(2)}" fill="${this._fillStyle}" opacity="${this._opacity.toFixed(2)}"${_svgXf(this._m)}/>`)},
-clearRect(){},
-
-
-
-drawImage(){this._rasterUsed=true},
-fillText(str,x,y){
-if(isPlotter||str==null||!_svgAllFinite(x,y))return;
-const t=String(str).replace(/[&<>]/g,ch=>ch==='&'?'&amp;':ch==='<'?'&lt;':'&gt;');
-const fs=(/([0-9]+(?:\.[0-9]+)?)px/.exec(this.font||'')||[])[1]||'12';
-const ta=this.textAlign==='center'?'middle':(this.textAlign==='right'||this.textAlign==='end')?'end':'start';
-
-const _tb=this.textBaseline, db=_tb==='middle'?'central':(_tb==='top'||_tb==='hanging')?'hanging':(_tb==='bottom'||_tb==='ideographic')?'text-after-edge':'';
-this._paths.push(`<text x="${x.toFixed(2)}" y="${y.toFixed(2)}" fill="${isMono?'#000000':this._fillStyle}" font-size="${fs}" text-anchor="${ta}"${db?` dominant-baseline="${db}"`:''} opacity="${this._opacity.toFixed(2)}"${_svgXf(this._m)}>${t}</text>`);
-},
-..._SVG_XFORM,_m:[1,0,0,1,0,0],_ms:[],_ps:[],clip(){this._rasterUsed=true},setLineDash(a){this._dash=a.join(',')},set lineDashOffset(v){this._dashOff=v},get lineDashOffset(){return this._dashOff},createImageData(){return{data:[]}},putImageData(){},getImageData(){return{data:[],width:0,height:0}},strokeText(){},measureText(){return{width:0}},
-};
-}
-
-
-async function doSVGExportPrint(){
-
-if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(() => doSVGExportPrint())) return;
-
-
-
-
-if(typeof _exportBusyBail==='function' && _exportBusyBail())return;
-
-
-
-
-
-const _visible=(typeof COMP_LAYERS!=='undefined'&&S.liveComposite)?COMP_LAYERS.filter(l=>l.visible):[];
-
-
-if(S.mode!=='geometry'&&_visible.length<2){showToast(t('export.svg-geometry-required'));return;}
-
-
-
-
-if(_pendingCloseModalTimer){clearTimeout(_pendingCloseModalTimer);_pendingCloseModalTimer=null;}
-_exportAbortController=new AbortController();
-try {
-const[pw,ph]=PLOTTER_SIZES[_plotterSize]||[210,297];
-const vb=CANVAS_SIZE;  
-const isPlotter=_plotterPreset==='plotter';
-
-
-
-
-
-const _ar=pw/ph;
-const _vw=_ar>=1? vb*_ar : vb, _vh=_ar>=1? vb : vb/_ar;
-const _vx=(-_vw/2).toFixed(1), _vy=(-_vh/2).toFixed(1);
-const _vbAttr=`${_vx} ${_vy} ${_vw.toFixed(1)} ${_vh.toFixed(1)}`;
-
-const isMono=_plotterPreset==='mono';
-const _x=(-vb/2).toFixed(0);
-
-
-
-
-
-if(_visible.length>=2){
-const {body,omitted}=await _svgCompositeBody(_visible, {x:-vb/2, y:-vb/2, w:vb, h:vb}, {buildVector:()=>_svgGeoGroupsForState(()=>_makeSVGCtxPrint(isPlotter,isMono,_vw/pw),true), allowRaster:false, bgRect:false});
-if(typeof scheduleRender==='function') scheduleRender();
-if(!body){showToast(_svgRasterMsg());return;}
-if(omitted>0&&typeof showToast==='function') showToast(t('export.svg-layers-omitted',{n:omitted,layerWord:(omitted===1?'layer':'layers')}));
-
-
-const _transp=!isPlotter && exportTransparent;
-const bgFill=isPlotter?'white':S.bgColor;
-const _bgRect=_transp?'':`<rect x="${_vx}" y="${_vy}" width="${_vw.toFixed(1)}" height="${_vh.toFixed(1)}" fill="${bgFill}"/>\n`;
-const svg=`<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated by Reactor ${new Date().toISOString().slice(0,10)} · ${_visible.length}-layer composite · Preset: ${_plotterPreset} -->
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="${_vbAttr}"
-  width="${pw}mm" height="${ph}mm">
-${_bgRect}<defs><clipPath id="aeon-frame"><rect x="${_vx}" y="${_vy}" width="${_vw.toFixed(1)}" height="${_vh.toFixed(1)}"/></clipPath></defs>
-<g clip-path="url(#aeon-frame)">
-${body}
-</g>
-</svg>`;
-const blob=new Blob([svg],{type:'image/svg+xml'});
-const url=URL.createObjectURL(blob);
-triggerDownload(url,`aeon-composite-${_visible.length}layers-${_plotterSize}.svg`);   
-closeExportModal();
-return;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-const r=_svgGeoGroupsForState(()=>_makeSVGCtxPrint(isPlotter,isMono,_vw/pw), true);
-if(!r.ok){showToast(r.reason==='dense'?_svgDenseMsg():_svgRasterMsg());return;}
-
-const _transp=!isPlotter && exportTransparent;
-const bgFill=isPlotter?'white':S.bgColor;
-
-const _bgRect=_transp?'':`<rect x="${_vx}" y="${_vy}" width="${_vw.toFixed(1)}" height="${_vh.toFixed(1)}" fill="${bgFill}"/>\n`;
-const svg=`<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated by Reactor ${new Date().toISOString().slice(0,10)} · Pattern: ${S.pattern} · Preset: ${_plotterPreset} -->
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="${_vbAttr}"
-  width="${pw}mm" height="${ph}mm">
-${_bgRect}<defs><clipPath id="aeon-frame"><rect x="${_vx}" y="${_vy}" width="${_vw.toFixed(1)}" height="${_vh.toFixed(1)}"/></clipPath></defs>
-<g clip-path="url(#aeon-frame)">
-${r.inner}
-</g>
-</svg>`;
-const blob=new Blob([svg],{type:'image/svg+xml'});
-const url=URL.createObjectURL(blob);
-const preset=isPlotter?'-plotter':isMono?'-mono':'';
-triggerDownload(url,`aeon-${S.pattern}${preset}-${_plotterSize}.svg`);   
-closeExportModal();
-} catch (err) {
-console.error('doSVGExportPrint failed:', err);
-if (typeof showToast === 'function') showToast(t('export.svg-failed',{error:err && err.message || err}));
-} finally {
-_exportAbortController=null;   
-}
-}
-
-
-
-
 async function _exportRenderAsyncGuarded(fn, attempts = 4, quiet = false){
 for (let i = 0; i < attempts; i++){
 const t = ++tok;
@@ -64322,6 +64126,215 @@ try { if (typeof scheduleRender === 'function') scheduleRender(); } catch (_) { 
 
 _freeExportScratch();
 _exportAbortController = null;
+}
+}
+
+
+
+
+
+
+const PLOTTER_SIZES={a4:[210,297],a3:[297,420],letter:[215.9,279.4],square:[200,200]};
+
+
+
+
+
+
+
+
+function _makeSVGCtxPrint(isPlotter,isMono,unitsPerMm){
+return{
+_paths:[],_current:'',_penDown:false,_stroke:'#fff',_fill:false,_fillStyle:'none',
+_lw:S.lineWeight,_opacity:S.strokeOpacity,_dash:getDashArray(S.dashPattern,S.lineWeight).join(','),
+
+
+_cap:S.lineCap||'round',_join:S.lineJoin||'round',_dashOff:0,
+set strokeStyle(v){this._stroke=isMono?'#000000':v},
+set fillStyle(v){this._fillStyle=isPlotter?'none':isMono?'#000000':v},
+set lineWidth(v){this._lw=isPlotter?(0.25*(unitsPerMm||1)):v},
+set globalAlpha(v){this._opacity=v},
+get strokeStyle(){return this._stroke},get fillStyle(){return this._fillStyle},
+get lineWidth(){return this._lw},get globalAlpha(){return this._opacity},
+set shadowBlur(v){},set shadowColor(v){},set lineCap(v){this._cap=v},set lineJoin(v){this._join=v},
+get lineCap(){return this._cap},get lineJoin(){return this._join},
+beginPath(){this._current='';this._penDown=false;},
+moveTo(x,y){_svgMoveTo(this,x,y);},
+lineTo(x,y){_svgLineTo(this,x,y);},
+arc(cx,cy,r,sa,ea,ccw){
+if(!_svgAllFinite(cx,cy,r,sa,ea)){this._penDown=false;return;}
+
+
+
+
+if(Math.abs(Math.abs(ea-sa)-TAU)<.01){
+this._current+=`M${(cx+r).toFixed(2)},${cy.toFixed(2)}A${r.toFixed(2)},${r.toFixed(2)} 0 1,1 ${(cx-r).toFixed(2)},${cy.toFixed(2)}A${r.toFixed(2)},${r.toFixed(2)} 0 1,1 ${(cx+r).toFixed(2)},${cy.toFixed(2)}`;
+} else {
+const sx=cx+r*Math.cos(sa),sy=cy+r*Math.sin(sa),ex=cx+r*Math.cos(ea),ey=cy+r*Math.sin(ea);
+let span=ccw?(sa-ea):(ea-sa); span=((span%TAU)+TAU)%TAU;
+const lg=span>Math.PI?1:0, sw=ccw?0:1;
+this._current+=`M${sx.toFixed(2)},${sy.toFixed(2)}A${r.toFixed(2)},${r.toFixed(2)} 0 ${lg},${sw} ${ex.toFixed(2)},${ey.toFixed(2)}`;
+}
+this._penDown=true;
+},
+quadraticCurveTo(cpx,cpy,x,y){
+if(!_svgAllFinite(cpx,cpy,x,y)){this._penDown=false;return;}
+this._current+=`Q${cpx.toFixed(2)},${cpy.toFixed(2)} ${x.toFixed(2)},${y.toFixed(2)}`;this._penDown=true;
+},
+bezierCurveTo(c1x,c1y,c2x,c2y,x,y){
+if(!_svgAllFinite(c1x,c1y,c2x,c2y,x,y)){this._penDown=false;return;}
+this._current+=`C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${x.toFixed(2)},${y.toFixed(2)}`;this._penDown=true;
+},
+ellipse(cx,cy,rx,ry,rot,sa,ea){
+if(!_svgAllFinite(cx,cy,rx,ry,rot)){this._penDown=false;return;}
+this._current+=`M${(cx+rx).toFixed(2)},${cy.toFixed(2)}A${rx.toFixed(2)},${ry.toFixed(2)} ${(rot*180/Math.PI).toFixed(1)} 1,1 ${(cx-rx).toFixed(2)},${cy.toFixed(2)}A${rx.toFixed(2)},${ry.toFixed(2)} ${(rot*180/Math.PI).toFixed(1)} 1,1 ${(cx+rx).toFixed(2)},${cy.toFixed(2)}`;
+this._penDown=true;
+},
+closePath(){this._current+='Z'},
+
+
+
+rect(x,y,w,h){
+if(!_svgAllFinite(x,y,w,h)){this._penDown=false;return;}
+this._current+=`M${x.toFixed(2)},${y.toFixed(2)}h${w.toFixed(2)}v${h.toFixed(2)}h${(-w).toFixed(2)}Z`;this._penDown=true;
+},
+
+stroke(p){if(p&&p._ops)_replaySVGRecPath(this,p);if(this._current)this._paths.push(`<path d="${this._current}" fill="none" stroke="${this._stroke}" stroke-width="${this._lw.toFixed(2)}" opacity="${this._opacity.toFixed(2)}"${this._dash?' stroke-dasharray="'+this._dash+'"':''}${(this._dash&&this._dashOff)?' stroke-dashoffset="'+(+this._dashOff).toFixed(2)+'"':''}${this._cap!=='butt'?' stroke-linecap="'+this._cap+'"':''}${this._join!=='miter'?' stroke-linejoin="'+this._join+'"':''}${_svgXf(this._m)}/>`)},
+
+
+fill(p){if(p&&p._ops)_replaySVGRecPath(this,p);if(!isPlotter&&this._current){const _fr=(S.mode==='geometry'&&S.fillRule==='evenodd')?' fill-rule="evenodd"':'';const _bl=(S.mode==='geometry')?_blendToCSS(S.fillBlend):'normal';this._paths.push(`<path d="${this._current}" fill="${this._fillStyle}" stroke="none" opacity="${this._opacity.toFixed(2)}"${_fr}${_bl!=='normal'?' style="mix-blend-mode:'+_bl+'"':''}${_svgXf(this._m)}/>`)}},
+
+
+
+strokeRect(x,y,w,h){if(!_svgAllFinite(x,y,w,h))return;this._paths.push(`<rect x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${w.toFixed(2)}" height="${h.toFixed(2)}" fill="none" stroke="${this._stroke}" stroke-width="${this._lw.toFixed(2)}" opacity="${this._opacity.toFixed(2)}"${this._dash?' stroke-dasharray="'+this._dash+'"':''}${(this._dash&&this._dashOff)?' stroke-dashoffset="'+(+this._dashOff).toFixed(2)+'"':''}${this._cap!=='butt'?' stroke-linecap="'+this._cap+'"':''}${this._join!=='miter'?' stroke-linejoin="'+this._join+'"':''}${_svgXf(this._m)}/>`)},
+fillRect(x,y,w,h){if(isPlotter||!_svgAllFinite(x,y,w,h))return;this._paths.push(`<rect x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${w.toFixed(2)}" height="${h.toFixed(2)}" fill="${this._fillStyle}" opacity="${this._opacity.toFixed(2)}"${_svgXf(this._m)}/>`)},
+clearRect(){},
+
+
+
+drawImage(){this._rasterUsed=true},
+fillText(str,x,y){
+if(isPlotter||str==null||!_svgAllFinite(x,y))return;
+const t=String(str).replace(/[&<>]/g,ch=>ch==='&'?'&amp;':ch==='<'?'&lt;':'&gt;');
+const fs=(/([0-9]+(?:\.[0-9]+)?)px/.exec(this.font||'')||[])[1]||'12';
+const ta=this.textAlign==='center'?'middle':(this.textAlign==='right'||this.textAlign==='end')?'end':'start';
+
+const _tb=this.textBaseline, db=_tb==='middle'?'central':(_tb==='top'||_tb==='hanging')?'hanging':(_tb==='bottom'||_tb==='ideographic')?'text-after-edge':'';
+this._paths.push(`<text x="${x.toFixed(2)}" y="${y.toFixed(2)}" fill="${isMono?'#000000':this._fillStyle}" font-size="${fs}" text-anchor="${ta}"${db?` dominant-baseline="${db}"`:''} opacity="${this._opacity.toFixed(2)}"${_svgXf(this._m)}>${t}</text>`);
+},
+..._SVG_XFORM,_m:[1,0,0,1,0,0],_ms:[],_ps:[],clip(){this._rasterUsed=true},setLineDash(a){this._dash=a.join(',')},set lineDashOffset(v){this._dashOff=v},get lineDashOffset(){return this._dashOff},createImageData(){return{data:[]}},putImageData(){},getImageData(){return{data:[],width:0,height:0}},strokeText(){},measureText(){return{width:0}},
+};
+}
+
+
+async function doSVGExportPrint(){
+
+if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(() => doSVGExportPrint())) return;
+
+
+
+
+if(typeof _exportBusyBail==='function' && _exportBusyBail())return;
+
+
+
+
+
+const _visible=(typeof COMP_LAYERS!=='undefined'&&S.liveComposite)?COMP_LAYERS.filter(l=>l.visible):[];
+
+
+if(S.mode!=='geometry'&&_visible.length<2){showToast(t('export.svg-geometry-required'));return;}
+
+
+
+
+if(_pendingCloseModalTimer){clearTimeout(_pendingCloseModalTimer);_pendingCloseModalTimer=null;}
+_exportAbortController=new AbortController();
+try {
+const[pw,ph]=PLOTTER_SIZES[_plotterSize]||[210,297];
+const vb=CANVAS_SIZE;  
+const isPlotter=_plotterPreset==='plotter';
+
+
+
+
+
+const _ar=pw/ph;
+const _vw=_ar>=1? vb*_ar : vb, _vh=_ar>=1? vb : vb/_ar;
+const _vx=(-_vw/2).toFixed(1), _vy=(-_vh/2).toFixed(1);
+const _vbAttr=`${_vx} ${_vy} ${_vw.toFixed(1)} ${_vh.toFixed(1)}`;
+
+const isMono=_plotterPreset==='mono';
+const _x=(-vb/2).toFixed(0);
+
+
+
+
+
+if(_visible.length>=2){
+const {body,omitted}=await _svgCompositeBody(_visible, {x:-vb/2, y:-vb/2, w:vb, h:vb}, {buildVector:()=>_svgGeoGroupsForState(()=>_makeSVGCtxPrint(isPlotter,isMono,_vw/pw),true), allowRaster:false, bgRect:false});
+if(typeof scheduleRender==='function') scheduleRender();
+if(!body){showToast(_svgRasterMsg());return;}
+if(omitted>0&&typeof showToast==='function') showToast(t('export.svg-layers-omitted',{n:omitted,layerWord:(omitted===1?'layer':'layers')}));
+
+
+const _transp=!isPlotter && exportTransparent;
+const bgFill=isPlotter?'white':S.bgColor;
+const _bgRect=_transp?'':`<rect x="${_vx}" y="${_vy}" width="${_vw.toFixed(1)}" height="${_vh.toFixed(1)}" fill="${bgFill}"/>\n`;
+const svg=`<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated by Reactor ${new Date().toISOString().slice(0,10)} · ${_visible.length}-layer composite · Preset: ${_plotterPreset} -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="${_vbAttr}"
+  width="${pw}mm" height="${ph}mm">
+${_bgRect}<defs><clipPath id="aeon-frame"><rect x="${_vx}" y="${_vy}" width="${_vw.toFixed(1)}" height="${_vh.toFixed(1)}"/></clipPath></defs>
+<g clip-path="url(#aeon-frame)">
+${body}
+</g>
+</svg>`;
+const blob=new Blob([svg],{type:'image/svg+xml'});
+const url=URL.createObjectURL(blob);
+triggerDownload(url,`aeon-composite-${_visible.length}layers-${_plotterSize}.svg`);   
+closeExportModal();
+return;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+const r=_svgGeoGroupsForState(()=>_makeSVGCtxPrint(isPlotter,isMono,_vw/pw), true);
+if(!r.ok){showToast(r.reason==='dense'?_svgDenseMsg():_svgRasterMsg());return;}
+
+const _transp=!isPlotter && exportTransparent;
+const bgFill=isPlotter?'white':S.bgColor;
+
+const _bgRect=_transp?'':`<rect x="${_vx}" y="${_vy}" width="${_vw.toFixed(1)}" height="${_vh.toFixed(1)}" fill="${bgFill}"/>\n`;
+const svg=`<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated by Reactor ${new Date().toISOString().slice(0,10)} · Pattern: ${S.pattern} · Preset: ${_plotterPreset} -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="${_vbAttr}"
+  width="${pw}mm" height="${ph}mm">
+${_bgRect}<defs><clipPath id="aeon-frame"><rect x="${_vx}" y="${_vy}" width="${_vw.toFixed(1)}" height="${_vh.toFixed(1)}"/></clipPath></defs>
+<g clip-path="url(#aeon-frame)">
+${r.inner}
+</g>
+</svg>`;
+const blob=new Blob([svg],{type:'image/svg+xml'});
+const url=URL.createObjectURL(blob);
+const preset=isPlotter?'-plotter':isMono?'-mono':'';
+triggerDownload(url,`aeon-${S.pattern}${preset}-${_plotterSize}.svg`);   
+closeExportModal();
+} catch (err) {
+console.error('doSVGExportPrint failed:', err);
+if (typeof showToast === 'function') showToast(t('export.svg-failed',{error:err && err.message || err}));
+} finally {
+_exportAbortController=null;   
 }
 }
 
