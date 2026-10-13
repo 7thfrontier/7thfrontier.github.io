@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-xarmO7ru8dbZHPdOcWiqQSqvh0Hhus6ZmOVF6ZPkGTE='; font-src 'self'; script-src 'self' 'sha256-onYy2doF+obvIn8I74fvZUnCBydhHu51gj+JVQ9N3Ro=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-r7TGx81CCxuqvS1kqemYaQrCSvx4vdtEHhGhAZLKARg='; font-src 'self'; script-src 'self' 'sha256-w88P8ABQKHPPadjIGb29UWYIbtAru+3oMX6jkYNUfRE=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -1380,7 +1380,7 @@
         }
 
         body.zen-mode .catalog-corner,body.zen-mode .right-panel,
-        body.zen-mode .coord-bar,body.zen-mode .nav-hints{display:none!important}
+        body.zen-mode .coord-bar,body.zen-mode .nav-hints,body.zen-mode #mobile-fab{display:none!important}
         body.zen-mode .canvas-area{left:0;right:0}
         body.zen-mode #zen-bar{opacity:1;pointer-events:auto}
         
@@ -7503,7 +7503,7 @@ const APP_VERSION='7.1.4';
 
 
 const MISSION_BUILD_HASH='07f634dbb9ae';
-const MISSION_GIT_SHA='8f8a75782d59dbaf4d54c168504fe53c58a34d0a';
+const MISSION_GIT_SHA='aa79faf86b8278645bfb69c7137fd4e5f7f54775';
 
 const MISSION_RENDER_HASH='d854d77d03c5';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
