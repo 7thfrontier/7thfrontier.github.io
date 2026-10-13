@@ -1,5 +1,7 @@
-Gate and lock tooling refuses on a failed read · 2026-10-13
+Controls that do something, and exports that match their size · 2026-10-13
 
-- A maintenance release with no change you can see in AEON.
+- **Geometry controls that changed nothing now either work or step aside.** Fill and Fill Opacity showed on twenty-two patterns that never draw a fill, among them the music diagrams, Lo Shu and several Cayley graphs; they are now hidden there. On the Ulam spiral, Fill Opacity now sets how strongly the non-prime cells show. Stroke Opacity now fades the Cayley graphs, the Klein quartic, the branch cuts and the antipodal map. On domain coloring, Scale, Line Weight, Stroke Opacity and Glow are hidden, since the colored plane covers them.
+- **Post-FX in an export stays on the picture, not the bars.** When an export's shape differs from the screen, the picture sits centred on plain bars, but Post-FX ran over the whole page, so a vignette was centred on the page and darkened the bars. Post-FX now grades the picture first and the bars stay the background color, in Quick and Print.
+- **WebP exports above 16383 pixels say what size they really are.** WebP stores at most 16383 pixels per side, so a 16384 export came out one pixel short while the filename and the finished notice still said 16384. A WebP export past the limit is now scaled to fit before it renders, the export panel says so when you pick the size, a notice names the size it exports at, and the filename carries that size.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.

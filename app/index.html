@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-xarmO7ru8dbZHPdOcWiqQSqvh0Hhus6ZmOVF6ZPkGTE='; font-src 'self'; script-src 'self' 'sha256-q2OBha2IFB/JrwcbfL2JjUbCsryPapKT4JQVQh7HdKo=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-xarmO7ru8dbZHPdOcWiqQSqvh0Hhus6ZmOVF6ZPkGTE='; font-src 'self'; script-src 'self' 'sha256-gDMtycYu4B/YJ4DlCq6uYd6nyykmZ9HB9jAeR4JLCS4=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4232,12 +4232,12 @@
 
 
 
-<!-- build: c757fb26ae59 -->
+<!-- build: 771e2941bfdd -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.1.2
+ * AEON -- Universal Dynamics Reactor v7.1.3
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7493,7 +7493,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.1.2';
+const APP_VERSION='7.1.3';
 
 
 
@@ -7502,8 +7502,8 @@ const APP_VERSION='7.1.2';
 
 
 
-const MISSION_BUILD_HASH='c757fb26ae59';
-const MISSION_GIT_SHA='63125f10051fb1d33a092719da284ecc8f031482';
+const MISSION_BUILD_HASH='771e2941bfdd';
+const MISSION_GIT_SHA='f9998183cb8bfa8f727f4140b3c6fb5b4622fae2';
 
 const MISSION_RENDER_HASH='39dc36fa586e';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50385,6 +50385,16 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.1.3',
+date:'2026-10-13',
+headline:'Controls that do nothing step aside, and exports keep their look and their size.',
+items:[
+'Fill and Fill Opacity are hidden on the patterns that never draw a fill, and Stroke Opacity now fades the Cayley graphs, the Klein quartic, the branch cuts and the antipodal map. On the Ulam spiral, Fill Opacity sets how strongly the non-prime cells show.',
+'When an export has a different shape from the screen, Post-FX now grades only the picture, so a vignette no longer darkens the plain bars around it.',
+'A WebP export past 16383 pixels is scaled to fit before it renders, and the export panel, the finished notice and the filename all give the size you actually get.',
+],
+},
+{
 version:'7.1.1',
 date:'2026-10-13',
 headline:'Large GPU exports save every tile, and links open on their final layout.',
@@ -50452,16 +50462,6 @@ items:[
 'The Sri Yantra is drawn from its real construction, with every triple meeting point exact and the traditional 43 small triangles.',
 'Every Penrose tile is drawn whole, and the kite-and-dart tiling is a real one.',
 'Thirty-one pattern notes now describe what the picture shows.',
-],
-},
-{
-version:'7.0.9',
-date:'2026-10-07',
-headline:'A first visit says what to do.',
-items:[
-'One guide now sits beside the live picture from the first frame, with three moves to try: zoom in, try another form, change the colors. Each checks off as you do it, and Hide folds it to a Getting started chip.',
-'Watch the one-minute tour plays inside AEON, with captions, from the app’s own files, so it works offline.',
-'Catalog previews render where you are looking: cards you scrolled past no longer hold up the ones on screen.',
 ],
 },
 ];
