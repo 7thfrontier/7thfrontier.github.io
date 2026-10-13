@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-ibN5/akhqC6bmLNLjtwZvLwKVYeb80RZI7snOFp76Hw='; font-src 'self'; script-src 'self' 'sha256-9CBwtU5PzILD2cNtx5yuyEGHLbAOOkct9wimsVMD2Hs=' 'sha256-odfZjWlWklfh04PKQcra6Xpe1a7CC7/QpVPDcNZUJuw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-xarmO7ru8dbZHPdOcWiqQSqvh0Hhus6ZmOVF6ZPkGTE='; font-src 'self'; script-src 'self' 'sha256-TeFZNea00kCSUl+x719jt65W+dUN9wyCZnBfO8gg8eI=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -634,6 +634,7 @@
         @property --vp-d{syntax:'<length>';inherits:false;initial-value:0px}
         body.vp-tile #cv-wrap{width:100%;margin-left:0}
         #cv-wrap.vp-snap{transition:none}
+        html.boot-pending #cv-wrap{visibility:hidden}
         #cv-wrap{--vp-d:calc(var(--lp-cur) - var(--rp-cur));width:calc(100% + max(var(--lp-cur) - var(--rp-cur), var(--rp-cur) - var(--lp-cur)));height:100%;max-width:none;max-height:none;border-radius:0;overflow:hidden;position:relative;cursor:crosshair;background:var(--canvas-bg);transition:background var(--dur-langorous),margin-left var(--dur-slow) ease;flex-shrink:0;margin-left:calc(var(--lp-cur) - var(--rp-cur))}
         
         #cv{display:block;width:100%;height:100%;background:var(--cv-bg,var(--canvas-bg));transform:translate(var(--cv-dx,0),var(--cv-dy,0));touch-action:none}
@@ -2324,7 +2325,7 @@
 </head>
 <body data-app-mode="fractal" class="vp-tile">
 
-<script id="boot-tile">(function(){try{var T=window.__bootTileTypes=['mandelbulb','mandelbox','menger','qjulia','sierp_tetra','custom_3d','mandelbrot','julia','burningship','tricorn','multibrot3','phoenix','celtic','newton3','newton_cayley','nova','magnet1','lyapunov','perp_mandelbrot','perp_burning','buffalo','lambda','collatz','biomorph','burningship_julia','exp_map','magnet2','newton_sin','tricorn_julia','formula'];var m='fractal',f='mandelbrot',h=location.hash,q=new URLSearchParams(location.search),j=null;if(h.indexOf('#state=')===0){try{j=JSON.parse(decodeURIComponent(escape(atob(h.slice(7).replace(/-/g,'+').replace(/_/g,'/')))));}catch(e){j=null;}}if(j&&typeof j==='object'){if(j.mode)m=j.mode;if(j.ft)f=j.ft;}else{if(q.get('fractal'))f=q.get('fractal');if(q.get('mode')==='geometry')m='geometry';}if(m!=='fractal'||T.indexOf(f)<0)document.body.classList.remove('vp-tile');}catch(e){}})();</script>
+<script id="boot-tile">(function(){try{if(location.search.length>1||location.hash.length>1){var r=document.documentElement;r.classList.add('boot-pending');setTimeout(function(){r.classList.remove('boot-pending');},15000);}var c=null;try{c=localStorage.getItem('reactor.rp-collapsed');}catch(e){}if(c==='1'){var fold=function(){var rp=document.getElementById('right-panel');if(rp){rp.classList.add('rp-collapsed');return true;}return false;};if(!fold())new MutationObserver(function(_,o){if(fold())o.disconnect();}).observe(document.documentElement,{childList:true,subtree:true});}}catch(e){}})();</script>
 <svg class="ic-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><symbol id="ic-compass" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M10.6 5.4L9.1 9.1 5.4 10.6 6.9 6.9z"/></symbol><symbol id="ic-eye" viewBox="0 0 16 16"><path d="M1.5 8S3.9 3.6 8 3.6 14.5 8 14.5 8 12.1 12.4 8 12.4 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></symbol><symbol id="ic-star" viewBox="0 0 16 16"><path d="M8 1.6l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.6 3.9 13.9l1-4.5L1.5 6.3l4.6-.5z"/></symbol><symbol id="ic-home" viewBox="0 0 16 16"><path d="M2 8l6-5.5L14 8M3.8 7v6.5h3V10h2.4v3.5h3V7"/></symbol><symbol id="ic-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></symbol><symbol id="ic-minus" viewBox="0 0 16 16"><path d="M3 8h10"/></symbol><symbol id="ic-check" viewBox="0 0 16 16"><path d="M2.5 8l3.5 3.5 7.5-8"/></symbol><symbol id="ic-warn" viewBox="0 0 16 16"><path d="M8 2.2L14.2 13.3H1.8Z"/><path d="M8 6.4v3.4"/><circle cx="8" cy="11.6" r=".6" fill="currentColor"/></symbol><symbol id="ic-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2v4.3"/><circle cx="8" cy="4.9" r=".6" fill="currentColor"/></symbol><symbol id="ic-menu" viewBox="0 0 16 16"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/></symbol><symbol id="ic-close" viewBox="0 0 16 16"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></symbol><symbol id="ic-palette" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M2.5 4h11v8h-11zM6.2 4v8M9.8 4v8"/></symbol><symbol id="ic-grid" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M2.5 2.5h4.5v4.5h-4.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5h-4.5zM9 9h4.5v4.5H9z"/></symbol><symbol id="ic-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.3"/><path d="M10.2 10.2l3.6 3.6"/></symbol><symbol id="ic-chev-down" viewBox="0 0 16 16"><path d="M3.5 6l4.5 4.5L12.5 6"/></symbol><symbol id="ic-chev-up" viewBox="0 0 16 16"><path d="M3.5 10l4.5-4.5 4.5 4.5"/></symbol><symbol id="ic-pin" viewBox="0 0 16 16"><path d="M9.5 2.5l4 4-2.5 1L8.5 10l.5 3-6-6 3 .5L8.5 5z"/><path d="M5.5 10.5l-3 3"/></symbol><symbol id="ic-chev-right" viewBox="0 0 16 16"><path d="M6 3.5L10.5 8 6 12.5"/></symbol><symbol id="ic-chev-left" viewBox="0 0 16 16"><path d="M10 3.5L5.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-left" viewBox="0 0 16 16"><path d="M8.5 3.5L4 8l4.5 4.5M13 3.5L8.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-right" viewBox="0 0 16 16"><path d="M3 3.5L7.5 8 3 12.5M7.5 3.5L12 8l-4.5 4.5"/></symbol><symbol id="ic-gear" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.3"/><circle cx="8" cy="8" r="4.6"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></symbol><symbol id="ic-dot" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.4" fill="currentColor" stroke="none"/></symbol><symbol id="ic-circle" viewBox="0 0 16 16"><circle cx="8" cy="8" r="4.6"/></symbol><symbol id="ic-reset" viewBox="0 0 16 16"><path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v3h3"/></symbol><symbol id="ic-redo" viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.6-3.7M13 2.5v3h-3"/></symbol><symbol id="ic-download" viewBox="0 0 16 16"><path d="M8 2v8M4.5 7L8 10.5 11.5 7M3 13.5h10"/></symbol><symbol id="ic-upload" viewBox="0 0 16 16"><path d="M8 10.5v-8M4.5 6L8 2.5 11.5 6M3 13.5h10"/></symbol><symbol id="ic-contrast" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"/></symbol><symbol id="ic-dice" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2.2"/><circle cx="5.6" cy="5.6" r=".8" fill="currentColor" stroke="none"/><circle cx="10.4" cy="10.4" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r=".8" fill="currentColor" stroke="none"/></symbol><symbol id="ic-sparkle" viewBox="0 0 16 16"><path d="M8 1.5c.5 3.6 2.9 6 6.5 6.5-3.6.5-6 2.9-6.5 6.5-.5-3.6-2.9-6-6.5-6.5 3.6-.5 6-2.9 6.5-6.5z"/></symbol><symbol id="ic-infinity" viewBox="0 0 16 16"><path d="M8 8c-1.2-1.8-2.3-3-3.7-3a3 3 0 0 0 0 6c1.4 0 2.5-1.2 3.7-3s2.3-3 3.7-3a3 3 0 0 1 0 6c-1.4 0-2.5-1.2-3.7-3z"/></symbol><symbol id="ic-diamond" viewBox="0 0 16 16"><path d="M8 1.8l6.2 6.2L8 14.2 1.8 8z"/><path d="M8 5.2L10.8 8 8 10.8 5.2 8z"/></symbol><symbol id="ic-circle-x" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 5.2l5.6 5.6M10.8 5.2l-5.6 5.6"/></symbol><symbol id="ic-nabla" viewBox="0 0 16 16"><path d="M2.5 3h11L8 13.5z"/></symbol><symbol id="ic-circle-plus" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4.8v6.4M4.8 8h6.4"/></symbol><symbol id="ic-option" viewBox="0 0 16 16"><path d="M2 4h3.5l5 8H14M9.5 4H14"/></symbol><symbol id="ic-asterisk" viewBox="0 0 16 16"><path d="M8 2.5v11M3.2 5.2l9.6 5.6M12.8 5.2L3.2 10.8"/></symbol><symbol id="ic-circle-equals" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 6.6h5.6M5.2 9.4h5.6"/></symbol><symbol id="ic-arrows-down" viewBox="0 0 16 16"><path d="M5 2.5v9M2.5 9L5 11.5 7.5 9M11 2.5v9M8.5 9l2.5 2.5L13.5 9"/></symbol><symbol id="ic-swap-h" viewBox="0 0 16 16"><path d="M13.5 5h-11M5.5 2l-3 3 3 3M2.5 11h11M10.5 8l3 3-3 3"/></symbol></svg>
 <a id="skip-link" href="#cv">Skip to canvas</a>
 
@@ -2785,9 +2786,10 @@
       <label class="row-meta-clickable"><input type="checkbox" id="chaosAnimate"> Animate emergence <button type="button" class="ctrl-help" aria-label="Show attractor emergence animation details" aria-describedby="cth-18">?<span class="ctrl-help-tip" role="tooltip" id="cth-18">Draw the attractor point by point as the orbit accumulates, rather than showing it all at once</span></button></label>
       <div class="ctrl mb-4"><label>Projection <span class="badge" id="chaos-proj-v">XZ</span></label><div class="seg" id="seg-chaos-proj"><button type="button" class="seg-opt active" data-seg-prop="chaosProj" data-seg-val="xz" data-seg-badge="chaos-proj-v" data-seg-badge-text="XZ">XZ</button><button type="button" class="seg-opt" data-seg-prop="chaosProj" data-seg-val="xy" data-seg-badge="chaos-proj-v" data-seg-badge-text="XY">XY</button><button type="button" class="seg-opt" data-seg-prop="chaosProj" data-seg-val="yz" data-seg-badge="chaos-proj-v" data-seg-badge-text="YZ">YZ</button></div></div>
       <div class="rp-sub-head mt-8">Initial Conditions</div>
-      <div class="ctrl"><label for="chaos-x0">x₀ <span class="badge" id="chaos-x0-v">0.10</span></label><div class="slider-row"><input type="range" id="chaos-x0" min="-2" max="2" step="0.01" value="0.1" aria-describedby="slider-keys-hint"></div></div>
-      <div class="ctrl"><label for="chaos-y0">y₀ <span class="badge" id="chaos-y0-v">0.00</span></label><div class="slider-row"><input type="range" id="chaos-y0" min="-2" max="2" step="0.01" value="0" aria-describedby="slider-keys-hint"></div></div>
+      <div class="ctrl" id="chaos-x0-ctrl"><label for="chaos-x0">x₀ <span class="badge" id="chaos-x0-v">0.10</span></label><div class="slider-row"><input type="range" id="chaos-x0" min="-2" max="2" step="0.01" value="0.1" aria-describedby="slider-keys-hint"></div></div>
+      <div class="ctrl" id="chaos-y0-ctrl"><label for="chaos-y0">y₀ <span class="badge" id="chaos-y0-v">0.00</span></label><div class="slider-row"><input type="range" id="chaos-y0" min="-2" max="2" step="0.01" value="0" aria-describedby="slider-keys-hint"></div></div>
       <div class="ctrl" id="chaos-z0-ctrl"><label for="chaos-z0">z₀ <span class="badge" id="chaos-z0-v">0.00</span></label><div class="slider-row"><input type="range" id="chaos-z0" min="-2" max="2" step="0.01" value="0" aria-describedby="slider-keys-hint"></div></div>
+      <div class="ctrl-hint is-hidden" id="chaos-ic-note"></div>
       <div class="inline-47">
         <button type="button" class="btn ghost fs-10-row-flex" data-action="resetAttractorParams"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-reset"/></svg> Reset Params</button>
         <button type="button" class="btn ghost fs-10-row-flex" data-action="resetAttractorICs"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-reset"/></svg> Reset ICs</button>
@@ -4230,7 +4232,7 @@
 
 
 
-<!-- build: 2367f1e6a5dd -->
+<!-- build: f24d0603ad59 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
@@ -7500,10 +7502,10 @@ const APP_VERSION='7.1.0';
 
 
 
-const MISSION_BUILD_HASH='2367f1e6a5dd';
-const MISSION_GIT_SHA='8cd20cf32ba88a1db68f1883d9d02aac10b13c89';
+const MISSION_BUILD_HASH='f24d0603ad59';
+const MISSION_GIT_SHA='f1956e71778c38460c4801c88edb0807a7d9b789';
 
-const MISSION_RENDER_HASH='595d85bf096a';
+const MISSION_RENDER_HASH='15ddf798df7c';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -20777,6 +20779,11 @@ syncInitCondUI();
 
 const _is3dA=IS_3D_ATTRACTORS.has(ft);
 const _z0c=document.getElementById('chaos-z0-ctrl');if(_z0c)_z0c.classList.toggle('is-hidden',!_is3dA);
+
+const _icDead=_ATTRACTOR_IC_DEAD[ft]||[];
+for(const k of ['x0','y0']){const r=document.getElementById('chaos-'+k+'-ctrl');if(r)r.classList.toggle('is-hidden',_icDead.includes(k));}
+const _icN=document.getElementById('chaos-ic-note');
+if(_icN){_icN.classList.toggle('is-hidden',!_icDead.length);_icN.textContent=ft==='attractor_duffing'?t('attractor.ic-settles.duffing'):ft==='attractor_thomas'?t('attractor.ic-settles.thomas'):'';}
 }
 
 
@@ -22340,7 +22347,9 @@ _resizeCanvasForAspect(_isViewport ? 'viewport' : 'square');
 } catch (_e) {  }
 };
 _bootFitCanvas();
-requestAnimationFrame(_bootFitCanvas);
+
+
+requestAnimationFrame(() => { _bootFitCanvas(); document.documentElement.classList.remove('boot-pending'); });
 
 
 
@@ -25783,6 +25792,8 @@ en: {
 'export.attractor-capped':    'Attractor capped to {m}M points at this resolution so the export completes. It is darker and sparser than on screen.',
 'export.density-capped':      'Density capped to {m}M samples at this resolution so the export completes. Brightness is compensated; the image is grainier than on screen.',
 'export.recording-in-progress': 'Stop the screen recording first. It shares the canvas with this export.',
+'attractor.ic-settles.duffing': 'Duffing settles onto the same figure from any starting x, so x₀ is not shown.',
+'attractor.ic-settles.thomas': 'Thomas settles onto the same figure from any starting x and y, so x₀ and y₀ are not shown.',
 'export.equirect-aspect-forced': 'Equirectangular forces a 2:1 aspect · exporting at {w}×{h}',
 'export.phys-size-capped':    'Physical size capped to fit the 32K pixel limit · exporting at {w}×{h} ({dpi} DPI)',
 'export.supersample-adjusted': 'Supersample × {ss} → × {ss2} for density renderer at this resolution: would peak ~{peak} GB working canvas vs {headroom} GB headroom{note}',
@@ -50366,7 +50377,7 @@ version:'7.0.14',
 date:'2026-10-12',
 headline:'The installed app keeps its full name, and the website tiles open AEON.',
 items:[
-'Installed from the browser on a Mac, the app is named AEON Universal Dynamics Reactor in the Dock and the app switcher, the same as the page title and link previews.',
+'Installed from the browser on a Mac, the app is named AEON Universal Dynamics Reactor in the Dock and the app switcher.',
 'Each of the six shape tiles on the published website opens AEON on the shape it shows again, instead of reloading the landing page.',
 ],
 },
@@ -63365,14 +63376,38 @@ function _trackCanvas(c){ _exportScratchCanvases.push(c); return c; }
 function _freeExportScratch(){ for(const c of _exportScratchCanvases) _freeCanvas(c); _exportScratchCanvases=[]; }
 
 
-function _tileHealthCheck(g,n,total,tx,ty){
+
+
+
+
+
+
+function _tileHealthCheck(g,n,total,tx,ty,tw,th){
 if(!g) return;
+let row=null;
+if(tw>0&&!g.isContextLost()){
+const fb=g.getParameter(g.FRAMEBUFFER_BINDING);g.bindFramebuffer(g.FRAMEBUFFER,null);
+row=new Uint8Array(tw*4);g.readPixels(0,th>>1,tw,1,g.RGBA,g.UNSIGNED_BYTE,row);
+g.bindFramebuffer(g.FRAMEBUFFER,fb);
+}
 if(g.isContextLost()) throw new Error(`GPU context lost while rendering tile ${n}/${total} (column ${tx+1}, row ${ty+1}). The export was stopped so a partly-blank image is not saved. Try a smaller size.`);
 const e=g.getError();
 if(e===g.CONTEXT_LOST_WEBGL||e===0x0505){
 throw new Error(`The GPU ran out of memory on tile ${n}/${total} (column ${tx+1}, row ${ty+1}). The export was stopped so a partly-blank image is not saved. Try a smaller size.`);
 }
+if(row&&!_exportTransparentAlpha){
+let lit=false;for(let i=3;i<row.length;i+=4)if(row[i]){lit=true;break;}
+if(!lit)throw new Error(`The GPU did not finish tile ${n}/${total} (column ${tx+1}, row ${ty+1}). The export was stopped so a partly-blank image is not saved. Try fewer iterations or a smaller size.`);
 }
+}
+
+
+
+
+
+
+const GL_TILE_ITER_BUDGET=4e9;
+function _glTileCostCap(mi){ return Math.max(256,Math.floor(Math.sqrt(GL_TILE_ITER_BUDGET/Math.max(1,mi|0)))); }
 
 
 function _refuseUncompilableFormulaExport(is3D){
@@ -63395,7 +63430,7 @@ if(renderFn===renderFractalCustom)_refuseUncompilableFormulaExport(false);
 const maxDims=gl.getParameter(gl.MAX_VIEWPORT_DIMS);
 glcv.width=Math.min(W2,maxDims[0]);
 glcv.height=Math.min(H2,maxDims[1]);
-const TILE=Math.min(gl.drawingBufferWidth,gl.drawingBufferHeight);
+const TILE=Math.min(gl.drawingBufferWidth,gl.drawingBufferHeight,_glTileCostCap(S.maxIter));
 
 
 
@@ -63423,7 +63458,7 @@ S.zoom=savedZoom*Math.min(W2,H2)/Math.min(tw,th);
 
 if(typeof _oFieldTile!=='undefined')_oFieldTile={ox:x0,oy:H2-y0-th,rw:W2,rh:H2};
 renderFn(tw,th);
-_tileHealthCheck(gl,done+1,total,tx,ty);
+_tileHealthCheck(gl,done+1,total,tx,ty,tw,th);
 
 octx.drawImage(glcv,0,0,tw,th,x0,y0,tw,th);
 done++;
@@ -63539,7 +63574,7 @@ const x0=tx*TILE,y0=ty*TILE;
 const tw=Math.min(TILE,W2-x0),th=Math.min(TILE,H2-y0);
 const _tileOpts={fullW:W2,fullH:H2,tileX:x0,tileY:H2-y0-th};
 if(_isCustom3D)renderFractal3DCustom(tw,th,_tileOpts); else renderFractal3D(tw,th,_tileOpts);
-_tileHealthCheck(gl,done+1,total,tx,ty);
+_tileHealthCheck(gl,done+1,total,tx,ty,tw,th);
 if(_3dTransp)octx.clearRect(x0,y0,tw,th);   
 octx.drawImage(glcv,0,0,tw,th,x0,y0,tw,th);
 done++;
@@ -66329,6 +66364,8 @@ const d=_attractorPickDefaults(S.fractalType);
 S.chaosX0=d.chaosX0;S.chaosY0=d.chaosY0;S.chaosZ0=d.chaosZ0;
 syncInitCondUI();_captureAttractorParams();scheduleRender();
 }
+
+const _ATTRACTOR_IC_DEAD={attractor_duffing:['x0'],attractor_thomas:['x0','y0']};
 
 function syncInitCondUI(){
 const sx=document.getElementById('chaos-x0'),sy=document.getElementById('chaos-y0'),sz=document.getElementById('chaos-z0');
