@@ -1,6 +1,6 @@
-Focus on a phone clears the whole screen, and 4D polytopes tumble faster with glow · 2026-10-13
+Small density exports and Motion Studio videos match the screen · 2026-10-14
 
-- **Focus on a phone clears the whole screen.** The Inspector handle stayed along the bottom edge in Focus, with the Exit button sitting on top of it. Focus now hides the handle too, and it comes back on exit.
-- **4D polytopes animate about 1.6 times faster with glow on.** Every edge stroke of a 4D polytope blurred its own glow, so the star polytopes tumbled at 10 to 12 frames a second at Retina size. The glow is now drawn once per frame, as it already was for the 2D patterns, and the same tumble runs at 17 to 22.
+- **Small Motion Studio videos and multi-layer exports of density fractals match the screen.** A video frame or a composite layer smaller than the canvas drew proportionally fewer samples and toned from an estimate, so a small Buddhabrot, IFS, attractor or flame clip came out grainier than the picture. These now render at the screen's size and are scaled down, as still exports do.
+- **Small Buddhabrot, IFS, attractor and flame exports are no grainier than the screen.** An export smaller than the canvas drew proportionally fewer samples, so a thumbnail of a density fractal came out visibly noisier than the picture it was saved from. It now renders at the screen's size and is scaled down into the file.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.
