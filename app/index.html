@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-r7TGx81CCxuqvS1kqemYaQrCSvx4vdtEHhGhAZLKARg='; font-src 'self'; script-src 'self' 'sha256-bN+7+uDuGncvge6wAfTlyNR+PVmnLtsDQ2EXEKmxc/8=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-r7TGx81CCxuqvS1kqemYaQrCSvx4vdtEHhGhAZLKARg='; font-src 'self'; script-src 'self' 'sha256-91a4a/rW2Pjf2tNRh37ZXC48p+tRoyzNqrTUgjD6sAA=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -2555,6 +2555,7 @@
     <button type="button" class="rp-tab" id="rpt-tab-style" role="tab" aria-selected="false" aria-controls="rpt-style" data-rpt="style" tabindex="-1">Color</button>
     <button type="button" class="rp-tab" id="rpt-tab-compose" role="tab" aria-selected="false" aria-controls="rpt-compose" data-rpt="compose" tabindex="-1">Compose</button>
     <button type="button" class="rp-tab" id="rpt-tab-output" role="tab" aria-selected="false" aria-controls="rpt-output" data-rpt="output" tabindex="-1">Output</button>
+    <button type="button" class="rp-tab" id="rpt-tab-construction" role="tab" aria-selected="false" aria-controls="rpt-construction" data-rpt="construction" tabindex="-1">Construction</button>
   </div>
 
   
@@ -3844,6 +3845,14 @@
     </div>
 
     
+    <div class="rp-tab-panel" id="rpt-construction" role="tabpanel" aria-labelledby="rpt-tab-construction" tabindex="-1" hidden>
+    <div class="rp-sec" id="sec-construction">
+      <h2 class="rp-sec-head">Construction</h2>
+      <div class="ctrl-hint" id="construction-flag"></div>
+      <ul id="construction-facts"></ul>
+      <div class="ctrl-hint" id="construction-source"></div>
+    </div>
+    </div>
     <div class="rp-tab-panel" id="rpt-output" role="tabpanel" aria-labelledby="rpt-tab-output" tabindex="-1" hidden>
 
     
@@ -4232,12 +4241,12 @@
 
 
 
-<!-- build: 2e362a930847 -->
+<!-- build: 30e51e41d626 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.1.6
+ * AEON -- Universal Dynamics Reactor v7.2.0
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7493,7 +7502,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.1.6';
+const APP_VERSION='7.2.0';
 
 
 
@@ -7502,10 +7511,10 @@ const APP_VERSION='7.1.6';
 
 
 
-const MISSION_BUILD_HASH='2e362a930847';
-const MISSION_GIT_SHA='ca2697b22d394a3cec01f698fdc3a7b1ea4ead21';
+const MISSION_BUILD_HASH='30e51e41d626';
+const MISSION_GIT_SHA='f6a6654ad85d990796985f11c3afc285ec8860b1';
 
-const MISSION_RENDER_HASH='f86af7aabaaa';
+const MISSION_RENDER_HASH='6707210e2b2c';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11611,10 +11620,7 @@ function hexPoints(rings){const pts=[];for(let q=-rings;q<=rings;q++)for(let r=M
 
 
 
-
-
-
-function fruitHexPoints(){const pts=[[0,0]];for(let i=0;i<6;i++){const a=i*TAU/6;pts.push([Math.cos(a),Math.sin(a)])}for(let i=0;i<6;i++){const a=i*TAU/6+TAU/12;pts.push([Math.sqrt(3)*Math.cos(a),Math.sqrt(3)*Math.sin(a)])}return pts}
+function fruitHexPoints(){const pts=[[0,0]];for(let i=0;i<6;i++){const a=i*TAU/6;pts.push([Math.cos(a),Math.sin(a)])}for(let i=0;i<6;i++){const a=i*TAU/6;pts.push([2*Math.cos(a),2*Math.sin(a)])}return pts}
 
 
 
@@ -12596,6 +12602,9 @@ _aspectKind=k;
 _refitCanvas(k==='viewport' ? 'viewport' : 'square');
 }
 function render(){
+
+
+try{if(typeof renderConstructionPanel==='function')renderConstructionPanel()}catch(e){_swallowed('render:construction',e)}
 
 
 
@@ -15267,6 +15276,7 @@ panel.removeAttribute('hidden');
 
 
 
+if(tab==='construction')try{renderConstructionPanel()}catch(e){_swallowed('switchRpTab:construction',e)}   
 if(panel.querySelector&&panel.querySelector('#grad-canvas')&&typeof refreshPalPreview==='function'){
 requestAnimationFrame(()=>{try{refreshPalPreview();}catch(_){_swallowed('switchRpTab', _);}});
 }
@@ -31827,12 +31837,12 @@ c.stroke(path);
 
 function drawFruitOfLife(c,bR){
 const R=bR*1.6, pts=fruitHexPoints(), total=pts.length;
-const maxDist=Math.sqrt(3)*R*1.05;
+const maxDist=2*R*1.05;
 for(let i=0;i<total;i++){
 const cx=pts[i][0]*R, cy=pts[i][1]*R, dist=Math.sqrt(cx*cx+cy*cy);
 c.strokeStyle=geoElemColor(i,total,dist,maxDist);
 if(S.fill)c.fillStyle=geoFillColor(i,total,dist,maxDist);
-c.beginPath();c.arc(cx,cy,R,0,TAU);
+c.beginPath();c.arc(cx,cy,R/2,0,TAU);
 if(S.fill)c.fill();
 c.stroke();
 }
@@ -31840,7 +31850,7 @@ c.stroke();
 
 function drawMetatronsCube(c,bR){
 const R=bR*1.6,pts=fruitHexPoints().map(([x,y])=>[x*R,y*R]),total=pts.length;
-const maxDist=Math.sqrt(3)*R*1.05;
+const maxDist=2*R*1.05;
 const gi=S.glowIntensity;
 const lwScale=_lwK();
 c.save();
@@ -31882,7 +31892,7 @@ for(let i=0;i<pts.length;i++){
 const cx=pts[i][0], cy=pts[i][1], dist=Math.sqrt(cx*cx+cy*cy);
 c.strokeStyle=geoElemColor(i,total,dist,maxDist);
 if(S.fill)c.fillStyle=geoFillColor(i,total,dist,maxDist);
-c.beginPath();c.arc(cx,cy,R,0,TAU);
+c.beginPath();c.arc(cx,cy,R/2,0,TAU);
 if(S.fill)c.fill();
 c.stroke();
 }
@@ -36858,6 +36868,54 @@ c.closePath();
 if(S.fill){c.fillStyle=geoFillColor(i,12,dist,R);c.fill();}
 c.stroke();
 }
+}
+
+
+
+
+
+
+function _constructionRecord(drawer,bR,state){
+const ops=[],keys=new Set();
+class Rec{constructor(){this.ops=[]}moveTo(x,y){this.ops.push(['M',x,y])}lineTo(x,y){this.ops.push(['L',x,y])}
+arc(x,y,r){this.ops.push(['A',x,y,r])}quadraticCurveTo(a,b,x,y){this.ops.push(['Q',x,y])}closePath(){this.ops.push(['C'])}}
+const base=new Rec();base.beginPath=function(){this.ops=[]};base.stroke=function(p){ops.push(...(p?p.ops:this.ops))};
+const c=new Proxy(base,{get:(t,k)=>k in t?t[k]:(typeof k==='string'?()=>{}:undefined),set:(t,k,v)=>{t[k]=v;return true}});
+const s0=S,p0=globalThis.Path2D;
+S=new Proxy(Object.assign({},s0,state||{}),{get:(t,k)=>{if(typeof k==='string')keys.add(k);return t[k]}});
+globalThis.Path2D=Rec;
+try{drawer(c,bR)}catch(e){return null}finally{S=s0;globalThis.Path2D=p0}
+return {ops,keys:[...keys]};
+}
+function constructionFacts(ops){
+const circles=ops.filter(o=>o[0]==='A'),rnd=v=>Math.round(v*1e6)/1e6;
+let segments=0,curves=0,triangles=0,up=0,down=0,start=null,poly=[];
+for(const o of ops){
+if(o[0]==='M'){start=[o[1],o[2]];poly=[start]}
+else if(o[0]==='L'){if(start)segments++;start=[o[1],o[2]];poly.push(start)}
+else if(o[0]==='Q'){curves++;start=[o[1],o[2]]}
+else if(o[0]==='C'&&poly.length===3){triangles++;(poly[0][1]<poly[1][1]?up++:down++)}
+}
+const radii=[...new Set(circles.map(o=>rnd(o[3])))].sort((a,b)=>a-b),eps=1e-6*Math.max(1,...radii);
+let tangent=0,overlap=0,disjoint=0,nested=0;
+for(let i=0;i<circles.length;i++)for(let j=i+1;j<circles.length;j++){
+const [,x1,y1,r1]=circles[i],[,x2,y2,r2]=circles[j],d=Math.hypot(x1-x2,y1-y2);
+if(Math.abs(d-r1-r2)<eps||(d>eps&&Math.abs(d-Math.abs(r1-r2))<eps))tangent++;
+else if(d>r1+r2)disjoint++;else if(d<Math.abs(r1-r2))nested++;else overlap++;
+}
+const centres=[...new Map(circles.map(o=>[rnd(o[1])+','+rnd(o[2]),[o[1],o[2]]])).values()];
+const has=(x,y)=>centres.some(([u,v])=>Math.abs(u-x)<eps*10&&Math.abs(v-y)<eps*10);
+let rotation=1;
+if(centres.length>1)for(let n=12;n>1;n--){
+const a=TAU/n,co=Math.cos(a),si=Math.sin(a);
+if(centres.every(([x,y])=>has(x*co-y*si,x*si+y*co))){rotation=n;break}
+}
+return {circles:circles.length,radii:radii.length,centres:centres.length,segments,curves,triangles,up,down,tangent,overlap,disjoint,nested,rotation};
+}
+
+function constructionCheck(decl,facts){
+if(!decl||!decl.exact||!facts)return [];
+return Object.entries(decl.claim).filter(([k,v])=>facts[k]!==v).map(([k,v])=>k+': claims '+v+', draws '+facts[k]);
 }
 
 
@@ -50389,6 +50447,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.2.0',
+date:'2026-10-14',
+headline:'The Fruit of Life is drawn true, and a Construction tab shows how a figure is built.',
+items:[
+'The Fruit of Life draws its 13 circles at the canonical size, so each touches its neighbors and none overlap. Metatron\'s Cube is built on the same circles and follows it.',
+'A new Construction tab in the Inspector lists the circles, triangles, segments and symmetry the figure on screen actually draws, with its source, and says plainly when a figure is drawn for the look.',
+],
+},
+{
 version:'7.1.6',
 date:'2026-10-14',
 headline:'Small density exports and Motion Studio videos match the screen.',
@@ -50454,16 +50521,6 @@ headline:'The installed app keeps its full name, and the website tiles open AEON
 items:[
 'Installed from the browser on a Mac, the app is named AEON Universal Dynamics Reactor in the Dock and the app switcher.',
 'Each of the six shape tiles on the published website opens AEON on the shape it shows again, instead of reloading the landing page.',
-],
-},
-{
-version:'7.0.13',
-date:'2026-10-11',
-headline:'The Buddhabrot shows its orbits, and the tour has a voice.',
-items:[
-'Buddhabrot renders and exports show the orbits, with no flat field or hard rectangle around them.',
-'The one-minute tour has a voiceover, and the landing page gallery opens AEON on each form it shows.',
-'The Klein quartic opens at full size, the app menu rows line up, and the Safari tab has no white border.',
 ],
 },
 ];
@@ -51323,6 +51380,20 @@ const PATTERN_INFO={
 };
 
 
+const CONSTRUCTION={
+'sri-yantra':{exact:true,state:{layers:4},claim:{triangles:9,up:4,down:5,circles:3,curves:24},
+note:'Concurrent: the nine triangles are solved so every triple of lines that should meet does.',source:'Chiodo (2021), from Huet (2002)'},
+'flower-of-life':{exact:true,state:{layers:2},claim:{circles:19,radii:1,rotation:6},
+note:'Equal circles on a triangular lattice, each centered on its neighbors’ circumferences.',source:'Melchizedek (1990)'},
+'seed-of-life':{exact:true,claim:{circles:7,radii:1,rotation:6},
+note:'One circle and six equal circles centered on its circumference at 60° spacing.',source:'Melchizedek (1990)'},
+'fruit-of-life':{exact:true,claim:{circles:13,radii:1,overlap:0,tangent:18,rotation:6},
+note:'Thirteen equal circles from the Flower of Life lattice, each touching its neighbors and overlapping none.',source:'Melchizedek (1990)'},
+'metatrons-cube':{exact:true,claim:{circles:13,segments:78,overlap:0,tangent:18},
+note:'Every one of the 78 segments joining the 13 Fruit of Life centers.',source:'Melchizedek (1990)'},
+};
+
+
 
 
 
@@ -51613,6 +51684,32 @@ function showActivePatternInfo(){
 const mode=document.body.dataset.appMode||'fractal';
 const key=mode==='geometry'?(S.pattern||'flower-of-life'):(S.fractalType||'mandelbrot');
 showPatternInfo(key);
+}
+
+
+
+const _CONSTRUCTION_STYLE_KEYS=new Set(['fill','glow','glowIntensity','lineWeight','strokeOpacity','metatronOpacity','metatronShowHex']);
+function renderConstructionPanel(){
+const panel=document.getElementById('rpt-construction');if(!panel||panel.hidden)return;
+const flag=document.getElementById('construction-flag'),list=document.getElementById('construction-facts'),src=document.getElementById('construction-source');
+const id=S.mode==='geometry'?S.pattern:null,decl=id&&CONSTRUCTION[id],fn=id&&PATTERN_DRAWERS.get(id);
+const r=decl&&fn?_constructionRecord(fn,40):null;
+list.textContent='';src.textContent='';
+if(!r){flag.textContent='No construction notes for this figure yet.';return}
+const f=constructionFacts(r.ops),lines=[],n=(k,one,many)=>k+' '+(k===1?one:many);
+flag.textContent=decl.note;
+if(f.circles)lines.push(n(f.circles,'circle','circles')+(f.radii===1?', one radius':', '+f.radii+' radii'));
+if(f.triangles)lines.push(n(f.triangles,'triangle','triangles')+' ('+f.up+' up, '+f.down+' down)');
+if(f.curves)lines.push(n(f.curves,'petal curve','petal curves'));
+if(f.segments)lines.push(n(f.segments,'line segment','line segments'));
+if(f.circles>1)lines.push('Circle pairs: '+f.tangent+' tangent, '+f.overlap+' overlapping, '+f.disjoint+' apart'+(f.nested?', '+f.nested+' nested':''));
+if(f.rotation>1)lines.push(f.rotation+'-fold rotation symmetry of the centers');
+const live=r.keys.filter(k=>!_CONSTRUCTION_STYLE_KEYS.has(k)&&typeof S[k]!=='object').map(k=>k+' = '+S[k]);
+if(live.length)lines.push('Live: '+live.join(', '));
+const partial=Object.entries(decl.state||{}).filter(([k,v])=>S[k]!==v).map(([k,v])=>k+' = '+v);
+if(partial.length)lines.push('Partial figure: the full construction is drawn at '+partial.join(', '));
+for(const t of lines){const li=document.createElement('li');li.textContent=t;list.appendChild(li)}
+if(decl.source)src.textContent='Source: '+decl.source;
 }
 
 

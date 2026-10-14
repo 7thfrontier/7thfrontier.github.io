@@ -5,7 +5,7 @@
     120
   ],
   "canvas": "1440x900",
-  "totalBytes": 749645,
+  "totalBytes": 746817,
   "entries": [
     {
       "mode": "fractal",
@@ -683,7 +683,7 @@
       "mode": "geometry",
       "type": "fruit-of-life",
       "file": "geometry-fruit-of-life.jpg",
-      "bytes": 5176
+      "bytes": 3556
     },
     {
       "mode": "geometry",
@@ -971,7 +971,7 @@
       "mode": "geometry",
       "type": "metatrons-cube",
       "file": "geometry-metatrons-cube.jpg",
-      "bytes": 5402
+      "bytes": 4194
     },
     {
       "mode": "geometry",
