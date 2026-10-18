@@ -5,7 +5,7 @@
     120
   ],
   "canvas": "1440x900",
-  "totalBytes": 746817,
+  "totalBytes": 747001,
   "entries": [
     {
       "mode": "fractal",
@@ -263,7 +263,7 @@
       "mode": "fractal",
       "type": "mandelbox",
       "file": "fractal-mandelbox.jpg",
-      "bytes": 11054
+      "bytes": 11064
     },
     {
       "mode": "fractal",
@@ -335,7 +335,7 @@
       "mode": "fractal",
       "type": "qjulia",
       "file": "fractal-qjulia.jpg",
-      "bytes": 2855
+      "bytes": 2724
     },
     {
       "mode": "fractal",
@@ -731,19 +731,19 @@
       "mode": "geometry",
       "type": "grand-one-twenty-cell",
       "file": "geometry-grand-one-twenty-cell.jpg",
-      "bytes": 2351
+      "bytes": 2357
     },
     {
       "mode": "geometry",
       "type": "grand-six-hundred-cell",
       "file": "geometry-grand-six-hundred-cell.jpg",
-      "bytes": 2184
+      "bytes": 2191
     },
     {
       "mode": "geometry",
       "type": "grand-stellated-one-twenty-cell",
       "file": "geometry-grand-stellated-one-twenty-cell.jpg",
-      "bytes": 2168
+      "bytes": 2173
     },
     {
       "mode": "geometry",
@@ -761,13 +761,13 @@
       "mode": "geometry",
       "type": "great-grand-one-twenty-cell",
       "file": "geometry-great-grand-one-twenty-cell.jpg",
-      "bytes": 2392
+      "bytes": 2421
     },
     {
       "mode": "geometry",
       "type": "great-icosahedral-one-twenty-cell",
       "file": "geometry-great-icosahedral-one-twenty-cell.jpg",
-      "bytes": 2164
+      "bytes": 2175
     },
     {
       "mode": "geometry",
@@ -779,13 +779,13 @@
       "mode": "geometry",
       "type": "great-one-twenty-cell",
       "file": "geometry-great-one-twenty-cell.jpg",
-      "bytes": 2334
+      "bytes": 2339
     },
     {
       "mode": "geometry",
       "type": "great-six-hundred-cell",
       "file": "geometry-great-six-hundred-cell.jpg",
-      "bytes": 2634
+      "bytes": 2806
     },
     {
       "mode": "geometry",
@@ -797,7 +797,7 @@
       "mode": "geometry",
       "type": "great-stellated-one-twenty-cell",
       "file": "geometry-great-stellated-one-twenty-cell.jpg",
-      "bytes": 2175
+      "bytes": 2195
     },
     {
       "mode": "geometry",
@@ -863,7 +863,7 @@
       "mode": "geometry",
       "type": "icosahedral-one-twenty-cell",
       "file": "geometry-icosahedral-one-twenty-cell.jpg",
-      "bytes": 2333
+      "bytes": 2340
     },
     {
       "mode": "geometry",
@@ -989,7 +989,7 @@
       "mode": "geometry",
       "type": "one-twenty-cell",
       "file": "geometry-one-twenty-cell.jpg",
-      "bytes": 3513
+      "bytes": 3521
     },
     {
       "mode": "geometry",
@@ -1175,13 +1175,13 @@
       "mode": "geometry",
       "type": "six-hundred-cell",
       "file": "geometry-six-hundred-cell.jpg",
-      "bytes": 2900
+      "bytes": 2926
     },
     {
       "mode": "geometry",
       "type": "sixteen-cell",
       "file": "geometry-sixteen-cell.jpg",
-      "bytes": 1273
+      "bytes": 1270
     },
     {
       "mode": "geometry",
@@ -1193,7 +1193,7 @@
       "mode": "geometry",
       "type": "small-stellated-one-twenty-cell",
       "file": "geometry-small-stellated-one-twenty-cell.jpg",
-      "bytes": 2414
+      "bytes": 2426
     },
     {
       "mode": "geometry",
@@ -1277,7 +1277,7 @@
       "mode": "geometry",
       "type": "tesseract",
       "file": "geometry-tesseract.jpg",
-      "bytes": 2446
+      "bytes": 2456
     },
     {
       "mode": "geometry",
@@ -1403,7 +1403,7 @@
       "mode": "geometry",
       "type": "twenty-four-cell",
       "file": "geometry-twenty-four-cell.jpg",
-      "bytes": 1967
+      "bytes": 1957
     },
     {
       "mode": "geometry",
