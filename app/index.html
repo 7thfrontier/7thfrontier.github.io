@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-r7TGx81CCxuqvS1kqemYaQrCSvx4vdtEHhGhAZLKARg='; font-src 'self'; script-src 'self' 'sha256-uQSWbYlxaf6w53uc082iEm/zcDfJUnM23r9Aj+6vMOU=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-r7TGx81CCxuqvS1kqemYaQrCSvx4vdtEHhGhAZLKARg='; font-src 'self'; script-src 'self' 'sha256-VqJiOx8DGkYfS81nG7Xs+BnwNi7XrbnydQ5tFf/+Tec=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4241,12 +4241,12 @@
 
 
 
-<!-- build: 6314c5b168d4 -->
+<!-- build: 451e50dfbd68 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.2.2
+ * AEON -- Universal Dynamics Reactor v7.2.3
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7502,7 +7502,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.2.2';
+const APP_VERSION='7.2.3';
 
 
 
@@ -7511,10 +7511,10 @@ const APP_VERSION='7.2.2';
 
 
 
-const MISSION_BUILD_HASH='6314c5b168d4';
-const MISSION_GIT_SHA='11627df12793ddba2a44a3bd9275fdaa4d17069d';
+const MISSION_BUILD_HASH='451e50dfbd68';
+const MISSION_GIT_SHA='14041270aa27ad08400507e281b81cf0f09acb7d';
 
-const MISSION_RENDER_HASH='6707210e2b2c';
+const MISSION_RENDER_HASH='27d8175baa31';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -50447,6 +50447,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.2.3',
+date:'2026-10-18',
+headline:'Point-density exports match the screen at any page shape.',
+items:[
+'A Buddhabrot, IFS, strange attractor or fractal flame exported with Extend at a shape unlike the window, such as a portrait page from a landscape window, now has the same brightness as the screen instead of coming out much brighter.',
+'Motion Studio videos and PNG sequences of these fractals match the screen at every preset, including Vertical.',
+],
+},
+{
 version:'7.2.0',
 date:'2026-10-14',
 headline:'The Fruit of Life is drawn true, and a Construction tab shows how a figure is built.',
@@ -50512,15 +50521,6 @@ items:[
 'File, Variation sheet places the current picture beside five named variants of itself, ready to save or export.',
 'Buddhabrot, attractor, IFS and flame exports keep the brightness you see on screen at any size, and big attractor exports get the points they need.',
 'A notice left over from an export no longer blocks the button under it, and the app name has its colon back.',
-],
-},
-{
-version:'7.0.14',
-date:'2026-10-12',
-headline:'The installed app keeps its full name, and the website tiles open AEON.',
-items:[
-'Installed from the browser on a Mac, the app is named AEON Universal Dynamics Reactor in the Dock and the app switcher.',
-'Each of the six shape tiles on the published website opens AEON on the shape it shows again, instead of reloading the landing page.',
 ],
 },
 ];
@@ -56266,7 +56266,7 @@ try{
 
 
 
-_rdMotion=_scaleDensitySamples((W*H)/Math.max(1,(o.liveW||W)*(o.liveH||H)));
+_rdMotion=_scaleDensitySamples((W*H)/Math.max(1,_densityScreenArea(W,H,o.liveW||W,o.liveH||H)));
 
 
 
@@ -56307,12 +56307,12 @@ glcv.classList.remove('is-shown'); if(typeof cv!=='undefined'&&cv)cv.classList.r
 
 
 let _fpAttractorOk=true;
-try{ if(typeof _beginExportPaint==='function')_beginExportPaint((o.liveW||W)*(o.liveH||H));
+try{ if(typeof _beginExportPaint==='function')_beginExportPaint(_densityScreenArea(W,H,o.liveW||W,o.liveH||H));
 
 
 
 
-try{ await _densityPaintAtScreenArea((o.liveW||W)*(o.liveH||H),()=>S.fractalType.startsWith('ifs_') ? _exportRenderRetryOnce(t=>renderIFS(t))
+try{ await _densityPaintAtScreenArea(_densityScreenArea(W,H,o.liveW||W,o.liveH||H),()=>S.fractalType.startsWith('ifs_') ? _exportRenderRetryOnce(t=>renderIFS(t))
 : _exportRenderRetryOnce(t=>renderAttractor(t,null))); }   
 finally{ if(typeof _endExportPaint==='function')_endExportPaint(); }
 if(typeof pfxAdvanceGrainFrame==='function')pfxAdvanceGrainFrame(); if(typeof _applyPostFXOnScreen==='function')_applyPostFXOnScreen(); }
@@ -56333,8 +56333,8 @@ _fpLastGoodAttractor.width=cv.width; _fpLastGoodAttractor.height=cv.height;
 try{ _fpLastGoodAttractor.getContext('2d').drawImage(cv,0,0); }catch(_e){ _fpLastGoodAttractor=null;  }
 }
 } else {
-try{ if(typeof _beginExportPaint==='function')_beginExportPaint((o.liveW||W)*(o.liveH||H));
-try{ await _densityPaintAtScreenArea((o.liveW||W)*(o.liveH||H),()=>renderFractal()); }   
+try{ if(typeof _beginExportPaint==='function')_beginExportPaint(_densityScreenArea(W,H,o.liveW||W,o.liveH||H));
+try{ await _densityPaintAtScreenArea(_densityScreenArea(W,H,o.liveW||W,o.liveH||H),()=>renderFractal()); }   
 finally{ if(typeof _endExportPaint==='function')_endExportPaint(); }
 if(typeof pfxAdvanceGrainFrame==='function')pfxAdvanceGrainFrame(); if(typeof _applyPostFXOnScreen==='function')_applyPostFXOnScreen(); }   
 catch(err){ console.warn('frame pump: renderFractal threw, falling back to render():', err); const _seq0=_frameSeqBefore(); render(); try{ if(!(await _awaitRenderPaint(_seq0)))_reportStaleFrame(f+1); }catch(_){_swallowed('_runFramePump', _);} }
@@ -56630,7 +56630,7 @@ let writeFailed=false;
 
 
 
-_rdPngMotion=_scaleDensitySamples((_pngExpW*_pngExpH)/Math.max(1,_pngOrigGW*_pngOrigGH));
+_rdPngMotion=_scaleDensitySamples((_pngExpW*_pngExpH)/Math.max(1,_densityScreenArea(_pngExpW,_pngExpH,_pngOrigGW,_pngOrigGH)));
 
 
 if(typeof _prepLayerCachesForMotionExport==='function')await _prepLayerCachesForMotionExport(_pngOrigGW,_pngOrigGH);
@@ -56675,7 +56675,7 @@ glcv.classList.remove('is-shown'); if(typeof cv!=='undefined'&&cv)cv.classList.r
 
 
 let _pngAttractorOk=true;
-try{ if(typeof _beginExportPaint==='function')_beginExportPaint(_pngOrigGW*_pngOrigGH);
+try{ if(typeof _beginExportPaint==='function')_beginExportPaint(_densityScreenArea(_pngExpW,_pngExpH,_pngOrigGW,_pngOrigGH));
 
 
 
@@ -56683,7 +56683,7 @@ try{ if(typeof _beginExportPaint==='function')_beginExportPaint(_pngOrigGW*_pngO
 
 
 try{ await Promise.race([
-_densityPaintAtScreenArea(_pngOrigGW*_pngOrigGH,()=>S.fractalType.startsWith('ifs_') ? _exportRenderRetryOnce(t=>renderIFS(t)) : _exportRenderRetryOnce(t=>renderAttractor(t,null))),
+_densityPaintAtScreenArea(_densityScreenArea(_pngExpW,_pngExpH,_pngOrigGW,_pngOrigGH),()=>S.fractalType.startsWith('ifs_') ? _exportRenderRetryOnce(t=>renderIFS(t)) : _exportRenderRetryOnce(t=>renderAttractor(t,null))),
 new Promise((_,rej)=>setTimeout(()=>rej(new Error('PNG seq: IFS/attractor render timeout (30s)')), 30000))
 ]); }
 finally{ if(typeof _endExportPaint==='function')_endExportPaint(); }
@@ -56708,13 +56708,13 @@ if(typeof showToast==='function')showToast(t('motion.frame-skipped-blank',{n:(i+
 continue;
 }
 } else {
-try{ if(typeof _beginExportPaint==='function')_beginExportPaint(_pngOrigGW*_pngOrigGH);
+try{ if(typeof _beginExportPaint==='function')_beginExportPaint(_densityScreenArea(_pngExpW,_pngExpH,_pngOrigGW,_pngOrigGH));
 
 
 
 
 try{ await Promise.race([
-_densityPaintAtScreenArea(_pngOrigGW*_pngOrigGH,()=>renderFractal()),
+_densityPaintAtScreenArea(_densityScreenArea(_pngExpW,_pngExpH,_pngOrigGW,_pngOrigGH),()=>renderFractal()),
 new Promise((_,rej)=>setTimeout(()=>rej(new Error('PNG seq: renderFractal timeout (30s)')), 30000))
 ]); }
 finally{ if(typeof _endExportPaint==='function')_endExportPaint(); }
@@ -59921,14 +59921,14 @@ const _letterbox = W2 !== H2 && ((S.exportFractalCompose || 'letterbox') === 'le
 const _dW = _letterbox ? _fW : W2, _dH = _letterbox ? _fH : H2;
 const _offX = _letterbox ? Math.round((W2 - _fW) / 2) : 0, _offY = _letterbox ? Math.round((H2 - _fH) / 2) : 0;
 const oCvW = cv.width, oCvH = cv.height, oW = W, oH = H;
-const _densScale = (_dW * _dH) / Math.max(1, oW * oH);   
+const _densScale = (_dW * _dH) / Math.max(1, _densityScreenArea(_dW, _dH, oW, oH));   
 cv.width = _dW; cv.height = _dH; W = _dW; H = _dH;    
 
 
 
 const _prevTA = _exportTransparentAlpha;
 _exportTransparentAlpha = !!alphaCapable && (typeof exportTransparent !== 'undefined' && !!exportTransparent);
-if (typeof _beginExportPaint === 'function') _beginExportPaint(oW * oH);   
+if (typeof _beginExportPaint === 'function') _beginExportPaint(_densityScreenArea(_dW, _dH, oW, oH));   
 try {
 for (const layer of visible) {
 
@@ -59982,8 +59982,8 @@ _motionExportCacheSave = new Map();
 
 
 
-const _mdens = (cv.width * cv.height) / Math.max(1, (liveW || CANVAS_SIZE) * (liveH || CANVAS_SIZE));
-if (typeof _beginExportPaint === 'function') _beginExportPaint((liveW || CANVAS_SIZE) * (liveH || CANVAS_SIZE));   
+const _mdens = (cv.width * cv.height) / Math.max(1, _densityScreenArea(cv.width, cv.height, liveW || CANVAS_SIZE, liveH || CANVAS_SIZE));
+if (typeof _beginExportPaint === 'function') _beginExportPaint(_densityScreenArea(cv.width, cv.height, liveW || CANVAS_SIZE, liveH || CANVAS_SIZE));   
 try {
 for (const layer of visible) {
 if (layer === active) continue;                  
@@ -63067,14 +63067,14 @@ if(await _renderDeepZoomForExport(rCtx,rW,rH,bar,status,signal))return;
 
 if(/^(buddhabrot|buddhabrot_anti|attractor_|fractal_flame|ifs_)/.test(S.fractalType)){
 bar&&bar.style.setProperty('--progress','30%');status.textContent='Native rendering…';await new Promise(r=>setTimeout(r,10));
-_beginExportPaint(W*H);   
-const oW=W,oH=H,[dW,dH]=_densityRenderSize(S.fractalType,rW,rH,W*H);   
+_beginExportPaint(_densityScreenArea(rW,rH,W,H));   
+const oW=W,oH=H,[dW,dH]=_densityRenderSize(S.fractalType,rW,rH,_densityScreenArea(rW,rH,W,H));   
 
 
 
 const _oBudSamp=S.buddhabrotSamples,_oIfsIter=S.ifsIter,_oChaosIter=S.chaosIter,_oFlameIter=S.flameIter;
 
-const _densScale=(dW*dH)/Math.max(1,oW*oH);
+const _densScale=(dW*dH)/Math.max(1,_densityScreenArea(dW,dH,oW,oH));
 try{
 cv.width=dW;cv.height=dH;if(glcv){glcv.width=dW;glcv.height=dH;}
 W=dW;H=dH;
@@ -63091,7 +63091,7 @@ S.chaosIter=Math.round((_oChaosIter||500000)*_densScale);_attractorCapNotice();
 ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,dW,dH);
 if(await _exportRenderRetryOnce(t=>renderAttractor(t,signal,{onProgress:_densityExportProgress(bar,status,'Attractor')})))_densityBlit(rCtx,cv,rW,rH);   
 } else if(S.fractalType==='buddhabrot'||S.fractalType==='buddhabrot_anti'){
-const _bx=_buddhaExportSamples(_oBudSamp,dW*dH,oW*oH);   
+const _bx=_buddhaExportSamples(_oBudSamp,dW*dH,_densityScreenArea(dW,dH,oW,oH));   
 S.buddhabrotSamples=_bx.samples;
 if(_bx.capped && typeof showToast==='function')
 showToast(t('export.density-capped',{m:(_bx.samples/1e6).toFixed(0)}),'info',6000);
@@ -63933,7 +63933,7 @@ const _lbFit=_fractalLetterboxFit(W2,H2), _lbAlpha=_fmt==='png'||_fmt==='webp'||
 const _lbOut=octx, _lbW=W2, _lbH=H2; let _lbSub=null;
 if(_lbFit){ _lbSub=_trackCanvas(document.createElement('canvas')); [_lbSub.width,_lbSub.height]=_lbFit; octx=_lbSub.getContext('2d'); [W2,H2]=_lbFit; }
 
-const _upSize=_densityRenderSize(S.fractalType,W2,H2,W*H), _upOut=octx, _upW=W2, _upH=H2; let _upSub=null;
+const _upSize=_densityRenderSize(S.fractalType,W2,H2,_densityScreenArea(W2,H2,W,H)), _upOut=octx, _upW=W2, _upH=H2; let _upSub=null;
 if(_upSize[0]!==W2||_upSize[1]!==H2){ _upSub=document.createElement('canvas'); [_upSub.width,_upSub.height]=_upSize; octx=_upSub.getContext('2d'); [W2,H2]=_upSize; }
 try {
 
@@ -63955,8 +63955,8 @@ if(_dzNeedsCpu(W2)&&await _renderDeepZoomForExport(octx,W2,H2,bar,status,signal)
 
 
 const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
-const _oIfs=S.ifsIter;if(_oIfs)S.ifsIter=Math.round(_oIfs*((W2*H2)/Math.max(1,oW*oH)));   
-_beginExportPaint(oW*oH);
+const _oIfs=S.ifsIter;if(_oIfs)S.ifsIter=Math.round(_oIfs*((W2*H2)/Math.max(1,_densityScreenArea(W2,H2,oW,oH))));   
+_beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
 try{ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderIFS(t,{signal,onProgress:_densityExportProgress(bar,status,'IFS')})))octx.drawImage(cv,0,0);}   
 finally{_endExportPaint();_exportTransparentAlpha=false;S.ifsIter=_oIfs;cv.width=oW;cv.height=oH;W=oW;H=oH;render();}
 } else if(S.fractalType.startsWith('attractor_')){
@@ -63964,8 +63964,8 @@ finally{_endExportPaint();_exportTransparentAlpha=false;S.ifsIter=_oIfs;cv.width
 
 bar.style.setProperty('--progress','20%');status.textContent='Computing attractor…';await new Promise(r=>setTimeout(r,10));
 const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
-const _rdAttr=_scaleDensitySamples((W2*H2)/Math.max(1,oW*oH));_attractorCapNotice();   
-_beginExportPaint(oW*oH);
+const _rdAttr=_scaleDensitySamples((W2*H2)/Math.max(1,_densityScreenArea(W2,H2,oW,oH)));_attractorCapNotice();   
+_beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
 try{ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderAttractor(t,signal,{onProgress:_densityExportProgress(bar,status,'Attractor')})))octx.drawImage(cv,0,0);}   
 finally{_endExportPaint();_exportTransparentAlpha=false;_rdAttr();cv.width=oW;cv.height=oH;W=oW;H=oH;render();}
 } else if(S.fractalType==='fractal_flame'){
@@ -63977,8 +63977,8 @@ finally{_endExportPaint();_exportTransparentAlpha=false;_rdAttr();cv.width=oW;cv
 
 bar.style.setProperty('--progress','20%');status.textContent='Computing flame…';await new Promise(r=>setTimeout(r,10));
 const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
-const _rdFlame=_scaleDensitySamples((W2*H2)/Math.max(1,oW*oH));   
-_beginExportPaint(oW*oH);
+const _rdFlame=_scaleDensitySamples((W2*H2)/Math.max(1,_densityScreenArea(W2,H2,oW,oH)));   
+_beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
 try{ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderFractalFlame(t,signal)))octx.drawImage(cv,0,0);}   
 finally{_endExportPaint();_exportTransparentAlpha=false;_rdFlame();cv.width=oW;cv.height=oH;W=oW;H=oH;render();}
 } else if(S.useWebGPU && typeof _wgpuAvailable!=='undefined' && _wgpuAvailable
@@ -64025,7 +64025,7 @@ let _cvSnapWgpu = null;
 try { _cvSnapWgpu = ctx.getImageData(0, 0, oW, oH); } catch (_e) {_swallowed('doExport', _e);}
 cv.width=W2;cv.height=H2;W=W2;H=H2;
 let _wgpuExportOk=false, _bbLim=null;
-_beginExportPaint(oW*oH);
+_beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
 try{
 
 
@@ -64057,7 +64057,7 @@ if(S.fractalType==='buddhabrot'||S.fractalType==='buddhabrot_anti'){
 
 
 
-const _bxG=_buddhaExportSamples(S.buddhabrotSamples, W2 * H2, oW * oH, 20);
+const _bxG=_buddhaExportSamples(S.buddhabrotSamples, W2 * H2, _densityScreenArea(W2,H2,oW,oH), 20);
 if(_bxG.capped && typeof showToast==='function')
 showToast(t('export.density-capped',{m:(_bxG.samples/1e6).toFixed(0)}),'info',6000);
 _wgpuExportOpts={ totalSamples: _bxG.samples, densityComp: _bxG.comp, forExport: true };
@@ -64089,8 +64089,8 @@ if(S.fractalType==='buddhabrot'||S.fractalType==='buddhabrot_anti'){
 
 const oW2=W,oH2=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
 const _oBudSamp2=S.buddhabrotSamples;
-_beginExportPaint(oW*oH);
-try{const _bxF=_buddhaExportSamples(_oBudSamp2,W2*H2,oW*oH);S.buddhabrotSamples=_bxF.samples;_buddhaDensityComp=_bxF.comp;ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderBuddhabrot(t,S.fractalType==='buddhabrot_anti',signal,_densityExportProgress(bar,status,'Buddhabrot'))))octx.drawImage(cv,0,0);}   
+_beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
+try{const _bxF=_buddhaExportSamples(_oBudSamp2,W2*H2,_densityScreenArea(W2,H2,oW,oH));S.buddhabrotSamples=_bxF.samples;_buddhaDensityComp=_bxF.comp;ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderBuddhabrot(t,S.fractalType==='buddhabrot_anti',signal,_densityExportProgress(bar,status,'Buddhabrot'))))octx.drawImage(cv,0,0);}   
 finally{
 _endExportPaint();
 _exportTransparentAlpha=false;
@@ -64126,12 +64126,12 @@ const oW=W,oH=H;
 let _cvSnap=null;
 try { _cvSnap = ctx.getImageData(0,0,oW,oH); } catch(_e) {  }
 const _origSamples = S.buddhabrotSamples;
-const _bxNoGpu=_buddhaExportSamples(_origSamples,W2*H2,oW*oH);   
+const _bxNoGpu=_buddhaExportSamples(_origSamples,W2*H2,_densityScreenArea(W2,H2,oW,oH));   
 S.buddhabrotSamples = _bxNoGpu.samples;
 if(_bxNoGpu.capped && typeof showToast==='function')
 showToast(t('export.density-capped',{m:(_bxNoGpu.samples/1e6).toFixed(0)}),'info',6000);
 cv.width=W2;cv.height=H2;W=W2;H=H2;
-_beginExportPaint(oW*oH);
+_beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
 try{_buddhaDensityComp=_bxNoGpu.comp;ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderBuddhabrot(t,S.fractalType==='buddhabrot_anti',signal,_densityExportProgress(bar,status,'Buddhabrot'))))octx.drawImage(cv,0,0);}   
 finally{
 _endExportPaint();
@@ -64448,6 +64448,15 @@ _exportAbortController=null;
 
 
 const _DENSITY_EXPORT_RE=/^(buddhabrot|attractor_|fractal_flame|ifs_)/;
+
+
+
+
+function _densityScreenArea(w,h,sW,sH){
+if(Math.abs(w*sH-h*sW)<=Math.max(w,h,sW,sH))return sW*sH;
+const k=Math.min(w,h)/Math.max(1,Math.min(sW,sH));
+return w*h/(k*k);
+}
 function _densityRenderSize(type,w,h,screenPx){
 if(!_DENSITY_EXPORT_RE.test(type||'')||!(screenPx>w*h))return [w,h];
 const k=Math.sqrt(screenPx/(w*h));
