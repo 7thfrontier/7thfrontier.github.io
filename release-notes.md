@@ -1,4 +1,4 @@
-Baseline checks, fixture cleanup and pinned Node for size budgets · 2026-10-18
+Aspect-true baseline subjects and isolated member-evidence fixtures · 2026-10-18
 
 - A maintenance release with no change you can see in AEON.
 
