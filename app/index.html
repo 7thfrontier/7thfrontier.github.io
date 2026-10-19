@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-r7TGx81CCxuqvS1kqemYaQrCSvx4vdtEHhGhAZLKARg='; font-src 'self'; script-src 'self' 'sha256-VqJiOx8DGkYfS81nG7Xs+BnwNi7XrbnydQ5tFf/+Tec=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-r7TGx81CCxuqvS1kqemYaQrCSvx4vdtEHhGhAZLKARg='; font-src 'self'; script-src 'self' 'sha256-Cxm6RHzs36thZ0eYodK1fe7/Kx1tUdJTSok3owrWBTE=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4241,12 +4241,12 @@
 
 
 
-<!-- build: 451e50dfbd68 -->
+<!-- build: eacd0867288d -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.2.3
+ * AEON -- Universal Dynamics Reactor v7.3.0
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7502,7 +7502,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.2.3';
+const APP_VERSION='7.3.0';
 
 
 
@@ -7511,10 +7511,10 @@ const APP_VERSION='7.2.3';
 
 
 
-const MISSION_BUILD_HASH='451e50dfbd68';
-const MISSION_GIT_SHA='14041270aa27ad08400507e281b81cf0f09acb7d';
+const MISSION_BUILD_HASH='eacd0867288d';
+const MISSION_GIT_SHA='eeea50f6f7526c9f262d2e54720a7e013dcb468b';
 
-const MISSION_RENDER_HASH='27d8175baa31';
+const MISSION_RENDER_HASH='a212dc79b913';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11925,7 +11925,6 @@ _showHeavyHint._t = setTimeout(() => { try { el.classList.remove('show'); } catc
 
 
 
-let _renderStatusDismissed = false;
 function _rsWgpuActive(){
 if (typeof _wgpuAvailable === 'undefined' || !_wgpuAvailable) return false;
 if (typeof _wgpuLost !== 'undefined' && _wgpuLost) return false;
@@ -11981,13 +11980,12 @@ function _renderStatusLine(f){
 const eng = _RS_ENGINE[f.engine] || _RS_ENGINE.cpu, prec = _RS_PRECISION[f.precision] || _RS_PRECISION.standard;
 const prog = _RS_PROGRESS[f.progress] || _RS_PROGRESS.finished;
 return { label: [eng[0], prec[0], prog[0]].filter(Boolean).join(' · '),
-title: [eng[1], prec[1], prog[1]].filter(Boolean).join(' ') + ' Click to hide this until the next reload.' };
+title: [eng[1], prec[1], prog[1]].filter(Boolean).join(' ') };
 }
 function _renderStatusCellHTML(){
 try {
-if (_renderStatusDismissed) return '';
 const { label, title } = _renderStatusLine(_renderStatusFacts()), q = s => s.replace(/"/g, '&quot;');
-return '<div class="ci ci-badge--info" id="render-status-cell" role="button" tabindex="0" title="'
+return '<div class="ci ci-badge--info" id="render-status-cell" role="note" title="'
 + q(title) + '" aria-label="Render status: ' + q(label) + '">' + label + '</div>';
 } catch (_e) { return ''; }
 }
@@ -13074,6 +13072,8 @@ _wgpuBadgeHTML = html.raw`<div id="webgpu-badge" class="${html`${cls.join(' ')}`
 }
 const _rsCell = _renderStatusCellHTML();
 
+const _verCell = html.raw`<div class="ci" id="version-cell" title="${html`Version ${APP_VERSION}${MISSION_GIT_SHA===_MGS_SENTINEL?' · development build':' · built from '+MISSION_GIT_SHA.slice(0,7)}`}"><span class="v">v${html`${APP_VERSION}`}</span></div>`;
+
 
 
 
@@ -13097,7 +13097,7 @@ if(S.mode==='fractal'){
 if(GL_3D_TYPES.has(S.fractalType)){
 const tlbl=FTYPE_LABELS[S.fractalType]||S.fractalType;
 
-_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div><div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div>${_wgpuBadgeHTML}${_rsCell}`;
+_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div><div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div>${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
 _newHintsHTML='<span class="nh"><kbd>Drag</kbd> Rotate 3D</span><span class="nh"><kbd>Scroll</kbd> Zoom in / out</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span>';
 }else{
 const re=S.centerX.toFixed(6),im=(S.centerY>=0?'+':'')+S.centerY.toFixed(6)+'i';
@@ -13176,7 +13176,7 @@ attrBadge='<div class="ci ci-badge--warn" title="Strange-attractor density: orbi
 const tlbl2D=FTYPE_LABELS[S.fractalType]||S.fractalType;
 const albl=ALGO_LABELS[S.colorAlgo]||S.colorAlgo;
 
-_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl2D}`}</span></div><div class="ci" data-coord-edit="center" tabindex="0" role="button" title="Click to edit center coordinates"><span class="lbl">Center</span><span class="v">${html`${re} ${im}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div><div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div><div class="ci"><span class="lbl">Algo</span><span class="v">${html`${albl}`}</span></div>${iterHint}${deepBadge}${precBadge}${capBadge}${attrBadge}${_wgpuBadgeHTML}${_rsCell}`;
+_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl2D}`}</span></div><div class="ci" data-coord-edit="center" tabindex="0" role="button" title="Click to edit center coordinates"><span class="lbl">Center</span><span class="v">${html`${re} ${im}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div><div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div><div class="ci"><span class="lbl">Algo</span><span class="v">${html`${albl}`}</span></div>${iterHint}${deepBadge}${precBadge}${capBadge}${attrBadge}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
 _newHintsHTML='<span class="nh"><kbd>Left-click</kbd> Zoom in</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span><span class="nh"><kbd>Drag</kbd> Pan view</span>';}
 } else {
 
@@ -13197,7 +13197,7 @@ if(typeof FOUR_D_POLYTOPE_PATTERNS!=='undefined' && FOUR_D_POLYTOPE_PATTERNS.has
 const projName=S.use4DSchlegel?'Schlegel':'stereographic';
 projBadge='<div class="ci ci-badge--info" title="4D-polytope projection: '+projName+' (toggle via ?schlegel=1 URL flag)">'+icon('circle-plus')+' '+projName+'</div>';
 }
-_newBarHTML=html.raw`<div class="ci"><span class="lbl">Pattern</span><span class="v">${html`${plbl}`}</span></div><div class="ci"><span class="lbl">${html`${_geoLayerLbl}`}</span><span class="v">${html`${_geoLayerVal}`}</span></div><div class="ci"><span class="lbl">Rotation</span><span class="v">${html`${S.geoRotation.toFixed(1)+'°'}`}</span></div><div class="ci"><span class="lbl">Scale</span><span class="v">${html`${S.geoScale.toFixed(1)+'×'}`}</span></div>${projBadge}${_wgpuBadgeHTML}${_rsCell}`;
+_newBarHTML=html.raw`<div class="ci"><span class="lbl">Pattern</span><span class="v">${html`${plbl}`}</span></div><div class="ci"><span class="lbl">${html`${_geoLayerLbl}`}</span><span class="v">${html`${_geoLayerVal}`}</span></div><div class="ci"><span class="lbl">Rotation</span><span class="v">${html`${S.geoRotation.toFixed(1)+'°'}`}</span></div><div class="ci"><span class="lbl">Scale</span><span class="v">${html`${S.geoScale.toFixed(1)+'×'}`}</span></div>${projBadge}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
 _newHintsHTML='<span class="nh"><kbd>Drag</kbd> Rotate pattern</span><span class="nh"><kbd>Scroll</kbd> Zoom in / out</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span>';
 }
 
@@ -15180,20 +15180,6 @@ document.addEventListener('keydown',(e)=>{
 if(e.key!=='Enter'&&e.key!==' ')return;
 const ae=document.activeElement;
 if(!ae||ae.id!=='webgpu-badge')return;
-e.preventDefault();
-ae.click();
-});
-
-
-document.addEventListener('click',(e)=>{
-if(!e.target.closest('#render-status-cell'))return;
-_renderStatusDismissed=true;
-if(typeof updateCoordBar==='function')updateCoordBar();
-});
-document.addEventListener('keydown',(e)=>{
-if(e.key!=='Enter'&&e.key!==' ')return;
-const ae=document.activeElement;
-if(!ae||ae.id!=='render-status-cell')return;
 e.preventDefault();
 ae.click();
 });
@@ -50447,6 +50433,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.3.0',
+date:'2026-10-19',
+headline:'The status bar shows the version you are running, and the render chip stays put.',
+items:[
+'The last cell of the status bar reads the version number, and hovering it names the build it came from, so a screenshot of a problem says which build it was taken on.',
+'The render chip no longer vanishes when clicked. It reports what draws the picture, at what precision, and whether it is finished, and it stays on the bar for the whole session.',
+],
+},
+{
 version:'7.2.3',
 date:'2026-10-18',
 headline:'Point-density exports match the screen at any page shape.',
@@ -50510,17 +50505,6 @@ items:[
 'A big GPU export of a slow, high-iteration view no longer saves with a blank block where a tile was not finished. A tile that never draws now stops the export with a message.',
 'Opening a link to a type this version does not know, or an old share link, no longer lays the canvas out for the wrong type and then jumps.',
 'Duffing and Thomas hide the start sliders that changed nothing, with a short note saying why.',
-],
-},
-{
-version:'7.1.0',
-date:'2026-10-12',
-headline:'The Catalog opens instantly, and the Variation sheet lays out five takes on your picture.',
-items:[
-'The Catalog opens on previews that ship with the app, so the sheet fills at once, offline too.',
-'File, Variation sheet places the current picture beside five named variants of itself, ready to save or export.',
-'Buddhabrot, attractor, IFS and flame exports keep the brightness you see on screen at any size, and big attractor exports get the points they need.',
-'A notice left over from an export no longer blocks the button under it, and the app name has its colon back.',
 ],
 },
 ];
