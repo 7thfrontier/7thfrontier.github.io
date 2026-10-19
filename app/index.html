@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-r7TGx81CCxuqvS1kqemYaQrCSvx4vdtEHhGhAZLKARg='; font-src 'self'; script-src 'self' 'sha256-OTGUA6lKRZQyNB74VJcK19FEt7j8vC/D1dSTcMY/cdk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-KBfwu+i7ElXkMOUzRt+5rm1nBcW/ORueRZDC2tfdpUI='; font-src 'self'; script-src 'self' 'sha256-vXaetRc4GH32aOm2CW3IZHHNu2nWVWNWKGoloMMBwFc=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -2171,6 +2171,7 @@
         .chrome-menu{position:fixed;left:var(--cm-x,0);top:var(--cm-y,0);z-index:var(--z-overlay-mid);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-3);padding:6px;min-width:200px;box-shadow:var(--shadow-md)}
         .chrome-menu.is-hidden{display:none}
         .chrome-menu-item{display:block;width:100%;text-align:left;padding:8px 10px;font-size:12px}
+        .chrome-menu-note{max-width:240px;margin:2px 10px 6px;color:var(--text-dim);font-size:11px;line-height:1.4}
         .chrome-menu-item[role=menuitemcheckbox]{display:flex;align-items:center;gap:8px}
         .chrome-menu-item[role=menuitemcheckbox]>.ic{visibility:hidden;color:var(--accent);order:1;margin-left:auto}
         .chrome-menu-item[role=menuitemcheckbox]>.menu-accel{order:2;margin-left:0}
@@ -3989,7 +3990,8 @@
 <div id="export-menu" class="chrome-menu is-hidden" role="menu" aria-label="Export and share">
   <button type="button" role="menuitem" class="btn ghost chrome-menu-item" data-action="openExportModal" aria-haspopup="dialog" aria-controls="export-modal">Export image…</button>
   <button type="button" role="menuitem" class="btn ghost chrome-menu-item" data-action="copyCanvasToClipboard">Copy image</button>
-  <button type="button" role="menuitem" class="btn ghost chrome-menu-item" data-action="shareState">Copy share link</button>
+  <button type="button" id="export-share-action" role="menuitem" class="btn ghost chrome-menu-item" data-action="shareState">Copy share link</button>
+  <p id="export-share-reason" class="chrome-menu-note" hidden></p>
 </div>
 <div id="app-menu" class="chrome-menu is-hidden" role="menu" aria-label="Application menu"></div>
 <div id="chrome-context-menu" class="chrome-menu is-hidden" role="menu" aria-label="Actions"></div>
@@ -4241,12 +4243,12 @@
 
 
 
-<!-- build: bdc7ab19edc5 -->
+<!-- build: 3c87c515aeb8 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.1
+ * AEON -- Universal Dynamics Reactor v7.3.2
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7502,7 +7504,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.1';
+const APP_VERSION='7.3.2';
 
 
 
@@ -7511,10 +7513,10 @@ const APP_VERSION='7.3.1';
 
 
 
-const MISSION_BUILD_HASH='bdc7ab19edc5';
-const MISSION_GIT_SHA='475f629f3b7e2cd9c9e0e73022db53658abede4c';
+const MISSION_BUILD_HASH='3c87c515aeb8';
+const MISSION_GIT_SHA='edf73263969225e7eee967eb1b3f01ee573c597e';
 
-const MISSION_RENDER_HASH='a212dc79b913';
+const MISSION_RENDER_HASH='11900bf8632d';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -16844,7 +16846,9 @@ if(typeof stopTour==='function' && typeof _currentTour!=='undefined' && _current
 
 
 if(typeof dsClear==='function') dsClear();
-Object.assign(S,_migrateState(state));
+const _ftDrops=[];
+Object.assign(S,_migrateState(state,_ftDrops));
+if(typeof _noteDroppedFractalTypes==='function')_noteDroppedFractalTypes(_ftDrops);
 
 
 
@@ -20180,6 +20184,7 @@ if(returnFocus&&btn)try{btn.focus();}catch(_e){_swallowed('_closeChromeMenu', _e
 }
 function _toggleChromeMenu(menu,btn){
 if(!menu)return;
+if(menu.id==='export-menu')_syncExportShareAction();
 const wasOpen=!menu.classList.contains('is-hidden');
 const prev=_openChromeMenu; _closeChromeMenu(false);           
 if(wasOpen && prev && prev.menu===menu){ if(btn)try{btn.focus();}catch(_e){_swallowed('_toggleChromeMenu', _e);} return; }
@@ -25525,7 +25530,7 @@ configurable: true,
 }
 
 
-const _I18N_TOAST_KINDS = {"tour.ui.complete": "success", "gpu.webgpu-failed": "warning", "gpu.custom-render-fail": "error", "state.share-copied": "success", "state.share-copy-failed": "warning", "state.png-restored": "success", "state.png-no-state": "warning", "state.png-bad-fragment": "warning", "state.png-read-failed": "warning", "state.drop-unsupported": "warning", "state.share-unknown-ft": "warning", "state.share-unknown-pat": "warning", "seed.invalid": "warning", "shader.unbounded-loop": "warning", "shader.huge-loop": "warning", "shader.3d-rejected": "warning", "shader.webgl2-unavailable": "warning", "shader.formula-empty": "warning", "shader.formula-applied": "success", "shader.formula-blank": "warning", "shader.basin-colouring-off": "warning", "export.svg-failed": "warning", "export.image-copied": "success", "state.load-failed": "warning", "state.save-success": "success", "autosave.restore-failed": "warning", "state.load-success": "success", "bookmark.not-found": "warning", "bookmark.save.failed": "warning", "bookmark.delete.failed": "warning", "bookmark.loaded": "success", "gallery.saved": "success", "postfx.lut-applied": "success", "gallery.not-found": "warning", "gallery.delete-failed": "warning", "gallery.save-failed": "warning", "flame.too-large": "warning", "flame.invalid-xml": "warning", "flame.no-flame-element": "warning", "flame.no-transforms": "warning", "flame.too-many-xforms": "warning", "flame.no-render-transforms": "warning", "flame.read-failed": "warning", "flame.drop-read-failed": "warning", "flame.parse-error": "warning", "flame.type-required": "warning", "flame.invalid-coef": "warning", "postfx.cube-read-failed": "warning", "palette.save-not-persisted": "warning", "palette.delete-not-persisted": "warning", "palette.export-ugr-alpha-lost": "warning", "palette.export-map-alpha-lost": "warning", "palette.export-hex-alpha-lost": "warning", "layer.max-reached": "warning", "layer.project-too-large": "warning", "layer.project-stamp-mismatch": "warning", "layer.keyframes-capped": "warning", "motion.kf-max-reached": "warning", "layer.layers-capped": "warning", "file.recents-unavailable": "warning", "postfx.cube-too-large": "warning", "postfx.cube-invalid": "warning", "postfx.lut-loaded-detail": "success", "postfx.drop-cube": "warning", "app.warning-prefixed": "warning", "state.save-file-too-large": "warning", "state.png-file-too-large": "warning", "state.read-file-failed": "warning", "deepzoom.orbit-truncated-simple": "warning", "app.uncaught-error": "warning", "worker.background-failed": "warning", "deepzoom.orbit-truncated-detailed": "warning", "share.url-too-long": "warning", "state.share-link-too-large": "warning", "state.share-link-rejected": "warning", "state.share-decode-failed": "warning", "state.share-apply-rolled-back": "warning", "state.share-apply-mixed-state": "warning", "motion.frame-skipped-timeout": "warning", "motion.frame-skipped-blank": "warning", "motion.frame-stale": "warning", "export.phys-size-capped": "warning", "export.size-capped": "warning", "export.memory-warning": "warning", "export.generic-failed": "warning", "export.svg-geometry-required": "warning", "export.svg-layers-omitted": "warning", "export.repeated-interruption": "warning", "export.svg-raster-pattern": "warning", "export.svg-dense-pattern": "warning"};
+const _I18N_TOAST_KINDS = {"tour.ui.complete": "success", "gpu.webgpu-failed": "warning", "gpu.custom-render-fail": "error", "state.share-copied": "success", "state.share-copy-failed": "warning", "state.png-restored": "success", "state.png-no-state": "warning", "state.png-bad-fragment": "warning", "state.png-read-failed": "warning", "state.drop-unsupported": "warning", "state.share-unknown-ft": "warning", "state.share-unknown-pat": "warning", "state.load-unknown-ft": "warning", "seed.invalid": "warning", "shader.unbounded-loop": "warning", "shader.huge-loop": "warning", "shader.3d-rejected": "warning", "shader.webgl2-unavailable": "warning", "shader.formula-empty": "warning", "shader.formula-applied": "success", "shader.formula-blank": "warning", "shader.basin-colouring-off": "warning", "export.svg-failed": "warning", "export.image-copied": "success", "state.load-failed": "warning", "state.save-success": "success", "autosave.restore-failed": "warning", "state.load-success": "success", "bookmark.not-found": "warning", "bookmark.save.failed": "warning", "bookmark.delete.failed": "warning", "bookmark.loaded": "success", "gallery.saved": "success", "postfx.lut-applied": "success", "gallery.not-found": "warning", "gallery.delete-failed": "warning", "gallery.save-failed": "warning", "flame.too-large": "warning", "flame.invalid-xml": "warning", "flame.no-flame-element": "warning", "flame.no-transforms": "warning", "flame.too-many-xforms": "warning", "flame.no-render-transforms": "warning", "flame.read-failed": "warning", "flame.drop-read-failed": "warning", "flame.parse-error": "warning", "flame.type-required": "warning", "flame.invalid-coef": "warning", "postfx.cube-read-failed": "warning", "palette.save-not-persisted": "warning", "palette.delete-not-persisted": "warning", "palette.export-ugr-alpha-lost": "warning", "palette.export-map-alpha-lost": "warning", "palette.export-hex-alpha-lost": "warning", "layer.max-reached": "warning", "layer.project-too-large": "warning", "layer.project-stamp-mismatch": "warning", "layer.keyframes-capped": "warning", "motion.kf-max-reached": "warning", "layer.layers-capped": "warning", "file.recents-unavailable": "warning", "postfx.cube-too-large": "warning", "postfx.cube-invalid": "warning", "postfx.lut-loaded-detail": "success", "postfx.drop-cube": "warning", "app.warning-prefixed": "warning", "state.save-file-too-large": "warning", "state.png-file-too-large": "warning", "state.read-file-failed": "warning", "deepzoom.orbit-truncated-simple": "warning", "app.uncaught-error": "warning", "worker.background-failed": "warning", "deepzoom.orbit-truncated-detailed": "warning", "share.url-too-long": "warning", "state.share-link-too-large": "warning", "state.share-link-rejected": "warning", "state.share-decode-failed": "warning", "state.share-apply-rolled-back": "warning", "state.share-apply-mixed-state": "warning", "motion.frame-skipped-timeout": "warning", "motion.frame-skipped-blank": "warning", "motion.frame-stale": "warning", "export.phys-size-capped": "warning", "export.size-capped": "warning", "export.memory-warning": "warning", "export.generic-failed": "warning", "export.svg-geometry-required": "warning", "export.svg-layers-omitted": "warning", "export.repeated-interruption": "warning", "export.svg-raster-pattern": "warning", "export.svg-dense-pattern": "warning"};
 const _i18nToastMessages = new Map();
 
 
@@ -25636,6 +25641,9 @@ en: {
 'state.share-unknown-pal':    "The shared link's palette '{pal}' isn't in this build, so the default palette is shown. Everything else from the link was applied.",
 
 
+
+
+'state.load-unknown-ft':      "Fractal type '{ft}' isn't known in version {ver}, so it opened as Mandelbrot. Everything else was loaded.",
 'state.share-unknown-ca':     "The shared link's color algorithm '{ca}' isn't in this build, so the default is shown. Everything else from the link was applied.",
 
 'render.cancelled':           'Render canceled.',
@@ -25783,9 +25791,7 @@ en: {
 'dataseed.error':             'Data seed error: {msg}',
 'dataseed.fetch-in-progress': 'Data fetch already in progress.',
 'dataseed.inspired':          'Inspired by data: {label}',
-'share.layer-scope-hint':     'Share links include only the active layer · use Save Project to keep all {n} layers',
-'share.motion-scope-hint':    'Share links don\'t include your motion timeline · use Save Project to keep {n} keyframes',
-'share.flame-scope-hint':     'Share links don\'t include your flame transforms · use Save Project to keep them, or Export .flame',
+'share.project-required':    'Share links omit {features}. Use Save Project (.aeon) to keep the complete piece.',
 'share.url-too-long':         'This share link is {len} characters · some chat apps, SMS, and QR tools may reject or truncate long links · simplify custom formulas/rules to shorten it',
 'state.share-link-too-large': 'Shared link is too large to decode safely',
 'state.share-link-rejected':  'Shared link rejected: {err}',
@@ -40930,7 +40936,13 @@ return { ok: true, value: out };
 }
 
 
-function _migrateState(raw) {
+
+function _noteDroppedFractalTypes(drops) {
+if (!drops || !drops.length || typeof showToast !== 'function') return;
+const ver = (typeof APP_VERSION !== 'undefined') ? APP_VERSION : '?';
+showToast(t('state.load-unknown-ft', {ft: [...new Set(drops)].join(', '), ver}), 'warning');
+}
+function _migrateState(raw, drops) {
 if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return { _v: 1 };
 if (_allowedStateKeys === null) {
 _allowedStateKeys = new Set(Object.keys(S));
@@ -41062,6 +41074,8 @@ if (repaired.ok) { cleaned[k] = repaired.value; continue; }
 if (typeof DS !== 'undefined' && DS && Object.prototype.hasOwnProperty.call(DS, k)) {
 cleaned[k] = DS[k];
 (cleaned._migrateResetKeys || (cleaned._migrateResetKeys = [])).push(k);
+
+if (k === 'fractalType' && Array.isArray(drops)) drops.push(String(v).slice(0, 64));
 }
 continue;
 }
@@ -41125,6 +41139,7 @@ if (v === undefined) return;
 if (typeof registry === 'undefined') return;
 if (_isRegistryMember(v, registry)) return;
 console.warn(`Reactor: dropping invalid ${label} from restored state:`, v);
+if (key === 'fractalType' && Array.isArray(drops)) drops.push(String(v).slice(0, 64));
 delete cleaned[key];
 };
 _dropInvalidEnumKey('pattern', typeof GTYPE_LABELS !== 'undefined' ? GTYPE_LABELS : undefined, 'pattern');
@@ -41560,9 +41575,30 @@ try{ return new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(atob(pa
 
 
 const SHARE_URL_WARN_LEN = 2083;
+function _shareProjectReason(){
+const omitted=[];
+if(typeof KEYFRAMES!=='undefined' && KEYFRAMES.length) omitted.push('motion keyframes');
+if(typeof COMP_LAYERS!=='undefined' && COMP_LAYERS.length>=2) omitted.push('compositor layers');
+if(S.mode==='fractal' && S.fractalType==='fractal_flame') omitted.push('flame transforms');
+return omitted.length ? t('share.project-required',{features:omitted.join(', ')}) : '';
+}
+function _syncExportShareAction(){
+const action=document.getElementById('export-share-action');
+const reason=document.getElementById('export-share-reason');
+if(!action||!reason)return;
+const message=_shareProjectReason();
+action.dataset.action=message?'exportProject':'shareState';
+action.textContent=message?'Save Project (.aeon)':'Copy share link';
+reason.textContent=message;
+reason.hidden=!message;
+if(message)action.setAttribute('aria-describedby','export-share-reason');
+else action.removeAttribute('aria-describedby');
+}
 function shareState(){
 
 if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(() => shareState())) return;
+const projectReason=_shareProjectReason();
+if(projectReason){ if(typeof showToast==='function')showToast(projectReason,'warning'); return; }
 const snap=_buildShareSnap();
 const encoded=_b64uEnc(JSON.stringify(snap));
 const url=window.location.href.split('#')[0]+'#state='+encoded;
@@ -41577,29 +41613,6 @@ window.history.replaceState(null,'',url);
 
 const _shareSuccess = () => {
 if (typeof showToast === 'function') showToast(t('state.share-copied'), 'success');
-
-
-
-if (typeof COMP_LAYERS !== 'undefined' && COMP_LAYERS.length >= 2 && typeof showToast === 'function') {
-showToast(t('share.layer-scope-hint',{n:COMP_LAYERS.length}),'info');
-}
-
-
-
-
-if (typeof KEYFRAMES !== 'undefined' && KEYFRAMES.length >= 2 && typeof showToast === 'function') {
-showToast(t('share.motion-scope-hint',{n:KEYFRAMES.length}),'info');
-}
-
-
-
-
-
-
-if (S.mode==='fractal' && S.fractalType==='fractal_flame' && typeof showToast === 'function') {
-showToast(t('share.flame-scope-hint'),'info');
-}
-
 
 if (url.length > SHARE_URL_WARN_LEN && typeof showToast === 'function') {
 showToast(t('share.url-too-long',{len:url.length}), 'warning');
@@ -50433,6 +50446,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.3.2',
+date:'2026-10-19',
+headline:'Copy Link says when a link cannot carry a piece, and a missing fractal type is named instead of hidden.',
+items:[
+'Copy Link no longer hands out a link that would open a different picture. For a piece with keyframes, more than one layer, or flame transforms it says why, and the Export menu offers Save Project (.aeon) instead.',
+'Opening a project, gallery entry or layer saved in a newer version names any fractal type this version does not have, along with the version you are running. The rest of the file still loads; before, the missing type quietly became Mandelbrot.',
+],
+},
+{
 version:'7.3.0',
 date:'2026-10-19',
 headline:'The status bar shows the version you are running, and the render chip stays put.',
@@ -50495,16 +50517,6 @@ items:[
 'Fill and Fill Opacity are hidden on the patterns that never draw a fill, and Stroke Opacity now fades the Cayley graphs, the Klein quartic, the branch cuts and the antipodal map. On the Ulam spiral, Fill Opacity sets how strongly the non-prime cells show.',
 'When an export has a different shape from the screen, Post-FX now grades only the picture, so a vignette no longer darkens the plain bars around it.',
 'A WebP export past 16383 pixels is scaled to fit before it renders, and the export panel, the finished notice and the filename all give the size you actually get.',
-],
-},
-{
-version:'7.1.1',
-date:'2026-10-13',
-headline:'Large GPU exports save every tile, and links open on their final layout.',
-items:[
-'A big GPU export of a slow, high-iteration view no longer saves with a blank block where a tile was not finished. A tile that never draws now stops the export with a message.',
-'Opening a link to a type this version does not know, or an old share link, no longer lays the canvas out for the wrong type and then jumps.',
-'Duffing and Thomas hide the start sliders that changed nothing, with a short note saying why.',
 ],
 },
 ];
@@ -53652,7 +53664,9 @@ try {
 
 
 
-snap = (typeof _migrateState === 'function') ? _migrateState(snap) : snap;
+const _ftDrops = [];
+snap = (typeof _migrateState === 'function') ? _migrateState(snap, _ftDrops) : snap;
+if (typeof _noteDroppedFractalTypes === 'function') _noteDroppedFractalTypes(_ftDrops);
 
 
 
@@ -60462,7 +60476,8 @@ return p;
 };
 
 
-const _pState = _migrateState(project.state);
+const _ftDrops = [];
+const _pState = _migrateState(project.state, _ftDrops);
 Object.assign(S, _pState);
 
 
@@ -60572,7 +60587,7 @@ if (!k || typeof _migrateState !== 'function') return k;
 
 
 if (!k.fractalType && !k.pattern) return k;
-const m = _migrateState({ fractalType: k.fractalType, fractalPower: k.fractalPower, pattern: k.pattern });
+const m = _migrateState({ fractalType: k.fractalType, fractalPower: k.fractalPower, pattern: k.pattern }, _ftDrops);
 if (!m) return k;
 const out = { ...k };
 if (k.fractalType) { out.fractalType = m.fractalType; out.fractalPower = m.fractalPower ?? k.fractalPower; }
@@ -60598,6 +60613,11 @@ COMP_LAYERS.length = 0;
 
 if (project.layers.length > MAX_LAYERS && typeof showToast === 'function') {
 showToast(t('layer.layers-capped',{cap:MAX_LAYERS,had:project.layers.length}),'warning');
+}
+
+
+for (const l of project.layers.slice(0, MAX_LAYERS)) {
+if (l && l.params && typeof l.params === 'object' && 'fractalType' in l.params) _migrateState({ fractalType: l.params.fractalType }, _ftDrops);
 }
 const layers = _sanitiseList(project.layers).slice(0, MAX_LAYERS).map(l => ({
 ...l,
@@ -60672,6 +60692,7 @@ if (typeof _flameActiveXform !== 'undefined') _flameActiveXform = 0;
 } else if (typeof flameSystem !== 'undefined') {
 flameSystem = null;   
 }
+_noteDroppedFractalTypes(_ftDrops);
 }, function resyncFn(){
 
 renderCompLayerList();
