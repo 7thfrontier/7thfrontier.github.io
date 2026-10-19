@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-KBfwu+i7ElXkMOUzRt+5rm1nBcW/ORueRZDC2tfdpUI='; font-src 'self'; script-src 'self' 'sha256-vXaetRc4GH32aOm2CW3IZHHNu2nWVWNWKGoloMMBwFc=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-hXEdTlKBVui+f48Oj4AQnCYyN2AiCFkI1CGXTJNZml0='; font-src 'self'; script-src 'self' 'sha256-yGplzggVAktmF36hLJCK++mA1a1kCx6atGVM33fNKu0=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -884,6 +884,12 @@
         .rp-collapse-btn[data-action="toggleToursMenu"]{font-size:20px;line-height:1}
 
         .rp-sec{padding:var(--rp-sec-padding-y) var(--rp-sec-padding-x);border-bottom:1px solid var(--rp-sec-divider)}
+        .math-next-row{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);padding:var(--sp-3) var(--rp-sec-padding-x);border-bottom:1px solid var(--border);background:var(--surface2)}
+        .math-next-row .math-next-copy{min-width:0}
+        .math-next-row strong{display:block;font-size:var(--fs-secondary);color:var(--text)}
+        .math-next-row p{margin:2px 0 0;font-size:var(--fs-secondary);color:var(--text-mid)}
+        .math-next-row button{flex-shrink:0}
+        @media(max-width:480px){.math-next-row{align-items:flex-start;flex-wrap:wrap}.math-next-row button{margin-left:auto}}
         
         .rp-sec-head{font-family:var(--font-ui);font-size:var(--fs-secondary);font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--rp-sec-head-color);margin:0 0 10px;display:flex;align-items:center;gap:var(--gap-7);cursor:pointer;user-select:none;transition:color var(--dur-snappy)}
         .rp-sec-head:hover{color:var(--text)}
@@ -2576,6 +2582,11 @@
     
     <div class="rp-tab-panel rpt-active" id="rpt-edit" role="tabpanel" aria-labelledby="rpt-tab-edit" tabindex="-1">
 
+    <div class="math-next-row is-hidden" id="math-next-row" role="group" aria-label="Try this next">
+      <div class="math-next-copy"><strong id="math-next-title">Try this next</strong><p id="math-next-detail"></p></div>
+      <button type="button" class="btn ghost" id="math-next-button" data-action="focusMathNextControl" aria-label="Go to suggested math control">Show control</button>
+    </div>
+
     
     <div class="rp-sec" id="sec-navigate" data-quick>
       <h2 class="rp-sec-head">Navigate</h2>
@@ -4243,12 +4254,12 @@
 
 
 
-<!-- build: 3c87c515aeb8 -->
+<!-- build: 090b75384383 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.2
+ * AEON -- Universal Dynamics Reactor v7.3.3
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7504,7 +7515,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.2';
+const APP_VERSION='7.3.3';
 
 
 
@@ -7513,10 +7524,10 @@ const APP_VERSION='7.3.2';
 
 
 
-const MISSION_BUILD_HASH='3c87c515aeb8';
-const MISSION_GIT_SHA='edf73263969225e7eee967eb1b3f01ee573c597e';
+const MISSION_BUILD_HASH='090b75384383';
+const MISSION_GIT_SHA='8fd72575be28474df2fee5d14a71d8a9ab17f051';
 
-const MISSION_RENDER_HASH='11900bf8632d';
+const MISSION_RENDER_HASH='0997e8ec972b';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -20582,7 +20593,86 @@ if(typeof _syncColorFieldRelevance==='function')_syncColorFieldRelevance();
 if(typeof _syncOpacityFieldRelevance==='function')_syncOpacityFieldRelevance();
 if(mode==='geometry') _inspectorGeometryMode(show);
 else _inspectorFractalMode(ft, is3D, show);
+_updateMathNextRow();
 }
+
+let _mathNextUsed=false;
+function _mathNextChoice(){
+const ft=S.fractalType||'mandelbrot';
+const pattern=S.pattern||'';
+let choices;
+if(S.mode==='geometry'){
+choices=pattern==='hyperbolic-tiling'
+? [['#hyperP','Try polygon sides','Change the number of sides in each tile.']]
+: pattern==='tesseract'
+? [['#seg-schlegel .seg-opt','Try a 4D projection','Compare two ways to flatten the tesseract.']]
+: pattern==='sri-yantra'
+? [['#symmetry','Try symmetry','Change the rotational structure.'],['#layers','Try layers','Add or remove depth levels.']]
+: [['#layers','Try layers','Change the construction depth.'],['#geoScale','Try scale','Change the pattern size.']];
+}else if(['mandelbrot','julia','multibrot3','newton3'].includes(ft)){
+choices=[['#fractalPower',ft==='newton3'?'Try degree':'Try power',ft==='newton3'?'Change the number of roots and basins.':'Change the symmetry of the set.']];
+}else if(ft==='fractal_flame'){
+choices=[['#flame-var-grid .flame-var-chip','Try a variation','Change how the flame transforms points.'],['#flame-gamma','Try gamma','Change the flame brightness.']];
+}else if(GL_3D_TYPES.has(ft)){
+choices=ft==='qjulia'
+? [['#qj-a','Try quaternion c','Change the 4D slice of the solid.']]
+: ft==='custom_3d'
+? [['#formula-editor-3d','Try the distance formula','Change the solid form.']]
+: [['#sec-3d-shape [data-3d-subtype]:not(.is-hidden) input','Try shape','Change the solid form.'],['#l3d-az','Try light angle','Change how the solid is lit.']];
+}else if(ft.includes('ifs') || ft.includes('chaos_game')){
+choices=[['#cgRatio','Try jump ratio','Change how the construction converges.'],['#ifsIter','Try iterations','Change the construction detail.']];
+}else if(ft.includes('attractor')){
+choices=[['#chaos-a','Try a coefficient','Change the orbit traced by the attractor.']];
+}else{
+choices=[['#maxIter','Try iterations','Resolve finer detail in the set.']];
+}
+for(const [selector,title,detail] of choices){
+const el=document.querySelector(selector);
+if(!el || el.disabled || el.getAttribute('aria-disabled')==='true')continue;
+let hidden=false;
+for(let node=el;node && node.id!=='rpt-edit';node=node.parentElement){
+if(node.hidden || node.classList.contains('is-hidden') || getComputedStyle(node).display==='none'){hidden=true;break;}
+}
+if(!hidden)return {selector,title,detail};
+}
+return null;
+}
+function _updateMathNextRow(){
+const row=document.getElementById('math-next-row');
+if(!row)return;
+const active=!_mathNextUsed && typeof _firstRunMathRowActive==='function' && _firstRunMathRowActive();
+const choice=active && _mathNextChoice();
+row.classList.toggle('is-hidden',!choice);
+if(!choice){delete row.dataset.target;return;}
+row.dataset.target=choice.selector;
+document.getElementById('math-next-title').textContent=choice.title;
+document.getElementById('math-next-detail').textContent=choice.detail;
+document.getElementById('math-next-button').setAttribute('aria-label',`Go to ${choice.title.toLowerCase()} control`);
+}
+
+function focusMathNextControl(){
+const row=document.getElementById('math-next-row');
+if(!row || row.classList.contains('is-hidden'))return;
+switchRpTab('edit');
+const target=row.dataset.target && document.querySelector(row.dataset.target);
+if(!target || target.disabled || target.getAttribute('aria-disabled')==='true')return;
+const section=target.closest('.rp-sec');
+if(section && section.classList.contains('collapsed'))section.classList.remove('collapsed');
+target.focus({preventScroll:true});
+target.scrollIntoView({block:'center',behavior:'smooth'});
+}
+function _mathNextOnAdjust(event){
+const row=document.getElementById('math-next-row');
+const target=row?.dataset.target && document.querySelector(row.dataset.target);
+if(!target || row.classList.contains('is-hidden') || !(target===event.target || target.contains(event.target)))return;
+_mathNextUsed=true;
+_updateMathNextRow();
+}
+for(const eventType of ['input','change'])document.addEventListener(eventType,_mathNextOnAdjust,true);
+document.addEventListener('click',event=>{
+const el=event.target.closest('button,[role="button"]');
+if(el)_mathNextOnAdjust({target:el});
+},true);
 
 function _inspectorGeometryMode(show){
 
@@ -50446,6 +50536,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.3.3',
+date:'2026-10-19',
+headline:'The getting-started guide is on screen from the first moment, and the first visit points to a useful math control.',
+items:[
+'On a first visit the getting-started guide shows its first step together with the rest of the page, instead of a few seconds later with the first picture.',
+'A first visit also points to one useful math control for the form on screen and takes you to it without changing the picture.',
+],
+},
+{
 version:'7.3.2',
 date:'2026-10-19',
 headline:'Copy Link says when a link cannot carry a piece, and a missing fractal type is named instead of hidden.',
@@ -50507,16 +50606,6 @@ items:[
 'The first frame of a Buddhabrot PNG sequence from Motion Studio no longer comes out almost black: each frame finishes its render before it is saved.',
 'Frame-exact video export saves its file again instead of stopping on its progress line.',
 'Fog Distance now moves the fog on Quaternion Julia and Mandelbox, and their default view shows a little depth haze, as Mandelbulb already did.',
-],
-},
-{
-version:'7.1.3',
-date:'2026-10-13',
-headline:'Controls that do nothing step aside, and exports keep their look and their size.',
-items:[
-'Fill and Fill Opacity are hidden on the patterns that never draw a fill, and Stroke Opacity now fades the Cayley graphs, the Klein quartic, the branch cuts and the antipodal map. On the Ulam spiral, Fill Opacity sets how strongly the non-prime cells show.',
-'When an export has a different shape from the screen, Post-FX now grades only the picture, so a vignette no longer darkens the plain bars around it.',
-'A WebP export past 16383 pixels is scaled to fit before it renders, and the export panel, the finished notice and the filename all give the size you actually get.',
 ],
 },
 ];
@@ -50820,6 +50909,11 @@ let _fs = null;
 function _fsTestBoot(){ try{ return !!localStorage.getItem('aeon-test-seed'); }catch(_e){ return false; } }
 function _fsFinished(){ const v=_safeGetItem(_FS_KEY); return v==='done' || v==='dismissed'; }
 function _fsSessionArmed(){ try{ return sessionStorage.getItem(_FS_SESSION)==='1'; }catch(_e){ return false; } }
+
+function _firstRunMathRowActive(){
+const linked=(location.hash||'').startsWith('#state=') || /[?&](fractal|mode|pattern)=/.test(location.search||'');
+return _fsSessionArmed() && !_fsTestBoot() && !_fsFinished() && !!_fs && !_fs.folded && !_fs.finished && !linked;
+}
 function _guideState(){
 try{
 const s=JSON.parse(sessionStorage.getItem(_GUIDE_STATE)||'{}');
@@ -50835,11 +50929,24 @@ function _guideBase(){ return { zoom:S.zoom, palette:S.palette, type:S.fractalTy
 function _guideRebase(){ if(_fs) _fs.base=_guideBase(); }
 
 
+function _welcomeLinked(){
+try{ return (location.hash||'').startsWith('#state=') || (!!location.search && /[?&](fractal|mode|pattern)=/.test(location.search)); }
+catch(_e){ return false; }   
+}
+
+
+function _guideEarly(){
+if(_welcomeLinked()) return;
+if(!_safeGetItem(WELCOME_KEY)){ if(_fsTestBoot() || _fsFinished()) return; _firstStepsArm(); }
+_firstStepsMaybeShow();
+
+
+if(_fs) _fs.pending=true;
+}
+
+
 function _maybeWelcome(){
-let linked=false;
-try{
-linked=(location.hash||'').startsWith('#state=') || (!!location.search && /[?&](fractal|mode|pattern)=/.test(location.search));
-}catch(_e){  }
+const linked=_welcomeLinked();
 if(_safeGetItem(WELCOME_KEY)){ _firstStepsMaybeShow(); return; }   
 
 
@@ -50910,7 +51017,14 @@ try{ sessionStorage.setItem(_FS_SESSION,'1'); }catch(_e){ _swallowed('_firstStep
 
 function _firstStepsMaybeShow(opts){
 const o=opts||{};
-if(_fs || typeof S==='undefined') return;
+if(typeof S==='undefined') return;
+if(_fs){
+
+if(_fs.pending){ _fs.pending=false; _fs.base=_guideBase(); }
+if(o.focus && _fs.el){ const h=document.getElementById('guide-title'); if(h) h.focus({preventScroll:true}); }
+_guidePlace();
+return;
+}
 if(!o.force && (_fsTestBoot() || _fsFinished() || !_fsSessionArmed())) return;
 const st=o.force ? { folded:false, done:[] } : _guideState();
 _fs={ el:null, chip:null, base:_guideBase(), done:new Set(st.done), folded:st.folded, finished:false, nudgeTimer:0 };
@@ -51003,6 +51117,7 @@ const st=li.querySelector('.fs-state'); if(st) st.textContent=t(done?'firststeps
 }
 }
 _guidePlace();
+if(typeof _updateMathNextRow==='function')_updateMathNextRow();
 }
 
 
@@ -51090,6 +51205,7 @@ if(hadFocus){ const h=document.getElementById('guide-title'); if(h) h.focus({pre
 const l2=document.getElementById('first-steps-live'); if(l2) l2.textContent=t('firststeps.finished');
 }
 _guidePlace();
+if(typeof _updateMathNextRow==='function')_updateMathNextRow();
 const fs=_fs;
 setTimeout(()=>{ if(_fs===fs) _firstStepsClose(); }, 8000);
 }
@@ -51097,7 +51213,7 @@ setTimeout(()=>{ if(_fs===fs) _firstStepsClose(); }, 8000);
 
 
 function _firstStepsTick(){
-if(!_fs || _fs.finished) return;
+if(!_fs || _fs.finished || _fs.pending) return;
 const b=_fs.base;
 if(S.zoom && b.zoom && Math.abs(Math.log(S.zoom/b.zoom))>0.05) _firstStepsMark('zoom');
 if(S.mode!==b.mode || S.fractalType!==b.type || S.pattern!==b.pattern) _firstStepsMark('catalog');
@@ -51119,10 +51235,18 @@ window.removeEventListener('resize', _guidePlace);
 const hadFocus=[fs.el, fs.chip].some(n=>n && n.contains(document.activeElement));
 if(fs.el) fs.el.remove();
 if(fs.chip) fs.chip.remove();
+if(typeof _updateMathNextRow==='function')_updateMathNextRow();
 if(hadFocus && !skipFocus && typeof _focusFallbackTarget==='function'){ const f=_focusFallbackTarget(); if(f && f.focus) f.focus({preventScroll:true}); }
 }
 function firstStepsHide(){ if(!_fsFinished()) _safeSetItem(_FS_KEY,'dismissed'); _firstStepsClose(); }
 function firstStepsTourStarted(){ if(!_fsFinished()) _safeSetItem(_FS_KEY,'done'); _firstStepsClose(true); }
+
+
+
+if(typeof document!=='undefined' && document.readyState==='loading'){
+try{ _guideEarly(); }
+catch(_e){ _swallowed('_guideEarly', _e); if(_fs){ try{ _firstStepsClose(true); }catch(_e2){ _swallowed('_guideEarly', _e2); } } }
+}
 
 
 
@@ -53873,6 +53997,8 @@ setTimeout(pushHist,100);
 
 
 if(typeof clearViewHistory==='function')clearViewHistory();
+
+if(typeof _updateMathNextRow==='function')_updateMathNextRow();
 scheduleRender();
 } catch (err) {
 console.error('[_galleryRestore] state-application error — an app bug, not the gallery entry itself:', err);
@@ -65692,6 +65818,7 @@ const w=tf.vars[v]||0;const on=w>0?'on':'';
 const wText=w>0?`weight ${w.toFixed(3)}`:'off';
 return `<div class="flame-var-chip ${on}" role="button" tabindex="0" aria-pressed="${w>0}" title="${v}=${w.toFixed(3)}" aria-label="Variation ${v}, ${wText}" data-var-name="${v}">${v}</div>`;
 }).join('');
+if(typeof _updateMathNextRow==='function')_updateMathNextRow();
 if(_vName&&typeof _restoreFocusAfterListRender==='function')
 _restoreFocusAfterListRender(true,[`#flame-var-grid .flame-var-chip[data-var-name="${CSS.escape(_vName)}"]`]);
 }
