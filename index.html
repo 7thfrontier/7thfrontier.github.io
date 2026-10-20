@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.3.6</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.3.7</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.3.6</h2>
+    <h2>AEON · v7.3.7</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1162,19 +1162,24 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.3.6.</h2>
-    <p class="section-lede">Copy report, and an open coordinate editor stays open · 2026-10-20</p>
+    <h2 class="section-title">What's new<br>in 7.3.7.</h2>
+    <p class="section-lede">One Export image tab, a proof before a long export, and Render history · 2026-10-20</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Copy report.</strong> Help &gt; Copy report puts the version, build, a share link to the exact view, the renderer and precision, the window size, the device pixel ratio and the browser on the clipboard as plain text, one fact per line.</li>
-    <li><strong>An open Zoom or Center editor stays open while the picture renders.</strong> On 7.3.4 the editor you were typing in could vanish when a render finished. 7.3.5 fixed that for the render status, and now no badge on the bar (deep zoom, precision, WebGPU) can close it either; the badges catch up once you press Enter or Escape.</li>
+    <li><strong>A proof before a long export.</strong> A large export first renders a small piece at its final pixel size beside the same piece of the screen, says whether it comes out brighter or darker than the screen, and waits for Export or Cancel. Escape-time, formula and 3D fractals show their exact pixels; Buddhabrot, attractors, flames and IFS show the whole picture small, for tone only, and say so when there is not enough memory for the export.</li>
+    <li><strong>One Export image tab.</strong> The Quick and Print / Hi-Res tabs are now one tab: pick a format and a size as before, and open Print options for physical size and DPI, supersampling, Letterbox or Extend, 3D projection and EXR. The Resolution row gains 8K and 16K, and Custom now reaches 32768 px. A file at a pixel size renders through one path, so the same settings always give the same file; supersampling, physical size and EXR keep their own path.</li>
+    <li><strong>The PSL₂(7) Cayley graph reads as Klein's quartic.</strong> Its 168 vertices now lie in the Poincaré disk as one patch of the truncated heptagonal tiling: 14-sided faces for the order-7 rotation, small triangles for the order-3 generator, and faint edges where the patch is glued back into the closed surface. Before, it was a dense 3D cloud.</li>
+    <li><strong>Render history.</strong> The catalog's new History chip, also under Render history in the menu, shows the last 16 views you rendered with a thumbnail each, newest first. One click returns to the exact state that drew it. The list lives in memory and starts over when you reload.</li>
+    <li><strong>The 4D projection badge points at the Projection control.</strong> Its tooltip told you to add a flag to the address bar; it now names the 4D Projection control in the Inspector, which switches between Stereographic and Schlegel.</li>
+    <li><strong>No more constant redrawing while idle on some graphics setups.</strong> When the browser cannot keep the last frame (a fallback some GPUs and drivers use), the layer and eyepiece thumbnails each triggered a fresh render, which scheduled the next thumbnail, so the picture redrew about twice a second forever, costing battery and up to 60 ms of main-thread time each time on a phone.</li>
+    <li><strong>A drag at deep zoom no longer snaps back before it lands.</strong> When the picture is computed on the CPU (deep zooms, with WebGPU off), letting go of a drag showed the old picture back where the drag started until the new frame arrived, which can take seconds, and then it jumped to where you dropped it. It now stays where you let go while the new frame renders.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.3.6</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.3.7</p>
 </footer>
 
 <script>

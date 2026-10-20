@@ -5,7 +5,7 @@
     120
   ],
   "canvas": "1440x900",
-  "totalBytes": 747001,
+  "totalBytes": 747330,
   "entries": [
     {
       "mode": "fractal",
@@ -461,7 +461,7 @@
       "mode": "geometry",
       "type": "cayley-psl-two-seven",
       "file": "geometry-cayley-psl-two-seven.jpg",
-      "bytes": 1359
+      "bytes": 1688
     },
     {
       "mode": "geometry",

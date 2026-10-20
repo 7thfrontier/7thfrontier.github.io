@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-KXQdOvxU83c++sUZmJSQWUrzH1ovyHf6V3yRa+8gBwk='; font-src 'self'; script-src 'self' 'sha256-Zy29GAf08iMKOXfIGaxqeAWugcOJk8Iz/eSfR8VqodI=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-jeoU9eOKpSD7n08Yne5qektpZ6sx5j/NHhKDtPnrZpE='; font-src 'self'; script-src 'self' 'sha256-hxn0dtl7kxMdqQEOxq0QkEjso2RHvQB09HQ8EsuQkW4=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -1073,7 +1073,7 @@
           .btn,.seg-opt{min-height:44px}
           
           #lp-tab-fractal,#lp-tab-geo,
-          #etab-quick,#etab-print,#etab-vector,
+          #etab-quick,#etab-vector,
           #rpt-tab-edit,#rpt-tab-style,#rpt-tab-compose,#rpt-tab-output,
           #it-next,#it-prev,#it-skip,
           #vres-hd,#vres-screen,#vres-square,#vres-vert,
@@ -1319,6 +1319,12 @@
         .custom-size .export-lbl{flex-basis:100%;margin:0}
         .custom-size input{width:75px;padding:4px 7px;border:1px solid var(--border-mid);border-radius:var(--r-2);background:var(--input-bg);color:var(--text);font-size:11px;font-family:var(--font-mono);outline:none}
         .custom-size input:focus-visible{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-dim);outline:none}
+        .export-proof{margin-bottom:var(--sp-3)}
+        .export-proof-pair{display:flex;gap:var(--sp-3);align-items:flex-start;flex-wrap:wrap;margin:var(--sp-2) 0}
+        .export-proof-pair figure{margin:0;max-width:100%}
+        .export-proof-pair canvas{display:block;width:var(--proof-w,auto);max-width:100%;height:auto;border:1px solid var(--border-mid)}
+        .export-proof-pair figcaption{font-size:var(--fs-secondary);color:var(--text-dim);margin-top:var(--sp-1)}
+        .export-proof-actions{display:flex;gap:var(--sp-2);margin-top:var(--sp-2)}
         .export-progress{height:4px;background:var(--slider-track);border-radius:2px;margin-bottom:10px;overflow:hidden;display:none}
         .export-progress.show{display:block}
         .export-progress-bar{height:100%;background:var(--accent);width:var(--progress,0%);transition:width var(--dur-fast);border-radius:2px}
@@ -4022,14 +4028,13 @@
 
         
         <div class="export-tabs" role="tablist" aria-label="Export type">
-          <button type="button" class="export-tab active" id="etab-quick" data-export-tab="quick" role="tab" aria-selected="true" aria-controls="epanel-quick">Quick</button>
-          <button type="button" class="export-tab" id="etab-print" data-export-tab="print" role="tab" aria-selected="false" aria-controls="epanel-print">Print / Hi-Res</button>
+          <button type="button" class="export-tab active" id="etab-quick" data-export-tab="quick" role="tab" aria-selected="true" aria-controls="epanel-quick">Export image</button>
           <button type="button" class="export-tab" id="etab-vector" data-export-tab="vector" role="tab" aria-selected="false" aria-controls="epanel-vector">Vector / Plotter</button>
         </div>
 
         
         <div class="export-tab-panel active" id="epanel-quick">
-          <div class="fs-meta-dim mb-8">Screen &amp; web · up to 4K</div>
+          <div class="fs-meta-dim mb-8">Choose a file size now. Open Print options for physical dimensions, DPI and extra detail.</div>
           <div class="export-lbl">Format</div>
           <div class="export-grid">
             <div class="format-btn active" id="fmt-png" data-select-format="png"><div class="fmt-name">PNG</div><div class="fmt-desc">Lossless · best quality</div></div>
@@ -4039,87 +4044,68 @@
             <div class="format-btn" id="fmt-gif" data-select-format="gif"><div class="fmt-name">GIF</div><div class="fmt-desc">Still image · 256 colors</div></div>
           </div>
           <div class="export-lbl">Resolution</div>
-          <div class="size-chips">
+          <div class="size-chips" id="export-size-row">
             <div class="size-chip active" data-select-size="screen" title="The canvas shape at 2048 px on the short side">Match canvas</div>
             <div class="size-chip" data-select-size="860">860 px</div>
             <div class="size-chip" data-select-size="2048">2048 px</div>
             <div class="size-chip" data-select-size="4096">4K</div>
+            <div class="size-chip" data-select-size="8192">8K</div>
+            <div class="size-chip" data-select-size="16384">16K</div>
             <div class="size-chip" data-select-size="custom">Custom…</div>
           </div>
-          <div class="custom-size" id="custom-size-row"><div class="export-lbl">Custom size (100–16384 px)</div><input type="number" id="custom-w" value="3000" min="100" max="16384" aria-label="Custom export width in pixels"><span>× </span><input type="number" id="custom-h" value="3000" min="100" max="16384" aria-label="Custom export height in pixels"><span>px</span></div>
+          <div class="custom-size" id="custom-size-row"><div class="export-lbl">Custom size (100–32768 px)</div><input type="number" id="custom-w" value="3000" min="100" max="32768" aria-label="Custom export width in pixels"><span>× </span><input type="number" id="custom-h" value="3000" min="100" max="32768" aria-label="Custom export height in pixels"><span>px</span></div>
           <div id="export-caveat-quick" class="ctrl-inactive-hint is-hidden" role="status" aria-live="polite"></div>
           <div id="jpeg-quality-row" class="is-hidden"><div class="ctrl"><label class="inline-25" for="jpeg-quality">JPEG Quality <span class="badge" id="jpeg-q-v">92</span></label><div class="slider-row"><input type="range" id="jpeg-quality" min="60" max="100" step="1" value="92" aria-label="JPEG quality, percent (60–100)" aria-describedby="slider-keys-hint"></div></div></div>
-          <div id="export-transparent-row" class="is-hidden"><label class="row-meta-clickable" title="Export with a transparent background instead of the background color. PNG, WebP, and GIF only; JPEG and TIFF stay opaque."><input type="checkbox" id="exportTransparent"> Transparent background</label></div>
-        </div>
+          <div id="export-transparent-row" class="is-hidden"><label class="row-meta-clickable" title="Export with a transparent background instead of the background color. PNG, WebP, and GIF only; JPEG, TIFF and EXR stay opaque."><input type="checkbox" id="exportTransparent"> Transparent background</label></div>
 
-        
-        <div class="export-tab-panel" id="epanel-print">
-          <div class="fs-meta-dim mb-8">Gallery prints · DPI, tiling, up to 32K</div>
-          
-          <div class="export-lbl">Sizing Mode</div>
-          <div class="size-chips mb-8" id="print-mode-row">
-            <div class="size-chip active" data-print-mode="pixel">Pixel</div>
-            <div class="size-chip" data-print-mode="physical">Physical · DPI</div>
-          </div>
-          
-          <div id="print-pixel-pane">
-            <div class="export-lbl">Output Size</div>
-            <div class="size-chips mb-8">
-              <div class="size-chip" data-print-size="4096">4K</div>
-              <div class="size-chip active" data-print-size="8192">8K</div>
-              <div class="size-chip" data-print-size="16384">16K</div>
-              <div class="size-chip" data-print-size="24576">24K</div>
-              <div class="size-chip" data-print-size="32768">32K</div>
-              <div class="size-chip" data-print-size="custom">Custom…</div>
+          <details class="rp-more" id="print-options">
+            <summary>Print options<span id="print-options-active"></span></summary>
+            <div class="export-lbl mt-10">Size by</div>
+            <div class="size-chips mb-8" id="print-mode-row">
+              <div class="size-chip active" data-print-mode="pixel" title="Use the Resolution above.">Pixels</div>
+              <div class="size-chip" data-print-mode="physical">Physical · DPI</div>
             </div>
-            <div class="custom-size" id="custom-size-row-print">
-              <div class="export-lbl">Custom size (512–32768 px)</div>
-              <input type="number" id="custom-w-print" value="8192" min="512" max="32768" aria-label="Custom print export width in pixels (512–32768)">
-              <span>× </span>
-              <input type="number" id="custom-h-print" value="8192" min="512" max="32768" aria-label="Custom print export height in pixels (512–32768)">
-              <span>px</span>
-            </div>
-          </div>
-          
-          <div id="print-phys-pane" class="is-hidden">
-            <div class="export-lbl">Preset</div>
-            <div class="size-chips mb-8" id="phys-preset-row">
-              <div class="size-chip" data-phys-preset="8x10">8×10″</div>
-              <div class="size-chip" data-phys-preset="11x14">11×14″</div>
-              <div class="size-chip active" data-phys-preset="16x20">16×20″</div>
-              <div class="size-chip" data-phys-preset="24x36">24×36″</div>
-              <div class="size-chip" data-phys-preset="36x48">36×48″</div>
-              <div class="size-chip" data-phys-preset="a4">A4</div>
-              <div class="size-chip" data-phys-preset="a3">A3</div>
-              <div class="size-chip" data-phys-preset="a2">A2</div>
-              <div class="size-chip" data-phys-preset="a1">A1</div>
-              <div class="size-chip" data-phys-preset="a0">A0</div>
-              <div class="size-chip" data-phys-preset="square12">12×12″</div>
-              <div class="size-chip" data-phys-preset="square24">24×24″</div>
-              <div class="size-chip" data-phys-preset="phone">Phone Pro Max</div>
-              <div class="size-chip" data-phys-preset="uhd4k">4K UHD</div>
-              <div class="size-chip" data-phys-preset="uhd8k">8K UHD</div>
-              <div class="size-chip" data-phys-preset="custom">Custom…</div>
-            </div>
-            <div class="custom-size" id="phys-custom-row">
-              <div class="export-lbl">Custom dimensions (0.5–200)</div>
-              <input type="number" id="phys-w" value="16" min="0.5" max="200" step="0.1" aria-label="Physical width">
-              <span>× </span>
-              <input type="number" id="phys-h" value="20" min="0.5" max="200" step="0.1" aria-label="Physical height">
-              <select id="phys-unit" aria-label="Physical unit">
-                <option value="in">inches</option>
-                <option value="mm">mm</option>
-                <option value="cm">cm</option>
-              </select>
-            </div>
-            <div class="export-lbl mt-10" id="dpi-label">DPI</div>
-            <div class="size-chips mb-8" id="dpi-row">
-              <div class="size-chip" data-dpi="72">72</div>
-              <div class="size-chip" data-dpi="150">150</div>
-              <div class="size-chip" data-dpi="200">200</div>
-              <div class="size-chip active" data-dpi="300">300</div>
-              <div class="size-chip" data-dpi="400">400</div>
-              <div class="size-chip" data-dpi="600">600</div>
+            
+            <div id="print-phys-pane" class="is-hidden">
+              <div class="export-lbl">Preset</div>
+              <div class="size-chips mb-8" id="phys-preset-row">
+                <div class="size-chip" data-phys-preset="8x10">8×10″</div>
+                <div class="size-chip" data-phys-preset="11x14">11×14″</div>
+                <div class="size-chip active" data-phys-preset="16x20">16×20″</div>
+                <div class="size-chip" data-phys-preset="24x36">24×36″</div>
+                <div class="size-chip" data-phys-preset="36x48">36×48″</div>
+                <div class="size-chip" data-phys-preset="a4">A4</div>
+                <div class="size-chip" data-phys-preset="a3">A3</div>
+                <div class="size-chip" data-phys-preset="a2">A2</div>
+                <div class="size-chip" data-phys-preset="a1">A1</div>
+                <div class="size-chip" data-phys-preset="a0">A0</div>
+                <div class="size-chip" data-phys-preset="square12">12×12″</div>
+                <div class="size-chip" data-phys-preset="square24">24×24″</div>
+                <div class="size-chip" data-phys-preset="phone">Phone Pro Max</div>
+                <div class="size-chip" data-phys-preset="uhd4k">4K UHD</div>
+                <div class="size-chip" data-phys-preset="uhd8k">8K UHD</div>
+                <div class="size-chip" data-phys-preset="custom">Custom…</div>
+              </div>
+              <div class="custom-size" id="phys-custom-row">
+                <div class="export-lbl">Custom dimensions (0.5–200)</div>
+                <input type="number" id="phys-w" value="16" min="0.5" max="200" step="0.1" aria-label="Physical width">
+                <span>× </span>
+                <input type="number" id="phys-h" value="20" min="0.5" max="200" step="0.1" aria-label="Physical height">
+                <select id="phys-unit" aria-label="Physical unit">
+                  <option value="in">inches</option>
+                  <option value="mm">mm</option>
+                  <option value="cm">cm</option>
+                </select>
+              </div>
+              <div class="export-lbl mt-10" id="dpi-label">DPI</div>
+              <div class="size-chips mb-8" id="dpi-row">
+                <div class="size-chip" data-dpi="72">72</div>
+                <div class="size-chip" data-dpi="150">150</div>
+                <div class="size-chip" data-dpi="200">200</div>
+                <div class="size-chip active" data-dpi="300">300</div>
+                <div class="size-chip" data-dpi="400">400</div>
+                <div class="size-chip" data-dpi="600">600</div>
+              </div>
             </div>
             <div class="export-lbl mt-10">Supersample</div>
             <div class="size-chips mb-8" id="ss-row" data-desc="ss-row-desc" aria-describedby="ss-row-desc">
@@ -4143,25 +4129,23 @@
                 <div class="size-chip" data-proj="equirect" title="Unwraps the sphere into a 2:1 equirectangular image for VR and 360° viewers. The export is always 2:1.">Equirectangular (2:1)</div>
               </div>
             </div>
-          </div>
-          <div class="export-lbl mt-10">Format</div>
-          <div class="export-grid inline-40">
-            <div class="format-btn active" id="pfmt-png" data-print-format="png"><div class="fmt-name">PNG</div><div class="fmt-desc">Lossless · DPI · metadata</div></div>
-            <div class="format-btn" id="pfmt-tiff" data-print-format="tiff"><div class="fmt-name">TIFF</div><div class="fmt-desc">16-bit · archival</div></div>
-            <div class="format-btn" id="pfmt-exr" data-print-format="exr" title="OpenEXR half-float (v6.25.2). Currently encodes the 8-bit canvas pixels as float (×1/255). Full HDR float-FBO pipeline lands with Tier 2.1; this format works today for VFX intermediate handoff."><div class="fmt-name">EXR</div><div class="fmt-desc">Half-float · VFX intermediate</div></div>
-          </div>
-          <div id="export-caveat-print" class="ctrl-inactive-hint is-hidden" role="status" aria-live="polite"></div>
-          <div id="export-transparent-print-row" class="is-hidden"><label class="row-meta-clickable" title="Export with a transparent background instead of the background color. PNG only; TIFF and EXR stay opaque."><input type="checkbox" id="exportTransparentPrint"> Transparent background</label></div>
-          
-          <div id="pfx-modal-summary" class="inline-33"></div>
-          
-          <div id="pfx-preview-wrap" title="Post-FX preview (click to refresh)">
-            <canvas id="pfx-preview-canvas" width="460" height="180" aria-hidden="true"></canvas>
-            <span id="pfx-preview-label">Post-FX Preview</span>
-          </div>
-          <div class="inline-29">
-            Renders tiled · pHYs DPI stamped · <span id="pfx-embed-note">State URL embedded in PNG tEXt</span>
-          </div>
+            <div class="export-lbl mt-10">Print format</div>
+            <div class="export-grid inline-40">
+              <div class="format-btn" id="fmt-exr" data-select-format="exr" title="OpenEXR half-float. Encodes the 8-bit canvas pixels as float (×1/255), for VFX intermediate handoff."><div class="fmt-name">EXR</div><div class="fmt-desc">Half-float · VFX intermediate</div></div>
+            </div>
+            
+            <div id="pfx-modal-summary" class="inline-33"></div>
+            
+            <div id="pfx-preview-wrap" title="Post-FX preview (click to refresh)">
+              <canvas id="pfx-preview-canvas" width="460" height="180" aria-hidden="true"></canvas>
+              <span id="pfx-preview-label">Post-FX Preview</span>
+            </div>
+            <div class="inline-29">
+              Renders tiled · pHYs DPI stamped · <span id="pfx-embed-note">State URL embedded in PNG tEXt</span>
+            </div>
+            
+            <button type="button" class="btn ghost" data-action="resetPrintSettings" id="reset-print-btn" aria-label="Reset print settings to defaults" title="Restore Pixels · 300 DPI · 1× direct · letterbox · 16×20&quot; defaults"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-reset"/></svg> Reset Print Settings</button>
+          </details>
         </div>
 
         
@@ -4185,10 +4169,21 @@
           <button type="button" class="btn ghost green inline-53" data-action="doSVGExportPrint" id="svg-export-btn"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-download"/></svg> Export SVG</button>
           <div class="inline-30">Clean &lt;path&gt; elements · raster-field patterns export as PNG instead</div>
 
-          
-          <button type="button" class="btn ghost" data-action="resetPrintSettings" id="reset-print-btn" aria-label="Reset print settings to defaults" title="Restore Pixel · 8K · 300 DPI · 1× direct · letterbox · 16×20&quot; defaults"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-reset"/></svg> Reset Print Settings</button>
         </div>
 
+        
+        <div id="export-proof" class="export-proof is-hidden" role="group" aria-labelledby="export-proof-title">
+          <div class="export-lbl" id="export-proof-title">Proof before a long export</div>
+          <div class="export-proof-pair">
+            <figure><canvas id="export-proof-screen" class="is-hidden" width="1" height="1" aria-hidden="true"></canvas><figcaption>Screen</figcaption></figure>
+            <figure><canvas id="export-proof-art" class="is-hidden" width="1" height="1" aria-hidden="true"></canvas><figcaption id="export-proof-art-cap">Export</figcaption></figure>
+          </div>
+          <div id="export-proof-verdict" class="ctrl-hint" role="status" aria-live="polite" aria-atomic="true"></div>
+          <div class="export-proof-actions">
+            <button type="button" class="btn hero" data-action="exportProofConfirm" id="export-proof-go">Export</button>
+            <button type="button" class="btn ghost" data-action="exportProofCancel" id="export-proof-cancel">Cancel</button>
+          </div>
+        </div>
         <div class="export-progress" id="export-progress"><div class="export-progress-bar" id="export-bar"></div></div>
         <div class="export-status" id="export-status" role="status" aria-live="polite" aria-atomic="true">Rendering…</div>
         <button type="button" class="btn hero inline-39" data-action="doExportFromModal" id="export-btn">Export Image</button>
@@ -4255,12 +4250,12 @@
 
 
 
-<!-- build: a28cb4972e29 -->
+<!-- build: 9f89d0e34184 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.6
+ * AEON -- Universal Dynamics Reactor v7.3.7
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7516,7 +7511,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.6';
+const APP_VERSION='7.3.7';
 
 
 
@@ -7525,10 +7520,10 @@ const APP_VERSION='7.3.6';
 
 
 
-const MISSION_BUILD_HASH='a28cb4972e29';
-const MISSION_GIT_SHA='1cffc2bf7515eefd97c828953ed224d5a7ad5725';
+const MISSION_BUILD_HASH='9f89d0e34184';
+const MISSION_GIT_SHA='4f848d3cbaac217fe9619d3ab5adb101677ef73e';
 
-const MISSION_RENDER_HASH='9d108bf18ec5';
+const MISSION_RENDER_HASH='0f5f25f9b030';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11904,6 +11899,7 @@ if (typeof _firstStepsTick === 'function') _firstStepsTick();
 
 if (typeof _xfadeRelease === 'function') _xfadeRelease();
 if (typeof _refreshRenderStatusCell === 'function') _refreshRenderStatusCell();   
+if (typeof _scheduleRenderHistory === 'function') _scheduleRenderHistory();
 
 
 
@@ -13222,7 +13218,7 @@ const plbl=GTYPE_LABELS[S.pattern]||S.pattern;
 let projBadge='';
 if(typeof FOUR_D_POLYTOPE_PATTERNS!=='undefined' && FOUR_D_POLYTOPE_PATTERNS.has(S.pattern)){
 const projName=S.use4DSchlegel?'Schlegel':'stereographic';
-projBadge='<div class="ci ci-badge--info" title="4D-polytope projection: '+projName+' (toggle via ?schlegel=1 URL flag)">'+icon('circle-plus')+' '+projName+'</div>';
+projBadge='<div class="ci ci-badge--info" title="4D projection: '+projName+'. Change it under 4D Projection in the Inspector.">'+icon('circle-plus')+' '+projName+'</div>';
 }
 _newBarHTML=html.raw`<div class="ci"><span class="lbl">Pattern</span><span class="v">${html`${plbl}`}</span></div><div class="ci"><span class="lbl">${html`${_geoLayerLbl}`}</span><span class="v">${html`${_geoLayerVal}`}</span></div><div class="ci"><span class="lbl">Rotation</span><span class="v">${html`${S.geoRotation.toFixed(1)+'°'}`}</span></div><div class="ci"><span class="lbl">Scale</span><span class="v">${html`${S.geoScale.toFixed(1)+'×'}`}</span></div>${projBadge}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
 _newHintsHTML='<span class="nh"><kbd>Drag</kbd> Rotate pattern</span><span class="nh"><kbd>Scroll</kbd> Zoom in / out</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span>';
@@ -15687,19 +15683,22 @@ document.getElementById('export-btn').disabled=false;
 document.getElementById('export-btn').textContent='Export Image';
 const cancelBtn=document.getElementById('export-cancel-btn');
 if(cancelBtn) cancelBtn.classList.add('is-hidden');
+if(typeof _proofPanel==='function'){ _exportProofOk=false; _proofPanel(false); }
 
 
 
 
 const vecTab=document.getElementById('etab-vector');
 if(vecTab)vecTab.classList.toggle('is-hidden',S.mode!=='geometry');
+
+const tabBar=document.querySelector('#export-modal .export-tabs');
+if(tabBar)tabBar.classList.toggle('is-hidden',S.mode!=='geometry');
 switchExportTab('quick');
 
 
 
 
 if(typeof selectFormat==='function') selectFormat(exportFormat);
-if(typeof selectPrintFormat==='function') selectPrintFormat(_printFormat);
 if(typeof _syncExportTransparentUI==='function') _syncExportTransparentUI();
 _pfxSyncUI();
 
@@ -15760,6 +15759,7 @@ if(_pendingCloseModalTimer){clearTimeout(_pendingCloseModalTimer);_pendingCloseM
 if(_exportAbortController && !_exportAbortController.signal.aborted){
 _abortCurrentExport();
 }
+if(typeof _proofPanel==='function'){ _exportProofOk=false; _proofPanel(false); }
 const m=document.getElementById('export-modal');
 m.classList.remove('open');
 
@@ -15917,7 +15917,6 @@ if(!supported&&exportTransparent){exportTransparent=false;if(cb)cb.checked=false
 
 function _syncExportTransparentOnTypeChange(){
 _syncExportTransparentAvailability('export-transparent-row','exportTransparent');
-_syncExportTransparentAvailability('export-transparent-print-row','exportTransparentPrint');
 }
 
 function selectFormat(fmt){
@@ -15935,6 +15934,7 @@ const _tr=document.getElementById('export-transparent-row');
 if(_tr)_tr.classList.toggle('is-hidden',!(fmt==='png'||fmt==='webp'||fmt==='gif'));
 _syncExportTransparentAvailability('export-transparent-row','exportTransparent');
 _updateExportCaveat();
+if(typeof _syncPrintOptionsSummary==='function')_syncPrintOptionsSummary();
 }
 
 
@@ -15962,58 +15962,29 @@ return msgs.join(' ');
 function _updateExportCaveat(){
 const row=document.getElementById('export-caveat-quick');
 if(!row)return;
-let w=exportSize,h=exportSize;
-if(exportSize==='custom'){
-w=parseInt(document.getElementById('custom-w').value,10)||0;
-h=parseInt(document.getElementById('custom-h').value,10)||0;
-} else if(exportSize==='screen'){ [w,h]=_screenShape(2048); }
-else { w=+exportSize;h=+exportSize; }
-const msg=_exportCaveatFor(exportFormat,w,h);
-row.textContent=msg;
-row.classList.toggle('is-hidden',!msg);
-}
-
-function _updatePrintExportCaveat(){
-const row=document.getElementById('export-caveat-print');
-if(!row)return;
-const isPixelMode=document.querySelector('[data-print-mode="pixel"]')?.classList.contains('active');
-if(!isPixelMode){row.classList.add('is-hidden');return;}
-const activeChip=document.querySelector('#print-pixel-pane .size-chip.active');
-const isCustom=activeChip && activeChip.getAttribute('data-print-size')==='custom';
 let w,h;
-if(isCustom){
-w=parseInt(document.getElementById('custom-w-print')?.value,10)||8192;
-h=parseInt(document.getElementById('custom-h-print')?.value,10)||8192;
-} else {
-const sz=activeChip?parseInt(activeChip.getAttribute('data-print-size'),10):8192;
-w=sz||8192;h=sz||8192;
-}
-const msg=_exportCaveatFor(typeof _printFormat!=='undefined'?_printFormat:'png',w,h);
+if(typeof _printMode!=='undefined'&&_printMode==='physical'){ ({W2:w,H2:h}=_resolvePrintExportPixels()); }
+else [w,h]=_quickExportPixels();
+const msg=_exportCaveatFor(exportFormat,w,h);
 row.textContent=msg;
 row.classList.toggle('is-hidden',!msg);
 }
 
 function _syncExportTransparentUI(){
 const q=document.getElementById('exportTransparent');if(q)q.checked=exportTransparent;
-const p=document.getElementById('exportTransparentPrint');if(p)p.checked=exportTransparent;
 }
 function selectSize(sz,el){
 exportSize=sz;
-document.querySelectorAll('#epanel-quick .size-chip').forEach(c=>c.classList.remove('active'));
+
+document.querySelectorAll('#export-size-row .size-chip').forEach(c=>c.classList.remove('active'));
 if(el)el.classList.add('active');
 document.getElementById('custom-size-row').classList.toggle('show',sz==='custom');
 _updateExportCaveat();
-}
-function selectPrintSize(sz,el){
 
 
-document.querySelectorAll('#print-pixel-pane .size-chip').forEach(c=>c.classList.remove('active'));
-if(el)el.classList.add('active');
-document.getElementById('custom-size-row-print').classList.toggle('show',sz==='custom');
-
-
-if(typeof pfxPreviewUpdate==='function')pfxPreviewUpdate();
-if(typeof _updatePrintExportCaveat==='function')_updatePrintExportCaveat();
+if(typeof _recomputePhysResolved==='function')_recomputePhysResolved();
+const po=document.getElementById('print-options');
+if(po&&po.open&&typeof pfxPreviewUpdate==='function')pfxPreviewUpdate();
 }
 
 
@@ -18251,12 +18222,18 @@ return _layerSeedStateHash() + ':' + muRe.toFixed(4) + ':' + muIm.toFixed(4);
 
 
 
+
+
+let _glcvSnapshotRendering = false;
 function _glcvSnapshot(){
 const attrs = (typeof gl !== 'undefined' && gl && gl.getContextAttributes) ? gl.getContextAttributes() : null;
 
 const _gest = typeof _glGestureLive === 'function' && _glGestureLive();
 if (_gest) _endGlInteract();
-if ((_gest || !(attrs && attrs.preserveDrawingBuffer)) && typeof render === 'function') render();
+if ((_gest || !(attrs && attrs.preserveDrawingBuffer)) && typeof render === 'function') {
+_glcvSnapshotRendering = true;
+try { render(); } finally { _glcvSnapshotRendering = false; }
+}
 const snap = document.createElement('canvas');
 snap.width = glcv.width; snap.height = glcv.height;
 snap.getContext('2d').drawImage(glcv, 0, 0);
@@ -18384,7 +18361,7 @@ return Date.now().toString(36)+'-'+(++_idCounter).toString(36)+'-'+Math.random()
 let _thumbRefreshTimer = null;
 
 function _scheduleThumbRefresh() {
-if (!COMP_LAYERS.length) return;
+if (!COMP_LAYERS.length || _glcvSnapshotRendering) return;
 
 
 if (typeof _palPreviewActive !== 'undefined' && _palPreviewActive) return;
@@ -22886,6 +22863,8 @@ toggleJuliaExplorer,toggleOrbitViz,
 dsResetBindings,dsSaveBindingPreset,
 
 resetPrintSettings,
+
+exportProofConfirm,exportProofCancel,
 };
 
 
@@ -22900,7 +22879,7 @@ resetPrintSettings,
 
 
 
-const _EXPORT_STOP_ACTIONS={cancelExport:1,closeExportModal:1,toggleRecord:1,toggleFractalRecord:1,recordAnimation:1,recordAnimationAsPNGSequence:1};
+const _EXPORT_STOP_ACTIONS={cancelExport:1,closeExportModal:1,exportProofCancel:1,toggleRecord:1,toggleFractalRecord:1,recordAnimation:1,recordAnimationAsPNGSequence:1};
 document.addEventListener('click',function _onDataActionClick(e){
 const el=e.target.closest('[data-action]');
 if(!el||el.classList.contains('hrow'))return;
@@ -23097,10 +23076,8 @@ scheduleRender();
 });
 
 
-
-
 document.addEventListener('change',e=>{
-if(e.target.id!=='exportTransparent'&&e.target.id!=='exportTransparentPrint')return;
+if(e.target.id!=='exportTransparent')return;
 exportTransparent=!!e.target.checked;
 _syncExportTransparentUI();
 });
@@ -23181,14 +23158,6 @@ const el=e.target.closest('[data-select-size]');if(!el)return;
 selectSize(el.dataset.selectSize,el);
 });
 document.addEventListener('click',e=>{
-const el=e.target.closest('[data-print-format]');if(!el)return;
-selectPrintFormat(el.dataset.printFormat);
-});
-document.addEventListener('click',e=>{
-const el=e.target.closest('[data-print-size]');if(!el)return;
-selectPrintSize(el.dataset.printSize,el);
-});
-document.addEventListener('click',e=>{
 const el=e.target.closest('[data-plotter-size]');if(!el)return;
 selectPlotterSize(el.dataset.plotterSize,el);
 });
@@ -23196,6 +23165,9 @@ document.addEventListener('click',e=>{
 const el=e.target.closest('[data-plotter-preset]');if(!el)return;
 selectPlotterPreset(el.dataset.plotterPreset,el);
 });
+
+const _po=document.getElementById('print-options');
+if(_po)_po.addEventListener('toggle',()=>{ if(_po.open&&typeof pfxPreviewUpdate==='function')pfxPreviewUpdate(); });
 
 document.addEventListener('click',e=>{
 const el=e.target.closest('[data-print-mode]');if(!el)return;
@@ -23244,24 +23216,19 @@ el.addEventListener('change',()=>{ if(id==='phys-unit')_syncPhysBounds(); if(typ
 });
 
 
-['custom-w-print','custom-h-print'].forEach(id=>{
-const el=document.getElementById(id);
-if(el)el.addEventListener('input',()=>{ if(typeof pfxPreviewUpdate==='function')pfxPreviewUpdate(); });
-});
-
 
 ['custom-w','custom-h'].forEach(id=>{
 const el=document.getElementById(id);
-if(el)el.addEventListener('input',()=>{ if(typeof _updateExportCaveat==='function')_updateExportCaveat(); });
+if(el)el.addEventListener('input',()=>{
+if(typeof _updateExportCaveat==='function')_updateExportCaveat();
+if(typeof _recomputePhysResolved==='function')_recomputePhysResolved();
+if(typeof pfxPreviewUpdate==='function')pfxPreviewUpdate();
 });
-['custom-w-print','custom-h-print'].forEach(id=>{
-const el=document.getElementById(id);
-if(el)el.addEventListener('input',()=>{ if(typeof _updatePrintExportCaveat==='function')_updatePrintExportCaveat(); });
 });
 
 
 
-['custom-w','custom-h','custom-w-print','custom-h-print'].forEach(id=>{
+['custom-w','custom-h'].forEach(id=>{
 const el=document.getElementById(id);
 if(!el)return;
 el.addEventListener('change',()=>{
@@ -25653,6 +25620,7 @@ en: {
 'catalog.star':               'Favorite {name}',
 'catalog.empty':              'Nothing matches. Try a shorter word, or All.',
 'catalog.count':              '{n} shown',
+'catalog.history-empty':      'Each view you render lands here, newest first, until you reload.',
 
 'explore.jx-unsupported':    'Julia explorer works on Mandelbrot, Burning Ship and Tricorn, switch to one of those to use it.',
 'explore.orbit-unsupported': 'Orbit view works on the escape-time fractals, switch to one (e.g. Mandelbrot) to use it.',
@@ -36077,7 +36045,7 @@ if(!G.invol[k]) _cayleyArrow(c, A, B, arrow);
 c.globalAlpha=so;
 c.fillStyle=accentColor();
 if(labels){c.font=`${Math.max(12,dotR*1.1|0)}px `+(window.UI_FONT_FAMILY||'sans-serif'); c.textAlign='center'; c.textBaseline='middle';}
-pos.forEach(([x,y],i)=>{
+if(o.dots!==false) pos.forEach(([x,y],i)=>{
 c.beginPath(); c.arc(x, y, dotR, 0, TAU); c.fill();
 if(labels){c.fillStyle='#fff'; c.fillText(labels[i], x, y); c.fillStyle=accentColor();}
 });
@@ -36247,30 +36215,28 @@ let _psl27Layout=null;
 function drawCayleyPSL27(c, bR){
 const P=7, mul=(x,y)=>[(x[0]*y[0]+x[1]*y[2])%P,(x[0]*y[1]+x[1]*y[3])%P,(x[2]*y[0]+x[3]*y[2])%P,(x[2]*y[1]+x[3]*y[3])%P];
 const key=m=>{const f=m.find(v=>v!==0);return (f>3?m.map(v=>(P-v)%P):m).join(',');}; 
-const G=_cayleyBuild([[0,6,1,0],[0,6,1,1]], mul, key, [1,0,0,1]);
-if(!_psl27Layout) _psl27Layout=_cayleyMDS(G, 3);
-const pos=_cayleyProject(_psl27Layout, bR*0.95);
-_cayleyDraw(c, bR, pos, G, {dotR:2, arrow:4, width:0.35, alpha:0.75});
-}
+const gens=[[0,6,1,0],[0,6,1,1]], G=_cayleyBuild(gens, mul, key, [1,0,0,1]);
+if(!_psl27Layout){
 
+const cm=(x,y)=>[x[0]*y[0]-x[1]*y[1],x[0]*y[1]+x[1]*y[0]], ca=(x,y)=>[x[0]+y[0],x[1]+y[1]];
+const mm=(A,B)=>[ca(cm(A[0],B[0]),cm(A[1],B[2])),ca(cm(A[0],B[1]),cm(A[1],B[3])),ca(cm(A[2],B[0]),cm(A[3],B[2])),ca(cm(A[2],B[1]),cm(A[3],B[3]))];
+const ap=(M,z)=>{const n=ca(cm(M[0],z),M[1]), d=ca(cm(M[2],z),M[3]), q=d[0]*d[0]+d[1]*d[1];return [(n[0]*d[0]+n[1]*d[1])/q,(n[1]*d[0]-n[0]*d[1])/q];};
+const rot=t=>[[Math.cos(t/2),Math.sin(t/2)],[0,0],[0,0],[Math.cos(t/2),-Math.sin(t/2)]], tr=x=>[[1,0],[x,0],[x,0],[1,0]];
+const hd=(u,v)=>Math.acosh(1+2*((u[0]-v[0])**2+(u[1]-v[1])**2)/((1-u[0]*u[0]-u[1]*u[1])*(1-v[0]*v[0]-v[1]*v[1])));
 
-function _cayleyMDS(G, d){
-const n=G.els.length, adj=G.els.map(()=>[]);
-for(const list of G.edges)for(const [i,j] of list)if(i!==j){adj[i].push(j);adj[j].push(i);}
-const D=G.els.map((_,s)=>{const dist=new Array(n).fill(-1);dist[s]=0;const q=[s];for(let h=0;h<q.length;h++)for(const t of adj[q[h]])if(dist[t]<0){dist[t]=dist[q[h]]+1;q.push(t);}return dist;});
-const B=D.map(r=>r.map(v=>-0.5*v*v)), rm=B.map(r=>r.reduce((a,b)=>a+b,0)/n), gm=rm.reduce((a,b)=>a+b,0)/n;
-for(let i=0;i<n;i++)for(let j=0;j<n;j++)B[i][j]+=gm-rm[i]-rm[j];
-const vecs=[];
-for(let k=0;k<d;k++){
-let x=Array.from({length:n},(_,i)=>Math.sin(1+i*(k+1)*0.7));
-for(let it=0;it<300;it++){
-let y=B.map(r=>r.reduce((a,v,j)=>a+v*x[j],0));
-for(const u of vecs){const dot=y.reduce((a,v,i)=>a+v*u[i],0);y=y.map((v,i)=>v-dot*u[i]);}
-const L=Math.hypot(...y)||1; x=y.map(v=>v/L);
+const r=Math.tanh(Math.acosh(Math.cos(Math.PI/7)/Math.sin(Math.PI/3))/2);
+const Mg=[mm(mm(tr(r),rot(Math.PI)),tr(-r)), rot(TAU/3)];
+let lo=0, hi=r;
+for(let i=0;i<60;i++){const m=(lo+hi)/2, z=[m,0]; if(hd(z,ap(Mg[0],z))>hd(z,ap(Mg[1],z))) lo=m; else hi=m;}
+const p0=[(lo+hi)/2,0], M=[[[1,0],[0,0],[0,0],[1,0]]];
+for(let q=0;q<G.els.length;q++)for(let s=0;s<2;s++){const j=G.idx.get(key(mul(G.els[q],gens[s])));if(!M[j])M[j]=mm(M[q],Mg[s]);}
+const pts=M.map(T=>ap(T,p0)), len=hd(p0,ap(Mg[0],p0));
+_psl27Layout={pts, near:(i,j)=>Math.abs(hd(pts[i],pts[j])-len)<1e-6};
 }
-vecs.push(x);
-}
-return G.els.map((_,i)=>vecs.map(u=>u[i]));
+const L=_psl27Layout, R=bR*1.6, pos=L.pts.map(([x,y])=>[R*x,R*y]);
+const part=keep=>({...G, edges:G.edges.map(list=>list.filter(([i,j])=>L.near(i,j)===keep))});
+_cayleyDraw(c, bR, pos, part(false), {arrow:4, width:0.35, alpha:0.14, dots:false});
+_cayleyDraw(c, bR, pos, part(true), {dotR:2, arrow:4, width:0.5, alpha:0.85});
 }
 
 
@@ -46229,6 +46195,30 @@ else drag.startRot=S.geoRotation;
 cv.dataset.cursor='grabbing';
 }
 }
+
+
+
+
+
+
+function _shiftCvForPan(dx,dy,r){
+const bx=Math.round(dx*(cv.width/r.width)),by=Math.round(dy*(cv.height/r.height));
+if(!bx&&!by)return;
+const onGl=typeof glcv!=='undefined'&&glcv&&glcv.classList.contains('is-shown');
+if(onGl){
+const cpuNext=(typeof _dzNeedsCpu==='function'&&_dzNeedsCpu())||(typeof _f64NeedsCpu==='function'&&_f64NeedsCpu());
+const a=(typeof gl!=='undefined'&&gl&&gl.getContextAttributes)?gl.getContextAttributes():null;
+if(!cpuNext||!(a&&a.preserveDrawingBuffer))return;
+}
+try{
+const tmp=document.createElement('canvas');tmp.width=cv.width;tmp.height=cv.height;
+tmp.getContext('2d').drawImage(onGl?glcv:cv,0,0,cv.width,cv.height);
+ctx.save();ctx.setTransform(1,0,0,1,0,0);
+ctx.fillStyle=S.bgColor||'#000';ctx.fillRect(0,0,cv.width,cv.height);
+ctx.drawImage(tmp,bx,by);ctx.restore();
+if(onGl){glcv.classList.remove('is-shown');cv.classList.remove('is-hidden');}
+}catch(e){_swallowed('_shiftCvForPan',e);}
+}
 cv.addEventListener('mousemove',e=>{
 if(!drag.active)return;
 drag.dx=e.clientX-drag.startX;drag.dy=e.clientY-drag.startY;
@@ -46342,6 +46332,7 @@ const r=cv.getBoundingClientRect(),sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);
 S.centerX-=drag.dx*(W/r.width)*sc;
 S.centerY-=drag.dy*(H/r.height)*sc;
 if(typeof _hiNavAddDelta==='function')_hiNavAddDelta(-drag.dx*(W/r.width)*sc,-drag.dy*(H/r.height)*sc);
+_shiftCvForPan(drag.dx,drag.dy,r);
 cv.parentElement.style.setProperty('--cv-dx','0');
 cv.parentElement.style.setProperty('--cv-dy','0');
 scheduleRender();pushView();
@@ -46393,6 +46384,7 @@ const r=cv.getBoundingClientRect(),sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);
 S.centerX-=drag.dx*(W/r.width)*sc;
 S.centerY-=drag.dy*(H/r.height)*sc;
 if(typeof _hiNavAddDelta==='function')_hiNavAddDelta(-drag.dx*(W/r.width)*sc,-drag.dy*(H/r.height)*sc);
+_shiftCvForPan(drag.dx,drag.dy,r);
 cv.parentElement.style.setProperty('--cv-dx','0');
 cv.parentElement.style.setProperty('--cv-dy','0');
 scheduleRender();
@@ -47451,15 +47443,14 @@ c.classList.toggle('active', c.getAttribute(attrName)===attrVal);
 });
 };
 _setActive('#print-mode-row','data-print-mode','pixel');
-_setActive('#print-pixel-pane','data-print-size','8192');
 _setActive('#phys-preset-row','data-phys-preset','16x20');
 _setActive('#dpi-row','data-dpi','300');
 _setActive('#ss-row','data-ss','1');
 
-const _px=document.getElementById('print-pixel-pane');
+if(typeof _printMode!=='undefined')_printMode='pixel';
 const _ph=document.getElementById('print-phys-pane');
-if(_px)_px.classList.remove('is-hidden');
 if(_ph)_ph.classList.add('is-hidden');
+if(typeof _syncPrintOptionsSummary==='function')_syncPrintOptionsSummary();
 setTimeout(pushHist,100);
 _syncHistUI();
 return true;
@@ -48137,7 +48128,7 @@ _esQueueThumb();
 let _esSyncQueued = false;
 
 function _queueEyepieceSync() {
-if (_esSyncQueued) return;
+if (_esSyncQueued || (typeof _glcvSnapshotRendering !== 'undefined' && _glcvSnapshotRendering)) return;
 _esSyncQueued = true;
 requestAnimationFrame(() => { _esSyncQueued = false; _syncEyepieceStrip(); });
 }
@@ -48593,6 +48584,7 @@ const hit = (e) => !q || e.name.toLowerCase().includes(q) || e.type.toLowerCase(
 const all = _catalogEntries(_catMode).filter(hit);
 if (_catChip === 'fav') return [{ label: 'Favorites', items: all.filter((e) => fav.has(e.type)) }];
 if (_catChip === 'recent') return [{ label: 'Recent', items: rec.map((t) => all.find((e) => e.type === t)).filter(Boolean) }];
+if (_catChip === 'history') return [{ label: 'History', items: _renderHistory.map(_rhCard).filter(hit) }];
 if (_catChip === 'showcase') {
 const sc = (typeof SHOWCASE !== 'undefined' ? SHOWCASE : []).map((r, i) => ({ showcase: i, type: r.preset.fractalType || r.preset.pattern || '', name: r.title, icon: '#ic-sparkle', mode: r.mode === 'geometry' ? 'geometry' : 'fractal' }))
 .filter((r) => r.mode === _catMode && (!q || r.name.toLowerCase().includes(q)));
@@ -48613,7 +48605,7 @@ const favN = (typeof _getFavourites === 'function' ? _getFavourites() : []).filt
 const recN = (typeof _getRecents === 'function' ? _getRecents() : []).filter((t) => _catalogEntries(_catMode).some((e) => e.type === t)).length;
 const scN = (typeof SHOWCASE !== 'undefined' ? SHOWCASE : []).filter((r) => (r.mode === 'geometry' ? 'geometry' : 'fractal') === _catMode).length;
 const chip = (id, label, n) => `<button type="button" class="cat-chip" data-cat-chip="${id.replace(/"/g, '&quot;')}" aria-pressed="${_catChip === id}">${label}${n === undefined ? '' : `<span class="cat-n">${n}</span>`}</button>`;
-host.innerHTML = chip('all', 'All') + chip('fav', 'Favorites', favN) + chip('recent', 'Recent', recN) + chip('showcase', 'Showcase', scN)
+host.innerHTML = chip('all', 'All') + chip('fav', 'Favorites', favN) + chip('recent', 'Recent', recN) + chip('history', 'History', _renderHistory.length) + chip('showcase', 'Showcase', scN)
 + '<span class="cat-chip-sep" aria-hidden="true"></span>'
 + CATALOG_GROUPS.filter((g) => g.mode === _catMode).map((g) => chip(g.label, _catEsc(g.label), g.items.length)).join('');
 }
@@ -48640,14 +48632,15 @@ body.innerHTML = groups.map((g) => {
 if (!g.items.length) return '';
 n += g.items.length;
 const cards = g.items.map((e) => {
-const isSc = e.showcase !== undefined;
-const on = !isSc && S.mode === _catMode && e.type === active;
-const star = isSc ? '' : `<button type="button" class="cat-star" data-cat-star="${e.type}" aria-pressed="${fav.has(e.type)}" aria-label="${t('catalog.star', { name: e.name }).replace(/"/g, '&quot;')}"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-star"/></svg></button>`;
-const pick = isSc ? `data-cat-showcase="${e.showcase}"` : `data-cat-pick="${e.type}"`;
-return `<div class="cat-card${on ? ' is-active' : ''}"><button type="button" class="cat-pick" ${pick}${on ? ' aria-current="true"' : ''}><span class="cat-thumb" data-cat-thumb="${isSc ? '' : e.type}" aria-hidden="true">${_catIconHTML(e.icon)}</span><span class="cat-name">${_catEsc(e.name)}</span></button>${star}</div>`;
+const isSc = e.showcase !== undefined, isH = e.hist !== undefined;
+const on = !isSc && !isH && S.mode === _catMode && e.type === active;
+const star = isSc || isH ? '' : `<button type="button" class="cat-star" data-cat-star="${e.type}" aria-pressed="${fav.has(e.type)}" aria-label="${t('catalog.star', { name: e.name }).replace(/"/g, '&quot;')}"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-star"/></svg></button>`;
+const pick = isH ? `data-cat-hist="${e.hist}"` : isSc ? `data-cat-showcase="${e.showcase}"` : `data-cat-pick="${e.type}"`;
+const thumb = isH ? `<span class="cat-thumb has-thumb" aria-hidden="true"><img class="cat-img" alt="" src="${e.thumb}"></span>` : `<span class="cat-thumb" data-cat-thumb="${isSc ? '' : e.type}" aria-hidden="true">${_catIconHTML(e.icon)}</span>`;
+return `<div class="cat-card${on ? ' is-active' : ''}"><button type="button" class="cat-pick" ${pick}${on ? ' aria-current="true"' : ''}>${thumb}<span class="cat-name">${_catEsc(e.name)}</span></button>${star}</div>`;
 }).join('');
 return `<h3 class="cat-gh">${_catEsc(g.label)}<span>${g.items.length}</span></h3><div class="cat-grid">${cards}</div>`;
-}).join('') || `<p class="cat-empty">${t('catalog.empty')}</p>`;
+}).join('') || `<p class="cat-empty">${t(_catChip === 'history' && !_renderHistory.length ? 'catalog.history-empty' : 'catalog.empty')}</p>`;
 document.getElementById('cat-status').textContent = t('catalog.count', { n });
 _catObserveThumbs();
 }
@@ -48669,7 +48662,7 @@ if (!sheet || !sheet.hidden) return;
 if (typeof _firstStepsMark === 'function') _firstStepsMark('catalog');
 if (typeof closeCommandPalette === 'function') closeCommandPalette();
 _catMode = S.mode === 'geometry' ? 'geometry' : 'fractal';
-_catChip = 'all';
+_catChip = (opts && opts.chip) || 'all';
 document.getElementById('cat-search').value = '';
 if (typeof _captureModalFocusGuard === 'function') _captureModalFocusGuard('catalog-sheet', sheet);
 
@@ -48679,7 +48672,7 @@ if (_catRpWasOpen && typeof _setRpCollapsed === 'function') _setRpCollapsed(true
 sheet.hidden = false;
 _catRender();
 
-const target = (opts && opts.search) ? document.getElementById('cat-search') : (sheet.querySelector('.cat-card.is-active .cat-pick') || document.getElementById('cat-search'));
+const target = (opts && opts.search) ? document.getElementById('cat-search') : (sheet.querySelector('.cat-card.is-active .cat-pick') || (opts && opts.chip && sheet.querySelector('#cat-body .cat-pick')) || document.getElementById('cat-search'));
 target.focus();
 if (target.scrollIntoView && target !== document.getElementById('cat-search')) target.scrollIntoView({ block: 'center' });
 trapFocus(sheet, closeCatalog);
@@ -48717,9 +48710,10 @@ const chip = e.target.closest('[data-cat-chip]');
 if (chip) { _catChip = chip.dataset.catChip; _catRender(); document.querySelector(`[data-cat-chip="${CSS.escape(_catChip)}"]`)?.focus(); return; }
 const star = e.target.closest('[data-cat-star]');
 if (star) { const on = _toggleFavourite(star.dataset.catStar); star.setAttribute('aria-pressed', String(on)); _catRenderChips(); return; }
-const sc = e.target.closest('[data-cat-showcase]');
+const sc = e.target.closest('[data-cat-showcase]'), hist = e.target.closest('[data-cat-hist]');
 
-if (sc || e.target.closest('[data-cat-pick]')) _catPickT = e.timeStamp;
+if (sc || hist || e.target.closest('[data-cat-pick]')) _catPickT = e.timeStamp;
+if (hist) { const h = _renderHistory.find((r) => r.id === hist.dataset.catHist); closeCatalog(); if (h) _catAfterThumbs(() => gotoBookmark(h.bm)); return; }
 if (sc) { const i = Number(sc.dataset.catShowcase); closeCatalog(); _catAfterThumbs(() => _applyShowcase(i)); return; }
 const pick = e.target.closest('[data-cat-pick]');
 if (pick) { const mode = _catMode, type = pick.dataset.catPick; closeCatalog(); _catAfterThumbs(() => _catalogPick(mode, type)); return; }
@@ -48749,6 +48743,46 @@ try { _initCatalog(); } catch (e) { _swallowed('_initCatalog', e); }
 if (typeof document !== 'undefined') {
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _initCatalogSafe);
 else _initCatalogSafe();
+}
+
+
+const _RH_MAX = 16, _RH_BYTES = 4 * 1024 * 1024;
+const _renderHistory = [];
+
+function _scheduleRenderHistory() {
+clearTimeout(_scheduleRenderHistory._t);
+_scheduleRenderHistory._t = setTimeout(_recordRenderHistory, 1200);
+}
+function _recordRenderHistory() {
+
+if (window._renderFractalInFlight > 0 || (typeof _geoWorkerBusy !== 'undefined' && _geoWorkerBusy) || _catThumbBusy > 0
+|| document.getElementById('cat-freeze') || _layerSwapInProgress()) { _scheduleRenderHistory(); return; }
+
+if (document.hidden || COMP_LAYERS.length > 1 || _exportInFlight() || _palPreviewActive || _animPlaying || S.geoAnimate
+|| (S.mode === 'geometry' && TIMED_PATTERNS.has(S.pattern) && S.cePlay)) return;   
+const full = _buildShareSnap();
+const flame = S.mode === 'fractal' && S.fractalType === 'fractal_flame' && flameSystem ? structuredClone(flameSystem) : undefined;
+const key = JSON.stringify([full, flame]);
+const i = _renderHistory.findIndex((r) => r.key === key);
+if (i === 0) return;
+if (i > 0) { _renderHistory.unshift(_renderHistory.splice(i, 1)[0]); return; }
+const src = typeof glcv !== 'undefined' && glcv && glcv.classList.contains('is-shown') ? _glcvSnapshot() : cv;
+if (!src || !src.width) return;
+const tc = document.createElement('canvas'); tc.width = _CAT_THUMB_W; tc.height = _CAT_THUMB_H;
+_drawCover(tc.getContext('2d'), src, _CAT_THUMB_W, _CAT_THUMB_H);
+const bm = { mode: S.mode, fractalType: S.fractalType, pattern: S.pattern, centerX: S.centerX, centerY: S.centerY, zoom: S.zoom,
+_full: full, pals: _collectCustomPalettes([S.palette]), flameSystem: flame };
+_renderHistory.unshift({ id: _uid(), key, bm, thumb: tc.toDataURL('image/jpeg', 0.75), at: Date.now() });
+for (let k = 0, bytes = 0; k < _renderHistory.length; k++) {
+bytes += _renderHistory[k].key.length + _renderHistory[k].thumb.length;
+if (k > 0 && (k >= _RH_MAX || bytes > _RH_BYTES)) { _renderHistory.length = k; break; }
+}
+}
+function _rhCard(r) {
+const type = r.bm.mode === 'geometry' ? r.bm.pattern : r.bm.fractalType;
+const e = _catalogEntries(r.bm.mode === 'geometry' ? 'geometry' : 'fractal').find((c) => c.type === type);
+const when = new Date(r.at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+return { hist: r.id, type, name: `${e ? e.name : type} · ${when}`, thumb: r.thumb };
 }
 
 
@@ -50561,6 +50595,17 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.3.7',
+date:'2026-10-20',
+headline:'One Export image tab, a proof before a long export, and Render history.',
+items:[
+'Quick and Print / Hi-Res are now one Export image tab. Print options holds physical size, DPI and supersampling, and the Resolution row gains 8K and 16K.',
+'A large export first renders a small piece at its final size beside the same piece of the screen, says whether it comes out brighter or darker, and waits for Export or Cancel.',
+'The catalog\'s History chip lists the last 16 views you rendered, with a thumbnail each. One click returns to the exact state.',
+'A drag at deep zoom stays where you let go while the new frame renders, and idle thumbnails no longer redraw the picture over and over on some graphics setups.',
+],
+},
+{
 version:'7.3.6',
 date:'2026-10-20',
 headline:'Copy report, and an open coordinate editor stays open.',
@@ -50621,15 +50666,6 @@ headline:'The Fruit of Life is drawn true, and a Construction tab shows how a fi
 items:[
 'The Fruit of Life draws its 13 circles at the canonical size, so each touches its neighbors and none overlap. Metatron\'s Cube is built on the same circles and follows it.',
 'A new Construction tab in the Inspector lists the circles, triangles, segments and symmetry the figure on screen actually draws, with its source, and says plainly when a figure is drawn for the look.',
-],
-},
-{
-version:'7.1.6',
-date:'2026-10-14',
-headline:'Small density exports and Motion Studio videos match the screen.',
-items:[
-'Small Buddhabrot, IFS, attractor and flame exports are no grainier than the screen: they render at the screen size and are scaled down into the file.',
-'Motion Studio videos and multi-layer exports of density fractals smaller than the canvas match the screen the same way.',
 ],
 },
 ];
@@ -51459,7 +51495,7 @@ const PATTERN_INFO={
 
 'cayley-s-four':{title:'Cayley Graph of S₄',body:'S₄ is the symmetric group on 4 letters: 24 elements (the 24 permutations of {1,2,3,4}), the rotation group of the cube. Drawn as the truncated octahedron, the permutohedron of order 4, whose 24 vertices are exactly the 24 permutations of (0,1,2,3) embedded in ℝ³ on the hyperplane x+y+z+w = 6. Edges correspond to adjacent transpositions. Arthur Cayley (1878).'},
 'cayley-a-five':{title:'Cayley Graph of A₅',body:'A₅ is the alternating group on 5 letters: 60 elements, the rotation group of the icosahedron. The smallest non-abelian simple group. Galois (1832) proved that A_n is simple for n ≥ 5; this is the foundation of his proof that the general quintic equation cannot be solved by radicals. Drawn with a 72° turn r about a vertex and a half turn s about the midpoint of an edge, its Cayley graph is the truncated icosahedron: 12 directed pentagons of r joined by the 30 edges of s.'},
-'cayley-psl-two-seven':{title:'Cayley Graph of PSL₂(7) (Klein Quartic Group)',body:'PSL₂(7) is the projective special linear group of degree 2 over ℤ/7. 168 elements; the second-smallest non-abelian simple group (after A₅). Acts as the orientation-preserving symmetry group of the Klein quartic surface, a genus-3 Riemann surface that achieves the Hurwitz upper bound of 84(g-1) = 168 automorphisms (Hurwitz 1893). Drawn from generators a of order 2 and b of order 3 whose product has order 7, the (2,3,7) generators: 168 vertices, 56 directed triangles of b and 84 edges of a, laid out in 3D so that elements close in the group sit close together (rotate the view to look around it). Klein, F., "Über die Transformation siebenter Ordnung" (1879).'},
+'cayley-psl-two-seven':{title:'Cayley Graph of PSL₂(7) (Klein Quartic Group)',body:'PSL₂(7) is the projective special linear group of degree 2 over ℤ/7. 168 elements; the second-smallest non-abelian simple group (after A₅). Acts as the orientation-preserving symmetry group of the Klein quartic surface, a genus-3 Riemann surface that achieves the Hurwitz upper bound of 84(g-1) = 168 automorphisms (Hurwitz 1893). Drawn from generators a of order 2 and b of order 3 whose product has order 7, the (2,3,7) generators: 168 vertices, 56 directed triangles of b and 84 edges of a, unrolled onto the hyperbolic plane as one patch of the truncated heptagonal tiling: each 14-sided face is a cycle of ab, and faint edges cross where the patch is glued back into the surface (Levy, "The Eightfold Way", 1999). Klein, F., "Über die Transformation siebenter Ordnung" (1879).'},
 'cayley-d-eight':{title:'Cayley Graph of D₈',body:'D₈ is the dihedral group of order 16: the symmetries of the regular octagon. 8 rotations + 8 reflections. Generators: r (rotation by 45°) and s (reflection), with relations r⁸ = s² = e, srs = r⁻¹. Drawn as two concentric octagons with reflection edges connecting them. Arthur Cayley (1878).'},
 
 'cayley-m-eleven':{title:'Mathieu M₁₁ Cayley Graph',body:'M₁₁ is the smallest of the 5 Mathieu sporadic finite simple groups: |G| = 7920 = 2⁴·3²·5·11. Acts sharply 4-transitively on 11 letters; the stabilizer of one point is M₁₀ of order 720 = 7920/11. Discovered by Émile Mathieu, "Mémoire sur l\'étude des fonctions de plusieurs quantités" (1861, 1873). The full 7920-vertex Cayley graph is too dense to render legibly; this visualization plots the 11-point Schreier graph of its action on cosets of M₁₀, the canonical 4-transitive 11-letter action. M₁₁ also has a separate transitive action on 12 letters with point-stabilizer PSL₂(11) of order 660 = 7920/12. Drawn with the two standard generators of the ATLAS of Finite Groups (1985): a, of order 2, swaps four pairs of points, and b, of order 4, turns two 4-cycles; together they generate all of M₁₁.'},
@@ -52794,6 +52830,7 @@ const APP_ACTIONS = [
 { id:'view-gallery',  label:'Gallery',    group:'view', run:()=>toggleGallery(), keybindingId:'gallery' },
 { id:'view-command',  label:'Command Palette…', group:'view', run:()=>openCommandPalette() },
 { id:'view-catalog',  label:'Catalog',    group:'view', run:()=>openCatalog() },
+{ id:'view-history',  label:'Render history', group:'view', run:()=>openCatalog({ chip:'history' }) },
 { id:'view-focus',    label:'Focus',      group:'view', run:()=>toggleZenMode(), keybindingId:'zenMode' },
 
 { id:'view-theme',    label:'Dark / Light theme', group:'view', run:()=>toggleTheme(), keybindingId:'theme', checked:()=>document.documentElement.getAttribute('data-theme')==='light' },
@@ -59555,6 +59592,43 @@ _pushLayerHist();
 const _LAYER_XFORM_DEFAULT = { x: 0, y: 0, scale: 1, rot: 0 };
 
 
+
+
+
+
+function _normalizeLazyIfsKeys(p) {
+if (p && typeof p === 'object') {
+if (!Array.isArray(p.ifsCustomTf)) p.ifsCustomTf = null;
+if (!Array.isArray(p.ifsWeights)) p.ifsWeights = null;
+}
+return p;
+}
+
+
+
+
+function _migrateProjectLayers(layers, max, drops) {
+return layers.slice(0, max).map(l => ({
+...l,
+
+name: String(l.name || '').slice(0, 64),
+
+blend: _validBlend(l.blend),
+
+
+
+opacity: (typeof l.opacity === 'number' && isFinite(l.opacity)) ? Math.max(0, Math.min(1, l.opacity)) : 1,
+
+
+transform: _sanitizeLayerXform(l.transform),
+
+
+
+
+params: _normalizeLazyIfsKeys((l.params && typeof _migrateState === 'function') ? _migrateState(l.params, drops) : l.params),
+}));
+}
+
 function _sanitizeLayerXform(t) {
 if (!t || typeof t !== 'object') return undefined;
 const num = (v, d) => (typeof v === 'number' && isFinite(v)) ? v : d;
@@ -60640,19 +60714,6 @@ applySnapshot(function applyFields(){
 
 
 
-
-
-
-
-const _normalizeLazyIfsKeys = (p) => {
-if (p && typeof p === 'object') {
-if (!Array.isArray(p.ifsCustomTf)) p.ifsCustomTf = null;
-if (!Array.isArray(p.ifsWeights)) p.ifsWeights = null;
-}
-return p;
-};
-
-
 const _ftDrops = [];
 const _pState = _migrateState(project.state, _ftDrops);
 Object.assign(S, _pState);
@@ -60791,30 +60852,7 @@ COMP_LAYERS.length = 0;
 if (project.layers.length > MAX_LAYERS && typeof showToast === 'function') {
 showToast(t('layer.layers-capped',{cap:MAX_LAYERS,had:project.layers.length}),'warning');
 }
-
-
-for (const l of project.layers.slice(0, MAX_LAYERS)) {
-if (l && l.params && typeof l.params === 'object' && 'fractalType' in l.params) _migrateState({ fractalType: l.params.fractalType }, _ftDrops);
-}
-const layers = _sanitiseList(project.layers).slice(0, MAX_LAYERS).map(l => ({
-...l,
-
-name: String(l.name || '').slice(0, 64),
-
-blend: _validBlend(l.blend),
-
-
-
-opacity: (typeof l.opacity === 'number' && isFinite(l.opacity)) ? Math.max(0, Math.min(1, l.opacity)) : 1,
-
-
-transform: _sanitizeLayerXform(l.transform),
-
-
-
-
-params: _normalizeLazyIfsKeys((l.params && typeof _migrateState === 'function') ? _migrateState(l.params) : l.params),
-}));
+const layers = _migrateProjectLayers(_sanitiseList(project.layers), MAX_LAYERS, _ftDrops);
 COMP_LAYERS.push(...layers);
 
 
@@ -62211,7 +62249,7 @@ try {
 
 
 
-if (typeof _exportTab !== 'undefined' && _exportTab === 'print' &&
+if (typeof _exportTab !== 'undefined' && _exportTab === 'quick' &&
 typeof _resolvePrintExportPixels === 'function') {
 const {W2,H2} = _resolvePrintExportPixels();
 if (W2 > 0 && H2 > 0) {
@@ -62671,7 +62709,6 @@ return null;
 
 
 let _exportTab='quick';
-let _printFormat='png';
 let _plotterSize='a4';
 let _plotterPreset='screen';
 
@@ -62840,6 +62877,31 @@ function _equirectExportActive(){
 return typeof S!=='undefined' && S.mode==='fractal' && S.projection3D==='equirect'
 && typeof GL_3D_TYPES!=='undefined' && !!GL_3D_TYPES.has && GL_3D_TYPES.has(S.fractalType);
 }
+
+function _quickExportPixels(){
+if(exportSize==='screen')return _screenShape(2048);
+if(exportSize==='custom'){
+const v=(id)=>Math.min(32768,Math.max(100,parseInt(document.getElementById(id).value, 10)||3000));
+return [v('custom-w'),v('custom-h')];
+}
+return [+exportSize,+exportSize];
+}
+
+function _exportNeedsPrintPath(){
+return _printMode==='physical' || (S.exportSupersample||1)>1 || exportFormat==='exr';
+}
+
+function _syncPrintOptionsSummary(){
+const po=document.getElementById('print-options'), tag=document.getElementById('print-options-active');
+if(!po||!tag)return;
+const on=[];
+if(_printMode==='physical')on.push('physical size');
+if((S.exportSupersample||1)>1)on.push(S.exportSupersample+'× supersample');
+if(S.mode==='fractal'&&S.exportFractalCompose==='extend')on.push('Extend');
+if(exportFormat==='exr')on.push('EXR');
+tag.textContent=on.length?' · '+on.join(' · '):'';
+if(on.length)po.open=true;
+}
 function _resolvePrintExportPixels(){
 _equirectAspectForced=false;   
 _physPixelCapApplied=false;
@@ -62890,21 +62952,7 @@ return{W2,H2,supersample:ss};
 }
 _exportResolvedDPI=null;   
 
-const activePrintChip=document.querySelector('#print-pixel-pane .size-chip.active');
-let W2,H2;
-if(activePrintChip&&activePrintChip.textContent.includes('…')){
-W2=parseInt(document.getElementById('custom-w-print').value, 10)||8192;
-H2=parseInt(document.getElementById('custom-h-print').value, 10)||8192;
-} else {
-const sz=activePrintChip?(parseInt(activePrintChip.getAttribute('data-print-size'), 10)||8192):8192;
-W2=H2=sz;
-}
-
-
-
-
-W2=Math.min(32768,Math.max(512,W2));
-H2=Math.min(32768,Math.max(512,H2));
+let [W2,H2]=_quickExportPixels();
 
 
 
@@ -62921,14 +62969,13 @@ return{W2,H2,supersample:ss};
 function setPrintMode(mode){
 _printMode=mode;
 document.querySelectorAll('#print-mode-row .size-chip').forEach(c=>c.classList.toggle('active',c.getAttribute('data-print-mode')===mode));
-const px=document.getElementById('print-pixel-pane');
 const ph=document.getElementById('print-phys-pane');
-if(px)px.classList.toggle('is-hidden',mode!=='pixel');
 if(ph)ph.classList.toggle('is-hidden',mode!=='physical');
 if(mode==='physical')_recomputePhysResolved();
 
 if(typeof pfxPreviewUpdate==='function')pfxPreviewUpdate();
-if(typeof _updatePrintExportCaveat==='function')_updatePrintExportCaveat();
+if(typeof _updateExportCaveat==='function')_updateExportCaveat();
+_syncPrintOptionsSummary();
 }
 
 
@@ -62952,6 +62999,7 @@ if(phu)phu.value='in';
 _recomputePhysResolved();
 
 if(typeof pfxPreviewUpdate==='function')pfxPreviewUpdate();
+if(typeof _updateExportCaveat==='function')_updateExportCaveat();
 }
 
 
@@ -62966,6 +63014,7 @@ function setExportSupersample(ss){
 S.exportSupersample=Math.max(1,Math.min(3,parseInt(ss, 10)||1));
 document.querySelectorAll('#ss-row .size-chip').forEach(c=>c.classList.toggle('active',parseInt(c.getAttribute('data-ss'), 10)===S.exportSupersample));
 _recomputePhysResolved();
+_syncPrintOptionsSummary();
 }
 
 
@@ -62975,19 +63024,12 @@ document.querySelectorAll('#compose-row .size-chip').forEach(c=>c.classList.togg
 
 
 if(typeof pfxPreviewUpdate==='function')pfxPreviewUpdate();
+_syncPrintOptionsSummary();
 }
 
 
 function resetPrintSettings(){
 if(typeof setPrintMode==='function')setPrintMode('pixel');
-
-
-const chip8K=document.querySelector('#print-pixel-pane .size-chip[data-print-size="8192"]');
-if(chip8K && typeof selectPrintSize==='function'){
-selectPrintSize('8192', chip8K);
-} else if(chip8K) {
-chip8K.click();
-}
 setExportDPI(300);
 setExportSupersample(1);
 setExportFractalCompose('letterbox');
@@ -63008,6 +63050,9 @@ if(phw&&phw.value)S.exportPhysicalW=_clampPhys(phw,16);
 if(phh&&phh.value)S.exportPhysicalH=_clampPhys(phh,20);
 if(phu&&phu.value)S.exportPhysicalUnit=phu.value;
 const{W2,H2,supersample}=_resolvePrintExportPixels();
+
+
+if(typeof _updateExportCaveat==='function')_updateExportCaveat();
 
 const _gcd=(a,b)=>b<1e-3?Math.round(a):_gcd(b,a%b);
 const g=_gcd(W2,H2);
@@ -63072,7 +63117,7 @@ const panel=document.getElementById('epanel-'+tab);
 if(btn){btn.classList.add('active');btn.setAttribute('aria-selected','true');btn.setAttribute('tabindex','0');}
 if(panel)panel.classList.add('active');
 const expBtn=document.getElementById('export-btn');
-if(expBtn)expBtn.textContent=tab==='vector'?'Export SVG':tab==='print'?'Render & Export':'Export Image';
+if(expBtn)expBtn.textContent=tab==='vector'?'Export SVG':'Export Image';
 
 
 if(tab==='vector'&&typeof _syncPlotterInfo==='function')_syncPlotterInfo(_plotterPreset);
@@ -63094,21 +63139,7 @@ if(tab==='vector'){
 document.getElementById('vector-geo-opts').classList.remove('is-hidden');
 document.getElementById('svg-export-btn').classList.remove('is-hidden');
 }
-
-if(tab==='print')pfxPreviewUpdate();
-}
-
-function selectPrintFormat(fmt){
-_printFormat=fmt;
-document.querySelectorAll('#epanel-print .format-btn').forEach(b=>b.classList.remove('active'));
-const btn=document.getElementById('pfmt-'+fmt);
-if(btn)btn.classList.add('active');
-
-
-const tr=document.getElementById('export-transparent-print-row');
-if(tr)tr.classList.toggle('is-hidden',fmt!=='png');
-if(typeof _syncExportTransparentAvailability==='function')_syncExportTransparentAvailability('export-transparent-print-row','exportTransparentPrint');
-if(typeof _updatePrintExportCaveat==='function')_updatePrintExportCaveat();
+if(tab==='quick'){ const po=document.getElementById('print-options'); if(po&&po.open)pfxPreviewUpdate(); }
 }
 
 
@@ -63146,8 +63177,11 @@ info.textContent=p==='plotter'
 
 function doExportFromModal(){
 if(_exportTab==='vector'){doSVGExportPrint();return;}
-if(_exportTab==='print'){doPrintExport();return;}
-doExport(); 
+
+if(!_exportProofOk){ const p=_exportPlan(); if(_exportWantsProof(p)){ _showExportProof(p); return; } }
+_exportProofOk=false;
+if(_exportNeedsPrintPath()){doPrintExport();return;}
+doExport();
 }
 
 
@@ -63226,15 +63260,17 @@ tileCtx.putImageData(img,0,0);
 }
 
 
-async function _renderFractalForPrint(rCtx,rW,rH,bar,status,signal,alphaCapable=(_printFormat!=='tiff'&&_printFormat!=='exr')){
+async function _renderFractalForPrint(rCtx,rW,rH,bar,status,signal,alphaCapable=_exportAlphaFormat(exportFormat),crop){
+
+
 if(S.fractalType==='formula'&&glReady){
 bar&&bar.style.setProperty('--progress','20%');status.textContent='GPU rendering (formula)…';await new Promise(r=>setTimeout(r,10));
-await _tileRenderFractalGL(rCtx,rW,rH,bar,status,renderFractalCustom,signal);
+await _tileRenderFractalGL(rCtx,rW,rH,bar,status,renderFractalCustom,signal,crop);
 return;
 }
 if(glReady&&GL_3D_TYPES.has(S.fractalType)){
 bar&&bar.style.setProperty('--progress','20%');status.textContent='3D rendering…';await new Promise(r=>setTimeout(r,10));
-await _tileRenderFractal3D(rCtx,rW,rH,bar,status,signal, exportTransparent&&alphaCapable);   
+await _tileRenderFractal3D(rCtx,rW,rH,bar,status,signal, exportTransparent&&alphaCapable, crop);   
 return;
 }
 
@@ -63314,12 +63350,12 @@ if(glReady && !_f64NeedsCpu(rW)){
 
 
 bar&&bar.style.setProperty('--progress','20%');status.textContent='GPU rendering…';await new Promise(r=>setTimeout(r,10));
-await _tileRenderFractalGL(rCtx,rW,rH,bar,status,undefined,signal);
+await _tileRenderFractalGL(rCtx,rW,rH,bar,status,undefined,signal,crop);
 bar&&bar.style.setProperty('--progress','75%');
 return;
 }
 
-await _tileRenderFractal(rCtx,rW,rH,bar,status,signal);
+await _tileRenderFractal(rCtx,rW,rH,bar,status,signal,crop);
 }
 
 
@@ -63343,6 +63379,23 @@ const samples = Math.min(scaled, budget);
 
 
 return { samples, capped: scaled > budget, comp: scaled / Math.max(1, samples) };
+}
+
+
+function _densityHeapHeadroom(){
+let heapLimit, probeNote;
+if(typeof performance !== 'undefined' && performance.memory && performance.memory.jsHeapSizeLimit){
+heapLimit = performance.memory.jsHeapSizeLimit;
+probeNote = '';
+} else if(typeof navigator !== 'undefined' && typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0){
+
+heapLimit = navigator.deviceMemory * 0.4 * 1024 * 1024 * 1024;
+probeNote = ` (estimated from navigator.deviceMemory = ${navigator.deviceMemory} GB)`;
+} else {
+heapLimit = 4 * 1024 * 1024 * 1024;
+probeNote = ' (no memory API available; using 4 GB conservative ceiling)';
+}
+return {heapHeadroom: heapLimit * 0.55, probeNote};
 }
 
 
@@ -63389,18 +63442,23 @@ const signal = _exportAbortController.signal;
 
 
 
-const _pfmt=_printFormat;
-const _pfmtAlpha=(_pfmt!=='tiff'&&_pfmt!=='exr');
+const _pfmt=exportFormat;
+const _pfmtAlpha=_exportAlphaFormat(_pfmt);
 
 
 
-const{W2:W2_target,H2:H2_target,supersample:ssRaw}=_resolvePrintExportPixels();
+const{W2:_W2t,H2:_H2t,supersample:ssRaw}=_resolvePrintExportPixels();
 if(_equirectAspectForced && typeof showToast==='function')
-showToast(t('export.equirect-aspect-forced',{w:W2_target,h:H2_target}),'info',5000);
+showToast(t('export.equirect-aspect-forced',{w:_W2t,h:_H2t}),'info',5000);
 
 
 if(_physPixelCapApplied && typeof showToast==='function')
-showToast(t('export.phys-size-capped',{w:W2_target,h:H2_target,dpi:_exportResolvedDPI}),'info',5000);
+showToast(t('export.phys-size-capped',{w:_W2t,h:_H2t,dpi:_exportResolvedDPI}),'info',5000);
+let W2_target=_W2t,H2_target=_H2t;
+if(_pfmt==='webp' && Math.max(W2_target,H2_target)>_WEBP_MAX_DIM){
+[W2_target,H2_target]=_webpFit(W2_target,H2_target,_equirectExportActive());
+if(typeof showToast==='function') showToast(t('export.webp-clamped',{m:_WEBP_MAX_DIM,w:W2_target,h:H2_target}),'info',6000);
+}
 
 
 
@@ -63413,26 +63471,7 @@ if(S.mode==='fractal' && _isCPUAsync && ssRaw > 1){
 const wWorking = W2_target * ssRaw, hWorking = H2_target * ssRaw;
 const peakBytes = wWorking * hWorking * 4 * 3 * 1.7; 
 
-
-
-
-
-
-
-
-let heapLimit, probeNote;
-if(typeof performance !== 'undefined' && performance.memory && performance.memory.jsHeapSizeLimit){
-heapLimit = performance.memory.jsHeapSizeLimit;
-probeNote = '';
-} else if(typeof navigator !== 'undefined' && typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0){
-
-heapLimit = navigator.deviceMemory * 0.4 * 1024 * 1024 * 1024;
-probeNote = ` (estimated from navigator.deviceMemory = ${navigator.deviceMemory} GB)`;
-} else {
-heapLimit = 4 * 1024 * 1024 * 1024;
-probeNote = ' (no memory API available; using 4 GB conservative ceiling)';
-}
-const heapHeadroom = heapLimit * 0.55; 
+const {heapHeadroom, probeNote} = _densityHeapHeadroom();
 if(peakBytes > heapHeadroom){
 
 let testSS = ssRaw;
@@ -63578,7 +63617,7 @@ await _renderFractalForPrint(renderCtx, renderW, renderH, bar, status, signal, _
 
 if (e && e.name === 'AbortError') throw e;
 console.error('Fractal render failed for '+S.fractalType+':', e);
-status.textContent = 'Export failed; try the Quick tab instead';
+status.textContent = 'Export failed';
 throw e;
 }
 if (fractalLetterbox) {
@@ -63619,24 +63658,12 @@ finalCanvas=dc;finalW=W2_target;finalH=H2_target;
 
 _checkAbort(signal);
 status.textContent='Encoding…';bar.style.setProperty('--progress','95%');await new Promise(r=>setTimeout(r,30));
-const fname=_buildExportFilename(finalW,finalH);
-if(_pfmt==='tiff'){
-await exportTIFF(finalCanvas,finalW,finalH,fname,bar,status,signal);
-} else if(_pfmt==='exr'){
-
-
-
-await exportEXRPrint(finalCanvas, finalW, finalH, fname, bar, status, signal);
-} else {
-
-
-await _writeImageBlob(finalCanvas, fname, 'png', undefined, signal);
-}
+const _out=await _encodeStillExport(finalCanvas,finalW,finalH,_pfmt,bar,status,signal);
 bar.style.setProperty('--progress','100%');status.textContent='Done!';
 
 
 
-if(typeof showToast==='function')showToast(t('export.completed',{w:finalW,h:finalH,fname}),undefined,undefined,_exportToastThumb(finalCanvas));
+if(typeof showToast==='function')showToast(t('export.completed',{w:_out.w,h:_out.h,fname:_out.fname}),undefined,undefined,_exportToastThumb(finalCanvas));
 _pendingCloseModalTimer=setTimeout(closeExportModal,1200);
 } catch (err) {
 if (err && err.name === 'AbortError') {
@@ -63664,21 +63691,22 @@ _exportAbortController = null;
 }
 
 
-async function _tileRenderFractal(octx,W2,H2,bar,status,signal){
+async function _tileRenderFractal(octx,W2,H2,bar,status,signal,crop){
 const TILE=512;
-const tilesX=Math.ceil(W2/TILE),tilesY=Math.ceil(H2/TILE);
+const cx0=crop?crop.x:0, cy0=crop?crop.y:0, cW=crop?crop.w:W2, cH=crop?crop.h:H2;   
+const tilesX=Math.ceil(cW/TILE),tilesY=Math.ceil(cH/TILE);
 const total=tilesX*tilesY;let done=0;
 for(let ty=0;ty<tilesY;ty++){
 if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');
 for(let tx=0;tx<tilesX;tx++){
 if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');
-const x0=tx*TILE,y0=ty*TILE;
-const tw=Math.min(TILE,W2-x0),th=Math.min(TILE,H2-y0);
+const x0=cx0+tx*TILE,y0=cy0+ty*TILE;
+const tw=Math.min(TILE,cx0+cW-x0),th=Math.min(TILE,cy0+cH-y0);
 const tc=document.createElement('canvas');tc.width=tw;tc.height=th;
 const tctx=tc.getContext('2d');
 tctx.fillStyle=S.bgColor;tctx.fillRect(0,0,tw,th);
 await _renderFractalTile(tctx,x0,y0,tw,th,W2,H2,bar,status,++done,total);
-octx.drawImage(tc,x0,y0);
+octx.drawImage(tc,x0-cx0,y0-cy0);
 }
 }
 }
@@ -63739,8 +63767,11 @@ ok=(_customGlProg&&_compiledFormula===f)||(f!==_lastFailedCustomFormula&&compile
 }
 if(!ok) throw new Error('the custom formula does not compile, so it would export as a blank image. Fix the formula error and export again. Nothing was saved.');
 }
-async function _tileRenderFractalGL(octx,W2,H2,bar,status,renderFn,signal){
+async function _tileRenderFractalGL(octx,W2,H2,bar,status,renderFn,signal,crop){
 if(!gl||!glReady)return;
+
+
+const cx0=crop?crop.x:0, cy0=crop?crop.y:0, cW=crop?crop.w:W2, cH=crop?crop.h:H2;
 renderFn=renderFn||renderFractalGL;
 if(renderFn===renderFractalCustom)_refuseUncompilableFormulaExport(false);
 
@@ -63748,8 +63779,8 @@ if(renderFn===renderFractalCustom)_refuseUncompilableFormulaExport(false);
 
 
 const maxDims=gl.getParameter(gl.MAX_VIEWPORT_DIMS);
-glcv.width=Math.min(W2,maxDims[0]);
-glcv.height=Math.min(H2,maxDims[1]);
+glcv.width=Math.min(cW,maxDims[0]);
+glcv.height=Math.min(cH,maxDims[1]);
 const TILE=Math.min(gl.drawingBufferWidth,gl.drawingBufferHeight,_glTileCostCap(S.maxIter));
 
 
@@ -63760,15 +63791,15 @@ const TILE=Math.min(gl.drawingBufferWidth,gl.drawingBufferHeight,_glTileCostCap(
 
 const savedCX=S.centerX,savedCY=S.centerY,savedZoom=S.zoom;
 const sc=_pxScale(W2,H2,savedZoom); 
-const tilesX=Math.ceil(W2/TILE),tilesY=Math.ceil(H2/TILE);
+const tilesX=Math.ceil(cW/TILE),tilesY=Math.ceil(cH/TILE);
 const total=tilesX*tilesY;let done=0;
 try{
 for(let ty=0;ty<tilesY;ty++){
 if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');
 for(let tx=0;tx<tilesX;tx++){
 if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');
-const x0=tx*TILE,y0=ty*TILE;
-const tw=Math.min(TILE,W2-x0),th=Math.min(TILE,H2-y0);
+const x0=cx0+tx*TILE,y0=cy0+ty*TILE;
+const tw=Math.min(TILE,cx0+cW-x0),th=Math.min(TILE,cy0+cH-y0);
 
 S.centerX=savedCX+(x0+tw/2-W2/2)*sc;
 S.centerY=savedCY+(y0+th/2-H2/2)*sc;
@@ -63780,7 +63811,7 @@ if(typeof _oFieldTile!=='undefined')_oFieldTile={ox:x0,oy:H2-y0-th,rw:W2,rh:H2};
 renderFn(tw,th);
 _tileHealthCheck(gl,done+1,total,tx,ty,tw,th);
 
-octx.drawImage(glcv,0,0,tw,th,x0,y0,tw,th);
+octx.drawImage(glcv,0,0,tw,th,x0-cx0,y0-cy0,tw,th);
 done++;
 const pct=(20+done/total*55).toFixed(0);
 if(bar)bar.style.setProperty('--progress',pct+'%');
@@ -63864,7 +63895,8 @@ return true;
 }
 
 
-async function _tileRenderFractal3D(octx,W2,H2,bar,status,signal,transparent){
+async function _tileRenderFractal3D(octx,W2,H2,bar,status,signal,transparent,crop){
+const cx0=crop?crop.x:0, cy0=crop?crop.y:0, cW=crop?crop.w:W2, cH=crop?crop.h:H2;   
 if(!gl||!glReady)return;
 if(!gl3dProg){initGL3D();if(!gl3dProg)return;}
 
@@ -63873,10 +63905,10 @@ const _isCustom3D=(S.fractalType==='custom_3d');
 if(_isCustom3D)_refuseUncompilableFormulaExport(true);
 
 const maxDims=gl.getParameter(gl.MAX_VIEWPORT_DIMS);
-glcv.width=Math.min(W2,maxDims[0]);
-glcv.height=Math.min(H2,maxDims[1]);
+glcv.width=Math.min(cW,maxDims[0]);
+glcv.height=Math.min(cH,maxDims[1]);
 const TILE=Math.min(gl.drawingBufferWidth,gl.drawingBufferHeight);
-const tilesX=Math.ceil(W2/TILE),tilesY=Math.ceil(H2/TILE);
+const tilesX=Math.ceil(cW/TILE),tilesY=Math.ceil(cH/TILE);
 const total=tilesX*tilesY;let done=0;
 
 
@@ -63890,13 +63922,13 @@ try{
 for(let ty=0;ty<tilesY;ty++){
 for(let tx=0;tx<tilesX;tx++){
 if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');   
-const x0=tx*TILE,y0=ty*TILE;
-const tw=Math.min(TILE,W2-x0),th=Math.min(TILE,H2-y0);
+const x0=cx0+tx*TILE,y0=cy0+ty*TILE;
+const tw=Math.min(TILE,cx0+cW-x0),th=Math.min(TILE,cy0+cH-y0);
 const _tileOpts={fullW:W2,fullH:H2,tileX:x0,tileY:H2-y0-th};
 if(_isCustom3D)renderFractal3DCustom(tw,th,_tileOpts); else renderFractal3D(tw,th,_tileOpts);
 _tileHealthCheck(gl,done+1,total,tx,ty,tw,th);
-if(_3dTransp)octx.clearRect(x0,y0,tw,th);   
-octx.drawImage(glcv,0,0,tw,th,x0,y0,tw,th);
+if(_3dTransp)octx.clearRect(x0-cx0,y0-cy0,tw,th);   
+octx.drawImage(glcv,0,0,tw,th,x0-cx0,y0-cy0,tw,th);
 done++;
 const pct=(20+done/total*55).toFixed(0);
 if(bar)bar.style.setProperty('--progress',pct+'%');
@@ -63974,6 +64006,36 @@ if (typeof showToast === 'function') showToast(t('export.repeated-interruption')
 throw new Error('Export render was interrupted by a concurrent render twice in a row — nothing was saved. Try again once the view settles.');
 }
 
+
+function _exportAlphaFormat(fmt){ return fmt==='png'||fmt==='webp'||fmt==='gif'; }
+
+
+async function _encodeStillExport(c,W2,H2,fmt,bar,status,signal){
+
+
+
+
+
+
+let _outW=W2,_outH=H2;
+if(fmt==='gif' && typeof _GIF_MAX_DIM!=='undefined' && Math.max(W2,H2)>_GIF_MAX_DIM){
+const _sc=_GIF_MAX_DIM/Math.max(W2,H2);_outW=Math.max(1,Math.round(W2*_sc));_outH=Math.max(1,Math.round(H2*_sc));
+}
+const fname=_buildExportFilename(_outW,_outH);
+if(fmt==='tiff'){await exportTIFF(c,W2,H2,fname,bar,status,signal);}
+
+else if(fmt==='exr'){await exportEXRPrint(c,W2,H2,fname,bar,status,signal);}
+else if(fmt==='gif'){exportGIF(c,W2,H2,fname,signal);}
+else{
+
+const q = fmt === 'jpeg'
+? (parseInt(document.getElementById('jpeg-quality').value, 10) / 100)
+: undefined;
+await _writeImageBlob(c, fname, fmt, q, signal);
+}
+return {w:_outW,h:_outH,fname};
+}
+
 async function doExport(){
 
 if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(() => doExport())) return;
@@ -64033,21 +64095,10 @@ if(_pendingCloseModalTimer){clearTimeout(_pendingCloseModalTimer);_pendingCloseM
 
 _exportAbortController = new AbortController();
 const signal = _exportAbortController.signal;
-let W2=exportSize,H2=exportSize;
 let _pfxOnArt=false;
 
 
-
-if(exportSize==='custom'){
-W2=Math.min(16384,Math.max(100,parseInt(document.getElementById('custom-w').value, 10)||3000));
-H2=Math.min(16384,Math.max(100,parseInt(document.getElementById('custom-h').value, 10)||3000));
-}
-
-
-if(exportSize==='screen'){ [W2,H2]=_screenShape(2048); }
-
-
-W2=+W2;H2=+H2;
+let [W2,H2]=_quickExportPixels();
 
 
 if(_equirectExportActive()){
@@ -64062,6 +64113,9 @@ if(_fmt==='webp' && Math.max(W2,H2)>_WEBP_MAX_DIM){
 [W2,H2]=_webpFit(W2,H2,_equirectExportActive());
 if(typeof showToast==='function') showToast(t('export.webp-clamped',{m:_WEBP_MAX_DIM,w:W2,h:H2}),'info',6000);
 }
+
+const _peakMB=Math.round((W2*H2*4*3)/(1024*1024));
+if(_peakMB>1500 && typeof showToast==='function') showToast(t('export.memory-warning',{peak:(_peakMB/1024).toFixed(1),min:(_peakMB*1.5/1024).toFixed(0)}),'warning',5000);
 const btn=document.getElementById('export-btn'),prog=document.getElementById('export-progress');
 const bar=document.getElementById('export-bar'),status=document.getElementById('export-status');
 btn.disabled=true;btn.textContent='Rendering…';prog.classList.add('show');status.classList.add('show');bar.style.setProperty('--progress','0%');
@@ -64365,28 +64419,9 @@ _exportBgFill(octx,W2,H2,_lbAlpha); octx.drawImage(_lbSub,Math.round((W2-_lbSub.
 }
 if(_pfxAnyActive()&&!_pfxOnArt){status.textContent='Post-FX…';bar.style.setProperty('--progress','92%');await new Promise(r=>setTimeout(r,10));await applyPostFXAsync(octx,W2,H2,bar,status,signal);}
 bar.style.setProperty('--progress','100%');status.textContent='Encoding…';await new Promise(r=>setTimeout(r,30));
-
-
-
-
-
-
-let _outW=W2,_outH=H2;
-if(_fmt==='gif' && typeof _GIF_MAX_DIM!=='undefined' && Math.max(W2,H2)>_GIF_MAX_DIM){
-const _sc=_GIF_MAX_DIM/Math.max(W2,H2);_outW=Math.max(1,Math.round(W2*_sc));_outH=Math.max(1,Math.round(H2*_sc));
-}
-const fname=_buildExportFilename(_outW,_outH);
-if(_fmt==='tiff'){await exportTIFF(oc,W2,H2,fname,bar,status,signal);}
-else if(_fmt==='gif'){exportGIF(oc,W2,H2,fname,signal);}
-else{
-
-const q = _fmt === 'jpeg'
-? (parseInt(document.getElementById('jpeg-quality').value, 10) / 100)
-: undefined;
-await _writeImageBlob(oc, fname, _fmt, q, signal);
-}
+const _out=await _encodeStillExport(oc,W2,H2,_fmt,bar,status,signal);
 status.textContent='Done!';btn.disabled=false;btn.textContent='Export Again';
-if(typeof showToast==='function')showToast(t('export.completed',{w:_outW,h:_outH,fname}),undefined,undefined,_exportToastThumb(oc));   
+if(typeof showToast==='function')showToast(t('export.completed',{w:_out.w,h:_out.h,fname:_out.fname}),undefined,undefined,_exportToastThumb(oc));   
 _pendingCloseModalTimer=setTimeout(closeExportModal,1200);
 } catch (err) {
 if (err && err.name === 'AbortError') {
@@ -64676,6 +64711,173 @@ const out=document.createElement('canvas');out.width=ow;out.height=oh;
 _densityBlit(out.getContext('2d'),big,ow,oh); big.width=big.height=0;
 return out;
 }
+
+
+
+
+let _exportProofOk=false;   
+const _PROOF_LONG_PX=4096*4096, _PROOF_LONG_DENSITY_PX=2048*2048;
+const _PROOF_MAX_W=320, _PROOF_MAX_H=200;
+const _PROOF_DENSITY_RE=/^(buddhabrot|buddhabrot_anti|attractor_|fractal_flame|ifs_)/;
+
+
+function _exportPlan(){
+const print=_exportNeedsPrintPath();
+let W2,H2,ss=1;
+if(print){ ({W2,H2,supersample:ss}=_resolvePrintExportPixels()); }
+else{
+[W2,H2]=_quickExportPixels();
+if(_equirectExportActive()){ H2=Math.min(H2,16384); W2=2*H2; }
+}
+if(exportFormat==='webp' && Math.max(W2,H2)>_WEBP_MAX_DIM)[W2,H2]=_webpFit(W2,H2,_equirectExportActive());
+const fit=_fractalLetterboxFit(W2,H2)||[W2,H2];
+return {print,W2,H2,ss,artW:fit[0],artH:fit[1]};
+}
+
+function _exportProofKind(p){
+if(S.mode!=='fractal')return '';
+if(typeof COMP_LAYERS!=='undefined' && S.liveComposite && COMP_LAYERS.filter(l=>l.visible).length>=2)return '';
+if(_PROOF_DENSITY_RE.test(S.fractalType))return 'tone';
+if(_dzNeedsCpu(p.artW*p.ss))return '';
+return 'crop';
+}
+
+function _exportWantsProof(p){
+const kind=_exportProofKind(p);
+if(!kind)return false;
+return p.W2*p.H2*p.ss*p.ss >= (kind==='tone'?_PROOF_LONG_DENSITY_PX:_PROOF_LONG_PX);
+}
+
+function _exportProofRegion(p,kind){
+if(kind==='tone')return {x:0,y:0,w:p.artW,h:p.artH};
+const w=Math.min(_PROOF_MAX_W,p.artW), h=Math.min(_PROOF_MAX_H,p.artH);
+return {x:Math.round((p.artW-w)/2), y:Math.round((p.artH-h)/2), w, h};
+}
+
+
+function _exportProofScreen(p,r){
+if(_pfxAnyActive())return null;
+let src=cv;
+if(typeof glcv!=='undefined' && glcv && glcv.classList.contains('is-shown')){
+
+if(typeof _endGlInteract==='function')_endGlInteract();
+render();
+src=document.createElement('canvas'); src.width=glcv.width; src.height=glcv.height;
+src.getContext('2d').drawImage(glcv,0,0);
+}
+const sw=src.width, sh=src.height;
+const k=Math.min(p.artW,p.artH)/Math.max(1,Math.min(sw,sh));   
+const vc=(typeof _viewCenterPx==='function')?_viewCenterPx(sw):sw/2;
+const w=Math.max(1,Math.round(r.w/k)), h=Math.max(1,Math.round(r.h/k));
+const x=Math.round(vc+(r.x+r.w/2-p.artW/2)/k-w/2), y=Math.round(sh/2+(r.y+r.h/2-p.artH/2)/k-h/2);
+const out=document.createElement('canvas'); out.width=w; out.height=h;
+out.getContext('2d').drawImage(src,x,y,w,h,0,0,w,h);
+return out;
+}
+
+async function _renderExportProof(p,kind,r,signal){
+const status=document.createElement('div');   
+const ss=p.ss;
+if(kind==='tone'){
+
+const need=p.W2*ss*p.H2*ss*4*3*1.7, {heapHeadroom}=_densityHeapHeadroom();
+if(need>heapHeadroom)return {refused:`Not enough memory to proof this export: it needs about ${(need/2**30).toFixed(1)} GB and about ${(heapHeadroom/2**30).toFixed(1)} GB is free. Try a smaller size.`};
+const k=Math.min(1,_PROOF_MAX_W/p.artW,_PROOF_MAX_H/p.artH);
+const pw=Math.max(1,Math.round(p.artW*k)), ph=Math.max(1,Math.round(p.artH*k));
+const c=document.createElement('canvas'); c.width=pw; c.height=ph;
+const g=c.getContext('2d'); _exportBgFill(g,pw,ph,false);
+await _renderFractalForPrint(g,pw,ph,null,status,signal,false);
+return {canvas:c};
+}
+
+
+const c=document.createElement('canvas'); c.width=r.w*ss; c.height=r.h*ss;
+const g=c.getContext('2d'); _exportBgFill(g,c.width,c.height,false);
+await _renderFractalForPrint(g,p.artW*ss,p.artH*ss,null,status,signal,false,{x:r.x*ss,y:r.y*ss,w:r.w*ss,h:r.h*ss});
+if(ss===1)return {canvas:c};
+const d=document.createElement('canvas'); d.width=r.w; d.height=r.h;
+const dg=d.getContext('2d'); dg.imageSmoothingEnabled=true; dg.imageSmoothingQuality='high'; dg.drawImage(c,0,0,r.w,r.h);
+c.width=0; c.height=0;
+return {canvas:d};
+}
+
+function _proofLum(c,bg){
+const d=c.getContext('2d').getImageData(0,0,c.width,c.height).data;
+let s=0,a=0; for(let i=0;i<d.length;i+=4){ const l=0.2126*d[i]+0.7152*d[i+1]+0.0722*d[i+2]; s+=l; a+=Math.abs(l-bg); }
+const n=Math.max(1,d.length/4); return {mean:s/n, art:a/n};
+}
+
+
+function _proofBrightness(proof,screen){
+const [r,g,b]=hexRgb(S.bgColor||'#000000'), bg=0.2126*r+0.7152*g+0.0722*b;
+const P=_proofLum(proof,bg), Q=_proofLum(screen,bg);
+const ratio=(P.art+0.5)/(Q.art+0.5), off=Math.abs(P.art-Q.art)>=0.5 && (ratio>=1.5||ratio<=1/1.5);
+const verdict=off?(P.mean>=Q.mean?'brighter':'darker'):'match';
+return {verdict, proof:+P.art.toFixed(2), screen:+Q.art.toFixed(2), pct:Math.round(Math.abs(ratio-1)*100)};
+}
+
+
+function _proofPaint(id,c){
+const el=document.getElementById(id); if(!el)return;
+el.width=c?c.width:1; el.height=c?c.height:1;
+if(c)el.getContext('2d').drawImage(c,0,0);
+const dpr=window.devicePixelRatio||1;
+el.style.setProperty('--proof-w',((c?c.width:0)/dpr)+'px');
+el.classList.toggle('is-hidden',!c);
+}
+
+function _proofPanel(show){
+const pn=document.getElementById('export-proof'); if(pn)pn.classList.toggle('is-hidden',!show);
+const btn=document.getElementById('export-btn'); if(btn)btn.classList.toggle('is-hidden',!!show);
+if(!show&&pn)pn.removeAttribute('data-verdict');
+}
+
+async function _showExportProof(p){
+if(typeof _exportBusyBail==='function' && _exportBusyBail())return;
+const kind=_exportProofKind(p), r=_exportProofRegion(p,kind);
+const pn=document.getElementById('export-proof'), verdictEl=document.getElementById('export-proof-verdict');
+const cap=document.getElementById('export-proof-art-cap'), go=document.getElementById('export-proof-go');
+_proofPanel(true);
+pn.setAttribute('data-verdict','pending');
+if(go)go.disabled=true;
+cap.textContent=kind==='tone'?'Export, tone only':'Export, actual pixels';
+verdictEl.textContent=kind==='tone'?'Rendering a tone proof of the whole picture…':'Rendering a piece at the export\'s pixel size…';
+_proofPaint('export-proof-screen',null); _proofPaint('export-proof-art',null);
+const loops=(typeof _snapshotAndStopBackgroundLoops==='function')?_snapshotAndStopBackgroundLoops():[];
+_exportAbortController=new AbortController();
+const signal=_exportAbortController.signal;
+try{
+const screen=_exportProofScreen(p,r);
+const res=await _renderExportProof(p,kind,r,signal);
+if(res.refused){ pn.setAttribute('data-verdict','refused'); verdictEl.textContent=res.refused; return; }
+
+
+let shown=screen;
+if(screen&&screen.width>res.canvas.width){
+shown=document.createElement('canvas'); shown.width=res.canvas.width; shown.height=Math.max(1,Math.round(screen.height*res.canvas.width/screen.width));
+_densityBlit(shown.getContext('2d'),screen,shown.width,shown.height);
+}
+_proofPaint('export-proof-art',res.canvas); _proofPaint('export-proof-screen',shown);
+const tone=kind==='tone'?' Tone only: judge its brightness here; the export itself has finer detail.':'';
+if(!screen){ pn.setAttribute('data-verdict','unchecked'); verdictEl.textContent='Brightness not checked: Post-FX is applied to the whole picture after this proof.'+tone; return; }
+const b=_proofBrightness(res.canvas,screen);
+pn.setAttribute('data-verdict',b.verdict);
+pn.setAttribute('data-lum',b.proof+' '+b.screen);
+verdictEl.textContent=(b.verdict==='match'?'Brightness matches the screen.':`The export comes out ${b.pct}% ${b.verdict} than the screen here.`)+tone;
+}catch(e){
+if(e&&e.name==='AbortError'){ _proofPanel(false); return; }
+pn.setAttribute('data-verdict','failed');
+verdictEl.textContent='The proof could not be rendered: '+((e&&e.message)||e)+'. You can still export.';
+}finally{
+_exportAbortController=null;
+if(go)go.disabled=false;
+if(typeof _restoreBackgroundLoops==='function')_restoreBackgroundLoops(loops);
+try{ if(typeof scheduleRender==='function')scheduleRender(); }catch(_){  }
+}
+}
+
+function exportProofConfirm(){ _exportProofOk=true; _proofPanel(false); doExportFromModal(); }
+function exportProofCancel(){ _abortCurrentExport(); _proofPanel(false); }
 
 
 
