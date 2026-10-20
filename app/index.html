@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-bmsxeCuIbW+bKFt9prInO07O5OZFlN2f0E0WjT+1EQE='; font-src 'self'; script-src 'self' 'sha256-6Hj8Gkd72qe5u8sP+m/MeMFxn4DR9Sf5J/GYaZadmks=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-bmsxeCuIbW+bKFt9prInO07O5OZFlN2f0E0WjT+1EQE='; font-src 'self'; script-src 'self' 'sha256-xj24oXQItv/UrigMHU+g3A6ShFSSU9X6WYS7/jMkWmg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4259,12 +4259,12 @@
 
 
 
-<!-- build: c99b4a77cb8a -->
+<!-- build: fa6d47cea504 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.8
+ * AEON -- Universal Dynamics Reactor v7.3.9
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7520,7 +7520,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.8';
+const APP_VERSION='7.3.9';
 
 
 
@@ -7529,10 +7529,10 @@ const APP_VERSION='7.3.8';
 
 
 
-const MISSION_BUILD_HASH='c99b4a77cb8a';
-const MISSION_GIT_SHA='cee5a296b862e0729314decb18f603d52d568670';
+const MISSION_BUILD_HASH='fa6d47cea504';
+const MISSION_GIT_SHA='b4150981b6e4384bb83ab66aa04c69cb7f9f3b11';
 
-const MISSION_RENDER_HASH='e6f19cdd101a';
+const MISSION_RENDER_HASH='3f70fbc0e789';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -25960,6 +25960,8 @@ en: {
 'dataseed.fetch-in-progress': 'Data fetch already in progress.',
 'dataseed.inspired':          'Inspired by data: {label}',
 'share.project-required':    'Share links omit {features}. Use Save Project (.aeon) to keep the complete piece.',
+'share.save-project':        'Save Project (.aeon)',
+'share.copy-link':           'Copy share link',
 'share.url-too-long':         'This share link is {len} characters · some chat apps, SMS, and QR tools may reject or truncate long links · simplify custom formulas/rules to shorten it',
 'state.share-link-too-large': 'Shared link is too large to decode safely',
 'state.share-link-rejected':  'Shared link rejected: {err}',
@@ -41102,12 +41104,12 @@ return { ok: true, value: out };
 }
 
 
-
 function _noteDroppedFractalTypes(drops) {
 if (!drops || !drops.length || typeof showToast !== 'function') return;
 const ver = (typeof APP_VERSION !== 'undefined') ? APP_VERSION : '?';
 showToast(t('state.load-unknown-ft', {ft: [...new Set(drops)].join(', '), ver}), 'warning');
 }
+
 function _migrateState(raw, drops) {
 if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return { _v: 1 };
 if (_allowedStateKeys === null) {
@@ -41754,7 +41756,7 @@ const reason=document.getElementById('export-share-reason');
 if(!action||!reason)return;
 const message=_shareProjectReason();
 action.dataset.action=message?'exportProject':'shareState';
-action.textContent=message?'Save Project (.aeon)':'Copy share link';
+action.textContent=message?t('share.save-project'):t('share.copy-link');
 reason.textContent=message;
 reason.hidden=!message;
 if(message)action.setAttribute('aria-describedby','export-share-reason');
