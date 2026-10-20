@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-hXEdTlKBVui+f48Oj4AQnCYyN2AiCFkI1CGXTJNZml0='; font-src 'self'; script-src 'self' 'sha256-7p1ggw4DUsDNFswYsUwW7UURsebtCKNGZ8WYvfvaumE=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-KXQdOvxU83c++sUZmJSQWUrzH1ovyHf6V3yRa+8gBwk='; font-src 'self'; script-src 'self' 'sha256-kgpuHqTJfPt70iwNK8VRqoHkd9lh9k0Cr4mosDTOR6U=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -819,7 +819,7 @@
         [data-theme="dark"] .es-export{background:var(--accent);color:var(--bg)}
         .es-type:focus-visible,.es-pal:focus-visible,.es-ib:focus-visible,.es-export:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         @media(prefers-reduced-motion:reduce){.eyepiece-strip,#cv-wrap{transition:none}}
-        .ci{display:flex;align-items:center;gap:var(--sp-1)}.ci .lbl{color:var(--text-dim)}.ci .v{color:var(--accent);font-weight:500}
+        .ci{display:flex;align-items:center;gap:var(--sp-1)}#coord-bar.es-iter-shown [data-coord-edit="iter"]{display:none}.ci .lbl{color:var(--text-dim)}.ci .v{color:var(--accent);font-weight:500}
         .nav-hints{font-size:12px;font-family:var(--font-ui);color:var(--text-mid);display:flex;gap:var(--sp-3);justify-content:center;flex-wrap:wrap;position:absolute;top:calc(12px + var(--uc-t,0px));left:calc(var(--lp-cur) + var(--sp-6));right:calc(var(--rp-cur) + var(--sp-6));width:fit-content;margin-inline:auto;box-sizing:border-box;white-space:nowrap;transition:opacity var(--dur-laze) var(--ease-decelerate);z-index:6;pointer-events:none}
         .nh{display:flex;align-items:center;gap:var(--sp-1);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-1);padding:2px 8px 2px 3px}
         .nh kbd{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--text-mid);background:var(--surface2);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-1);padding:1px 5px;line-height:1.3;}
@@ -1380,6 +1380,7 @@
           .eyepiece-strip .es-act{grid-area:act;margin:0}
           .eyepiece-strip #es-param-0{grid-area:p0;width:auto}
           .eyepiece-strip #es-param-1,.eyepiece-strip .es-ro,.eyepiece-strip .es-act .es-ib{display:none!important}
+          .canvas-area>.coord-bar .ci:first-child,#coord-bar [data-coord-edit="iter"]{display:none}
           .eyepiece-strip .es-export{min-width:44px;min-height:44px}
           .canvas-area{left:0!important;right:0!important;bottom:calc(var(--mobile-bottom-bar-h) + env(safe-area-inset-bottom,0px))}
           #cv-wrap{width:100%!important;height:100%!important;max-height:none}
@@ -4254,12 +4255,12 @@
 
 
 
-<!-- build: 301ad1cfee80 -->
+<!-- build: 5d2328349046 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.4
+ * AEON -- Universal Dynamics Reactor v7.3.5
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7515,7 +7516,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.4';
+const APP_VERSION='7.3.5';
 
 
 
@@ -7524,10 +7525,10 @@ const APP_VERSION='7.3.4';
 
 
 
-const MISSION_BUILD_HASH='301ad1cfee80';
-const MISSION_GIT_SHA='4c7159574e5472ed0cb6e5f9ea6b5d7ad478d265';
+const MISSION_BUILD_HASH='5d2328349046';
+const MISSION_GIT_SHA='f1d4daf0473373e8bb43dee64fd032a0a56eaac2';
 
-const MISSION_RENDER_HASH='0997e8ec972b';
+const MISSION_RENDER_HASH='f2da23b49485';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11972,8 +11973,8 @@ return { engine, precision, progress: !settled ? 'refining'
 : (precision === 'limited' || precision === 'fallback' || fellBack) ? 'limited' : 'finished' };
 }
 const _RS_ENGINE = {
-webgpu: ['graphics card · WebGPU', 'This picture is computed on your graphics card through WebGPU.'],
-webgl2: ['graphics card · WebGL2', 'This picture is computed on your graphics card through WebGL2.'],
+webgpu: ['WebGPU', 'This picture is computed on your graphics card through WebGPU.'],
+webgl2: ['WebGL2', 'This picture is computed on your graphics card through WebGL2.'],
 worker: ['background thread', 'This picture is computed in a background thread so the controls stay responsive.'],
 cpu:    ['processor', 'This picture is computed on your processor.'],
 };
@@ -11986,29 +11987,38 @@ standard: ['', ''],
 const _RS_PROGRESS = {
 refining: ['still refining', 'Still working: the picture will keep sharpening.'],
 limited:  ['as sharp as this view gets', 'Finished, and this is as sharp as the available precision allows here.'],
-finished: ['finished', 'Finished.'],
+finished: ['', 'Finished.'],
 };
 
 function _renderStatusLine(f){
 const eng = _RS_ENGINE[f.engine] || _RS_ENGINE.cpu, prec = _RS_PRECISION[f.precision] || _RS_PRECISION.standard;
 const prog = _RS_PROGRESS[f.progress] || _RS_PROGRESS.finished;
-return { label: [eng[0], prec[0], prog[0]].filter(Boolean).join(' · '),
-title: [eng[1], prec[1], prog[1]].filter(Boolean).join(' ') };
+const badgeNames = _rsBadgeShown() && (f.engine === 'webgpu' || f.engine === 'webgl2');
+return { label: [badgeNames ? '' : eng[0], prec[0], prog[0]].filter(Boolean).join(' · '),
+title: [eng[1], prec[1], prog[1], _versionLine() + '.'].filter(Boolean).join(' ') };
 }
+
+function _rsBadgeShown(){
+return (typeof _wgpuAvailable !== 'undefined' && !!_wgpuAvailable) || (typeof _wgpuLost !== 'undefined' && !!_wgpuLost);
+}
+
+function _versionLine(){
+return 'Version ' + APP_VERSION + (MISSION_GIT_SHA === _MGS_SENTINEL ? ' · development build' : ' · built from ' + MISSION_GIT_SHA.slice(0, 7));
+}
+
+
 function _renderStatusCellHTML(){
-try {
-const { label, title } = _renderStatusLine(_renderStatusFacts()), q = s => s.replace(/"/g, '&quot;');
-return '<div class="ci ci-badge--info" id="render-status-cell" role="note" title="'
-+ q(title) + '" aria-label="Render status: ' + q(label) + '">' + label + '</div>';
-} catch (_e) { return ''; }
+return '<div class="ci ci-badge--info" id="render-status-cell" role="note" hidden></div>';
 }
 
 
 function _refreshRenderStatusCell(){
 try {
 const el = document.getElementById('render-status-cell');
-if (!el) return;
 const { label, title } = _renderStatusLine(_renderStatusFacts());
+if (!el) return;
+
+if (el.hidden !== !label) el.hidden = !label;
 if (el.textContent !== label) { el.textContent = label; el.setAttribute('aria-label', 'Render status: ' + label); }
 if (el.getAttribute('title') !== title) el.setAttribute('title', title);
 } catch (_e) {  }
@@ -13072,6 +13082,7 @@ const title = isLost
 : (isOn && _cgReason)
 ? `WebGPU is on but not in use: ${_cgLabel} has no GPU kernel, so this render is using WebGL2`
 : 'WebGPU available: click to toggle compute shader path';
+const _titleV = title + '. ' + _versionLine();
 const ariaLabel = isLost
 ? 'WebGPU device lost; using WebGL2 fallback'
 : 'WebGPU compute path toggle';
@@ -13081,11 +13092,14 @@ const role = isLost ? 'status' : 'button';
 
 
 const _apAttr = isLost ? html.raw`` : html.raw` aria-pressed="${html`${isActive ? 'true' : 'false'}`}"`;
-_wgpuBadgeHTML = html.raw`<div id="webgpu-badge" class="${html`${cls.join(' ')}`}" role="${html`${role}`}" tabindex="${html`${tabindex}`}" title="${html`${title}`}" aria-label="${html`${ariaLabel}`}"${_apAttr}>WebGPU ${glyph}</div>`;
+_wgpuBadgeHTML = html.raw`<div id="webgpu-badge" class="${html`${cls.join(' ')}`}" role="${html`${role}`}" tabindex="${html`${tabindex}`}" title="${html`${_titleV}`}" aria-label="${html`${ariaLabel}`}"${_apAttr}>WebGPU ${glyph}</div>`;
 }
 const _rsCell = _renderStatusCellHTML();
 
-const _verCell = html.raw`<div class="ci" id="version-cell" title="${html`Version ${APP_VERSION}${MISSION_GIT_SHA===_MGS_SENTINEL?' · development build':' · built from '+MISSION_GIT_SHA.slice(0,7)}`}"><span class="v">v${html`${APP_VERSION}`}</span></div>`;
+const _verCell = html.raw`<div class="ci" id="version-cell" title="${html`${_versionLine()}`}"><span class="lbl">v${html`${APP_VERSION}`}</span></div>`;
+
+
+const _iterCell = html.raw`<div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div>`;
 
 
 
@@ -13110,7 +13124,7 @@ if(S.mode==='fractal'){
 if(GL_3D_TYPES.has(S.fractalType)){
 const tlbl=FTYPE_LABELS[S.fractalType]||S.fractalType;
 
-_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div><div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div>${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
+_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div>${_iterCell}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
 _newHintsHTML='<span class="nh"><kbd>Drag</kbd> Rotate 3D</span><span class="nh"><kbd>Scroll</kbd> Zoom in / out</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span>';
 }else{
 const re=S.centerX.toFixed(6),im=(S.centerY>=0?'+':'')+S.centerY.toFixed(6)+'i';
@@ -13189,7 +13203,7 @@ attrBadge='<div class="ci ci-badge--warn" title="Strange-attractor density: orbi
 const tlbl2D=FTYPE_LABELS[S.fractalType]||S.fractalType;
 const albl=ALGO_LABELS[S.colorAlgo]||S.colorAlgo;
 
-_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl2D}`}</span></div><div class="ci" data-coord-edit="center" tabindex="0" role="button" title="Click to edit center coordinates"><span class="lbl">Center</span><span class="v">${html`${re} ${im}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div><div class="ci" data-coord-edit="iter" tabindex="0" role="button" title="Click to type a max-iteration count"><span class="lbl">Iters</span><span class="v">${html`${S.maxIter}`}</span></div><div class="ci"><span class="lbl">Algo</span><span class="v">${html`${albl}`}</span></div>${iterHint}${deepBadge}${precBadge}${capBadge}${attrBadge}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
+_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl2D}`}</span></div><div class="ci" data-coord-edit="center" tabindex="0" role="button" title="Click to edit center coordinates"><span class="lbl">Center</span><span class="v">${html`${re} ${im}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div>${_iterCell}<div class="ci"><span class="lbl">Algo</span><span class="v">${html`${albl}`}</span></div>${iterHint}${deepBadge}${precBadge}${capBadge}${attrBadge}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
 _newHintsHTML='<span class="nh"><kbd>Left-click</kbd> Zoom in</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span><span class="nh"><kbd>Drag</kbd> Pan view</span>';}
 } else {
 
@@ -13241,6 +13255,7 @@ clearTimeout(_coordBarLiveT);
 _coordBarLiveT = setTimeout(()=>{ try{ bar.setAttribute('aria-live','polite'); }catch(_e){_swallowed('updateCoordBar', _e);} }, 400);
 }
 if (_newHintsHTML !== _lastHintsHTML) { hints.innerHTML = _newHintsHTML; _lastHintsHTML = _newHintsHTML; }
+_refreshRenderStatusCell();
 }
 
 
@@ -48042,7 +48057,13 @@ cell.querySelector('.es-plbl').textContent = _esLabelFor(src, short);
 document.getElementById('es-val-' + i).textContent = _esBadgeFor(src);
 }
 _esSyncPinButtons();
+const iterShown = _esShowsControl('maxIter');
+
+if (iterShown !== _esIterShown) { _esIterShown = iterShown; const bar = document.getElementById('coord-bar'); if (bar) bar.classList.toggle('es-iter-shown', iterShown); }
 }
+let _esIterShown = null;
+
+function _esShowsControl(id) { try { return _esBound.some((s) => s && s.id === id); } catch (_e) { return false; } }
 
 function _esSyncValues() {
 for (let i = 0; i < 2; i++) {
@@ -50536,6 +50557,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.3.5',
+date:'2026-10-19',
+headline:'The control bar says each thing once.',
+items:[
+'The Iters readout steps aside while the Iterations slider beside it is showing, and the renderer is named once and stays quiet until there is something to report, such as a picture still refining.',
+'On a phone the readout over the picture no longer repeats the fractal name or the iteration count.',
+],
+},
+{
 version:'7.3.3',
 date:'2026-10-19',
 headline:'The getting-started guide is on screen from the first moment, and the first visit points to a useful math control.',
@@ -50596,16 +50626,6 @@ headline:'Focus on a phone clears the whole screen, and 4D polytopes tumble fast
 items:[
 'In Focus on a phone, the Inspector handle no longer stays along the bottom edge under the Exit button. It hides with the rest of the interface and comes back when you leave Focus.',
 'With glow on, 4D polytopes animate about 1.6 times faster: the glow is drawn once per frame instead of once per edge.',
-],
-},
-{
-version:'7.1.4',
-date:'2026-10-13',
-headline:'Buddhabrot frames keep their brightness, and Fog Distance works on every 3D fractal.',
-items:[
-'The first frame of a Buddhabrot PNG sequence from Motion Studio no longer comes out almost black: each frame finishes its render before it is saved.',
-'Frame-exact video export saves its file again instead of stopping on its progress line.',
-'Fog Distance now moves the fog on Quaternion Julia and Mandelbox, and their default view shows a little depth haze, as Mandelbulb already did.',
 ],
 },
 ];
