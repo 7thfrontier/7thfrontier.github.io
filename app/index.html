@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-jeoU9eOKpSD7n08Yne5qektpZ6sx5j/NHhKDtPnrZpE='; font-src 'self'; script-src 'self' 'sha256-hxn0dtl7kxMdqQEOxq0QkEjso2RHvQB09HQ8EsuQkW4=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-bmsxeCuIbW+bKFt9prInO07O5OZFlN2f0E0WjT+1EQE='; font-src 'self'; script-src 'self' 'sha256-6Hj8Gkd72qe5u8sP+m/MeMFxn4DR9Sf5J/GYaZadmks=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -780,9 +780,17 @@
         .canvas-area.ui-idle .coord-bar,.canvas-area.ui-idle .nav-hints{opacity:0;pointer-events:none}
         
         .canvas-area.ui-idle .coord-bar:focus-within{opacity:1;pointer-events:auto}
+        .canvas-area.ui-idle .coord-bar:has(.coord-more-pop:not([hidden])){opacity:1;pointer-events:auto}
+        #coord-bar-room{position:absolute;left:8px;right:8px;bottom:0;height:0;visibility:hidden;pointer-events:none}
+        .coord-bar .ci-more{position:relative}
+        .coord-more-btn{font:inherit;color:inherit;background:none;border:1px solid var(--border-mid);border-radius:var(--r-1);padding:0 var(--sp-2);cursor:pointer}
+        .coord-more-btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+        .coord-more-pop{position:absolute;right:0;bottom:calc(100% + var(--sp-2));display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-1);padding:var(--sp-2) var(--sp-3);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-2);white-space:nowrap;z-index:7}
+        .coord-more-pop[hidden]{display:none}
+        .coord-bar.coord-bar--wrap{flex-wrap:wrap;row-gap:var(--sp-1)}
         .eyepiece-strip{position:absolute;bottom:20px;left:calc(var(--lp-cur) + (100% - var(--lp-cur)) / 2);transform:translateX(-50%);z-index:var(--z-panel);display:flex;align-items:stretch;height:76px;padding:0 6px;width:min(1180px,calc(100% - var(--lp-cur) - 32px));container-type:inline-size;box-sizing:border-box;background:var(--surface);color:var(--text);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);transition:left var(--dur-slow) ease,width var(--dur-slow) ease}
         body.zen-mode .eyepiece-strip{display:none}
-        @media(min-width:861px){.canvas-area>.coord-bar{bottom:calc(20px + 76px + var(--sp-3));left:calc(var(--lp-cur) + var(--sp-6));right:calc(var(--rp-cur) + var(--sp-6));width:fit-content;max-width:none;margin-inline:auto;transform:none;flex-wrap:wrap;justify-content:center;row-gap:var(--sp-1)}}
+        @media(min-width:861px){.canvas-area>.coord-bar{bottom:calc(20px + 76px + var(--sp-3));left:calc(var(--lp-cur) + var(--sp-6));right:calc(var(--rp-cur) + var(--sp-6));width:fit-content;max-width:calc(100% - var(--lp-cur) - var(--rp-cur) - var(--sp-6) * 2);margin-inline:auto;transform:none;flex-wrap:nowrap;justify-content:center}#coord-bar-room{left:calc(var(--lp-cur) + var(--sp-6));right:calc(var(--rp-cur) + var(--sp-6))}}
         .es-cell{display:flex;flex:none;align-items:center;gap:var(--sp-4);padding:0 var(--sp-5);white-space:nowrap}
         .es-cell+.es-cell{border-left:1px solid var(--border)}
         .es-type,.es-pal{background:none;border:0;border-radius:var(--r-2);color:inherit;font:inherit;cursor:pointer;text-align:left}
@@ -800,7 +808,7 @@
         .es-pal-sw{height:12px;border-radius:var(--r-1);border:1px solid var(--border-mid);background:var(--es-pal-bg,var(--surface2))}
         .es-ro{flex:1 1 0;min-width:0;overflow:hidden}
         .es-ro:empty{display:none}
-        .eyepiece-strip .coord-bar .ci:first-child{display:none}
+        .eyepiece-strip .coord-bar>.ci:first-child{display:none}
         @container (max-width:900px){.es-act .es-ib{display:none}}
         .eyepiece-strip .coord-bar{position:static;transform:none;background:none;border:0;padding:0;max-width:none;flex-wrap:wrap;row-gap:var(--sp-0);column-gap:var(--sp-5);white-space:normal;z-index:auto}
         .es-act{gap:var(--sp-3);margin-left:auto}
@@ -1386,7 +1394,7 @@
           .eyepiece-strip .es-act{grid-area:act;margin:0}
           .eyepiece-strip #es-param-0{grid-area:p0;width:auto}
           .eyepiece-strip #es-param-1,.eyepiece-strip .es-ro,.eyepiece-strip .es-act .es-ib{display:none!important}
-          .canvas-area>.coord-bar .ci:first-child,#coord-bar [data-coord-edit="iter"]{display:none}
+          .canvas-area>.coord-bar>.ci:first-child,#coord-bar [data-coord-edit="iter"]{display:none}
           .eyepiece-strip .es-export{min-width:44px;min-height:44px}
           .canvas-area{left:0!important;right:0!important;bottom:calc(var(--mobile-bottom-bar-h) + env(safe-area-inset-bottom,0px))}
           #cv-wrap{width:100%!important;height:100%!important;max-height:none}
@@ -2442,6 +2450,7 @@
 </div>
   
   <div class="coord-bar" id="coord-bar" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="coord-bar-room" aria-hidden="true"></div>
   <div class="nav-hints" id="nav-hints"></div>
 </div>
 
@@ -4250,12 +4259,12 @@
 
 
 
-<!-- build: 9f89d0e34184 -->
+<!-- build: c99b4a77cb8a -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.7
+ * AEON -- Universal Dynamics Reactor v7.3.8
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7511,7 +7520,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.7';
+const APP_VERSION='7.3.8';
 
 
 
@@ -7520,10 +7529,10 @@ const APP_VERSION='7.3.7';
 
 
 
-const MISSION_BUILD_HASH='9f89d0e34184';
-const MISSION_GIT_SHA='4f848d3cbaac217fe9619d3ab5adb101677ef73e';
+const MISSION_BUILD_HASH='c99b4a77cb8a';
+const MISSION_GIT_SHA='cee5a296b862e0729314decb18f603d52d568670';
 
-const MISSION_RENDER_HASH='0f5f25f9b030';
+const MISSION_RENDER_HASH='e6f19cdd101a';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -12004,7 +12013,7 @@ return 'Version ' + APP_VERSION + (MISSION_GIT_SHA === _MGS_SENTINEL ? ' · deve
 
 
 function _renderStatusCellHTML(){
-return '<div class="ci ci-badge--info" id="render-status-cell" role="note" hidden></div>';
+return '<div class="ci ci-badge--info" id="render-status-cell" data-fold="2" role="note" hidden></div>';
 }
 
 
@@ -12014,8 +12023,8 @@ const el = document.getElementById('render-status-cell');
 const { label, title } = _renderStatusLine(_renderStatusFacts());
 if (!el) return;
 
-if (el.hidden !== !label) el.hidden = !label;
-if (el.textContent !== label) { el.textContent = label; el.setAttribute('aria-label', 'Render status: ' + label); }
+if (el.hidden !== !label) { el.hidden = !label; if (typeof _scheduleCoordFold === 'function') _scheduleCoordFold(); }
+if (el.textContent !== label) { el.textContent = label; el.setAttribute('aria-label', 'Render status: ' + label); if (typeof _scheduleCoordFold === 'function') _scheduleCoordFold(); }
 if (el.getAttribute('title') !== title) el.setAttribute('title', title);
 } catch (_e) {  }
 }
@@ -13088,7 +13097,7 @@ const role = isLost ? 'status' : 'button';
 
 
 const _apAttr = isLost ? html.raw`` : html.raw` aria-pressed="${html`${isActive ? 'true' : 'false'}`}"`;
-_wgpuBadgeHTML = html.raw`<div id="webgpu-badge" class="${html`${cls.join(' ')}`}" role="${html`${role}`}" tabindex="${html`${tabindex}`}" title="${html`${_titleV}`}" aria-label="${html`${ariaLabel}`}"${_apAttr}>WebGPU ${glyph}</div>`;
+_wgpuBadgeHTML = html.raw`<div id="webgpu-badge" data-fold="3" class="${html`${cls.join(' ')}`}" role="${html`${role}`}" tabindex="${html`${tabindex}`}" title="${html`${_titleV}`}" aria-label="${html`${ariaLabel}`}"${_apAttr}>WebGPU ${glyph}</div>`;
 }
 const _rsCell = _renderStatusCellHTML();
 
@@ -13120,7 +13129,7 @@ if(S.mode==='fractal'){
 if(GL_3D_TYPES.has(S.fractalType)){
 const tlbl=FTYPE_LABELS[S.fractalType]||S.fractalType;
 
-_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div>${_iterCell}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
+_newBarHTML=html.raw`<div class="ci" data-fold="1"><span class="lbl">Type</span><span class="v">${html`${tlbl}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div>${_iterCell}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
 _newHintsHTML='<span class="nh"><kbd>Drag</kbd> Rotate 3D</span><span class="nh"><kbd>Scroll</kbd> Zoom in / out</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span>';
 }else{
 const re=S.centerX.toFixed(6),im=(S.centerY>=0?'+':'')+S.centerY.toFixed(6)+'i';
@@ -13138,13 +13147,13 @@ const _iterWant=S.zoom>1e10?4000:S.zoom>1e6?1500:S.zoom>200?512:0;
 
 
 const iterHint=_iterWant&&S.maxIter<_iterWant?
-`<div class="ci ci-badge--warn" id="raise-iter-badge" tabindex="0" role="button" title="Click to raise Max Iterations to ${_iterWant} for this zoom level">${icon('warn')} Raise Max Iter</div>`:'';
+`<div class="ci ci-badge--warn" id="raise-iter-badge" data-fold="6" tabindex="0" role="button" title="Click to raise Max Iterations to ${_iterWant} for this zoom level">${icon('warn')} Raise Max Iter</div>`:'';
 
 
 let deepBadge='';
 if(typeof _dzNeedsCpu==='function' && _dzNeedsCpu()){   
 const tier=(S.fractalType!=='julia'&&S.zoom>1e60)?'degree-3 series':(S.fractalType!=='julia'&&S.zoom>1e25)?'degree-2 series':'perturbation';
-deepBadge='<div class="ci ci-badge--info" title="High-precision CPU rendering: '+tier+' active (beyond the GPU’s float precision)">deep · '+tier+'</div>';
+deepBadge='<div class="ci ci-badge--info" data-fold="4" title="High-precision CPU rendering: '+tier+' active (beyond the GPU’s float precision)">deep · '+tier+'</div>';
 
 
 
@@ -13159,7 +13168,7 @@ deepBadge='<div class="ci ci-badge--info" title="High-precision CPU rendering: '
 
 let precBadge='';
 if(typeof _centerPrecisionLimited==='function' && _centerPrecisionLimited()){
-precBadge='<div class="ci ci-badge--warn" title="'+t('deepzoom.precision-limited-title')+'">'+t('deepzoom.precision-limited-label')+'</div>';
+precBadge='<div class="ci ci-badge--warn" data-fold="5" title="'+t('deepzoom.precision-limited-title')+'">'+t('deepzoom.precision-limited-label')+'</div>';
 }
 
 
@@ -13178,7 +13187,7 @@ const _capTitle=_capReason==='fractional-power'?t('deepzoom.precision-exhausted-
 :_capReason==='unsupported-type'?t('deepzoom.precision-exhausted-title.unsupported-type')
 :null;
 if(_capTitle){
-capBadge='<div class="ci ci-badge--warn" title="'+_capTitle+'">'+t('deepzoom.precision-exhausted-label')+'</div>';
+capBadge='<div class="ci ci-badge--warn" data-fold="5" title="'+_capTitle+'">'+t('deepzoom.precision-exhausted-label')+'</div>';
 }
 }
 
@@ -13189,7 +13198,7 @@ capBadge='<div class="ci ci-badge--warn" title="'+_capTitle+'">'+t('deepzoom.pre
 
 let attrBadge='';
 if(S.fractalType.startsWith("attractor_") && (S.zoom||1)>2 && (S.maxIter||0)<800){
-attrBadge='<div class="ci ci-badge--warn" title="Strange-attractor density: orbit samples a smaller window at this zoom. Raise iter count for fuller coverage.">'+icon('warn')+' Raise iter for density</div>';
+attrBadge='<div class="ci ci-badge--warn" data-fold="6" title="Strange-attractor density: orbit samples a smaller window at this zoom. Raise iter count for fuller coverage.">'+icon('warn')+' Raise iter for density</div>';
 }
 
 
@@ -13199,7 +13208,7 @@ attrBadge='<div class="ci ci-badge--warn" title="Strange-attractor density: orbi
 const tlbl2D=FTYPE_LABELS[S.fractalType]||S.fractalType;
 const albl=ALGO_LABELS[S.colorAlgo]||S.colorAlgo;
 
-_newBarHTML=html.raw`<div class="ci"><span class="lbl">Type</span><span class="v">${html`${tlbl2D}`}</span></div><div class="ci" data-coord-edit="center" tabindex="0" role="button" title="Click to edit center coordinates"><span class="lbl">Center</span><span class="v">${html`${re} ${im}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div>${_iterCell}<div class="ci"><span class="lbl">Algo</span><span class="v">${html`${albl}`}</span></div>${iterHint}${deepBadge}${precBadge}${capBadge}${attrBadge}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
+_newBarHTML=html.raw`<div class="ci" data-fold="1"><span class="lbl">Type</span><span class="v">${html`${tlbl2D}`}</span></div><div class="ci" data-coord-edit="center" tabindex="0" role="button" title="Click to edit center coordinates"><span class="lbl">Center</span><span class="v">${html`${re} ${im}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div>${_iterCell}<div class="ci"><span class="lbl">Algo</span><span class="v">${html`${albl}`}</span></div>${iterHint}${deepBadge}${precBadge}${capBadge}${attrBadge}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
 _newHintsHTML='<span class="nh"><kbd>Left-click</kbd> Zoom in</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span><span class="nh"><kbd>Drag</kbd> Pan view</span>';}
 } else {
 
@@ -13230,6 +13239,7 @@ _newHintsHTML='<span class="nh"><kbd>Drag</kbd> Rotate pattern</span><span class
 
 
 
+let _barRepainted = false, _focId = null;
 if (_newBarHTML !== _lastCoordBarHTML && !bar.querySelector('input.coord-editor')) {
 
 
@@ -13247,14 +13257,92 @@ _coordBarLastChange = _now;
 
 const _focEl = (typeof document!=='undefined') ? document.activeElement : null;
 const _focCoord = (_focEl && bar.contains(_focEl) && _focEl.matches && _focEl.matches('.ci[data-coord-edit]')) ? _focEl.getAttribute('data-coord-edit') : null;
-bar.innerHTML = _newBarHTML; _lastCoordBarHTML = _newBarHTML;
+_focId = (_focEl && bar.contains(_focEl) && _focEl.id) ? _focEl.id : null;
+bar.innerHTML = _newBarHTML; _lastCoordBarHTML = _newBarHTML; _barRepainted = true;
 if(_focCoord){ const _re = bar.querySelector('.ci[data-coord-edit="'+_focCoord+'"]'); if(_re){ try{ _re.focus({preventScroll:true}); }catch(_e){_swallowed('updateCoordBar', _e);} } }
 clearTimeout(_coordBarLiveT);
 _coordBarLiveT = setTimeout(()=>{ try{ bar.setAttribute('aria-live','polite'); }catch(_e){_swallowed('updateCoordBar', _e);} }, 400);
 }
 if (_newHintsHTML !== _lastHintsHTML) { hints.innerHTML = _newHintsHTML; _lastHintsHTML = _newHintsHTML; }
 _refreshRenderStatusCell();
+if (_barRepainted) {
+_foldCoordBar();
+
+const _ff = _focId && document.getElementById(_focId);
+if (_ff && bar.contains(_ff) && document.activeElement !== _ff) { try { _ff.focus({preventScroll:true}); } catch(_e) { _swallowed('updateCoordBar', _e); } }
 }
+}
+
+
+
+
+
+let _coordMoreOpen = false, _coordFoldRaf = 0;
+function _scheduleCoordFold(){
+if (_coordFoldRaf) return;
+_coordFoldRaf = requestAnimationFrame(() => { _coordFoldRaf = 0; _foldCoordBar(); });
+}
+function _setCoordMore(open){
+_coordMoreOpen = open;
+const b = document.getElementById('coord-more-btn'), p = document.getElementById('coord-more-pop');
+if (b) b.setAttribute('aria-expanded', String(open));
+if (p) p.hidden = !open;
+}
+
+
+function _coordBarOver(bar){
+const vis = [...bar.children].filter((c) => c.getBoundingClientRect().width > 0);
+if (!vis.length) return 0;
+const cs = getComputedStyle(bar), first = vis[0], last = vis[vis.length - 1];
+const left = first.getBoundingClientRect().left - parseFloat(getComputedStyle(first).marginLeft);
+const right = last.getBoundingClientRect().right + parseFloat(getComputedStyle(last).marginRight);
+return right - left + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) - bar.clientWidth;
+}
+function _foldCoordBar(){
+const bar = document.getElementById('coord-bar');
+if (!bar) return;
+bar.classList.remove('coord-bar--wrap');
+const old = bar.querySelector(':scope>.ci-more');
+if (old) {
+
+const back = [...old.querySelectorAll('[data-fold-at]')];
+old.remove();
+for (const c of back) { bar.insertBefore(c, bar.children[+c.dataset.foldAt] || null); delete c.dataset.foldAt; }
+}
+if (_coordBarOver(bar) <= 1) return;
+const kids = [...bar.children];
+const opt = kids.filter((c) => c.dataset.fold && !c.hidden && getComputedStyle(c).display !== 'none').sort((a, b) => a.dataset.fold - b.dataset.fold);
+if (!opt.length) return;
+const gap = parseFloat(getComputedStyle(bar).columnGap) || 0;
+const widths = opt.map((c) => c.getBoundingClientRect().width + gap);
+const cell = document.createElement('div');
+cell.className = 'ci ci-more';
+cell.innerHTML = '<button type="button" id="coord-more-btn" class="coord-more-btn" aria-expanded="false" aria-controls="coord-more-pop">More (' + opt.length + ')</button><div id="coord-more-pop" class="coord-more-pop" role="group" aria-label="More status" hidden></div>';
+bar.insertBefore(cell, bar.querySelector(':scope>#version-cell'));
+let over = _coordBarOver(bar), k = 0;
+while (k < opt.length && over > 0) { over -= widths[k]; k++; }
+const pop = cell.lastChild;
+for (const c of opt.slice(0, k).sort((a, b) => kids.indexOf(a) - kids.indexOf(b))) { c.dataset.foldAt = String(kids.indexOf(c)); pop.appendChild(c); }
+cell.firstChild.textContent = 'More (' + k + ')';
+_setCoordMore(_coordMoreOpen);
+
+if (_coordBarOver(bar) > 1) bar.classList.add('coord-bar--wrap');
+}
+(() => {
+const room = document.getElementById('coord-bar-room');
+if (room && typeof ResizeObserver !== 'undefined') new ResizeObserver(_scheduleCoordFold).observe(room);
+})();
+
+document.addEventListener('click', (e) => {
+if (e.target.closest('#coord-more-btn')) { _setCoordMore(!_coordMoreOpen); return; }
+if (_coordMoreOpen && !e.target.closest('#coord-more-pop')) _setCoordMore(false);
+});
+document.addEventListener('keydown', (e) => {
+if (e.key !== 'Escape' || !_coordMoreOpen) return;
+const inside = document.activeElement && document.activeElement.closest && document.activeElement.closest('.ci-more');
+_setCoordMore(false);
+if (inside) { e.stopPropagation(); const b = document.getElementById('coord-more-btn'); if (b) b.focus(); }
+});
 
 
 
@@ -24383,6 +24471,7 @@ _loopsPaused = true;
 
 if (typeof isRecording !== 'undefined' && isRecording && typeof _recPauseForHide === 'function') _recPauseForHide();
 if (_renderRafId) { cancelAnimationFrame(_renderRafId); _renderRafId = 0; }
+if (typeof _coordFoldRaf !== 'undefined' && _coordFoldRaf) { cancelAnimationFrame(_coordFoldRaf); _coordFoldRaf = 0; }
 
 if (_animPlaying) {
 _animWasPlayingAtPause = true;
@@ -24469,6 +24558,8 @@ if (!_loopsPaused) return;
 _loopsPaused = false;
 
 if (typeof _recResumeFromHide === 'function') _recResumeFromHide();
+
+if (typeof _scheduleCoordFold === 'function') _scheduleCoordFold();
 
 scheduleRender();
 
@@ -50595,6 +50686,14 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.3.8',
+date:'2026-10-20',
+headline:'The status bar keeps one row.',
+items:[
+'When the status bar\'s readouts do not fit, the optional ones move into a More menu before the version label instead of wrapping onto extra rows or running off a narrow window. Every badge in the menu still works.',
+],
+},
+{
 version:'7.3.7',
 date:'2026-10-20',
 headline:'One Export image tab, a proof before a long export, and Render history.',
@@ -50657,15 +50756,6 @@ headline:'Point-density exports match the screen at any page shape.',
 items:[
 'A Buddhabrot, IFS, strange attractor or fractal flame exported with Extend at a shape unlike the window, such as a portrait page from a landscape window, now has the same brightness as the screen instead of coming out much brighter.',
 'Motion Studio videos and PNG sequences of these fractals match the screen at every preset, including Vertical.',
-],
-},
-{
-version:'7.2.0',
-date:'2026-10-14',
-headline:'The Fruit of Life is drawn true, and a Construction tab shows how a figure is built.',
-items:[
-'The Fruit of Life draws its 13 circles at the canonical size, so each touches its neighbors and none overlap. Metatron\'s Cube is built on the same circles and follows it.',
-'A new Construction tab in the Inspector lists the circles, triangles, segments and symmetry the figure on screen actually draws, with its source, and says plainly when a figure is drawn for the look.',
 ],
 },
 ];
