@@ -1,5 +1,6 @@
-The control bar says each thing once · 2026-10-19
+Copy report, and an open coordinate editor stays open · 2026-10-20
 
-- **The control bar says each thing once.** The Iters readout steps aside while the Iterations slider beside it is showing (exact entry stays in the Inspector), the renderer is named once and stays quiet until there is something to report, such as a picture still refining, and the bar no longer says "finished" when nothing is happening. On a phone the readout over the picture no longer repeats the fractal's name or the iteration count. The version stays as a quiet label at the end, and its tooltip names the build.
+- **Copy report.** Help > Copy report puts the version, build, a share link to the exact view, the renderer and precision, the window size, the device pixel ratio and the browser on the clipboard as plain text, one fact per line.
+- **An open Zoom or Center editor stays open while the picture renders.** On 7.3.4 the editor you were typing in could vanish when a render finished. 7.3.5 fixed that for the render status, and now no badge on the bar (deep zoom, precision, WebGPU) can close it either; the badges catch up once you press Enter or Escape.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.

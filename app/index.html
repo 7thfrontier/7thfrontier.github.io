@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-KXQdOvxU83c++sUZmJSQWUrzH1ovyHf6V3yRa+8gBwk='; font-src 'self'; script-src 'self' 'sha256-kgpuHqTJfPt70iwNK8VRqoHkd9lh9k0Cr4mosDTOR6U=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-KXQdOvxU83c++sUZmJSQWUrzH1ovyHf6V3yRa+8gBwk='; font-src 'self'; script-src 'self' 'sha256-Zy29GAf08iMKOXfIGaxqeAWugcOJk8Iz/eSfR8VqodI=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4255,12 +4255,12 @@
 
 
 
-<!-- build: 5d2328349046 -->
+<!-- build: a28cb4972e29 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.5
+ * AEON -- Universal Dynamics Reactor v7.3.6
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7516,7 +7516,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.5';
+const APP_VERSION='7.3.6';
 
 
 
@@ -7525,10 +7525,10 @@ const APP_VERSION='7.3.5';
 
 
 
-const MISSION_BUILD_HASH='5d2328349046';
-const MISSION_GIT_SHA='f1d4daf0473373e8bb43dee64fd032a0a56eaac2';
+const MISSION_BUILD_HASH='a28cb4972e29';
+const MISSION_GIT_SHA='1cffc2bf7515eefd97c828953ed224d5a7ad5725';
 
-const MISSION_RENDER_HASH='f2da23b49485';
+const MISSION_RENDER_HASH='9d108bf18ec5';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -13232,7 +13232,9 @@ _newHintsHTML='<span class="nh"><kbd>Drag</kbd> Rotate pattern</span><span class
 
 
 
-if (_newBarHTML !== _lastCoordBarHTML) {
+
+
+if (_newBarHTML !== _lastCoordBarHTML && !bar.querySelector('input.coord-editor')) {
 
 
 
@@ -25635,7 +25637,7 @@ configurable: true,
 }
 
 
-const _I18N_TOAST_KINDS = {"tour.ui.complete": "success", "gpu.webgpu-failed": "warning", "gpu.custom-render-fail": "error", "state.share-copied": "success", "state.share-copy-failed": "warning", "state.png-restored": "success", "state.png-no-state": "warning", "state.png-bad-fragment": "warning", "state.png-read-failed": "warning", "state.drop-unsupported": "warning", "state.share-unknown-ft": "warning", "state.share-unknown-pat": "warning", "state.load-unknown-ft": "warning", "seed.invalid": "warning", "shader.unbounded-loop": "warning", "shader.huge-loop": "warning", "shader.3d-rejected": "warning", "shader.webgl2-unavailable": "warning", "shader.formula-empty": "warning", "shader.formula-applied": "success", "shader.formula-blank": "warning", "shader.basin-colouring-off": "warning", "export.svg-failed": "warning", "export.image-copied": "success", "state.load-failed": "warning", "state.save-success": "success", "autosave.restore-failed": "warning", "state.load-success": "success", "bookmark.not-found": "warning", "bookmark.save.failed": "warning", "bookmark.delete.failed": "warning", "bookmark.loaded": "success", "gallery.saved": "success", "postfx.lut-applied": "success", "gallery.not-found": "warning", "gallery.delete-failed": "warning", "gallery.save-failed": "warning", "flame.too-large": "warning", "flame.invalid-xml": "warning", "flame.no-flame-element": "warning", "flame.no-transforms": "warning", "flame.too-many-xforms": "warning", "flame.no-render-transforms": "warning", "flame.read-failed": "warning", "flame.drop-read-failed": "warning", "flame.parse-error": "warning", "flame.type-required": "warning", "flame.invalid-coef": "warning", "postfx.cube-read-failed": "warning", "palette.save-not-persisted": "warning", "palette.delete-not-persisted": "warning", "palette.export-ugr-alpha-lost": "warning", "palette.export-map-alpha-lost": "warning", "palette.export-hex-alpha-lost": "warning", "layer.max-reached": "warning", "layer.project-too-large": "warning", "layer.project-stamp-mismatch": "warning", "layer.keyframes-capped": "warning", "motion.kf-max-reached": "warning", "layer.layers-capped": "warning", "file.recents-unavailable": "warning", "postfx.cube-too-large": "warning", "postfx.cube-invalid": "warning", "postfx.lut-loaded-detail": "success", "postfx.drop-cube": "warning", "app.warning-prefixed": "warning", "state.save-file-too-large": "warning", "state.png-file-too-large": "warning", "state.read-file-failed": "warning", "deepzoom.orbit-truncated-simple": "warning", "app.uncaught-error": "warning", "worker.background-failed": "warning", "deepzoom.orbit-truncated-detailed": "warning", "share.url-too-long": "warning", "state.share-link-too-large": "warning", "state.share-link-rejected": "warning", "state.share-decode-failed": "warning", "state.share-apply-rolled-back": "warning", "state.share-apply-mixed-state": "warning", "motion.frame-skipped-timeout": "warning", "motion.frame-skipped-blank": "warning", "motion.frame-stale": "warning", "export.phys-size-capped": "warning", "export.size-capped": "warning", "export.memory-warning": "warning", "export.generic-failed": "warning", "export.svg-geometry-required": "warning", "export.svg-layers-omitted": "warning", "export.repeated-interruption": "warning", "export.svg-raster-pattern": "warning", "export.svg-dense-pattern": "warning"};
+const _I18N_TOAST_KINDS = {"tour.ui.complete": "success", "gpu.webgpu-failed": "warning", "gpu.custom-render-fail": "error", "state.share-copied": "success", "state.share-copy-failed": "warning", "report.copied": "success", "report.copy-failed": "warning", "state.png-restored": "success", "state.png-no-state": "warning", "state.png-bad-fragment": "warning", "state.png-read-failed": "warning", "state.drop-unsupported": "warning", "state.share-unknown-ft": "warning", "state.share-unknown-pat": "warning", "state.load-unknown-ft": "warning", "seed.invalid": "warning", "shader.unbounded-loop": "warning", "shader.huge-loop": "warning", "shader.3d-rejected": "warning", "shader.webgl2-unavailable": "warning", "shader.formula-empty": "warning", "shader.formula-applied": "success", "shader.formula-blank": "warning", "shader.basin-colouring-off": "warning", "export.svg-failed": "warning", "export.image-copied": "success", "state.load-failed": "warning", "state.save-success": "success", "autosave.restore-failed": "warning", "state.load-success": "success", "bookmark.not-found": "warning", "bookmark.save.failed": "warning", "bookmark.delete.failed": "warning", "bookmark.loaded": "success", "gallery.saved": "success", "postfx.lut-applied": "success", "gallery.not-found": "warning", "gallery.delete-failed": "warning", "gallery.save-failed": "warning", "flame.too-large": "warning", "flame.invalid-xml": "warning", "flame.no-flame-element": "warning", "flame.no-transforms": "warning", "flame.too-many-xforms": "warning", "flame.no-render-transforms": "warning", "flame.read-failed": "warning", "flame.drop-read-failed": "warning", "flame.parse-error": "warning", "flame.type-required": "warning", "flame.invalid-coef": "warning", "postfx.cube-read-failed": "warning", "palette.save-not-persisted": "warning", "palette.delete-not-persisted": "warning", "palette.export-ugr-alpha-lost": "warning", "palette.export-map-alpha-lost": "warning", "palette.export-hex-alpha-lost": "warning", "layer.max-reached": "warning", "layer.project-too-large": "warning", "layer.project-stamp-mismatch": "warning", "layer.keyframes-capped": "warning", "motion.kf-max-reached": "warning", "layer.layers-capped": "warning", "file.recents-unavailable": "warning", "postfx.cube-too-large": "warning", "postfx.cube-invalid": "warning", "postfx.lut-loaded-detail": "success", "postfx.drop-cube": "warning", "app.warning-prefixed": "warning", "state.save-file-too-large": "warning", "state.png-file-too-large": "warning", "state.read-file-failed": "warning", "deepzoom.orbit-truncated-simple": "warning", "app.uncaught-error": "warning", "worker.background-failed": "warning", "deepzoom.orbit-truncated-detailed": "warning", "share.url-too-long": "warning", "state.share-link-too-large": "warning", "state.share-link-rejected": "warning", "state.share-decode-failed": "warning", "state.share-apply-rolled-back": "warning", "state.share-apply-mixed-state": "warning", "motion.frame-skipped-timeout": "warning", "motion.frame-skipped-blank": "warning", "motion.frame-stale": "warning", "export.phys-size-capped": "warning", "export.size-capped": "warning", "export.memory-warning": "warning", "export.generic-failed": "warning", "export.svg-geometry-required": "warning", "export.svg-layers-omitted": "warning", "export.repeated-interruption": "warning", "export.svg-raster-pattern": "warning", "export.svg-dense-pattern": "warning"};
 const _i18nToastMessages = new Map();
 
 
@@ -25723,6 +25725,8 @@ en: {
 
 'state.share-copied':         'Share link copied to clipboard.',
 'state.share-copy-failed':    'Could not copy, the URL is in the address bar.',
+'report.copied':              'Report copied to clipboard.',
+'report.copy-failed':         'Could not copy the report to the clipboard.',
 
 
 'state.png-restored':         'Restored state from {filename}.',
@@ -50557,6 +50561,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.3.6',
+date:'2026-10-20',
+headline:'Copy report, and an open coordinate editor stays open.',
+items:[
+'Help > Copy report puts the version, the build, a link to the exact view, the renderer and precision, the window size and the browser on the clipboard as plain text, ready to paste into a bug report.',
+'An open Zoom or Center editor no longer closes when a badge on the bar changes during a render. The bar catches up once you press Enter or Escape.',
+],
+},
+{
 version:'7.3.5',
 date:'2026-10-19',
 headline:'The control bar says each thing once.',
@@ -50617,15 +50630,6 @@ headline:'Small density exports and Motion Studio videos match the screen.',
 items:[
 'Small Buddhabrot, IFS, attractor and flame exports are no grainier than the screen: they render at the screen size and are scaled down into the file.',
 'Motion Studio videos and multi-layer exports of density fractals smaller than the canvas match the screen the same way.',
-],
-},
-{
-version:'7.1.5',
-date:'2026-10-13',
-headline:'Focus on a phone clears the whole screen, and 4D polytopes tumble faster with glow.',
-items:[
-'In Focus on a phone, the Inspector handle no longer stays along the bottom edge under the Exit button. It hides with the rest of the interface and comes back when you leave Focus.',
-'With glow on, 4D polytopes animate about 1.6 times faster: the glow is drawn once per frame instead of once per edge.',
 ],
 },
 ];
@@ -52800,12 +52804,39 @@ const APP_ACTIONS = [
 { id:'edit-reset',    label:'Reset all',  group:'edit', run:()=>resetAll(), keybindingId:'reset' },
 
 { id:'help-shortcuts',label:'Keyboard shortcuts', group:'help', run:()=>openShortcutsModal() },
+{ id:'help-copy-report', label:'Copy report', group:'help', run:()=>copyReport() },
 
 { id:'help-showcase', label:'Showcase',   group:'help', run:()=>openShowcase() },
 { id:'help-foreword', label:'Foreword',   group:'help', run:()=>openForeword() },
 { id:'help-references', label:'References', group:'help', run:()=>openCitations() },
 { id:'help-whats-new', label:"What's new", group:'help', run:()=>openWhatsNew() },
 ];
+
+const _REPORT_RENDERER = { webgpu:'WebGPU', webgl2:'WebGL2', worker:'CPU, background thread', cpu:'CPU, main thread' };
+const _REPORT_PRECISION = { standard:'standard', deep:'extra precision', limited:'limited by the center coordinate', fallback:'reduced' };
+
+function _copyReportText(){
+const f = _renderStatusFacts(), omits = _shareProjectReason();
+return [
+'Version: ' + APP_VERSION,
+'Build: ' + (MISSION_GIT_SHA === _MGS_SENTINEL ? 'development build' : MISSION_GIT_SHA),
+'Share link: ' + window.location.href.split('#')[0] + '#state=' + _b64uEnc(JSON.stringify(_buildShareSnap())),
+...(omits ? ['Share link note: ' + omits] : []),
+'Renderer: ' + (_REPORT_RENDERER[f.engine] || f.engine),
+'Precision: ' + (_REPORT_PRECISION[f.precision] || f.precision),
+'Window: ' + window.innerWidth + ' x ' + window.innerHeight,
+'Device pixel ratio: ' + window.devicePixelRatio,
+'Browser: ' + navigator.userAgent,
+].join('\n');
+}
+function copyReport(){
+
+if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(() => copyReport())) return;
+const text = _copyReportText();
+const ok = () => showToast(t('report.copied'), 'success'), bad = () => showToast(t('report.copy-failed'), 'warning');
+if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok).catch(() => fallbackCopy(text, ok, bad));
+else fallbackCopy(text, ok, bad);
+}
 
 function getActionsByGroup(group){ return APP_ACTIONS.filter(a => a.group === group); }
 
