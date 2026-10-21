@@ -27,6 +27,8 @@ let _IT_DISPATCH = {};
 let IS_3D_ATTRACTORS = new Set();
 let _deriv_lorenz, _deriv_rossler, _deriv_dadras, _deriv_aizawa;
 let _deriv_halvorsen, _deriv_sprott_b, _deriv_thomas, _deriv_chen_lee, _deriv_duffing, _deriv_chua;
+
+let _map_clifford, _map_dejong, _map_hopalong, _map_henon, _map_pickover, _map_tinkerbell, _map_ikeda, _map_gumowski_mira;
 const _RK4_SCRATCH = new Float64Array(12);
 
 
@@ -214,6 +216,18 @@ function _renderAttractor(oc){
     return null;
   }
   
+  function _pickMap(ft){
+    if(ft==='attractor_clifford')return _map_clifford;
+    if(ft==='attractor_dejong')return _map_dejong;
+    if(ft==='attractor_hopalong')return _map_hopalong;
+    if(ft==='attractor_henon')return _map_henon;
+    if(ft==='attractor_pickover')return _map_pickover;
+    if(ft==='attractor_tinkerbell')return _map_tinkerbell;
+    if(ft==='attractor_ikeda')return _map_ikeda;
+    if(ft==='attractor_gumowski_mira')return _map_gumowski_mira;
+    return null;
+  }
+  
   
   
   
@@ -234,24 +248,11 @@ function _renderAttractor(oc){
   
   
   var _drv=_pickDeriv(ft);
+  var _mp=_drv?null:_pickMap(ft);
   
   for(var i=0;i<1000;i++){
     if(_drv){_rk4(_drv,x,y,z,dt,a,b,c,d,_rkOut);x=_rkOut[0];y=_rkOut[1];z=_rkOut[2];}
-    else if(ft==='attractor_clifford'){var nx=Math.sin(a*y)+c*Math.cos(a*x);var ny=Math.sin(b*x)+d*Math.cos(b*y);x=nx;y=ny;}
-    else if(ft==='attractor_dejong'){var nx=Math.sin(a*y)-Math.cos(b*x);var ny=Math.sin(c*x)-Math.cos(d*y);x=nx;y=ny;}
-    else if(ft==='attractor_hopalong'){var nx=y-Math.sign(x)*Math.sqrt(Math.abs(b*x-c));y=a-x;x=nx;}
-    else if(ft==='attractor_henon'){var nx=1-a*x*x+y;y=b*x;x=nx;}
-    else if(ft==='attractor_pickover'){
-      
-      
-      var nx=Math.sin(a*y)-z*Math.cos(b*x);
-      var ny=z*Math.sin(c*x)-Math.cos(d*y);
-      var nz=Math.sin(x);
-      x=nx;y=ny;z=nz;
-    }
-    else if(ft==='attractor_tinkerbell'){var nx=x*x-y*y+a*x+b*y;y=2*x*y+c*x+d*y;x=nx;}
-    else if(ft==='attractor_ikeda'){var tt=0.4-6/(1+x*x+y*y),ct=Math.cos(tt),st=Math.sin(tt),nx=1+a*(x*ct-y*st);y=a*(x*st+y*ct);x=nx;}
-    else if(ft==='attractor_gumowski_mira'){var gx=c*x+2*(1-c)*x*x/(1+x*x),nx=y+a*y*(1-b*y*y)+gx;y=-x+(c*nx+2*(1-c)*nx*nx/(1+nx*nx));x=nx;}
+    else if(_mp){_mp(x,y,z,a,b,c,d,_rkOut);x=_rkOut[0];y=_rkOut[1];z=_rkOut[2];}
     else{self.postMessage({type:'error',msg:'Unknown attractor type: '+ft});return;}
     if(!isFinite(x)||!isFinite(y)||!isFinite(z)){var _r=_wReseedICs(ft);x=_r[0];y=_r[1];z=_r[2];}
   }
@@ -280,7 +281,7 @@ function _renderAttractor(oc){
     var _drv0=_pickDeriv(ft),_sz=0,_sn=0,_wx=x,_wy=y,_wz=z;
     for(var _k=0;_k<60000;_k++){
       if(_drv0){_rk4(_drv0,_wx,_wy,_wz,dt,a,b,c,d,_rkOut);_wx=_rkOut[0];_wy=_rkOut[1];_wz=_rkOut[2];}
-      else{var _pnx=Math.sin(a*_wy)-_wz*Math.cos(b*_wx),_pny=_wz*Math.sin(c*_wx)-Math.cos(d*_wy),_pnz=Math.sin(_wx);_wx=_pnx;_wy=_pny;_wz=_pnz;}
+      else{_map_pickover(_wx,_wy,_wz,a,b,c,d,_rkOut);_wx=_rkOut[0];_wy=_rkOut[1];_wz=_rkOut[2];}
       if(!isFinite(_wx)||!isFinite(_wy)||!isFinite(_wz)){var _r2=_wReseedICs(ft);_wx=_r2[0];_wy=_r2[1];_wz=_r2[2];continue;}
       _sz+=(proj==='xz')?_wy:(proj==='xy')?_wz:_wx;_sn++;
     }
@@ -289,21 +290,12 @@ function _renderAttractor(oc){
   for(var i=0;i<nIter;i++){
     var px2d,py2d,colorT=0;
     if(_drv){_rk4(_drv,x,y,z,dt,a,b,c,d,_rkOut);x=_rkOut[0];y=_rkOut[1];z=_rkOut[2];if(ft==='attractor_duffing'){px2d=x;py2d=y;}else{var wx,wy,wz;if(proj==='xz'){wx=x;wy=z;wz=y;}else if(proj==='xy'){wx=x;wy=y;wz=z;}else{wx=y;wy=z;wz=x;}if(_rot3D){var _ax=wx-_cX,_az=wz-_cwz,_nx=_ax*_cRY+_az*_sRY,_nz=-_ax*_sRY+_az*_cRY;px2d=_nx+_cX;py2d=(wy-_cY)*_cRX-_nz*_sRX+_cY;}else{px2d=wx;py2d=wy;}}colorT=(Math.atan2(y,x)/TAU+0.5);}
-    else if(ft==='attractor_clifford'){var nx=Math.sin(a*y)+c*Math.cos(a*x);var ny=Math.sin(b*x)+d*Math.cos(b*y);x=nx;y=ny;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/TAU+0.5);}
-    else if(ft==='attractor_dejong'){var nx=Math.sin(a*y)-Math.cos(b*x);var ny=Math.sin(c*x)-Math.cos(d*y);x=nx;y=ny;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/TAU+0.5);}
-    else if(ft==='attractor_hopalong'){var nx=y-Math.sign(x)*Math.sqrt(Math.abs(b*x-c));y=a-x;x=nx;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/TAU+0.5);}
-    else if(ft==='attractor_henon'){var nx=1-a*x*x+y;y=b*x;x=nx;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/TAU+0.5);}
-    else if(ft==='attractor_pickover'){
-      var nx=Math.sin(a*y)-z*Math.cos(b*x);
-      var ny=z*Math.sin(c*x)-Math.cos(d*y);
-      var nz=Math.sin(x);
-      x=nx;y=ny;z=nz;
-      {var wx,wy,wz;if(proj==='xz'){wx=x;wy=z;wz=y;}else if(proj==='xy'){wx=x;wy=y;wz=z;}else{wx=y;wy=z;wz=x;}if(_rot3D){var _ax=wx-_cX,_az=wz-_cwz,_nx=_ax*_cRY+_az*_sRY,_nz=-_ax*_sRY+_az*_cRY;px2d=_nx+_cX;py2d=(wy-_cY)*_cRX-_nz*_sRX+_cY;}else{px2d=wx;py2d=wy;}}
+    else if(_mp){
+      _mp(x,y,z,a,b,c,d,_rkOut);x=_rkOut[0];y=_rkOut[1];z=_rkOut[2];
+      if(_mp===_map_pickover){var wx,wy,wz;if(proj==='xz'){wx=x;wy=z;wz=y;}else if(proj==='xy'){wx=x;wy=y;wz=z;}else{wx=y;wy=z;wz=x;}if(_rot3D){var _ax=wx-_cX,_az=wz-_cwz,_nx=_ax*_cRY+_az*_sRY,_nz=-_ax*_sRY+_az*_cRY;px2d=_nx+_cX;py2d=(wy-_cY)*_cRX-_nz*_sRX+_cY;}else{px2d=wx;py2d=wy;}}
+      else{px2d=x;py2d=y;}
       colorT=(Math.atan2(y,x)/TAU+0.5);
     }
-    else if(ft==='attractor_tinkerbell'){var nx=x*x-y*y+a*x+b*y;y=2*x*y+c*x+d*y;x=nx;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/TAU+0.5);}
-    else if(ft==='attractor_ikeda'){var tt=0.4-6/(1+x*x+y*y),ct=Math.cos(tt),st=Math.sin(tt),nx=1+a*(x*ct-y*st);y=a*(x*st+y*ct);x=nx;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/TAU+0.5);}
-    else if(ft==='attractor_gumowski_mira'){var gx=c*x+2*(1-c)*x*x/(1+x*x),nx=y+a*y*(1-b*y*y)+gx;y=-x+(c*nx+2*(1-c)*nx*nx/(1+nx*nx));x=nx;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/TAU+0.5);}
     else{self.postMessage({type:'error',msg:'Unknown attractor type (iteration): '+ft});return;}
     if(!isFinite(x)||!isFinite(y)||!isFinite(z)){
       if(dbg)dbg.nan++;
@@ -538,6 +530,14 @@ self.onmessage = function(e){
     _deriv_chen_lee = self._deriv_chen_lee;
     _deriv_duffing = self._deriv_duffing;
     _deriv_chua = self._deriv_chua;
+    _map_clifford = self._map_clifford;
+    _map_dejong = self._map_dejong;
+    _map_hopalong = self._map_hopalong;
+    _map_henon = self._map_henon;
+    _map_pickover = self._map_pickover;
+    _map_tinkerbell = self._map_tinkerbell;
+    _map_ikeda = self._map_ikeda;
+    _map_gumowski_mira = self._map_gumowski_mira;
     
     IFS_DEFS = d.ifsDefs || {};
     PALS = d.pals || {};

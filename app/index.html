@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-bmsxeCuIbW+bKFt9prInO07O5OZFlN2f0E0WjT+1EQE='; font-src 'self'; script-src 'self' 'sha256-bpsSLEqMp50JUWGmYc4zA4W7b61g5/mi+/ah5oDh/mQ=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-QUgDUGYDyR2yI5BaQCHCraWlSSbBlqPIOUb7RB9GIQg='; font-src 'self'; script-src 'self' 'sha256-rZ8gC9iMQ5zZ+r0yXlW2hM9+jp6kv1w4WUUlueOi/uw=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -537,7 +537,10 @@
         .ic-sprite{position:absolute;width:0;height:0;overflow:hidden}
         .ic{width:1em;height:1em;flex-shrink:0;vertical-align:-.14em;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 
-        .cc-logo.unseen::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent);margin-left:2px;align-self:flex-start;animation:wn-pulse 2.4s ease-in-out 6}
+        #app-menu-btn.unseen{position:relative}
+        #app-menu-btn.unseen::after{content:'';position:absolute;top:var(--sp-2);right:var(--sp-2);width:7px;height:7px;border-radius:50%;background:var(--accent);animation:wn-pulse 2.4s ease-in-out 6;pointer-events:none}
+        .chrome-menu-item.unseen{display:flex;align-items:center;gap:var(--sp-2)}
+        .menu-new{margin-left:auto;padding:0 var(--sp-1);border-radius:var(--r-2);background:var(--accent-dim);color:var(--accent);font-weight:600}
 
         #act-tooltip{position:fixed;background:var(--tooltip-bg);color:var(--tooltip-fg);border:1px solid var(--border-mid);border-radius:var(--r-2);padding:6px 10px;font-family:var(--font-ui);font-size:12px;font-weight:500;letter-spacing:.01em;line-height:1.35;max-width:280px;pointer-events:none;z-index:var(--z-toast);opacity:0;transition:opacity var(--dur-snappy);box-shadow:0 6px 18px var(--shadow);white-space:normal}
         #act-tooltip.act-tip-vis{opacity:1}
@@ -787,7 +790,7 @@
         .coord-more-btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
         .coord-more-pop{position:absolute;right:0;bottom:calc(100% + var(--sp-2));display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-1);padding:var(--sp-2) var(--sp-3);background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-2);white-space:nowrap;z-index:7}
         .coord-more-pop[hidden]{display:none}
-        .coord-bar.coord-bar--wrap{flex-wrap:wrap;row-gap:var(--sp-1)}
+        .coord-bar.coord-bar--wrap,.canvas-area>.coord-bar.coord-bar--wrap{flex-wrap:wrap;row-gap:var(--sp-1)}
         .eyepiece-strip{position:absolute;bottom:20px;left:calc(var(--lp-cur) + (100% - var(--lp-cur)) / 2);transform:translateX(-50%);z-index:var(--z-panel);display:flex;align-items:stretch;height:76px;padding:0 6px;width:min(1180px,calc(100% - var(--lp-cur) - 32px));container-type:inline-size;box-sizing:border-box;background:var(--surface);color:var(--text);border:1px solid var(--border-mid);border-radius:var(--r-3);box-shadow:var(--shadow-md);transition:left var(--dur-slow) ease,width var(--dur-slow) ease}
         body.zen-mode .eyepiece-strip{display:none}
         @media(min-width:861px){.canvas-area>.coord-bar{bottom:calc(20px + 76px + var(--sp-3));left:calc(var(--lp-cur) + var(--sp-6));right:calc(var(--rp-cur) + var(--sp-6));width:fit-content;max-width:calc(100% - var(--lp-cur) - var(--rp-cur) - var(--sp-6) * 2);margin-inline:auto;transform:none;flex-wrap:nowrap;justify-content:center}#coord-bar-room{left:calc(var(--lp-cur) + var(--sp-6));right:calc(var(--rp-cur) + var(--sp-6))}}
@@ -4259,12 +4262,12 @@
 
 
 
-<!-- build: 1898ac4a764a -->
+<!-- build: 9538f37e92c1 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.10
+ * AEON -- Universal Dynamics Reactor v7.3.11
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7520,7 +7523,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.10';
+const APP_VERSION='7.3.11';
 
 
 
@@ -7529,10 +7532,10 @@ const APP_VERSION='7.3.10';
 
 
 
-const MISSION_BUILD_HASH='1898ac4a764a';
-const MISSION_GIT_SHA='692ce95ed4dd1ac1a2ab6dc94e5636d280999aa3';
+const MISSION_BUILD_HASH='9538f37e92c1';
+const MISSION_GIT_SHA='4ec69b33d5ec0e8acf3677b9770d0259777f5b8c';
 
-const MISSION_RENDER_HASH='f37e0550f941';
+const MISSION_RENDER_HASH='2764b9f76e48';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11145,12 +11148,16 @@ if(typeof cv!=='undefined' && cv)cv.classList.remove('is-hidden');
 
 
 
+
+_cpuPathInFlight++;
+try{
 const t=++tok; await renderDeepZoom(t).catch(e=>console.warn('Deep-zoom render failed:', e));
 
 
 
 
 if(t===tok){if(typeof _applyPostFXOnScreen==='function')_applyPostFXOnScreen();if(typeof _announceRenderDone==='function')_announceRenderDone();_bumpRenderSeq();}
+}finally{_cpuPathInFlight--;}
 }
 updateCoordBar();
 drawMandelbrotFeatures();if(typeof drawOrbitOverlay==='function')drawOrbitOverlay();
@@ -12959,7 +12966,13 @@ const GTYPE_LABELS={
 const ALGO_LABELS={smooth:'Smooth',banded:'Banded',angle:'Angle',stripe:'Stripe',de:'Dist Est.',histogram:'Hist EQ',normalmap:'Normal Map',tia:'TIA',curvature:'Curvature'};
 
 
-function zoomLabel(z){return z<10?z.toFixed(1)+'×':(z<1000?Math.round(z)+'×':z.toExponential(1)+'×')}
+
+function zoomLabel(z){
+if(+z.toFixed(2)<1)return z.toFixed(2)+'×';
+if(+z.toFixed(1)<10)return z.toFixed(1)+'×';
+if(Math.round(z)<1000)return Math.round(z)+'×';
+return z.toExponential(1)+'×';
+}
 
 
 let _cvEl_a11y = null;
@@ -13208,7 +13221,7 @@ attrBadge='<div class="ci ci-badge--warn" data-fold="6" title="Strange-attractor
 const tlbl2D=FTYPE_LABELS[S.fractalType]||S.fractalType;
 const albl=ALGO_LABELS[S.colorAlgo]||S.colorAlgo;
 
-_newBarHTML=html.raw`<div class="ci" data-fold="1"><span class="lbl">Type</span><span class="v">${html`${tlbl2D}`}</span></div><div class="ci" data-coord-edit="center" tabindex="0" role="button" title="Click to edit center coordinates"><span class="lbl">Center</span><span class="v">${html`${re} ${im}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div>${_iterCell}<div class="ci"><span class="lbl">Algo</span><span class="v">${html`${albl}`}</span></div>${iterHint}${deepBadge}${precBadge}${capBadge}${attrBadge}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
+_newBarHTML=html.raw`<div class="ci" data-fold="1"><span class="lbl">Type</span><span class="v">${html`${tlbl2D}`}</span></div><div class="ci" data-coord-edit="center" tabindex="0" role="button" title="Click to edit center coordinates"><span class="lbl">Center</span><span class="v">${html`${re} ${im}`}</span></div><div class="ci" data-coord-edit="zoom" tabindex="0" role="button" title="Click to type a zoom factor"><span class="lbl">Zoom</span><span class="v">${html`${zoomLabel(S.zoom)}`}</span></div>${_iterCell}<div class="ci" data-fold="7"><span class="lbl">Algo</span><span class="v">${html`${albl}`}</span></div>${iterHint}${deepBadge}${precBadge}${capBadge}${attrBadge}${_wgpuBadgeHTML}${_rsCell}${_verCell}`;
 _newHintsHTML='<span class="nh"><kbd>Left-click</kbd> Zoom in</span><span class="nh"><kbd>Right-click</kbd> Zoom out</span><span class="nh"><kbd>Drag</kbd> Pan view</span>';}
 } else {
 
@@ -13304,6 +13317,16 @@ _refoldCoordBar(bar);
 
 const f = focId && document.getElementById(focId);
 if (f && bar.contains(f) && document.activeElement !== f) { try { f.focus({preventScroll:true}); } catch(_e) { _swallowed('_foldCoordBar', _e); } }
+
+const more = f && document.activeElement !== f && f.closest('#coord-more-pop') && document.getElementById('coord-more-btn');
+if (more) { try { more.focus({preventScroll:true}); } catch(_e) { _swallowed('_foldCoordBar', _e); } }
+}
+
+
+function _moveKeepingFocus(move){
+const held = document.activeElement;
+move();
+if (held && held !== document.body && held.isConnected && document.activeElement !== held) { try { held.focus({preventScroll:true}); } catch(_e) { _swallowed('_moveKeepingFocus', _e); } }
 }
 function _refoldCoordBar(bar){
 bar.classList.remove('coord-bar--wrap');
@@ -15128,17 +15151,23 @@ _openBadgeEditor(ae);
 function _parseCoordCenter(text){
 if(!text)return null;
 
-const s=text.replace(/i\b/gi,'').replace(/\s+/g,' ').trim();
+let s=text.replace(/i\b/gi,'').replace(/\u2212/g,'-').replace(/\s+/g,' ').trim();
+const p=s.match(/^\(([^()]*)\)$/);
+if(p)s=p[1].trim();
 
 
 
-let m=s.match(/^(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\s*,\s*(-?\d+\.?\d*(?:[eE][+-]?\d+)?)$/);
-if(m)return {x:parseFloat(m[1]),y:parseFloat(m[2]),xStr:m[1],yStr:m[2]};
+const N='[+-]?(?:\\d+\\.?\\d*|\\.\\d+)(?:[eE][+-]?\\d+)?', U='(?:\\d+\\.?\\d*|\\.\\d+)(?:[eE][+-]?\\d+)?';
+const canon=(t)=>{ const neg=t[0]==='-'; t=t.replace(/^[+-]/,''); return (neg?'-':'')+(t[0]==='.'?'0':'')+t; };
+const pair=(a,b)=>({x:parseFloat(a),y:parseFloat(b),xStr:canon(a),yStr:canon(b)});
 
-m=s.match(/^(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\s*([+-])\s*(\d+\.?\d*(?:[eE][+-]?\d+)?)$/);
-if(m)return {x:parseFloat(m[1]),y:(m[2]==='-'?-1:1)*parseFloat(m[3]),xStr:m[1],yStr:(m[2]==='-'?'-':'')+m[3]};
-m=s.match(/^(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\s+(-?\d+\.?\d*(?:[eE][+-]?\d+)?)$/);
-if(m)return {x:parseFloat(m[1]),y:parseFloat(m[2]),xStr:m[1],yStr:m[2]};
+let m=s.match(new RegExp('^('+N+')\\s*,\\s*('+N+')$'));
+if(m)return pair(m[1],m[2]);
+
+m=s.match(new RegExp('^('+N+')\\s*([+-])\\s*('+U+')$'));
+if(m)return pair(m[1],m[2]+m[3]);
+m=s.match(new RegExp('^('+N+')\\s+('+N+')$'));
+if(m)return pair(m[1],m[2]);
 return null;
 }
 function _parseZoom(text){
@@ -15343,8 +15372,7 @@ const wrap=document.createElement('div');wrap.className='rp-sec-content';
 
 
 if(sec.id)wrap.id=sec.id+'-body';
-[...sec.children].filter(c=>c!==head).forEach(c=>wrap.appendChild(c));
-sec.appendChild(wrap);
+_moveKeepingFocus(()=>{ [...sec.children].filter(c=>c!==head).forEach(c=>wrap.appendChild(c)); sec.appendChild(wrap); });
 });
 
 requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -21372,6 +21400,7 @@ _writeJSONList(RECENTS_KEY,list);
 
 
 
+
 const LP_TYPE_ALIASES = {
 'mandelbrot':'escape-time','burningship':'burning ship','tricorn':'mandelbar conjugate','multibrot3':'multibrot power','phoenix':'shadid','celtic':'mandelbrot','nova':'newton relaxation','magnet1':'magnetic renormalization','magnet2':'magnetic renormalization','biomorph':'pickover organic',
 'newton3':'newton root finding basin','newton_cayley':'newton root finding basin','newton_sin':'newton root finding basin',
@@ -22255,6 +22284,8 @@ _warpT, _fieldNoise01, _pixelAlphaField, mulberry32,
 _deriv_lorenz, _deriv_rossler, _deriv_dadras, _deriv_aizawa,
 _deriv_halvorsen, _deriv_sprott_b, _deriv_thomas, _deriv_chen_lee, _deriv_duffing, _deriv_chua,
 
+_map_clifford, _map_dejong, _map_hopalong, _map_henon, _map_pickover, _map_tinkerbell, _map_ikeda, _map_gumowski_mira,
+
 
 
 
@@ -22806,8 +22837,8 @@ banner.setAttribute('aria-live','polite');
 document.body.appendChild(banner);
 }
 banner.innerHTML='';
-const txt=document.createElement('span');txt.className='gl-error-text';txt.textContent='A new version is available.';
-const reload=document.createElement('button');reload.className='sw-update-reload';reload.type='button';reload.textContent='Reload';
+const txt=document.createElement('span');txt.className='gl-error-text';txt.textContent=t('update.available');
+const reload=document.createElement('button');reload.className='sw-update-reload';reload.type='button';reload.textContent=t('update.reload');
 reload.onclick=()=>{
 
 
@@ -22815,9 +22846,13 @@ reload.onclick=()=>{
 if(worker===navigator.serviceWorker.controller){window.location.reload();return;}
 worker.postMessage({type:'SKIP_WAITING'});
 };
-const x=document.createElement('button');x.className='gl-error-close';x.type='button';x.setAttribute('aria-label','Dismiss');x.innerHTML=icon('close');
+
+
+const notes=document.createElement('button');notes.className='sw-update-reload';notes.type='button';notes.textContent=t('update.whats-new');
+notes.onclick=()=>{try{sessionStorage.setItem(WHATS_NEW_AFTER_RELOAD_KEY,'1');}catch(_){}reload.onclick();};
+const x=document.createElement('button');x.className='gl-error-close';x.type='button';x.setAttribute('aria-label',t('update.dismiss'));x.innerHTML=icon('close');
 x.onclick=()=>{banner.classList.remove('is-visible');};
-banner.appendChild(txt);banner.appendChild(reload);banner.appendChild(x);
+banner.appendChild(txt);banner.appendChild(reload);banner.appendChild(notes);banner.appendChild(x);
 banner.classList.add('is-visible');
 }
 
@@ -25791,6 +25826,14 @@ en: {
 'state.share-copy-failed':    'Could not copy, the URL is in the address bar.',
 'report.copied':              'Report copied to clipboard.',
 'report.copy-failed':         'Could not copy the report to the clipboard.',
+'whats-new.menu-btn':         'Application menu',
+'whats-new.menu-btn-unseen':  'Application menu (new updates available)',
+'whats-new.menu-item-unseen': "What's new (new updates available)",
+'whats-new.new-tag':          'New',
+'update.available':           'A new version is available.',
+'update.reload':              'Reload',
+'update.whats-new':           "What's New",
+'update.dismiss':             'Dismiss',
 'pattern.head-harmonograph':  'Harmonograph',
 'pattern.head-maurer-rose':   'Maurer Rose',
 'pattern.head-lissajous':     'Lissajous Frequencies',
@@ -48266,7 +48309,8 @@ const strip = document.getElementById('eyepiece-strip');
 const inStrip = !window.matchMedia(_ES_PHONE_MQ).matches && strip && strip.clientWidth >= _ES_READOUT_MIN_W;
 const target = inStrip ? slot : area;
 if (bar.parentElement === target) return;
-if (inStrip) slot.appendChild(bar); else area.insertBefore(bar, document.getElementById('nav-hints'));
+
+_moveKeepingFocus(() => { if (inStrip) slot.appendChild(bar); else area.insertBefore(bar, document.getElementById('nav-hints')); });
 }
 
 
@@ -48696,18 +48740,21 @@ return icon && icon[0] === '#' ? `<svg class="ic" aria-hidden="true" focusable="
 
 
 function _catVisibleGroups() {
-const q = (document.getElementById('cat-search')?.value || '').trim().toLowerCase();
+
+
+const norm = (s) => String(s || '').toLowerCase().replace(/[\s_-]+/g, ' ').trim();
+const q = norm(document.getElementById('cat-search')?.value);
 const fav = new Set(typeof _getFavourites === 'function' ? _getFavourites() : []);
 const rec = typeof _getRecents === 'function' ? _getRecents() : [];
-const hit = (e) => !q || e.name.toLowerCase().includes(q) || e.type.toLowerCase().includes(q)
-|| ((typeof LP_TYPE_ALIASES !== 'undefined' && LP_TYPE_ALIASES[e.type]) || '').includes(q);
+const hit = (e) => !q || norm(e.name).includes(q) || norm(e.type).includes(q)
+|| norm(typeof LP_TYPE_ALIASES !== 'undefined' && LP_TYPE_ALIASES[e.type]).includes(q);
 const all = _catalogEntries(_catMode).filter(hit);
 if (_catChip === 'fav') return [{ label: 'Favorites', items: all.filter((e) => fav.has(e.type)) }];
 if (_catChip === 'recent') return [{ label: 'Recent', items: rec.map((t) => all.find((e) => e.type === t)).filter(Boolean) }];
 if (_catChip === 'history') return [{ label: 'History', items: _renderHistory.map(_rhCard).filter(hit) }];
 if (_catChip === 'showcase') {
 const sc = (typeof SHOWCASE !== 'undefined' ? SHOWCASE : []).map((r, i) => ({ showcase: i, type: r.preset.fractalType || r.preset.pattern || '', name: r.title, icon: '#ic-sparkle', mode: r.mode === 'geometry' ? 'geometry' : 'fractal' }))
-.filter((r) => r.mode === _catMode && (!q || r.name.toLowerCase().includes(q)));
+.filter((r) => r.mode === _catMode && (!q || norm(r.name).includes(q)));
 return [{ label: 'Showcase', items: sc }];
 }
 const groups = [];
@@ -50708,12 +50755,25 @@ if(skipFocusRestore!==true && typeof _restoreModalFocusGuard==='function') _rest
 
 const WHATS_NEW_KEY='aeon-changelog-seen';
 
+const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
+
 
 
 
 
 
 const WHATS_NEW=[
+{
+version:'7.3.11',
+date:'2026-10-21',
+headline:'Variation sheets fill every cell, and the status bar fits a narrow window.',
+items:[
+'A variation sheet of a strange attractor or an IFS fractal now fills every cell, with no stray warning about an export.',
+'In a narrow window the status bar stays inside its frame: the coloring readout folds into More, and a bar that still cannot fit wraps onto a second row.',
+'The Center field accepts .5, a leading +, the − sign and a pair in parentheses, and catalog search treats a hyphen and a space alike.',
+'The new-version dot now sits on the Application menu, and the update banner has a What\'s New button that opens the notes after reloading.',
+],
+},
 {
 version:'7.3.10',
 date:'2026-10-21',
@@ -50778,15 +50838,6 @@ items:[
 'Opening a project, gallery entry or layer saved in a newer version names any fractal type this version does not have, along with the version you are running. The rest of the file still loads; before, the missing type quietly became Mandelbrot.',
 ],
 },
-{
-version:'7.3.0',
-date:'2026-10-19',
-headline:'The status bar shows the version you are running, and the render chip stays put.',
-items:[
-'The last cell of the status bar reads the version number, and hovering it names the build it came from, so a screenshot of a problem says which build it was taken on.',
-'The render chip no longer vanishes when clicked. It reports what draws the picture, at what precision, and whether it is finished, and it stays on the bar for the whole session.',
-],
-},
 ];
 
 
@@ -50798,22 +50849,26 @@ return _safeGetItem(WHATS_NEW_KEY,'');
 }
 function _whatsNewMarkSeen(){
 _safeSetItem(WHATS_NEW_KEY,APP_VERSION);
-const chip=document.querySelector('#catalog-corner .cc-logo');
+_syncWhatsNewUnseen();
+}
 
-
-if(chip){chip.classList.remove('unseen');chip.setAttribute('aria-label','AEON: open the guide');}
+function _syncWhatsNewUnseen(){
+const unseen=_verMinor(_whatsNewSeen())!==_verMinor(APP_VERSION);
+const btn=document.getElementById('app-menu-btn');
+if(btn){btn.classList.toggle('unseen',unseen);btn.setAttribute('aria-label',unseen?t('whats-new.menu-btn-unseen'):t('whats-new.menu-btn'));}
+const item=document.querySelector('#app-menu [data-app-action="help-whats-new"]');
+if(!item)return;
+item.classList.toggle('unseen',unseen);
+let tag=item.querySelector('.menu-new');
+if(unseen&&!tag){tag=document.createElement('span');tag.className='menu-new';tag.setAttribute('aria-hidden','true');tag.textContent=t('whats-new.new-tag');item.appendChild(tag);}
+if(!unseen&&tag)tag.remove();
+if(unseen)item.setAttribute('aria-label',t('whats-new.menu-item-unseen'));else item.removeAttribute('aria-label');
 }
 function _initWhatsNew(){
-
-
-
-const chip=document.querySelector('#catalog-corner .cc-logo');
-if(!chip)return;
-
-
-
-const seen=_whatsNewSeen();
-if(_verMinor(seen)!==_verMinor(APP_VERSION)){chip.classList.add('unseen');chip.setAttribute('aria-label','AEON: open the guide (new updates available)');}
+_syncWhatsNewUnseen();
+let open=false;
+try{open=sessionStorage.getItem(WHATS_NEW_AFTER_RELOAD_KEY)==='1';sessionStorage.removeItem(WHATS_NEW_AFTER_RELOAD_KEY);}catch(_){}
+if(open)openWhatsNew();
 }
 
 function openWhatsNew(){
@@ -53161,6 +53216,7 @@ else menu.appendChild(frag);
 
 function toggleAppMenu(){
 _buildAppMenu();
+_syncWhatsNewUnseen();
 _refreshActionsEnabled(document.getElementById('app-menu'));
 _refreshActionAccels(document.getElementById('app-menu'));
 
@@ -53244,10 +53300,14 @@ if (menu && !menu.classList.contains('is-hidden') && !menu.contains(e.target)) _
 
 
 function _paletteFilter(query, actions){
-const q = String(query || '').toLowerCase().trim();
+let q = String(query || '').toLowerCase().trim();
 if (!q) return actions.slice();
+
+
+const fold = /[\s_-]/.test(q) ? (s) => s.replace(/[\s_-]+/g, ' ') : (s) => s;
+q = fold(q);
 const score = (a) => {
-const label = String(a.label).toLowerCase(), hay = (a.search || a.label).toLowerCase();
+const label = fold(String(a.label).toLowerCase()), hay = fold((a.search || a.label).toLowerCase());
 if (label.startsWith(q)) return 4;
 if ((' ' + hay).includes(' ' + q)) return 3;
 if (hay.includes(q)) return 2;
@@ -53281,11 +53341,15 @@ return menu.concat(keys);
 function _paletteCatalogSource(){
 const out = [];
 for (const mode of ['fractal', 'geometry'])
-for (const e of _catalogEntries(mode))
+for (const e of _catalogEntries(mode)) {
+
+
+const alias = (typeof LP_TYPE_ALIASES !== 'undefined' && LP_TYPE_ALIASES[e.type]) || '';
 out.push({ id: 'type:' + e.type, label: e.name, group: mode === 'fractal' ? 'Types' : 'Patterns', where: e.group,
-search: (e.name + ' ' + e.type.replace(/[_-]/g, ' ') + ' ' +
-(mode === 'fractal' ? [FRACTAL_REGISTRY[e.type]?.info?.name, FRACTAL_REGISTRY[e.type]?.label].filter(Boolean).join(' ') : '')).toLowerCase(),
+search: [e.name, e.type, e.type.replace(/[_-]/g, ' '), alias, alias.replace(/[_-]/g, ' '),
+...(mode === 'fractal' ? [FRACTAL_REGISTRY[e.type]?.info?.name, FRACTAL_REGISTRY[e.type]?.label] : [])].filter(Boolean).join(' ').toLowerCase(),
 run: () => _catalogPick(mode, e.type) });
+}
 if (typeof SHOWCASE !== 'undefined') SHOWCASE.forEach((r, i) =>
 out.push({ id: 'showcase:' + i, label: r.title, group: 'Showcase', where: r.mode === 'geometry' ? 'Geometry' : 'Fractal', run: () => _applyShowcase(i) }));
 if (typeof TOURS !== 'undefined') for (const name of Object.keys(TOURS))
@@ -55890,7 +55954,7 @@ function _kfDeltaLabel(kf,prev){
 if(!prev)return '';
 const out=[];
 for(const [k,lbl,fmt] of _KF_DELTA_FIELDS){
-if(kf[k]!==undefined&&prev[k]!==undefined&&kf[k]!==prev[k])out.push(lbl+' '+fmt(kf[k]));
+if(kf[k]!==undefined&&prev[k]!==undefined&&kf[k]!==prev[k])out.push(lbl+' '+(typeof _fmtMinus==='function'?_fmtMinus(fmt(kf[k])):fmt(kf[k])));
 }
 return out.length?' · '+out.join(' '):'';
 }
@@ -61318,7 +61382,12 @@ if (!need.length) return;
 _flattenInProgress = true;
 _refillBlockInput(true);   
 try {
-for (const layer of need) { const [cw, ch] = _layerCachePx(layer, W2, H2); layer.cache = _swapLayerCanvas(layer.cache, await _renderLayerAtPx(layer, cw, ch)); }
+for (const layer of need) {
+const [cw, ch] = _layerCachePx(layer, W2, H2);
+
+try { layer.cache = _swapLayerCanvas(layer.cache, await _renderLayerAtPx(layer, cw, ch)); }
+catch (e) { _swallowed('_populateLayerCachesOnce', e); }
+}
 } finally {
 _refillBlockInput(false);
 _flattenInProgress = false;
@@ -64153,8 +64222,11 @@ if (await _exportRenderAsyncGuarded(fn, 4, true)) return true;
 
 
 
+
+if (typeof _exportOwnsCanvas === 'function' && _exportOwnsCanvas()) {
 try { console.warn('[export] render superseded 8x — canvas may be blank'); } catch (_e) {_swallowed('_exportRenderRetryOnce', _e);}
 if (typeof showToast === 'function') showToast(t('export.repeated-interruption'), 'warning');
+}
 
 
 
@@ -64164,7 +64236,7 @@ if (typeof showToast === 'function') showToast(t('export.repeated-interruption')
 
 
 
-throw new Error('Export render was interrupted by a concurrent render twice in a row — nothing was saved. Try again once the view settles.');
+throw new Error('The render was interrupted by a new render twice in a row, so nothing was saved. Try again once the view settles.');
 }
 
 
@@ -67280,6 +67352,25 @@ const _rk4Out=new Float64Array(3);
 
 
 
+
+
+function _map_clifford(x,y,z,a,b,c,d,out){out[0]=Math.sin(a*y)+c*Math.cos(a*x);out[1]=Math.sin(b*x)+d*Math.cos(b*y);out[2]=z;}
+function _map_dejong(x,y,z,a,b,c,d,out){out[0]=Math.sin(a*y)-Math.cos(b*x);out[1]=Math.sin(c*x)-Math.cos(d*y);out[2]=z;}
+function _map_hopalong(x,y,z,a,b,c,d,out){out[0]=y-Math.sign(x)*Math.sqrt(Math.abs(b*x-c));out[1]=a-x;out[2]=z;}
+function _map_henon(x,y,z,a,b,c,d,out){out[0]=1-a*x*x+y;out[1]=b*x;out[2]=z;}
+
+function _map_pickover(x,y,z,a,b,c,d,out){out[0]=Math.sin(a*y)-z*Math.cos(b*x);out[1]=z*Math.sin(c*x)-Math.cos(d*y);out[2]=Math.sin(x);}
+function _map_tinkerbell(x,y,z,a,b,c,d,out){out[0]=x*x-y*y+a*x+b*y;out[1]=2*x*y+c*x+d*y;out[2]=z;}
+function _map_ikeda(x,y,z,a,b,c,d,out){const tt=0.4-6/(1+x*x+y*y),ct=Math.cos(tt),st=Math.sin(tt);out[0]=1+a*(x*ct-y*st);out[1]=a*(x*st+y*ct);out[2]=z;}
+function _map_gumowski_mira(x,y,z,a,b,c,d,out){const gx=c*x+2*(1-c)*x*x/(1+x*x),nx=y+a*y*(1-b*y*y)+gx;out[0]=nx;out[1]=-x+(c*nx+2*(1-c)*nx*nx/(1+nx*nx));out[2]=z;}
+const _MAP_STEPS={
+attractor_clifford:_map_clifford, attractor_dejong:_map_dejong, attractor_hopalong:_map_hopalong,
+attractor_henon:_map_henon, attractor_pickover:_map_pickover, attractor_tinkerbell:_map_tinkerbell,
+attractor_ikeda:_map_ikeda, attractor_gumowski_mira:_map_gumowski_mira,
+};
+
+
+
 let _attrDensity=null,_attrColorAcc=null,_attrBufSize=0;
 
 function _getAttrBuffers(size){
@@ -67381,6 +67472,7 @@ S.fractalType==='attractor_chua'?_rk4_chua:
 
 
 null);
+const _map=_rk4?null:_MAP_STEPS[S.fractalType];
 
 
 
@@ -67411,21 +67503,7 @@ if((ORIGIN_FIXED_ATTRACTORS.has(S.fractalType)||_duffingOriginFixed) && Math.abs
 
 for(let i=0;i<1000;i++){
 if(_rk4){_rk4(x,y,z,dt,a,b,c,d,_rk4Out);x=_rk4Out[0];y=_rk4Out[1];z=_rk4Out[2];}
-else if(S.fractalType==='attractor_clifford'){const nx=Math.sin(a*y)+c*Math.cos(a*x);const ny=Math.sin(b*x)+d*Math.cos(b*y);x=nx;y=ny;}
-else if(S.fractalType==='attractor_dejong'){const nx=Math.sin(a*y)-Math.cos(b*x);const ny=Math.sin(c*x)-Math.cos(d*y);x=nx;y=ny;}
-else if(S.fractalType==='attractor_hopalong'){const nx=y-Math.sign(x)*Math.sqrt(Math.abs(b*x-c));y=a-x;x=nx;}
-else if(S.fractalType==='attractor_henon'){const nx=1-a*x*x+y;y=b*x;x=nx;}
-else if(S.fractalType==='attractor_pickover'){
-
-
-const nx=Math.sin(a*y)-z*Math.cos(b*x);
-const ny=z*Math.sin(c*x)-Math.cos(d*y);
-const nz=Math.sin(x);
-x=nx;y=ny;z=nz;
-}
-else if(S.fractalType==='attractor_tinkerbell'){const nx=x*x-y*y+a*x+b*y;y=2*x*y+c*x+d*y;x=nx;}
-else if(S.fractalType==='attractor_ikeda'){const tt=0.4-6/(1+x*x+y*y),ct=Math.cos(tt),st=Math.sin(tt),nx=1+a*(x*ct-y*st);y=a*(x*st+y*ct);x=nx;}
-else if(S.fractalType==='attractor_gumowski_mira'){const gx=c*x+2*(1-c)*x*x/(1+x*x),nx=y+a*y*(1-b*y*y)+gx;y=-x+(c*nx+2*(1-c)*nx*nx/(1+nx*nx));x=nx;}
+else if(_map){_map(x,y,z,a,b,c,d,_rk4Out);x=_rk4Out[0];y=_rk4Out[1];z=_rk4Out[2];}
 if(!isFinite(x)||!isFinite(y)||!isFinite(z)){[x,y,z]=_reseedICs();}
 }
 
@@ -67456,7 +67534,7 @@ if(_rot3D){
 let _sz=0,_sn=0,_wx=x,_wy=y,_wz=z;
 for(let i=0;i<60000;i++){
 if(_rk4){_rk4(_wx,_wy,_wz,dt,a,b,c,d,_rk4Out);_wx=_rk4Out[0];_wy=_rk4Out[1];_wz=_rk4Out[2];}
-else{const _nx=Math.sin(a*_wy)-_wz*Math.cos(b*_wx),_ny=_wz*Math.sin(c*_wx)-Math.cos(d*_wy),_nz=Math.sin(_wx);_wx=_nx;_wy=_ny;_wz=_nz;}
+else{_map_pickover(_wx,_wy,_wz,a,b,c,d,_rk4Out);_wx=_rk4Out[0];_wy=_rk4Out[1];_wz=_rk4Out[2];}
 if(!isFinite(_wx)||!isFinite(_wy)||!isFinite(_wz)){const _r=_reseedICs();_wx=_r[0];_wy=_r[1];_wz=_r[2];continue;}
 _sz+=(proj==='xz')?_wy:(proj==='xy')?_wz:_wx;_sn++;   
 }
@@ -67483,35 +67561,13 @@ if(S.fractalType==='attractor_duffing'){px2d=x;py2d=y;}
 else{let wx,wy,wz;if(proj==='xz'){wx=x;wy=z;wz=y;}else if(proj==='xy'){wx=x;wy=y;wz=z;}else{wx=y;wy=z;wz=x;}
 if(_rot3D){const _ax=wx-_cX,_az=wz-_cwz,_nx=_ax*_cRY+_az*_sRY,_nz=-_ax*_sRY+_az*_cRY;px2d=_nx+_cX;py2d=(wy-_cY)*_cRX-_nz*_sRX+_cY;}else{px2d=wx;py2d=wy;}}
 colorT=(Math.atan2(y,x)/(TAU)+0.5);
-} else if(S.fractalType==='attractor_clifford'){
-const nx=Math.sin(a*y)+c*Math.cos(a*x);
-const ny=Math.sin(b*x)+d*Math.cos(b*y);
-x=nx;y=ny;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/(TAU)+0.5);
-} else if(S.fractalType==='attractor_dejong'){
-const nx=Math.sin(a*y)-Math.cos(b*x);
-const ny=Math.sin(c*x)-Math.cos(d*y);
-x=nx;y=ny;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/(TAU)+0.5);
-} else if(S.fractalType==='attractor_hopalong'){
-const nx=y-Math.sign(x)*Math.sqrt(Math.abs(b*x-c));
-y=a-x;x=nx;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/(TAU)+0.5);
-} else if(S.fractalType==='attractor_henon'){
-const nx=1-a*x*x+y;y=b*x;x=nx;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/(TAU)+0.5);
-} else if(S.fractalType==='attractor_pickover'){
+} else if(_map){
+_map(x,y,z,a,b,c,d,_rk4Out);x=_rk4Out[0];y=_rk4Out[1];z=_rk4Out[2];
 
-
-const nx=Math.sin(a*y)-z*Math.cos(b*x);
-const ny=z*Math.sin(c*x)-Math.cos(d*y);
-const nz=Math.sin(x);
-x=nx;y=ny;z=nz;
-{let wx,wy,wz;if(proj==='xz'){wx=x;wy=z;wz=y;}else if(proj==='xy'){wx=x;wy=y;wz=z;}else{wx=y;wy=z;wz=x;}
+if(_map===_map_pickover){let wx,wy,wz;if(proj==='xz'){wx=x;wy=z;wz=y;}else if(proj==='xy'){wx=x;wy=y;wz=z;}else{wx=y;wy=z;wz=x;}
 if(_rot3D){const _ax=wx-_cX,_az=wz-_cwz,_nx=_ax*_cRY+_az*_sRY,_nz=-_ax*_sRY+_az*_cRY;px2d=_nx+_cX;py2d=(wy-_cY)*_cRX-_nz*_sRX+_cY;}else{px2d=wx;py2d=wy;}}
+else{px2d=x;py2d=y;}
 colorT=(Math.atan2(y,x)/(TAU)+0.5);
-} else if(S.fractalType==='attractor_tinkerbell'){
-const nx=x*x-y*y+a*x+b*y;y=2*x*y+c*x+d*y;x=nx;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/(TAU)+0.5);
-} else if(S.fractalType==='attractor_ikeda'){
-const tt=0.4-6/(1+x*x+y*y),ct=Math.cos(tt),st=Math.sin(tt),nx=1+a*(x*ct-y*st);y=a*(x*st+y*ct);x=nx;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/(TAU)+0.5);
-} else if(S.fractalType==='attractor_gumowski_mira'){
-const gx=c*x+2*(1-c)*x*x/(1+x*x),nx=y+a*y*(1-b*y*y)+gx;y=-x+(c*nx+2*(1-c)*nx*nx/(1+nx*nx));x=nx;px2d=x;py2d=y;colorT=(Math.atan2(y,x)/(TAU)+0.5);
 }
 
 
@@ -67656,7 +67712,7 @@ if(ORIGIN_FIXED_ATTRACTORS.has(ft) && Math.abs(x)+Math.abs(y)+Math.abs(z)<1e-9){
 const o=_rk4Out;
 const step = rk4
 ? ()=>{ rk4(x,y,z,dt,a,b,c,d,o); x=o[0]; y=o[1]; z=o[2]; }
-: ()=>{ const nx=Math.sin(a*y)-z*Math.cos(b*x), ny=z*Math.sin(c*x)-Math.cos(d*y), nz=Math.sin(x); x=nx; y=ny; z=nz; };
+: ()=>{ _map_pickover(x,y,z,a,b,c,d,o); x=o[0]; y=o[1]; z=o[2]; };
 for(let i=0;i<1000;i++){ step(); if(!isFinite(x)||!isFinite(y)||!isFinite(z)){x=_rsd[0];y=_rsd[1];z=_rsd[2];} }  
 const pts = new Float32Array(_ATTR_PV_N*3);
 for(let i=0;i<_ATTR_PV_N;i++){ step(); if(!isFinite(x)||!isFinite(y)||!isFinite(z)){x=_rsd[0];y=_rsd[1];z=_rsd[2];} pts[i*3]=x; pts[i*3+1]=y; pts[i*3+2]=z; }

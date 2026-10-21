@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.3.10</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.3.11</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.3.10</h2>
+    <h2>AEON · v7.3.11</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1162,19 +1162,25 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.3.10.</h2>
-    <p class="section-lede">Variation sheets no longer freeze the app · 2026-10-21</p>
+    <h2 class="section-title">What's new<br>in 7.3.11.</h2>
+    <p class="section-lede">Variation sheets fill every cell, and the status bar fits a narrow window · 2026-10-21</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Making a variation sheet no longer freezes the app.</strong> After File &gt; Variation sheet the app could stop answering clicks and keys until the page was reloaded, most often on a flame: two layer renders overlapped and left it waiting for one that had already finished. Each cell's preview now renders at the size it is shown instead of the full frame, so a deep-zoom or 3D sheet no longer blocks the window for many seconds, and one Undo returns the picture you had before the sheet.</li>
-    <li><strong>Keyboard focus stays in the status bar's More menu.</strong> When the bar refolded its cells (a render finishing, the window resizing), focus on More or on a badge inside it fell back to the page, so Enter did nothing. Focus now stays where it was, and Enter on a folded Raise Max Iter raises it.</li>
+    <li><strong>The status bar stays inside its frame in a narrow window.</strong> At about 900 px wide, the bar's end cells, the version among them, ran past both of its edges once the version label gained a digit. The coloring algorithm readout now folds into More with the other optional readouts when room runs out, and a bar that still cannot fit wraps onto a second row instead of running off.</li>
+    <li><strong>A variation sheet of a strange attractor or an IFS fractal fills every cell.</strong> It used to stop after the first cell and show a warning about an interrupted export, though nothing was being exported. A cell that does fail now leaves only that cell empty, and the export warning appears only during an export.</li>
+    <li><strong>A focused status-bar cell keeps keyboard focus when the window narrows.</strong> When a narrower window moved the status bar out of the bottom strip, or folded a focused Raise Max Iter or WebGPU badge into the closed More menu, focus fell back to the page. Focus now stays on the cell, or moves to More when the cell is folded away.</li>
+    <li><strong>Inspector controls keep keyboard focus while the inspector sets up.</strong> When the inspector grouped its sections during startup, a control that already had keyboard focus lost it to the page. It now keeps focus.</li>
+    <li><strong>Captures wait for a deep zoom rendered on the CPU.</strong> When a deep view had to render on the CPU (with orbit traps or a shaded interior on, or on a GPU that fails the precision check), the app reported the render finished while it was still computing, so a gallery thumbnail or a duplicated layer could keep the previous frame. Captures now wait for the new frame.</li>
+    <li><strong>The Center field takes more ways of writing a point.</strong> Typing a center into the coordinate bar now accepts <code>.5</code> without a leading zero, a leading <code>+</code>, the <code>−</code> minus sign the app itself displays, and a pair in parentheses such as <code>(-0.5, 0.6)</code>. Deep-zoom centers keep every typed digit.</li>
+    <li><strong>Catalog search treats a hyphen and a space alike, and Cmd-K finds types by concept.</strong> Typing &quot;reaction-diffusion&quot;, &quot;escape time&quot; or &quot;space-filling&quot; in the catalog now finds the types it names, whichever separator you use. Cmd-K's Types and Patterns also search the same concept words as the catalog, so &quot;strange attractor&quot;, &quot;cellular&quot; or &quot;sacred geometry&quot; list their types there too, and Cmd-K matches a hyphen and a space alike, so &quot;high contrast&quot; finds Toggle high-contrast mode.</li>
+    <li><strong>The new-version dot moves to the Application menu.</strong> The dot that says a new version is out now sits on the Application menu button, and the menu marks its What's new item as New. Opening What's new from there clears both. The AEON wordmark no longer carries the dot, since clicking it opens the guide and never cleared it; it still turns when you hover it. The &quot;A new version is available.&quot; banner gains a What's New button beside Reload: it reloads the same way, then opens the notes for the version you just loaded.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.3.10</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.3.11</p>
 </footer>
 
 <script>
