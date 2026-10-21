@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-bmsxeCuIbW+bKFt9prInO07O5OZFlN2f0E0WjT+1EQE='; font-src 'self'; script-src 'self' 'sha256-xj24oXQItv/UrigMHU+g3A6ShFSSU9X6WYS7/jMkWmg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-bmsxeCuIbW+bKFt9prInO07O5OZFlN2f0E0WjT+1EQE='; font-src 'self'; script-src 'self' 'sha256-bpsSLEqMp50JUWGmYc4zA4W7b61g5/mi+/ah5oDh/mQ=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4259,12 +4259,12 @@
 
 
 
-<!-- build: fa6d47cea504 -->
+<!-- build: 1898ac4a764a -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.9
+ * AEON -- Universal Dynamics Reactor v7.3.10
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7520,7 +7520,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.9';
+const APP_VERSION='7.3.10';
 
 
 
@@ -7529,10 +7529,10 @@ const APP_VERSION='7.3.9';
 
 
 
-const MISSION_BUILD_HASH='fa6d47cea504';
-const MISSION_GIT_SHA='b4150981b6e4384bb83ab66aa04c69cb7f9f3b11';
+const MISSION_BUILD_HASH='1898ac4a764a';
+const MISSION_GIT_SHA='692ce95ed4dd1ac1a2ab6dc94e5636d280999aa3';
 
-const MISSION_RENDER_HASH='3f70fbc0e789';
+const MISSION_RENDER_HASH='f37e0550f941';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -13265,12 +13265,7 @@ _coordBarLiveT = setTimeout(()=>{ try{ bar.setAttribute('aria-live','polite'); }
 }
 if (_newHintsHTML !== _lastHintsHTML) { hints.innerHTML = _newHintsHTML; _lastHintsHTML = _newHintsHTML; }
 _refreshRenderStatusCell();
-if (_barRepainted) {
-_foldCoordBar();
-
-const _ff = _focId && document.getElementById(_focId);
-if (_ff && bar.contains(_ff) && document.activeElement !== _ff) { try { _ff.focus({preventScroll:true}); } catch(_e) { _swallowed('updateCoordBar', _e); } }
-}
+if (_barRepainted) _foldCoordBar(_focId);
 }
 
 
@@ -13298,9 +13293,19 @@ const left = first.getBoundingClientRect().left - parseFloat(getComputedStyle(fi
 const right = last.getBoundingClientRect().right + parseFloat(getComputedStyle(last).marginRight);
 return right - left + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) - bar.clientWidth;
 }
-function _foldCoordBar(){
+
+function _foldCoordBar(focId){
 const bar = document.getElementById('coord-bar');
 if (!bar) return;
+const ae = document.activeElement;
+if (!focId && ae && ae.id && bar.contains(ae)) focId = ae.id;
+_refoldCoordBar(bar);
+
+
+const f = focId && document.getElementById(focId);
+if (f && bar.contains(f) && document.activeElement !== f) { try { f.focus({preventScroll:true}); } catch(_e) { _swallowed('_foldCoordBar', _e); } }
+}
+function _refoldCoordBar(bar){
 bar.classList.remove('coord-bar--wrap');
 const old = bar.querySelector(':scope>.ci-more');
 if (old) {
@@ -14059,7 +14064,7 @@ if(la){la.value=S.lissajousA||3;if(lav)lav.textContent=la.value;}
 if(lb){const _bv=S.lissajousB>0?S.lissajousB:0;lb.value=_bv;if(lbv)lbv.textContent=_bv>0?String(_bv):'auto';}
 if(lp){lp.value=S.lissajousPhase||0;if(lpv)lpv.textContent=Math.round(S.lissajousPhase||0)+'°';}
 const head=document.getElementById('liss-panel-head');
-if(head)head.textContent=S.pattern==='harmonograph'?'Harmonograph':S.pattern==='maurer-rose'?'Maurer Rose':'Lissajous Frequencies';
+if(head)head.textContent=t(S.pattern==='harmonograph'?'pattern.head-harmonograph':S.pattern==='maurer-rose'?'pattern.head-maurer-rose':'pattern.head-lissajous');
 
 
 
@@ -18829,11 +18834,11 @@ const _ab=document.getElementById('anim-btn');
 const _hp=document.getElementById('rp-header-play');
 if(S.geoAnimate){
 if(typeof animFrame!=='undefined' && !animFrame && typeof geoTick==='function')animFrame=requestAnimationFrame(geoTick);
-if(_ab)_ab.textContent='⏸ Pause';
+if(_ab)_ab.textContent=t('motion.pause');
 if(_hp){_hp.textContent='⏸';_hp.setAttribute('aria-pressed','true');_hp.setAttribute('aria-label','Pause animation');_hp.setAttribute('title','Pause animation');}
 } else {
 if(typeof animFrame!=='undefined' && animFrame){cancelAnimationFrame(animFrame);animFrame=null;}
-if(_ab)_ab.textContent='▶ Play';
+if(_ab)_ab.textContent=t('motion.play');
 if(_hp){_hp.textContent='▶';_hp.setAttribute('aria-pressed','false');_hp.setAttribute('aria-label','Play animation');_hp.setAttribute('title','Play animation');}
 }
 }
@@ -20007,7 +20012,7 @@ eb=document.createElement('span');
 eb.className='rp-type-eyebrow';
 infoEl.insertBefore(eb, infoEl.firstChild);
 }
-eb.textContent=`Inspector · ${mode==='geometry'?'Geometry':'Fractal'}`;
+eb.textContent=t(mode==='geometry'?'inspector.title-geometry':'inspector.title-fractal');
 }
 
 
@@ -25786,6 +25791,28 @@ en: {
 'state.share-copy-failed':    'Could not copy, the URL is in the address bar.',
 'report.copied':              'Report copied to clipboard.',
 'report.copy-failed':         'Could not copy the report to the clipboard.',
+'pattern.head-harmonograph':  'Harmonograph',
+'pattern.head-maurer-rose':   'Maurer Rose',
+'pattern.head-lissajous':     'Lissajous Frequencies',
+'inspector.title-geometry':   'Inspector · Geometry',
+'inspector.title-fractal':    'Inspector · Fractal',
+'orbit.pinned-suffix':        ' · pinned (click to release)',
+'gallery.empty-count':        'No saved works yet',
+'motion.pause':               '⏸ Pause',
+'motion.play':                '▶ Play',
+'proof.cap-tone':             'Export, tone only',
+'proof.cap-pixels':           'Export, actual pixels',
+'proof.rendering-tone':       'Rendering a tone proof of the whole picture…',
+'proof.rendering-pixels':     "Rendering a piece at the export's pixel size…",
+'proof.tone-note':            ' Tone only: judge its brightness here; the export itself has finer detail.',
+'proof.unchecked-postfx':     'Brightness not checked: Post-FX is applied to the whole picture after this proof.',
+'proof.brightness-match':     'Brightness matches the screen.',
+'proof.brightness-off':       'The export comes out {pct}% {verdict} than the screen here.',
+'proof.failed':               'The proof could not be rendered: {reason}. You can still export.',
+'lut.none':                   'None',
+'construction.none':          'No construction notes for this figure yet.',
+'construction.source':        'Source: {source}',
+'palette.no-matches':         'No matches',
 
 
 'state.png-restored':         'Restored state from {filename}.',
@@ -44798,7 +44825,7 @@ if(bm.pfxLUT==null){
 S.pfxLUT=false;
 if(typeof _lutData!=='undefined')_lutData=null;
 if(typeof _builtinLUTName!=='undefined')_builtinLUTName=null;
-const _ln=document.getElementById('lut-name');if(_ln)_ln.textContent='None';
+const _ln=document.getElementById('lut-name');if(_ln)_ln.textContent=t('lut.none');
 const _dz=document.getElementById('lut-dropzone');if(_dz){if(typeof t==='function')_dz.textContent=t('postfx.lut-dropzone-prompt');}
 if(typeof _pfxSyncUI==='function')_pfxSyncUI();
 }
@@ -47914,7 +47941,7 @@ ctx2.beginPath(); ctx2.arc(p.x, p.y, 2.6, 0, TAU); ctx2.fill();
 }
 const badge = document.getElementById('orbit-readout');
 if(badge){
-badge.textContent = `orbit: ${label}${_orbitPinned ? ' · pinned (click to release)' : ''}`;
+badge.textContent = `orbit: ${label}${_orbitPinned ? t('orbit.pinned-suffix') : ''}`;
 badge.classList.add('orbit-active'); badge.setAttribute('aria-hidden','false');
 }
 }
@@ -50688,6 +50715,15 @@ const WHATS_NEW_KEY='aeon-changelog-seen';
 
 const WHATS_NEW=[
 {
+version:'7.3.10',
+date:'2026-10-21',
+headline:'Variation sheets no longer freeze the app.',
+items:[
+'After File > Variation sheet the app could stop answering clicks and keys until a reload. Each cell now renders at the size it is shown, so a deep-zoom or 3D sheet no longer blocks the window, and one Undo returns the picture you had before the sheet.',
+'Keyboard focus stays in the status bar\'s More menu when the bar refolds its cells, and Enter on a folded Raise Max Iter raises it.',
+],
+},
+{
 version:'7.3.8',
 date:'2026-10-20',
 headline:'The status bar keeps one row.',
@@ -50749,15 +50785,6 @@ headline:'The status bar shows the version you are running, and the render chip 
 items:[
 'The last cell of the status bar reads the version number, and hovering it names the build it came from, so a screenshot of a problem says which build it was taken on.',
 'The render chip no longer vanishes when clicked. It reports what draws the picture, at what precision, and whether it is finished, and it stays on the bar for the whole session.',
-],
-},
-{
-version:'7.2.3',
-date:'2026-10-18',
-headline:'Point-density exports match the screen at any page shape.',
-items:[
-'A Buddhabrot, IFS, strange attractor or fractal flame exported with Extend at a shape unlike the window, such as a portrait page from a landscape window, now has the same brightness as the screen instead of coming out much brighter.',
-'Motion Studio videos and PNG sequences of these fractals match the screen at every preset, including Vertical.',
 ],
 },
 ];
@@ -51967,7 +51994,7 @@ const flag=document.getElementById('construction-flag'),list=document.getElement
 const id=S.mode==='geometry'?S.pattern:null,decl=id&&CONSTRUCTION[id],fn=id&&PATTERN_DRAWERS.get(id);
 const r=decl&&fn?_constructionRecord(fn,40):null;
 list.textContent='';src.textContent='';
-if(!r){flag.textContent='No construction notes for this figure yet.';return}
+if(!r){flag.textContent=t('construction.none');return}
 const f=constructionFacts(r.ops),lines=[],n=(k,one,many)=>k+' '+(k===1?one:many);
 flag.textContent=decl.note;
 if(f.circles)lines.push(n(f.circles,'circle','circles')+(f.radii===1?', one radius':', '+f.radii+' radii'));
@@ -51980,8 +52007,8 @@ const live=r.keys.filter(k=>!_CONSTRUCTION_STYLE_KEYS.has(k)&&typeof S[k]!=='obj
 if(live.length)lines.push('Live: '+live.join(', '));
 const partial=Object.entries(decl.state||{}).filter(([k,v])=>S[k]!==v).map(([k,v])=>k+' = '+v);
 if(partial.length)lines.push('Partial figure: the full construction is drawn at '+partial.join(', '));
-for(const t of lines){const li=document.createElement('li');li.textContent=t;list.appendChild(li)}
-if(decl.source)src.textContent='Source: '+decl.source;
+for(const line of lines){const li=document.createElement('li');li.textContent=line;list.appendChild(li)}
+if(decl.source)src.textContent=t('construction.source',{source:decl.source});
 }
 
 
@@ -53338,7 +53365,7 @@ if (!_palResults.length && String(q).trim()) {
 const empty = document.createElement('li');
 empty.className = 'cp-empty';
 empty.setAttribute('role', 'presentation');
-empty.textContent = 'No matches';
+empty.textContent = t('palette.no-matches');
 list.appendChild(empty);
 }
 _palResults.forEach((a, i) => {
@@ -53625,8 +53652,9 @@ project.state = structuredClone(variants[0].params);
 
 
 project._stamp = _stampChecksum(project);
+
+if (typeof pushHist === 'function') pushHist();
 _loadProject(project);
-if (typeof _histRebase === 'function') _histRebase();
 _setDocDirty(true);
 if (typeof showToast === 'function') showToast(t('varsheet.made', { n: project.layers.length }), 'success');
 }
@@ -54193,7 +54221,7 @@ function renderGalleryCount(){
 const arr=_galleryLoad();
 const el=document.getElementById('gallery-count');
 if(!el)return;
-el.textContent=arr.length===0?'No saved works yet'
+el.textContent=arr.length===0?t('gallery.empty-count')
 :`${arr.length} saved work${arr.length===1?'':'s'}`;
 }
 
@@ -57607,7 +57635,7 @@ _syncAnimUI();
 
 function _syncAnimUI(){
 const btn=document.getElementById('anim-btn');
-if(btn) btn.textContent = S.geoAnimate ? '⏸ Pause' : '▶ Play';
+if(btn) btn.textContent = t(S.geoAnimate ? 'motion.pause' : 'motion.play');
 const cb=document.getElementById('ce-play-btn');
 const sb=document.getElementById('ce-step-btn');
 if(cb){cb.textContent=S.cePlay?'⏸':'▶';cb.setAttribute('aria-pressed',S.cePlay?'true':'false');cb.setAttribute('aria-label',S.cePlay?'Pause time evolution':'Play time evolution');}
@@ -58776,7 +58804,10 @@ async function _refreshMissingLayerThumbsOnce() {
 
 
 for (const layer of COMP_LAYERS.filter(l => !l.thumb)) {
-const lt = await _renderLayerToCanvas(layer);
+
+const W2 = cv.width, H2 = cv.height, dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+const [tw, th] = _layerRenderPx(layer, W2, H2, Math.ceil(36 * dpr) / Math.min(W2, H2));
+const lt = await _renderLayerAtPx(layer, tw, th);
 const tc = document.createElement('canvas');
 tc.width = 36; tc.height = 36;
 _drawCover(tc.getContext('2d'), lt, 36, 36);
@@ -58962,7 +58993,7 @@ layerCanvas = layer._taCache;
 layerCanvas = activeImg;
 if (layer.transparentBg && typeof _scheduleActiveTATransparent === 'function') _scheduleActiveTATransparent();
 }
-} else if (layer.cache && layer.cache.width === W2 && layer.cache.height === H2) {
+} else if (layer.cache && layer.cache.width && _layerCacheFits(layer, W2, H2)) {
 layerCanvas = layer.cache;
 } else {
 
@@ -60023,7 +60054,10 @@ if (_layerMoveDrag) { _layerMoveDrag = null; _pushLayerHist(); }
 let _taRefreshTimer = null;
 function _scheduleActiveTATransparent() {
 clearTimeout(_taRefreshTimer);
-_taRefreshTimer = setTimeout(async () => {
+
+_taRefreshTimer = setTimeout(() => { _thumbRefreshChain = _thumbRefreshChain.then(_activeTATransparentOnce).catch(() => {}); }, 140);
+}
+async function _activeTATransparentOnce() {
 const layer = COMP_LAYERS[_activeCompLayerIdx];
 if (!layer || !layer.transparentBg || !S.liveComposite) return;
 if (COMP_LAYERS.filter(l => l.visible).length < 2) return;
@@ -60047,7 +60081,6 @@ cur._taCache = _swapLayerCanvas(cur._taCache, tc);
 
 if (typeof _recompositeOnScreenPostFX === 'function') _recompositeOnScreenPostFX();
 else if (typeof _applyLiveCompositeOnScreen === 'function') _applyLiveCompositeOnScreen();
-}, 140);
 }
 
 function setLayerOpacity(val) {
@@ -60087,7 +60120,6 @@ let _sWriteGen = 0;
 async function _renderLayerToCanvas(layer, _densScale, _exportTile, signal) {
 const savedS = structuredClone(S);
 const _savedSGen = _sWriteGen;   
-const _prevComposite = window._renderingLayerForComposite;
 
 
 
@@ -60111,7 +60143,9 @@ const swappedIn = {}; for (const k of Object.keys(S)) swappedIn[k] = JSON.string
 
 
 
-window._renderingLayerForComposite = true;
+
+
+window._renderingLayerForComposite = (window._renderingLayerForComposite | 0) + 1;
 try {
 
 
@@ -60218,7 +60252,7 @@ const restore = {};
 for (const k of Object.keys(savedS)) if (JSON.stringify(S[k]) === swappedIn[k]) restore[k] = savedS[k];
 Object.assign(S, restore);
 }
-window._renderingLayerForComposite = _prevComposite;
+window._renderingLayerForComposite = Math.max(0, (window._renderingLayerForComposite | 0) - 1);
 _exportTransparentAlpha = _prevLayerTA;
 _replayHeldLayerSwapEvents();
 }
@@ -61237,6 +61271,41 @@ const _run = _thumbRefreshChain.then(() => _populateLayerCachesOnce());
 _thumbRefreshChain = _run.catch(() => {});   
 return _run;
 }
+
+
+
+
+
+function _layerRenderPx(layer, W2, H2, s) {
+const p = (layer && layer.params) || {};
+if (!(s > 0 && s < 1) || (p.mode !== 'geometry' && /^(buddhabrot|attractor_|fractal_flame|ifs_)/.test(p.fractalType || ''))) return [W2, H2];
+return [Math.max(1, Math.ceil(W2 * s)), Math.max(1, Math.ceil(H2 * s))];
+}
+function _layerCachePx(layer, W2, H2) {
+const t = layer && layer.transform;
+return _layerRenderPx(layer, W2, H2, t && typeof t.scale === 'number' ? t.scale : 1);
+}
+
+function _layerCacheFits(layer, W2, H2) {
+const c = layer.cache, [w, h] = _layerCachePx(layer, W2, H2);
+return !!c && ((c.width === w && c.height === h) || (c.width === W2 && c.height === H2));
+}
+
+async function _renderLayerAtPx(layer, w, h) {
+const W2 = cv.width, H2 = cv.height;
+if (w === W2 && h === H2) return _renderLayerToCanvas(layer);
+
+const gW = W, gH = H, gTile = _vpTile, k = w / W2;
+window._renderingLayerForComposite = (window._renderingLayerForComposite | 0) + 1;
+cv.width = w; cv.height = h; W = w; H = h;
+if (gTile && gTile.w === W2) _vpTile = { ...gTile, w, tx: gTile.tx * k, fullW: gTile.fullW * k };
+try { return await _renderLayerToCanvas(layer); }
+finally {
+cv.width = W2; cv.height = H2; W = gW; H = gH; _vpTile = gTile;
+window._renderingLayerForComposite = Math.max(0, (window._renderingLayerForComposite | 0) - 1);
+_replayHeldLayerSwapEvents();   
+}
+}
 async function _populateLayerCachesOnce() {
 if (_flattenInProgress) return;
 if (typeof COMP_LAYERS === 'undefined' || COMP_LAYERS.length < 2) return;
@@ -61244,12 +61313,12 @@ const W2 = cv.width, H2 = cv.height;
 
 
 const need = COMP_LAYERS.filter((l, i) => l.visible && i !== _activeCompLayerIdx
-&& !(l.cache && l.cache.width === W2 && l.cache.height === H2));
+&& !(l.cache && _layerCacheFits(l, W2, H2)));
 if (!need.length) return;
 _flattenInProgress = true;
 _refillBlockInput(true);   
 try {
-for (const layer of need) layer.cache = _swapLayerCanvas(layer.cache, await _renderLayerToCanvas(layer));
+for (const layer of need) { const [cw, ch] = _layerCachePx(layer, W2, H2); layer.cache = _swapLayerCanvas(layer.cache, await _renderLayerAtPx(layer, cw, ch)); }
 } finally {
 _refillBlockInput(false);
 _flattenInProgress = false;
@@ -62525,7 +62594,7 @@ function _clearLutCache(){
 _lutData=null;
 _builtinLUTName=null;
 const nameEl=document.getElementById('lut-name');
-if(nameEl)nameEl.textContent='None';
+if(nameEl)nameEl.textContent=t('lut.none');
 const dz=document.getElementById('lut-dropzone');
 if(dz){
 
@@ -64932,8 +65001,8 @@ const cap=document.getElementById('export-proof-art-cap'), go=document.getElemen
 _proofPanel(true);
 pn.setAttribute('data-verdict','pending');
 if(go)go.disabled=true;
-cap.textContent=kind==='tone'?'Export, tone only':'Export, actual pixels';
-verdictEl.textContent=kind==='tone'?'Rendering a tone proof of the whole picture…':'Rendering a piece at the export\'s pixel size…';
+cap.textContent=t(kind==='tone'?'proof.cap-tone':'proof.cap-pixels');
+verdictEl.textContent=t(kind==='tone'?'proof.rendering-tone':'proof.rendering-pixels');
 _proofPaint('export-proof-screen',null); _proofPaint('export-proof-art',null);
 const loops=(typeof _snapshotAndStopBackgroundLoops==='function')?_snapshotAndStopBackgroundLoops():[];
 _exportAbortController=new AbortController();
@@ -64950,16 +65019,16 @@ shown=document.createElement('canvas'); shown.width=res.canvas.width; shown.heig
 _densityBlit(shown.getContext('2d'),screen,shown.width,shown.height);
 }
 _proofPaint('export-proof-art',res.canvas); _proofPaint('export-proof-screen',shown);
-const tone=kind==='tone'?' Tone only: judge its brightness here; the export itself has finer detail.':'';
-if(!screen){ pn.setAttribute('data-verdict','unchecked'); verdictEl.textContent='Brightness not checked: Post-FX is applied to the whole picture after this proof.'+tone; return; }
+const tone=kind==='tone'?t('proof.tone-note'):'';
+if(!screen){ pn.setAttribute('data-verdict','unchecked'); verdictEl.textContent=t('proof.unchecked-postfx')+tone; return; }
 const b=_proofBrightness(res.canvas,screen);
 pn.setAttribute('data-verdict',b.verdict);
 pn.setAttribute('data-lum',b.proof+' '+b.screen);
-verdictEl.textContent=(b.verdict==='match'?'Brightness matches the screen.':`The export comes out ${b.pct}% ${b.verdict} than the screen here.`)+tone;
+verdictEl.textContent=(b.verdict==='match'?t('proof.brightness-match'):t('proof.brightness-off',{pct:b.pct,verdict:b.verdict}))+tone;
 }catch(e){
 if(e&&e.name==='AbortError'){ _proofPanel(false); return; }
 pn.setAttribute('data-verdict','failed');
-verdictEl.textContent='The proof could not be rendered: '+((e&&e.message)||e)+'. You can still export.';
+verdictEl.textContent=t('proof.failed',{reason:(e&&e.message)||e});
 }finally{
 _exportAbortController=null;
 if(go)go.disabled=false;
