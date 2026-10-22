@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-QUgDUGYDyR2yI5BaQCHCraWlSSbBlqPIOUb7RB9GIQg='; font-src 'self'; script-src 'self' 'sha256-rZ8gC9iMQ5zZ+r0yXlW2hM9+jp6kv1w4WUUlueOi/uw=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-QUgDUGYDyR2yI5BaQCHCraWlSSbBlqPIOUb7RB9GIQg='; font-src 'self'; script-src 'self' 'sha256-c68U304LJFeOrFxOd2akLqqXycEz++vkqgwcgJDibr0=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4262,12 +4262,12 @@
 
 
 
-<!-- build: 9538f37e92c1 -->
+<!-- build: 136309e9423b -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.11
+ * AEON -- Universal Dynamics Reactor v7.3.12
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7523,7 +7523,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.11';
+const APP_VERSION='7.3.12';
 
 
 
@@ -7532,10 +7532,10 @@ const APP_VERSION='7.3.11';
 
 
 
-const MISSION_BUILD_HASH='9538f37e92c1';
-const MISSION_GIT_SHA='4ec69b33d5ec0e8acf3677b9770d0259777f5b8c';
+const MISSION_BUILD_HASH='136309e9423b';
+const MISSION_GIT_SHA='75a03260aa08f7249601ae75b8687173a284b261';
 
-const MISSION_RENDER_HASH='2764b9f76e48';
+const MISSION_RENDER_HASH='15360c883096';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -10805,8 +10805,11 @@ await new Promise(r=>setTimeout(r,0));
 const nIter=Math.min(8000000,S.ifsIter||200000),   
 scale=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom),
 nT=def.tf.length,
-density=_floatAcquire(W*H),
-colorAcc=_floatAcquire(W*H);
+_rs=(typeof _densityResumeFor==='function'?_densityResumeFor(opts.signal):null),_rsS=_rs&&_rs.state,
+density=_rsS?_rsS.density:_floatAcquire(W*H),
+colorAcc=_rsS?_rsS.colorAcc:_floatAcquire(W*H);
+if(_rsS)_rs.state=null;
+let _rsKept=false;   
 try{
 let maxD=0;
 const cumP=[];
@@ -10822,7 +10825,7 @@ if(!(_pSum>0)){_rawPr=def.pr;_pSum=def.pr.reduce((a,b)=>a+b,0);}
 for(const p of _rawPr){ps+=p/_pSum;cumP.push(ps);}
 const _tf=(S.ifsCustomTf&&S.ifsCustomTf.length===nT&&S.fractalType!=='ifs_polygon')?S.ifsCustomTf:def.tf;
 let x=.1,y=.1;
-const rng=mulberry32(S.seed);
+let rng=mulberry32(S.seed);
 
 
 
@@ -10832,7 +10835,9 @@ let _lastTi=-1;
 
 
 const CHUNK=opts.animate?Math.min(40000,Math.max(5000,Math.ceil(nIter/90))):60000;
-for(let base=0;base<nIter;base+=CHUNK){
+if(_rsS){x=_rsS.x;y=_rsS.y;rng=_rsS.rng;_lastTi=_rsS.lastTi;maxD=_rsS.maxD;}
+for(let base=_rsS?_rsS.base:0;base<nIter;base+=CHUNK){
+if(_rs){_rs.done=base;_rs.total=nIter;if(t!==tok||opts.signal.aborted){_rs.state={base,x,y,rng,lastTi:_lastTi,maxD,density,colorAcc,free(){_floatRelease(density);_floatRelease(colorAcc);}};_rsKept=true;}}
 
 
 
@@ -10871,7 +10876,7 @@ if(density[idx]>maxD)maxD=density[idx];
 
 
 if(_dueForProgressivePaint(opts.signal,end>=nIter)) renderIFSFrame(density,colorAcc,maxD);
-await new Promise(r=>opts.animate?requestAnimationFrame(()=>r()):setTimeout(r,0));
+if(!opts.signal||end<nIter)await new Promise(r=>opts.animate?requestAnimationFrame(()=>r()):setTimeout(r,0));   
 }
 if(t===tok){
 _setPillProgress('IFS',null);
@@ -10882,8 +10887,7 @@ if(typeof _announceRenderDone==='function')_announceRenderDone();
 _bumpRenderSeq();   
 }
 }finally{
-_floatRelease(density);
-_floatRelease(colorAcc);
+if(!_rsKept){_floatRelease(density);_floatRelease(colorAcc);}
 }
 }
 
@@ -18666,10 +18670,12 @@ const TOTAL=S.buddhabrotSamples||800000, CHUNK=40000;
 
 const orbX=new Float32Array(mi+2), orbY=new Float32Array(mi+2);
 
-const rng=mulberry32(S.seed);
+let rng=mulberry32(S.seed);
+
+const _rs=(typeof _densityResumeFor==='function'?_densityResumeFor(signal):null),_rsS=_rs&&_rs.state;let _rsKept=false;if(_rsS){_rs.state=null;rng=_rsS.rng;maxR=_rsS.maxR;maxG=_rsS.maxG;maxB=_rsS.maxB;}
 
 try {
-rBuf=_floatAcquire(W*H); gBuf=_floatAcquire(W*H); bBuf=_floatAcquire(W*H);
+if(_rsS)({rBuf,gBuf,bBuf}=_rsS);else{rBuf=_floatAcquire(W*H); gBuf=_floatAcquire(W*H); bBuf=_floatAcquire(W*H);}
 bufs=[rBuf,gBuf,bBuf];
 
 
@@ -18721,7 +18727,8 @@ if(!_buddhaImgData || _buddhaImgData.data!==d || _buddhaImgData.width!==W || _bu
 ctx.putImageData(_buddhaImgData,0,0);
 _u8cRelease(d);
 };
-for(let base=0; base<TOTAL; base+=CHUNK){
+for(let base=_rsS?_rsS.base:0; base<TOTAL; base+=CHUNK){
+if(_rs){_rs.done=base;_rs.total=TOTAL;if(t!==tok||signal.aborted){const b3=[rBuf,gBuf,bBuf];_rs.state={base,rng,maxR,maxG,maxB,rBuf,gBuf,bBuf,free(){b3.forEach(_floatRelease);}};_rsKept=true;}}
 if(t!==tok){_pill().classList.remove('show');return}
 _checkAbort(signal);  
 _setPillProgress(anti?'ANTI-BUDDHABROT':'BUDDHABROT', ((base/1e6).toFixed(2))+'M / '+((TOTAL/1e6).toFixed(1))+'M samples');
@@ -18833,7 +18840,7 @@ await new Promise(r=>setTimeout(r,0));
 }
 if(signal) _paintBuddha();   
 if(t===tok){_setPillProgress(null,null);_pill().classList.remove('show');if(typeof _announceRenderDone==='function')_announceRenderDone();updateCoordBar();_applyPostFXOnScreen();_bumpRenderSeq();}
-} finally { _floatRelease(rBuf); _floatRelease(gBuf); _floatRelease(bBuf); }
+} finally { if(!_rsKept){_floatRelease(rBuf); _floatRelease(gBuf); _floatRelease(bBuf);} }
 }
 
 
@@ -50764,6 +50771,17 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.3.12',
+date:'2026-10-21',
+headline:'Density variation sheets answer you while they render, and videos keep transparent layers.',
+items:[
+'A variation sheet of a Buddhabrot, attractor, IFS or flame shows a quick draft of every cell within a second or two, then sharpens each one in the background while your clicks and keys take effect at once.',
+'A cell picks up where it left off when you interact, and ends exactly as an uninterrupted render would.',
+'An export started while a sheet refines its cells no longer fails with an interrupted render, and the layer previews no longer render at the export\'s size.',
+'Videos and PNG sequences keep a layer\'s transparent background, so each frame matches a still export of the same moment.',
+],
+},
+{
 version:'7.3.11',
 date:'2026-10-21',
 headline:'Variation sheets fill every cell, and the status bar fits a narrow window.',
@@ -50827,15 +50845,6 @@ headline:'The getting-started guide is on screen from the first moment, and the 
 items:[
 'On a first visit the getting-started guide shows its first step together with the rest of the page, instead of a few seconds later with the first picture.',
 'A first visit also points to one useful math control for the form on screen and takes you to it without changing the picture.',
-],
-},
-{
-version:'7.3.2',
-date:'2026-10-19',
-headline:'Copy Link says when a link cannot carry a piece, and a missing fractal type is named instead of hidden.',
-items:[
-'Copy Link no longer hands out a link that would open a different picture. For a piece with keyframes, more than one layer, or flame transforms it says why, and the Export menu offers Save Project (.aeon) instead.',
-'Opening a project, gallery entry or layer saved in a newer version names any fractal type this version does not have, along with the version you are running. The rest of the file still loads; before, the missing type quietly became Mandelbrot.',
 ],
 },
 ];
@@ -56678,6 +56687,7 @@ if(o.shouldAbort&&o.shouldAbort()){aborted=true;break;}
 const elapsed=(f===o.totalFrames-1)?o.totalSec:f*dt;
 _animInterpolate(elapsed);
 _cancelScheduledRender();
+if(typeof _motionFrameTransparentActive==='function')await _motionFrameTransparentActive();   
 
 
 
@@ -57050,6 +57060,7 @@ if(st)st.textContent=`Rendering ${i+1}/${totalFrames}…`;
 const _pngFrameT=(i===totalFrames-1)?totalSec:i/fps;
 _animInterpolate(_pngFrameT);
 _cancelScheduledRender();
+if(typeof _motionFrameTransparentActive==='function')await _motionFrameTransparentActive();   
 
 
 if(totalSec>0)S.flameMotionTime=Math.min(1, _pngFrameT/totalSec);
@@ -58871,7 +58882,8 @@ for (const layer of COMP_LAYERS.filter(l => !l.thumb)) {
 
 const W2 = cv.width, H2 = cv.height, dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
 const [tw, th] = _layerRenderPx(layer, W2, H2, Math.ceil(36 * dpr) / Math.min(W2, H2));
-const lt = await _renderLayerAtPx(layer, tw, th);
+
+const lt = await (typeof _isDensityLayer === 'function' && _isDensityLayer(layer) ? _densityCellRender(layer, _DENSITY_PREVIEW_SCALE) : _renderLayerAtPx(layer, tw, th));
 const tc = document.createElement('canvas');
 tc.width = 36; tc.height = 36;
 _drawCover(tc.getContext('2d'), lt, 36, 36);
@@ -59150,6 +59162,9 @@ return _deferDuringLayerSwap(() => _refitCanvas(S.mode === 'fractal' && VIEWPORT
 function _holdDuringLayerSwap(e) {
 if (e.__aeonReplay || !_layerSwapInProgress() || !_swapHoldsEvent(e)) return;   
 const t = e.target;
+
+
+if (typeof _densityRefineAbort === 'function') _densityRefineAbort();
 e.preventDefault(); e.stopImmediatePropagation();
 const replay = () => { const c = new e.constructor(e.type, e); c.__aeonReplay = true; t.dispatchEvent(c); };   
 if (e.type === 'input' || e.type === 'change') _deferDuringLayerSwap(replay, ((t.__aeonSwapKeys = t.__aeonSwapKeys || {})[e.type] = t.__aeonSwapKeys[e.type] || {})); else _swapDeferred.push(replay);
@@ -60126,10 +60141,15 @@ const layer = COMP_LAYERS[_activeCompLayerIdx];
 if (!layer || !layer.transparentBg || !S.liveComposite) return;
 if (COMP_LAYERS.filter(l => l.visible).length < 2) return;
 if (typeof cv === 'undefined' || !cv) return;
+
+
+
+if (typeof _exportOwnsCanvas === 'function' && _exportOwnsCanvas()) return;
 const W2 = cv.width, H2 = cv.height;
 let tc = null;
 try { tc = await _renderLayerToCanvas({ params: structuredClone(S), transparentBg: true }); }
 catch { return; }
+if (typeof _exportOwnsCanvas === 'function' && _exportOwnsCanvas()) { _freeCanvas(tc); return; }   
 
 
 
@@ -60181,7 +60201,28 @@ _pushLayerHistDebounced();
 let _sWriteGen = 0;
 
 
+
+
+
+
+
+
+
+
+let _layerRenderBusy = false;
+const _layerRenderWaiters = [];
+function _layerRenderLocked(fn) {
+const go = async () => {
+try { return await fn(); }
+finally { const next = _layerRenderWaiters.shift(); if (next) next(); else _layerRenderBusy = false; }
+};
+if (!_layerRenderBusy) { _layerRenderBusy = true; return go(); }
+return new Promise((r) => _layerRenderWaiters.push(r)).then(go);
+}
 async function _renderLayerToCanvas(layer, _densScale, _exportTile, signal) {
+return _layerRenderLocked(() => _renderLayerToCanvasOnce(layer, _densScale, _exportTile, signal));
+}
+async function _renderLayerToCanvasOnce(layer, _densScale, _exportTile, signal) {
 const savedS = structuredClone(S);
 const _savedSGen = _sWriteGen;   
 
@@ -60270,8 +60311,11 @@ if (_ft.startsWith('attractor_') || _ft.startsWith('ifs_') || (signal && (_budEx
 
 
 
+
+if (!layer.keepScreen) {
 if (typeof glcv !== 'undefined' && glcv) glcv.classList.remove('is-shown');
 ctx.fillStyle = S.bgColor; ctx.fillRect(0, 0, W, H);
+}
 
 
 
@@ -60297,7 +60341,7 @@ finally { _buddhaDensityComp = 1; }
 
 
 const src = (S.mode === 'geometry') ? cv
-: ((typeof glcv !== 'undefined') && glcv && glcv.classList.contains('is-shown') ? glcv : cv);
+: (!layer.keepScreen && (typeof glcv !== 'undefined') && glcv && glcv.classList.contains('is-shown') ? glcv : cv);
 const tmp = document.createElement('canvas');
 tmp.width = cv.width; tmp.height = cv.height;
 tmp.getContext('2d').drawImage(src, 0, 0);
@@ -60335,7 +60379,12 @@ catch (e) { console.warn('composite export: WGPU Buddhabrot layer failed, render
 }
 
 
+
+
 async function _compositeLayersToExport(octx, W2, H2, alphaCapable, signal) {
+return _layerRenderLocked(() => _compositeLayersToExportHeld(octx, W2, H2, alphaCapable, signal));
+}
+async function _compositeLayersToExportHeld(octx, W2, H2, alphaCapable, signal) {
 const visible = COMP_LAYERS.filter(l => l.visible);
 if (typeof _exportBgFill === 'function') _exportBgFill(octx, W2, H2, alphaCapable);
 else { octx.fillStyle = S.bgColor || '#090909'; octx.fillRect(0, 0, W2, H2); }
@@ -60377,7 +60426,7 @@ if (signal && signal.aborted) throw new DOMException('Composite export aborted',
 
 
 const src = (layer === activeLayer) ? { params: liveState, transparentBg: layer.transparentBg } : layer;
-const tmp = await _densityLayerToCanvas(src, _densScale, true, signal);   
+const tmp = await _densityLayerToCanvasHeld(src, _densScale, true, signal);   
 octx.globalAlpha = (typeof layer.opacity === 'number') ? layer.opacity : 1;
 octx.globalCompositeOperation = _validBlend(layer.blend);
 _drawLayerTransformed(octx, tmp, layer.transform, _offX, _offY, _dW, _dH);
@@ -60432,7 +60481,21 @@ catch (_e) {  }
 }
 } finally { if (typeof _endExportPaint === 'function') _endExportPaint(); }
 }
+
+
+
+let _motionFrameTAWritten = null;
+async function _motionFrameTransparentActive() {
+const layer = COMP_LAYERS[_activeCompLayerIdx];
+if (!layer || !layer.transparentBg || !S.liveComposite || COMP_LAYERS.filter(l => l.visible).length < 2) return;
+const tc = await _renderLayerToCanvas({ params: structuredClone(S), transparentBg: true });
+layer._taCache = _swapLayerCanvas(layer._taCache, tc);
+_motionFrameTAWritten = layer;
+}
 function _restoreLayerCachesAfterMotionExport() {
+
+
+if (_motionFrameTAWritten) { _motionFrameTAWritten._taCache = _swapLayerCanvas(_motionFrameTAWritten._taCache, null); _motionFrameTAWritten = null; }
 if (!_motionExportCacheSave) return;
 
 
@@ -61331,6 +61394,7 @@ throw e;
 
 
 function _populateLayerCaches() {
+if (typeof _densityRefineAbort === 'function') _densityRefineAbort();   
 const _run = _thumbRefreshChain.then(() => _populateLayerCachesOnce());
 _thumbRefreshChain = _run.catch(() => {});   
 return _run;
@@ -61356,24 +61420,31 @@ return !!c && ((c.width === w && c.height === h) || (c.width === W2 && c.height 
 }
 
 async function _renderLayerAtPx(layer, w, h) {
+if (w === cv.width && h === cv.height) return _renderLayerToCanvas(layer);
+
+return _layerRenderLocked(async () => {
 const W2 = cv.width, H2 = cv.height;
-if (w === W2 && h === H2) return _renderLayerToCanvas(layer);
+if (w === W2 && h === H2) return _renderLayerToCanvasOnce(layer);
 
 const gW = W, gH = H, gTile = _vpTile, k = w / W2;
 window._renderingLayerForComposite = (window._renderingLayerForComposite | 0) + 1;
 cv.width = w; cv.height = h; W = w; H = h;
 if (gTile && gTile.w === W2) _vpTile = { ...gTile, w, tx: gTile.tx * k, fullW: gTile.fullW * k };
-try { return await _renderLayerToCanvas(layer); }
+try { return await _renderLayerToCanvasOnce(layer); }
 finally {
 cv.width = W2; cv.height = H2; W = gW; H = gH; _vpTile = gTile;
 window._renderingLayerForComposite = Math.max(0, (window._renderingLayerForComposite | 0) - 1);
 _replayHeldLayerSwapEvents();   
 }
+});
 }
 async function _populateLayerCachesOnce() {
+if (typeof _scheduleDensityRefine === 'function') _scheduleDensityRefine();   
 if (_flattenInProgress) return;
 if (typeof COMP_LAYERS === 'undefined' || COMP_LAYERS.length < 2) return;
-const W2 = cv.width, H2 = cv.height;
+
+
+const [W2, H2] = await _layerRenderLocked(async () => [cv.width, cv.height]);
 
 
 const need = COMP_LAYERS.filter((l, i) => l.visible && i !== _activeCompLayerIdx
@@ -61385,7 +61456,11 @@ try {
 for (const layer of need) {
 const [cw, ch] = _layerCachePx(layer, W2, H2);
 
-try { layer.cache = _swapLayerCanvas(layer.cache, await _renderLayerAtPx(layer, cw, ch)); }
+
+try {
+const c = typeof _isDensityLayer === 'function' && _isDensityLayer(layer) ? await _densityCellRender(layer, _DENSITY_PREVIEW_SCALE) : await _renderLayerAtPx(layer, cw, ch);
+layer.cache = _swapLayerCanvas(layer.cache, c);
+}
 catch (e) { _swallowed('_populateLayerCachesOnce', e); }
 }
 } finally {
@@ -64932,18 +65007,92 @@ finally{ restore(); cv.width=ow;cv.height=oh;W=gW;H=gH; if(big.width)_densityBli
 }
 
 
+
 async function _densityLayerToCanvas(layer,densScale,exportTile,signal){
-const p=(layer&&layer.params)||{},ow=cv.width,oh=cv.height;
-const [dw,dh]=(densScale>0&&p.mode!=='geometry')?_densityRenderSize(p.fractalType,ow,oh,_exportScreenPx):[ow,oh];
-if(dw===ow&&dh===oh)return _renderLayerToCanvas(layer,densScale,exportTile,signal);
+return _layerRenderLocked(()=>_densityLayerToCanvasHeld(layer,densScale,exportTile,signal));
+}
+
+async function _densityLayerToCanvasHeld(layer,densScale,exportTile,signal){
+const p=(layer&&layer.params)||{};
+const ow=cv.width,oh=cv.height,[dw,dh]=(densScale>0&&p.mode!=='geometry')?_densityRenderSize(p.fractalType,ow,oh,_exportScreenPx):[ow,oh];
+if(dw===ow&&dh===oh)return _renderLayerToCanvasOnce(layer,densScale,exportTile,signal);
 const gW=W,gH=H;let big=null;
 cv.width=dw;cv.height=dh;W=dw;H=dh;
-try{ big=await _renderLayerToCanvas(layer,densScale*(dw*dh)/(ow*oh),exportTile,signal); }
+try{ big=await _renderLayerToCanvasOnce(layer,densScale*(dw*dh)/(ow*oh),exportTile,signal); }
 finally{ cv.width=ow;cv.height=oh;W=gW;H=gH; }
 const out=document.createElement('canvas');out.width=ow;out.height=oh;
 _densityBlit(out.getContext('2d'),big,ow,oh); big.width=big.height=0;
 return out;
 }
+
+
+
+
+
+
+
+
+
+const _DENSITY_PREVIEW_SCALE=1/16,_DENSITY_REFINE_IDLE_MS=150;
+let _densityRefineCtl=null,_densityRefineTimer=0,_densityLastInputMs=-Infinity;
+let _densityResume=null;   
+
+function _densityResumeFor(signal){const r=_densityResume;return r&&signal&&r.signal===signal?r:null;}
+function _densityResumeDrop(){const r=_densityResume;_densityResume=null;if(r&&r.state&&r.state.free)r.state.free();}
+
+function _densityRefineProgress(){const r=_densityResume;return r?{key:r.key,done:r.done,total:r.total}:null;}
+
+
+const _densityRefineStats={passes:0,completed:0,aborts:0,saved:0,resumed:0};
+function _isDensityLayer(layer){const p=(layer&&layer.params)||{};return p.mode!=='geometry'&&_DENSITY_EXPORT_RE.test(p.fractalType||'');}
+
+async function _densityCellRender(layer,scale,signal){
+const c=await _renderLayerToCanvas({params:layer.params,transparentBg:layer.transparentBg,keepScreen:true},scale,false,signal||new AbortController().signal);
+if(scale<1)c._densityPreview=true;
+return c;
+}
+function _densityRefineAbort(){if(_densityRefineCtl)_densityRefineCtl.abort();}
+function _scheduleDensityRefine(ms){
+clearTimeout(_densityRefineTimer);
+_densityRefineTimer=setTimeout(()=>{_thumbRefreshChain=_thumbRefreshChain.then(_densityRefineOnce).catch(()=>{});},ms==null?_DENSITY_REFINE_IDLE_MS:ms);
+}
+async function _densityRefineOnce(){
+if(typeof COMP_LAYERS==='undefined')return;
+const layer=COMP_LAYERS.find((l,i)=>i!==_activeCompLayerIdx&&l.visible&&l.cache&&l.cache._densityPreview);
+if(!layer){_densityResumeDrop();return;}   
+if(!_compositeWouldEngage())return;   
+const idle=performance.now()-_densityLastInputMs;
+if(idle<_DENSITY_REFINE_IDLE_MS||!_renderSettled()||_layerSwapInProgress()||_exportOwnsCanvas()){_scheduleDensityRefine(Math.max(50,_DENSITY_REFINE_IDLE_MS-idle));return;}
+const W2=cv.width,H2=cv.height,key=JSON.stringify(layer.params),ctl=_densityRefineCtl=new AbortController();
+const rkey=key+'@'+W2+'x'+H2;
+if(!_densityResume||_densityResume.key!==rkey){_densityResumeDrop();_densityResume={key:rkey,signal:null,state:null,done:0,total:0};}
+_densityResume.signal=ctl.signal;
+const held=_densityResume.state;_densityRefineStats.passes++;
+let c=null;
+try{c=await _densityCellRender(layer,1,ctl.signal);}
+catch(e){
+const p=_pill();if(p)p.classList.remove('show','cancellable');
+
+if(!ctl.signal.aborted){_swallowed('_densityRefineOnce',e);if(layer.cache)layer.cache._densityPreview=false;_densityResumeDrop();}
+}finally{_densityRefineCtl=null;if(_densityResume)_densityResume.signal=null;}
+const left=_densityResume&&_densityResume.key===rkey?_densityResume.state:null;
+if(held&&left!==held)_densityRefineStats.resumed++;
+if(c)_densityRefineStats.completed++;
+else if(ctl.signal.aborted){_densityRefineStats.aborts++;if(left&&left!==held)_densityRefineStats.saved++;}
+if(c&&_densityResume&&_densityResume.key===rkey)_densityResumeDrop();   
+if(c&&COMP_LAYERS.includes(layer)&&COMP_LAYERS[_activeCompLayerIdx]!==layer&&layer.cache&&layer.cache._densityPreview
+&&JSON.stringify(layer.params)===key&&cv.width===W2&&cv.height===H2){
+layer.cache=_swapLayerCanvas(layer.cache,c);
+const tc=document.createElement('canvas');tc.width=tc.height=36;_drawCover(tc.getContext('2d'),c,36,36);
+layer.thumb=tc.toDataURL('image/jpeg',0.8);tc.width=tc.height=0;
+const img=document.getElementById('layer-row-'+COMP_LAYERS.indexOf(layer));const ti=img&&img.querySelector('.layer-thumb');if(ti)ti.src=layer.thumb;
+}else _freeCanvas(c);
+
+if(c){if(_compositeWouldEngage())_recompositeOnScreenPostFX();else scheduleRender();}
+_scheduleDensityRefine(0);
+}
+if(typeof window!=='undefined')for(const ev of ['pointerdown','keydown','wheel','input'])
+window.addEventListener(ev,()=>{_densityLastInputMs=performance.now();_densityRefineAbort();},{capture:true,passive:true});
 
 
 
@@ -66064,7 +66213,10 @@ const sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);
 
 
 let hist,rAcc,gAcc,bAcc,tAcc,wAcc;
+
+const _rs=(typeof _densityResumeFor==='function'?_densityResumeFor(signal):null),_rsS=_rs&&_rs.state;let _rsKept=false;if(_rsS)_rs.state=null;
 try {
+if(_rsS)({hist,rAcc,gAcc,bAcc,tAcc,wAcc}=_rsS);else{
 hist=_floatAcquire(W*H);
 rAcc=_floatAcquire(W*H);gAcc=_floatAcquire(W*H);bAcc=_floatAcquire(W*H);
 
@@ -66076,10 +66228,10 @@ tAcc=_floatAcquire(W*H);
 
 
 
-wAcc=_floatAcquire(W*H);
+wAcc=_floatAcquire(W*H);}
 let maxH=0;
 
-const rng=mulberry32(S.seed^0xdeadbeef);
+let rng=mulberry32(S.seed^0xdeadbeef);
 
 const baseP=[];let ps=0;reg.forEach(tf=>{ps+=tf.w;baseP.push(ps)});
 const basePn=baseP[baseP.length-1]||1;const normBase=baseP.map(v=>v/basePn);
@@ -66093,7 +66245,9 @@ ti=ni2;[x,y]=applyFlameTransform(reg[ti],x,y,rng);
 
 col=col*(1-(reg[ti].colorSpeed??0.5))+reg[ti].color*(reg[ti].colorSpeed??0.5);
 }
-for(let base=0;base<nIter;base+=CHUNK){
+if(_rsS){x=_rsS.x;y=_rsS.y;col=_rsS.col;ti=_rsS.ti;maxH=_rsS.maxH;rng=_rsS.rng;}
+for(let base=_rsS?_rsS.base:0;base<nIter;base+=CHUNK){
+if(_rs){_rs.done=base;_rs.total=nIter;if(rtok!==tok||signal.aborted){const b6=[hist,rAcc,gAcc,bAcc,tAcc,wAcc];_rs.state={base,x,y,col,ti,maxH,rng,hist,rAcc,gAcc,bAcc,tAcc,wAcc,free(){b6.forEach(_floatRelease);}};_rsKept=true;}}
 if(rtok!==tok){document.getElementById('pill').classList.remove('show');return}
 
 
@@ -66165,7 +66319,7 @@ tAcc[idx]+=tc*om;
 
 
 
-if(maxH>0&&_dueForProgressivePaint(signal,end>=nIter)){
+if((maxH>0||(signal&&end>=nIter))&&_dueForProgressivePaint(signal,end>=nIter)){   
 const img=ctx.createImageData(W,H),id=img.data,bg=hexRgb(S.bgColor);
 const gam=S.flameGamma||2.2,lm=Math.log((typeof _densityScreenPeak==='function'?_densityScreenPeak:(_b,_w,_h,m)=>m)(hist,W,H,maxH)+1);   
 const bright=Math.min((S.flameBrightness||4)/4,6);
@@ -66206,11 +66360,11 @@ id[i*4+3]=255;
 }
 ctx.putImageData(img,0,0);
 }
-await new Promise(r=>setTimeout(r,0));
+if(!signal||end<nIter)await new Promise(r=>setTimeout(r,0));   
 }
 if(rtok===tok){_setPillProgress('FLAME',null);document.getElementById('pill').classList.remove('show');_applyPostFXOnScreen();if(typeof _announceRenderDone==='function')_announceRenderDone();_bumpRenderSeq();if(_flameHandlesActive)_drawFlameHandles()}
 } finally {
-_floatRelease(hist); _floatRelease(rAcc); _floatRelease(gAcc); _floatRelease(bAcc); _floatRelease(tAcc); _floatRelease(wAcc);
+if(!_rsKept){_floatRelease(hist); _floatRelease(rAcc); _floatRelease(gAcc); _floatRelease(bAcc); _floatRelease(tAcc); _floatRelease(wAcc);}
 
 
 
@@ -67412,7 +67566,9 @@ await new Promise(r=>setTimeout(r,0));
 const nIter=Math.min((typeof window!=='undefined'&&window._renderingForExport>0)?200000000:5000000,Math.max(100000,S.chaosIter||500000)),CHUNK=opts.animate?Math.min(40000,Math.max(5000,Math.ceil(nIter/90))):50000;
 const sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);  
 const a=S.chaosA,b=S.chaosB,c=S.chaosC,d=S.chaosD;
-const {density,colorAcc}=_getAttrBuffers(W*H);
+
+const _rs=(typeof _densityResumeFor==='function'?_densityResumeFor(signal):null),_rsS=_rs&&_rs.state;if(_rsS)_rs.state=null;
+const {density,colorAcc}=_rsS?_rsS:_rs?{density:new Float32Array(W*H),colorAcc:new Float32Array(W*H)}:_getAttrBuffers(W*H);
 let maxD=0;
 const proj=S.chaosProj||'xz';
 
@@ -67540,7 +67696,9 @@ _sz+=(proj==='xz')?_wy:(proj==='xy')?_wz:_wx;_sn++;
 }
 if(_sn)_cwz=_sz/_sn;
 }
-for(let base=0;base<nIter;base+=CHUNK){
+if(_rsS){x=_rsS.x;y=_rsS.y;z=_rsS.z;maxD=_rsS.maxD;}
+for(let base=_rsS?_rsS.base:0;base<nIter;base+=CHUNK){
+if(_rs){_rs.done=base;_rs.total=nIter;if(t!==tok||signal.aborted)_rs.state={base,x,y,z,maxD,density,colorAcc};}
 if(t!==tok){document.getElementById('pill').classList.remove('show');return}
 
 
@@ -67602,7 +67760,7 @@ if(density[idx]>maxD)maxD=density[idx];
 
 
 
-if(maxD>0&&_dueForProgressivePaint(signal,end>=nIter)){
+if((maxD>0||(signal&&end>=nIter))&&_dueForProgressivePaint(signal,end>=nIter)){   
 const img=ctx.createImageData(W,H),id=img.data,bg=hexRgb(S.bgColor),lm=Math.log((typeof _densityScreenPeak==='function'?_densityScreenPeak:(_b,_w,_h,m)=>m)(density,W,H,maxD)+1);   
 
 
@@ -67643,7 +67801,7 @@ id[i*4]=Math.min(255,nR);id[i*4+1]=Math.min(255,nG);id[i*4+2]=Math.min(255,nB);i
 }
 ctx.putImageData(img,0,0);
 }
-await new Promise(r=>opts.animate?requestAnimationFrame(()=>r()):setTimeout(r,0));
+if(!signal||end<nIter)await new Promise(r=>opts.animate?requestAnimationFrame(()=>r()):setTimeout(r,0));   
 }
 if(t===tok){_setPillProgress('ATTRACTOR',null);document.getElementById('pill').classList.remove('show');_applyPostFXOnScreen();if(typeof _announceRenderDone==='function')_announceRenderDone();_bumpRenderSeq();}
 
