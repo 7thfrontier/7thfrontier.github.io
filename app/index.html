@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-QUgDUGYDyR2yI5BaQCHCraWlSSbBlqPIOUb7RB9GIQg='; font-src 'self'; script-src 'self' 'sha256-c68U304LJFeOrFxOd2akLqqXycEz++vkqgwcgJDibr0=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-q8dHJUCh0+2uQDSBkGDX33tUanPTGeD40eoTjaU/YGA=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -674,6 +674,8 @@
         .exp-navbtn,.exp-exit{font-size:12px;padding:4px 10px;border:1px solid var(--border-mid);border-radius:var(--r-2);background:var(--surface2);color:var(--text);cursor:pointer;font-family:inherit}
         .exp-navbtn:disabled{opacity:.4;cursor:default}
         .exp-exit{border:none;background:none;color:var(--text-dim);padding:4px 6px}
+        #varsheet-close{position:absolute;top:12px;left:12px;z-index:5;font-size:12px;padding:6px 12px;border:1px solid var(--border-mid);border-radius:var(--r-2);background:var(--surface);color:var(--text);cursor:pointer;font-family:inherit}
+        #varsheet-close[hidden]{display:none}
         .tours-menu-group,.chrome-menu-group{margin-top:4px;padding-top:4px;border-top:1px solid var(--border)}
         .tours-menu-label,.chrome-menu-label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);padding:4px 10px 2px}
         @media(prefers-reduced-motion:reduce){.exp-card{transition:none}}
@@ -4262,12 +4264,12 @@
 
 
 
-<!-- build: 136309e9423b -->
+<!-- build: 508415c98880 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.12
+ * AEON -- Universal Dynamics Reactor v7.3.13
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7523,7 +7525,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.12';
+const APP_VERSION='7.3.13';
 
 
 
@@ -7532,10 +7534,10 @@ const APP_VERSION='7.3.12';
 
 
 
-const MISSION_BUILD_HASH='136309e9423b';
-const MISSION_GIT_SHA='75a03260aa08f7249601ae75b8687173a284b261';
+const MISSION_BUILD_HASH='508415c98880';
+const MISSION_GIT_SHA='b0df4817a7ef10c3a0f24b1a69490fd4595edd45';
 
-const MISSION_RENDER_HASH='15360c883096';
+const MISSION_RENDER_HASH='c93557633c18';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -25983,6 +25985,8 @@ en: {
 'layer.layers-capped':        'Capped at {cap} layers (had {had})',
 'file.saved':                 'Saved {name}',
 'file.save-failed':           'Could not save the project.',
+'varsheet.close':             'Close sheet',
+'varsheet.close.label':       'Close sheet and go back to the picture before it (Esc)',
 'varsheet.made':              '{n} variants on one sheet. Save it to keep the sheet, or Export to get the picture.',
 'file.save-busy':             'A composite or export is running. Save when it finishes.',
 'layer.flatten-busy':         'Compositing layers. Try again when it finishes.',
@@ -31134,7 +31138,9 @@ if(e.key!=='Escape' && typeof _exportInFlight==='function' && _exportInFlight())
 
 
 
-if(typeof document!=='undefined' && document.body && document.body.classList.contains('is-flattening'))return;
+
+
+if(e.key!=='Escape' && typeof document!=='undefined' && document.body && document.body.classList.contains('is-flattening'))return;
 
 
 
@@ -31324,7 +31330,8 @@ case'p':case'P':_KEYBINDING_HANDLERS.cyclePalette();break;
 
 
 
-case'Escape':_closeTopModal();break;
+
+case'Escape':if(!_closeTopModal()&&typeof exitVariationSheet==='function')exitVariationSheet();break;
 }
 });
 
@@ -50771,6 +50778,16 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.3.13',
+date:'2026-10-25',
+headline:'You can leave a variation sheet, and videos play smoothly at their frame rate.',
+items:[
+'Press Escape, or choose Close sheet in the corner of the canvas, to go back to the picture you had before a variation sheet. Undo brings the sheet back.',
+'On a Buddhabrot sheet, Undo works again: while the cells refined, each Undo landed back on the sheet.',
+'Record Video and Frame-Exact Export give every frame the same length at the chosen rate, so a deep zoom or a density fractal no longer stutters or drops frames. A video export now takes at least as long as the clip.',
+],
+},
+{
 version:'7.3.12',
 date:'2026-10-21',
 headline:'Density variation sheets answer you while they render, and videos keep transparent layers.',
@@ -50838,15 +50855,7 @@ items:[
 'On a phone the readout over the picture no longer repeats the fractal name or the iteration count.',
 ],
 },
-{
-version:'7.3.3',
-date:'2026-10-19',
-headline:'The getting-started guide is on screen from the first moment, and the first visit points to a useful math control.',
-items:[
-'On a first visit the getting-started guide shows its first step together with the rest of the page, instead of a few seconds later with the first picture.',
-'A first visit also points to one useful math control for the form on screen and takes you to it without changing the picture.',
-],
-},
+
 ];
 
 
@@ -53726,10 +53735,51 @@ project.state = structuredClone(variants[0].params);
 
 project._stamp = _stampChecksum(project);
 
+const pre = _histEntry();
 if (typeof pushHist === 'function') pushHist();
 _loadProject(project);
+_varSheet = { pre, ids: COMP_LAYERS.map((l) => l.id).join() };
+_varSheetSync();
 _setDocDirty(true);
 if (typeof showToast === 'function') showToast(t('varsheet.made', { n: project.layers.length }), 'success');
+}
+
+
+
+let _varSheet = null;
+function _varSheetActive() {
+return !!_varSheet && COMP_LAYERS.map((l) => l.id).join() === _varSheet.ids;
+}
+
+
+function exitVariationSheet() {
+if (!_varSheetActive()) return false;
+if (typeof _densityRefineAbort === 'function') _densityRefineAbort();
+
+if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(exitVariationSheet, 'varsheet-exit')) return true;
+if (typeof _stopBackgroundRenderLoops === 'function') _stopBackgroundRenderLoops();
+_histPause = true;
+try { _applyHist(_varSheet.pre); } finally { _histPause = false; }
+pushHist();
+_varSheetSync();
+return true;
+}
+
+function _varSheetSync() {
+const wrap = document.getElementById('cv-wrap');
+if (!wrap) return;
+let btn = document.getElementById('varsheet-close');
+if (!_varSheetActive()) { if (btn) btn.hidden = true; return; }
+if (!btn) {
+btn = document.createElement('button');
+btn.type = 'button'; btn.id = 'varsheet-close';
+btn.addEventListener('click', () => exitVariationSheet());
+wrap.appendChild(btn);
+}
+btn.textContent = t('varsheet.close');
+btn.setAttribute('aria-label', t('varsheet.close.label'));
+btn.title = t('varsheet.close.label');
+btn.hidden = false;
 }
 
 function _docTitleFor(name, dirty){
@@ -56605,6 +56655,7 @@ const mimeType=await _pickRecorderMime(o.bitrate);
 const src=glcv&&glcv.classList.contains('is-shown')?glcv:cv;
 
 
+
 const useGen = typeof MediaStreamTrackGenerator==='function' && typeof VideoFrame==='function';
 let stream, videoTrack=null, gen=null, writer=null;
 if(useGen){
@@ -56678,8 +56729,12 @@ _rdMotion=_scaleDensitySamples((W*H)/Math.max(1,_densityScreenArea(W,H,o.liveW||
 
 if(typeof _prepLayerCachesForMotionExport==='function')await _prepLayerCachesForMotionExport(o.liveW,o.liveH);
 _animDsKf=-1;   
-recorder.start();
+
+
+
+recorder.start(); recorder.pause();
 const dt=1/o.fps;
+let _recMs=0;   
 for(let f=0;f<o.totalFrames;f++){
 if(o.shouldAbort&&o.shouldAbort()){aborted=true;break;}
 
@@ -56768,6 +56823,8 @@ try{ _fpGlSnap.getContext('2d').drawImage(glcv,0,0); }catch(_e){ _fpGlSnap=null;
 _fpGlSnap=null;   
 }
 await new Promise(r=>requestAnimationFrame(()=>r()));
+
+recorder.resume(); const _recT0=performance.now();
 if(writer){
 
 
@@ -56792,6 +56849,11 @@ try{ cv.getContext('2d').drawImage(_fpGlSnap,0,0,cv.width,cv.height); }catch(_e)
 }
 videoTrack.requestFrame();
 }
+
+
+
+await new Promise(r=>setTimeout(r,Math.max(0,(f+1)*dt*1000-_recMs-(performance.now()-_recT0))));
+recorder.pause(); _recMs+=performance.now()-_recT0;
 framesDone=f+1;
 
 if(f%10===0){
@@ -56800,6 +56862,7 @@ await new Promise(r=>setTimeout(r,0));
 }
 }
 if(writer){ try{ await writer.close(); writer=null; }catch(_){_swallowed('_runFramePump', _);} }   
+if(recorder.state==='paused')recorder.resume();
 recorder.stop(); stopped=true;
 await done;
 
@@ -59206,6 +59269,8 @@ return tagMode + (tagBlend ? ' · ' + tagBlend : '') + ' · ' + Math.round(l.opa
 }
 
 function renderCompLayerList() {
+
+if (typeof _varSheetSync === 'function') _varSheetSync();
 const el = document.getElementById('layer-list');
 if (!el) return;
 
@@ -60230,6 +60295,10 @@ const _savedSGen = _sWriteGen;
 
 
 
+
+
+
+
 const _prevLayerTA = (typeof _exportTransparentAlpha !== 'undefined') ? _exportTransparentAlpha : false;
 if (layer.transparentBg) _exportTransparentAlpha = true;
 Object.assign(S, layer.params);
@@ -60328,10 +60397,13 @@ if (_ft.startsWith('attractor_')) await _exportRenderRetryOnce(t=>renderAttracto
 else if (_ft.startsWith('ifs_')) await _exportRenderRetryOnce(t=>renderIFS(t, signal ? { signal } : undefined));
 else if (_ft === 'fractal_flame') await _exportRenderRetryOnce(t=>renderFractalFlame(t, signal));
 else if (!(await _wgpuBuddhaExportLayer(_densScale))) {
-const _bx = _buddhaExportSamples(S.buddhabrotSamples, _densScale, 1);
+
+
+
+const _bx = _buddhaExportSamples(S.buddhabrotSamples, _densScale, 1), _bbSamples = S.buddhabrotSamples;
 S.buddhabrotSamples = _bx.samples; _buddhaDensityComp = _bx.comp;
 try { await _exportRenderRetryOnce(t=>renderBuddhabrot(t, _ft === 'buddhabrot_anti', signal)); }
-finally { _buddhaDensityComp = 1; }
+finally { _buddhaDensityComp = 1; S.buddhabrotSamples = _bbSamples; }
 }
 } else await renderFractal();
 }
@@ -60361,7 +60433,7 @@ for (const k of Object.keys(savedS)) if (JSON.stringify(S[k]) === swappedIn[k]) 
 Object.assign(S, restore);
 }
 window._renderingLayerForComposite = Math.max(0, (window._renderingLayerForComposite | 0) - 1);
-_exportTransparentAlpha = _prevLayerTA;
+_exportTransparentAlpha = _prevLayerTA;   
 _replayHeldLayerSwapEvents();
 }
 }

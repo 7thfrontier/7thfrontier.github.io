@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.3.12</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.3.13</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.3.12</h2>
+    <h2>AEON · v7.3.13</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1162,22 +1162,19 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.3.12.</h2>
-    <p class="section-lede">Density variation sheets answer you while they render, and videos keep transparent layers · 2026-10-21</p>
+    <h2 class="section-title">What's new<br>in 7.3.13.</h2>
+    <p class="section-lede">You can leave a variation sheet, and videos play smoothly at their frame rate · 2026-10-25</p>
   </header>
   <ul class="prose changes">
-    <li><strong>A density variation sheet keeps sharpening while you work.</strong> Each cell of a Buddhabrot, attractor, IFS or flame sheet now picks up its full-quality render where it left off when you click, type or scroll, instead of starting over, so the cells finish even while you keep interacting, and each still ends exactly as an uninterrupted render would.</li>
-    <li><strong>An export made while a variation sheet refines its cells no longer fails.</strong> If an export, or a layer render, started while a density cell (an attractor, IFS fractal, flame or Buddhabrot) was still rendering at full samples, both could keep interrupting each other until the export failed with &quot;The render was interrupted by a new render twice in a row&quot;. Layer renders now take turns.</li>
-    <li><strong>A variation sheet of a density fractal, such as a Buddhabrot or a flame, answers you while it renders.</strong> Its cells appear within a second or two as a grainier draft, then each one finishes at full quality in the background. Clicks and keys take effect at once, and the cells pick up again when you pause. Before, the app ignored input for up to 15 seconds while the cells rendered.</li>
-    <li><strong>A multi-layer export no longer inflates the layer previews.</strong> If the layer previews refilled while a multi-layer export ran, they were rendered at the export's size, up to hundreds of megabytes a layer for a large print, and then rendered again at screen size. The previews now wait for the export and render at screen size.</li>
-    <li><strong>A video or PNG sequence keeps a layer's transparent background.</strong> In a composite whose selected layer has a transparent background, Record Video, Frame-Exact and PNG-sequence exports drew that layer opaque, hiding the layers beneath it, though a still export and the screen showed them. Each frame now matches a still export of the same moment.</li>
+    <li><strong>You can leave a variation sheet.</strong> Press Escape, or choose Close sheet in the corner of the canvas, to go back to the picture you had before the sheet; Undo brings the sheet back. On a Buddhabrot sheet Undo works again too: while the cells refined, each Undo landed back on the sheet.</li>
+    <li><strong>Videos play smoothly at their frame rate.</strong> Record Video and Frame-Exact Export saved each frame for as long as it took to render, so a clip sped up through quick frames and stuttered on slow ones, such as a deep zoom or a density fractal, and could drop a frame. Each frame now lasts one frame at the chosen rate, however long it took to draw. A video export now takes at least as long as the clip itself.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.3.12</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.3.13</p>
 </footer>
 
 <script>
