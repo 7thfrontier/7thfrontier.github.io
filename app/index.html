@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-q8dHJUCh0+2uQDSBkGDX33tUanPTGeD40eoTjaU/YGA=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-a32g67VyVx/3VbZgl2zg2akriEyirKlKGX24ACY7vOM=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -3780,7 +3780,7 @@
       </div>
 
       
-      <label class="row-meta-clickable mb-6" title="When ON, this layer's background (the escaped/exterior region) becomes transparent in the composite, so the layers beneath it show through. Applies to the active layer.">
+      <label class="row-meta-clickable mb-6" title="When ON, this layer's background becomes transparent in the composite and in exports, so the layers beneath it show through. For an escape-time fractal such as Mandelbrot or Multibrot, that is the inside of the set, the region drawn in the Interior color. Applies to the active layer.">
         <input type="checkbox" id="layer-transparent-bg">
         Transparent background
       </label>
@@ -4264,12 +4264,12 @@
 
 
 
-<!-- build: 508415c98880 -->
+<!-- build: a94e4df27d1e -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.13
+ * AEON -- Universal Dynamics Reactor v7.3.14
  * Proprietary. See LICENSE for terms.
  */
 
@@ -6180,6 +6180,7 @@ gl.uniform1f(u('u_zoom'), Math.min(S.zoom||1, 1e30));
 gl.uniform1i(u('u_juliaMode'), S.fractalType==='julia'?1:0);
 const _ic=(S.interiorColor&&S.interiorColor.length===3)?S.interiorColor:[10,0,16];
 gl.uniform3f(u('u_interiorColor'), _ic[0]/255, _ic[1]/255, _ic[2]/255);
+gl.uniform1f(u('u_clearInterior'), _exportTransparentAlpha?1:0);   
 gl.uniform1f(u('u_zero'), 0.0);
 }
 
@@ -6475,9 +6476,11 @@ t=Math.max(0,Math.min(1,t+_oPhase));
 return Math.max(0,Math.min(1,_oMin+(_oMax-_oMin)*t));
 }
 const _icSolid=(S.interiorColor&&S.interiorColor.length===3)?S.interiorColor:[10,0,16];
+const _clearInterior=!!_exportTransparentAlpha;   
 function colorize(t, exv, i){
 const px=i%w, py=(i/w)|0;
 let col, u=0;
+if(_clearInterior&&t<=DZ_SENTINEL_MAX)return [0,0,0,0];
 
 
 
@@ -7525,7 +7528,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.13';
+const APP_VERSION='7.3.14';
 
 
 
@@ -7534,10 +7537,10 @@ const APP_VERSION='7.3.13';
 
 
 
-const MISSION_BUILD_HASH='508415c98880';
-const MISSION_GIT_SHA='b0df4817a7ef10c3a0f24b1a69490fd4595edd45';
+const MISSION_BUILD_HASH='a94e4df27d1e';
+const MISSION_GIT_SHA='e6625ca10bc13b25c43d81e773491f6af91bf087';
 
-const MISSION_RENDER_HASH='c93557633c18';
+const MISSION_RENDER_HASH='3dfb6d005e0f';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -9691,6 +9694,7 @@ gl.uniform1i(u('u_colorAlgo'),_GL_ALGO_MAP[S.colorAlgo]??0);
 gl.uniform1i(u('u_interiorMode'),_GL_INT_MAP[S.interiorMode]||0);
 const ic=S.interiorColor;
 gl.uniform3f(u('u_interiorColor'),ic[0]/255,ic[1]/255,ic[2]/255);
+gl.uniform1f(u('u_clearInterior'),_exportTransparentAlpha?1:0);   
 gl.uniform1f(u('u_colorCycle'),S.colorCycle);
 gl.uniform1f(u('u_colorOffset'),S.colorOffset);
 _uploadColorFieldUniforms(u); 
@@ -10418,6 +10422,7 @@ gl.uniform1i(u('u_colorAlgo'),_GL_ALGO_MAP[S.colorAlgo]??0);
 gl.uniform1i(u('u_interiorMode'),_GL_INT_MAP[S.interiorMode]||0);
 const ic=S.interiorColor;
 gl.uniform3f(u('u_interiorColor'),ic[0]/255,ic[1]/255,ic[2]/255);
+gl.uniform1f(u('u_clearInterior'),_exportTransparentAlpha?1:0);   
 gl.uniform1f(u('u_colorCycle'),S.colorCycle);
 gl.uniform1f(u('u_colorOffset'),S.colorOffset);
 _uploadColorFieldUniforms(u); 
@@ -11417,7 +11422,7 @@ const _wOk=await new Promise(res=>{
 
 
 const _lt=_liveViewTile(W);   
-const msg={type:'render',seq:++_cpuFracSeq,S,_origType:S.fractalType,W,H,VCX:_viewCenterPx(),VTX:_lt?_lt.tx:0,VFW:_lt?_lt.fullW:W,pal:_geoActivePal()};   
+const msg={type:'render',seq:++_cpuFracSeq,S,_origType:S.fractalType,W,H,VCX:_viewCenterPx(),VTX:_lt?_lt.tx:0,VFW:_lt?_lt.fullW:W,CLR:!!_exportTransparentAlpha,pal:_geoActivePal()};   
 _cpuFracEscapeWaiters.set(msg.seq,res);
 _pill().classList.add('show');
 _setPillProgress('CPU RENDER',null);
@@ -11474,6 +11479,7 @@ const aa=S.aa,isNewton=S.fractalType.startsWith('newton'),img=ctx.createImageDat
 
 
 const _bgFR=hexRgb(S.bgColor);
+const _clrIn=!!_exportTransparentAlpha;   
 for(let py=0;py<H;py+=CHUNK){
 if(t!==tok){const _p=_pill();if(_p)_p.classList.remove('show','cancellable');return}   
 _setPillProgress('CPU RENDER',Math.min(99,Math.round(100*py/H))+'%');
@@ -11485,12 +11491,13 @@ _setPillProgress('CPU RENDER',Math.min(99,Math.round(100*py/H))+'%');
 
 for(let row=py;row<Math.min(py+CHUNK,H);row++){
 for(let px=0;px<W;px++){
-let rA=0,gA=0,bA=0;
+let rA=0,gA=0,bA=0,nIn=0;
 let lastT=0;
 for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){
 const spx=px+(sx+.5)/aa-.5,
 spy=row+(sy+.5)/aa-.5,
 [iter,zx,zy]=iterate(spx,spy);
+if(_clrIn&&iter>=S.maxIter){nIn++;continue;}
 let r,g,b;
 if(isNewton){
 [r,g,b]=newtonRGB(iter,zx,zy);
@@ -11515,8 +11522,8 @@ b=_bgFR[2]*(1-a)+b*a|0;
 }
 rA+=r;gA+=g;bA+=b;
 }
-const n=aa*aa,i4=(row*W+px)*4;
-let mr=rA/n|0,mg=gA/n|0,mb=bA/n|0;
+const n=aa*aa,nOut=(n-nIn)||1,i4=(row*W+px)*4;
+let mr=rA/nOut|0,mg=gA/nOut|0,mb=bA/nOut|0;
 if(S.opacityFieldStroke&&S.opacityFieldStroke!=='constant'){
 const _lt=_liveViewTile(W);   
 const fa=_pixelAlphaField(px+(_lt?_lt.tx:0),H-1-row,_lt?_lt.fullW:W,H,lastT);   
@@ -11526,7 +11533,7 @@ mg=_bgFR[1]*(1-fa)+mg*fa|0;
 mb=_bgFR[2]*(1-fa)+mb*fa|0;
 }
 }
-d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255;
+d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255*(n-nIn)/n|0;
 }
 }
 ctx.putImageData(img,0,0);await new Promise(r=>setTimeout(r,0));
@@ -13437,7 +13444,6 @@ const FD=Object.fromEntries(Object.entries(FRACTAL_REGISTRY).map(([k,v])=>[k,v.f
 function changeFractalType(){
 if(typeof _captureAttractorParams==='function')_captureAttractorParams();
 S.fractalType=_coerceFractalType(document.getElementById('fractalType').value);
-if(typeof _syncExportTransparentOnTypeChange==='function')_syncExportTransparentOnTypeChange();
 
 
 
@@ -16024,28 +16030,6 @@ function openShortcutsModal(){ openHelpOverlay(); }
 function closeShortcutsModal(){ closeHelpOverlay(); }
 { const _exm=document.getElementById('export-modal'); if(_exm) _exm.addEventListener('click',e=>{if(e.target===_exm)closeExportModal()}); }
 
-function _exportTransparentSupported(){
-if(S.mode==='geometry')return true;
-const _reg=(typeof FRACTAL_REGISTRY!=='undefined')&&FRACTAL_REGISTRY[S.fractalType];
-return !_reg||_reg.family!=='escape';
-}
-const _EXPORT_TRANSPARENT_TITLE='Export with a transparent background instead of the background color. PNG, WebP, GIF, and SVG only; JPEG and TIFF stay opaque.';
-const _EXPORT_TRANSPARENT_UNSUPPORTED_TITLE='Not available for this fractal type: every pixel is coloured (interior or exterior), so there is no empty background to make transparent.';
-
-function _syncExportTransparentAvailability(rowId,checkboxId){
-const row=document.getElementById(rowId);if(!row)return;
-const cb=document.getElementById(checkboxId);
-const label=row.querySelector('label');
-const supported=_exportTransparentSupported();
-if(cb)cb.disabled=!supported;
-if(label)label.title=supported?_EXPORT_TRANSPARENT_TITLE:_EXPORT_TRANSPARENT_UNSUPPORTED_TITLE;
-if(!supported&&exportTransparent){exportTransparent=false;if(cb)cb.checked=false;}
-}
-
-function _syncExportTransparentOnTypeChange(){
-_syncExportTransparentAvailability('export-transparent-row','exportTransparent');
-}
-
 function selectFormat(fmt){
 exportFormat=fmt;
 document.querySelectorAll('#epanel-quick .format-btn').forEach(b=>b.classList.remove('active'));
@@ -16059,7 +16043,6 @@ document.getElementById('jpeg-quality-row').classList.toggle('is-hidden',fmt!=='
 
 const _tr=document.getElementById('export-transparent-row');
 if(_tr)_tr.classList.toggle('is-hidden',!(fmt==='png'||fmt==='webp'||fmt==='gif'));
-_syncExportTransparentAvailability('export-transparent-row','exportTransparent');
 _updateExportCaveat();
 if(typeof _syncPrintOptionsSummary==='function')_syncPrintOptionsSummary();
 }
@@ -18621,7 +18604,7 @@ const src=(srcRow*w+col)*4, dst=(row*w+col)*4;
 outBuf[dst  ]=pixels[src];
 outBuf[dst+1]=pixels[src+1];
 outBuf[dst+2]=pixels[src+2];
-outBuf[dst+3]=255;
+outBuf[dst+3]=pixels[src+3];   
 }
 }
 if(!_histImgData || _histImgData.data!==outBuf || _histImgData.width!==w || _histImgData.height!==h) _histImgData=new ImageData(outBuf,w,h);
@@ -19362,7 +19345,6 @@ S.fractalType=type;
 
 
 if(typeof _recordRecentType==='function')_recordRecentType(type);
-if(typeof _syncExportTransparentOnTypeChange==='function')_syncExportTransparentOnTypeChange();
 
 const sel=document.getElementById('fractalType');
 if(sel&&Array.from(sel.options).some(o=>o.value===type))sel.value=type;
@@ -20421,7 +20403,7 @@ if (typeof _dsActiveController !== 'undefined' && _dsActiveController) { _dsActi
 
 if((stop.mode&&stop.mode!==S.mode)||(stop.fractalType&&stop.fractalType!==S.fractalType)||(stop.pattern&&stop.pattern!==S.pattern)){ if(typeof tok!=='undefined')tok++; }
 if(stop.mode){S.mode=stop.mode; document.body.dataset.appMode=stop.mode}
-if(stop.fractalType){S.fractalType=_coerceFractalType(stop.fractalType);if(typeof _syncExportTransparentOnTypeChange==='function')_syncExportTransparentOnTypeChange();}
+if(stop.fractalType)S.fractalType=_coerceFractalType(stop.fractalType);
 
 
 
@@ -22442,6 +22424,7 @@ if(typeof _cpuFracEscapeWaiters!=='undefined' && _cpuFracEscapeWaiters.has(d.seq
 const _resolve=_cpuFracEscapeWaiters.get(d.seq);
 _cpuFracEscapeWaiters.delete(d.seq);
 if(S.mode==='fractal' && d.fractalType===S.fractalType){
+if(d.clr)ctx.clearRect(0,0,cv.width,cv.height);   
 ctx.drawImage(d.bmp,0,0);d.bmp.close();
 _setPillProgress('CPU RENDER',null);
 _pill().classList.remove('show');
@@ -26246,6 +26229,7 @@ struct Params {
   
   interiorMode: u32,  
   interiorColor: vec3<f32>,  
+  clearInterior: u32,  
 }
 @group(0) @binding(0) var<uniform> p: Params;
 @group(0) @binding(1) var<storage, read_write> out: array<u32>;
@@ -26889,6 +26873,7 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
     
     rgb = palRGB(result.y) * result.z;
   } else if (result.x < 0.0) {
+    if (p.clearInterior == 1u) { out[id.y * p.width + id.x] = 0u; return; }
     
     let zFinal = vec2<f32>(result.y, result.z);
     
@@ -27986,7 +27971,7 @@ const _ic = S.interiorColor || [10, 0, 16];
 dv.setFloat32(64, (_ic[0] || 0) / 255, true); 
 dv.setFloat32(68, (_ic[1] || 0) / 255, true); 
 dv.setFloat32(72, (_ic[2] || 0) / 255, true); 
-dv.setFloat32(76, 0,                   true); 
+dv.setUint32( 76, _exportTransparentAlpha ? 1 : 0, true); 
 
 
 
@@ -28834,7 +28819,12 @@ float _pixelAlpha(vec2 fragCoord, float colourT){
   t=clamp(t+u_opacityPhase,0.0,1.0);
   return clamp(u_opacityRange.x+(u_opacityRange.y-u_opacityRange.x)*t,0.0,1.0);
 }
+
+
+uniform float u_clearInterior;
+bool _inSetPx=false;
 vec4 fcOut(vec3 col, float colourT){
+  if(_inSetPx&&u_clearInterior>0.5)return vec4(0.0);
   float a=_pixelAlpha(gl_FragCoord.xy,colourT);
   return vec4(mix(u_bgColor,col,a),1.0);
 }
@@ -29247,7 +29237,7 @@ void main(){
   vec2 fragCoord=vec2(gl_FragCoord.x,u_res.y-gl_FragCoord.y);
   vec2 px=u_center+(fragCoord-u_res*.5+vec2(u_viewOff,0.))*sc;
 
-  if(u_type==15){vec4 lr=lyapunovIter(px);float lambda=lr.x;vec3 col;float lt=0.0;if(lambda<=-1e5){col=u_interiorColor;}else if(lambda<0.0){lt=fract(-lambda*u_colorCycle*0.15+u_colorOffset);col=pal(lt)*pow(clamp(-lambda*0.5,0.,1.),0.4);}else{lt=fract(lambda*u_colorCycle*0.15+u_colorOffset+0.33);col=mix(pal(lt),vec3(0.85,0.05,0.02),clamp(lambda*0.25,0.,0.75));}fc=fcOut(col,_resT(lt));return;}
+  if(u_type==15){vec4 lr=lyapunovIter(px);float lambda=lr.x;vec3 col;float lt=0.0;if(lambda<=-1e5){col=u_interiorColor;_inSetPx=true;}else if(lambda<0.0){lt=fract(-lambda*u_colorCycle*0.15+u_colorOffset);col=pal(lt)*pow(clamp(-lambda*0.5,0.,1.),0.4);}else{lt=fract(lambda*u_colorCycle*0.15+u_colorOffset+0.33);col=mix(pal(lt),vec3(0.85,0.05,0.02),clamp(lambda*0.25,0.,0.75));}fc=fcOut(col,_resT(lt));return;}
 
   
   
@@ -29282,6 +29272,7 @@ void main(){
     float ttOut = 0.0;
     if (it_fast >= mi_fast) {
       
+      _inSetPx = true;
       if (u_interiorMode == 0) col_fast = u_interiorColor;
       else if (u_interiorMode == 1) {
         float d = length(z_fast), tt = min(1., d/2.);
@@ -29364,7 +29355,7 @@ void main(){
   float _opacT=0.0;
 
   if(isN){
-    if(it>=mi){col=u_interiorColor;}
+    if(it>=mi){col=u_interiorColor;_inSetPx=true;}
     else if(u_type==99&&u_customBasin==1){
       
       
@@ -29386,6 +29377,7 @@ void main(){
     else{float t=fract((atan(z.y,z.x)/TAU+.5)*u_colorCycle+u_colorOffset);float b=pow(1.-it/mi,.35);col=pal(t)*b;_opacT=_resT(t);}
   }else{
     if(it>=mi){
+      _inSetPx=true;
       if(u_interiorMode==0)col=u_interiorColor;
       else if(u_interiorMode==1){float d=length(z),t=min(1.,d/2.);float _ic=fract(t*u_colorCycle+u_colorOffset);col=pal(_ic);_opacT=_resT(_ic);}
       else{float a=atan(z.y,z.x)/TAU+.5;float _ic=fract(a*u_colorCycle+u_colorOffset);col=pal(_ic);_opacT=_resT(_ic);}
@@ -29916,6 +29908,7 @@ uniform sampler2D u_palette;
 uniform float u_colorOffset;
 uniform vec3 u_bgColor; 
 uniform vec3 u_interiorColor; 
+uniform float u_clearInterior; 
 uniform int u_opacityMode;
 uniform vec2 u_opacityRange;
 uniform int u_opacityWarp;
@@ -30140,6 +30133,7 @@ void main(){
   
   
   if (!escaped && u_refEscaped == 1) { fragColor = vec4(0.31, 0.31, 0.31, 1.0); return; }
+  if (!escaped && u_clearInterior > 0.5) { fragColor = vec4(0.0); return; }
   if (!escaped) { fragColor = vec4(u_interiorColor, 1.0); return; }
   
   
@@ -30190,6 +30184,7 @@ uniform sampler2D u_palette;
 uniform float u_colorOffset;
 uniform vec3 u_bgColor; 
 uniform vec3 u_interiorColor; 
+uniform float u_clearInterior; 
 uniform int u_opacityMode;
 uniform vec2 u_opacityRange;
 uniform int u_opacityWarp;
@@ -30409,6 +30404,7 @@ void main(){
   
   
   if (!escaped && u_refEscaped == 1) { fragColor = vec4(0.31, 0.31, 0.31, 1.0); return; }
+  if (!escaped && u_clearInterior > 0.5) { fragColor = vec4(0.0); return; }
   if (!escaped) { fragColor = vec4(u_interiorColor, 1.0); return; }
   
   
@@ -31131,6 +31127,7 @@ if(e.target&&e.target.isContentEditable)return;
 
 
 if(e.key!=='Escape' && typeof _exportInFlight==='function' && _exportInFlight())return;
+
 
 
 
@@ -42925,7 +42922,6 @@ if(!snap.v)return false;
 _resetOmittedRenderDefaults(snap);
 S.mode=snap.mode||'fractal';
 if(snap.ft)S.fractalType=_coerceFractalType(snap.ft);
-if(typeof _syncExportTransparentOnTypeChange==='function')_syncExportTransparentOnTypeChange();
 
 
 
@@ -50778,6 +50774,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.3.14',
+date:'2026-10-26',
+headline:'A fractal layer\'s transparent background lets the layer below show through the inside of the set.',
+items:[
+'Transparent background now works on escape-time fractals such as Multibrot. The inside of the set, drawn in the Interior color, turns transparent, so a layer beneath shows through it, on screen and in exports. The Export dialog offers Transparent background for these types too.',
+'A Buddhabrot variation sheet sharpens right away again. Its cells no longer sit at their quick, grainy picture for tens of seconds after the sheet appears, even while you keep working.',
+],
+},
+{
 version:'7.3.13',
 date:'2026-10-25',
 headline:'You can leave a variation sheet, and videos play smoothly at their frame rate.',
@@ -50846,15 +50851,7 @@ items:[
 'An open Zoom or Center editor no longer closes when a badge on the bar changes during a render. The bar catches up once you press Enter or Escape.',
 ],
 },
-{
-version:'7.3.5',
-date:'2026-10-19',
-headline:'The control bar says each thing once.',
-items:[
-'The Iters readout steps aside while the Iterations slider beside it is showing, and the renderer is named once and stays quiet until there is something to report, such as a picture still refining.',
-'On a phone the readout over the picture no longer repeats the fractal name or the iteration count.',
-],
-},
+
 
 ];
 
@@ -61540,7 +61537,15 @@ _refillBlockInput(false);
 _flattenInProgress = false;
 _replayHeldLayerSwapEvents();
 }
-if (typeof scheduleRender === 'function') scheduleRender();   
+
+
+
+
+const a = typeof _compositeActiveImg !== 'undefined' ? _compositeActiveImg : null;
+if (typeof _recompositeOnScreenPostFX === 'function' && typeof _isDensityLayer === 'function' && need.every(_isDensityLayer)
+&& typeof _renderSettled === 'function' && _renderSettled() && cv.width === W2 && cv.height === H2
+&& a && a.width === W2 && a.height === H2 && _compositeWouldEngage()) _recompositeOnScreenPostFX();
+else if (typeof scheduleRender === 'function') scheduleRender();
 }
 
 
@@ -63612,21 +63617,22 @@ const CHUNK=8;
 for(let row=0;row<th;row+=CHUNK){
 for(let r=row;r<Math.min(row+CHUNK,th);r++){
 for(let px=0;px<tw;px++){
-let rA=0,gA=0,bA=0,lastT=0;
+let rA=0,gA=0,bA=0,lastT=0,nIn=0;
 for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){
 const spx=(x0+px)+(sx+.5)/aa-.5,spy=(y0+r)+(sy+.5)/aa-.5;
 const cx=S.centerX+(spx-W2/2)*sc,cy=S.centerY+(spy-H2/2)*sc;
 const res=_itFn(cx,cy,mi,er2);
 const[iter,zx,zy]=res;let rv,gv,bv;
+if(_exportTransparentAlpha&&iter>=mi){nIn++;continue;}   
 if(isNewton){[rv,gv,bv]=newtonRGB(iter,zx,zy);if(typeof _newtonOpacT==='function')lastT=_newtonOpacT(zx,zy,iter);}  
 else if(iter>=mi){[rv,gv,bv]=interiorRGB(zx,zy,iter);if(typeof _interiorOpacT==='function')lastT=_interiorOpacT(zx,zy);}  
 else{const tc=colorT(iter,zx,zy);lastT=tc;const rgba=palRGBA(tc);rv=rgba[0];gv=rgba[1];bv=rgba[2];const a=rgba[3];if(a<0.999){rv=_bgFR[0]*(1-a)+rv*a|0;gv=_bgFR[1]*(1-a)+gv*a|0;bv=_bgFR[2]*(1-a)+bv*a|0;}}
 rA+=rv;gA+=gv;bA+=bv;
 }
-const n=aa*aa,i4=(r*tw+px)*4;
-let mr=rA/n|0,mg=gA/n|0,mb=bA/n|0;
+const n=aa*aa,nOut=(n-nIn)||1,i4=(r*tw+px)*4;
+let mr=rA/nOut|0,mg=gA/nOut|0,mb=bA/nOut|0;
 if(_opacField){const fa=_pixelAlphaField(x0+px,H2-1-(y0+r),W2,H2,lastT);if(fa<0.999){mr=_bgFR[0]*(1-fa)+mr*fa|0;mg=_bgFR[1]*(1-fa)+mg*fa|0;mb=_bgFR[2]*(1-fa)+mb*fa|0;}}  
-d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255;
+d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255*(n-nIn)/n|0;
 }
 }
 if(bar)bar.style.setProperty('--progress',(((tileNum-1)/totalTiles+(row/th)/totalTiles)*100).toFixed(1)+'%');
@@ -63638,6 +63644,13 @@ tileCtx.putImageData(img,0,0);
 
 
 async function _renderFractalForPrint(rCtx,rW,rH,bar,status,signal,alphaCapable=_exportAlphaFormat(exportFormat),crop){
+
+const prevTA=_exportTransparentAlpha;
+_exportTransparentAlpha=!!(exportTransparent&&alphaCapable);
+try{ return await _renderFractalForPrintBody(rCtx,rW,rH,bar,status,signal,alphaCapable,crop); }
+finally{ _exportTransparentAlpha=prevTA; }
+}
+async function _renderFractalForPrintBody(rCtx,rW,rH,bar,status,signal,alphaCapable,crop){
 
 
 if(S.fractalType==='formula'&&glReady){
@@ -64556,6 +64569,8 @@ try {
 
 
 _exportBgFill(octx,W2,H2,_fmt==='png'||_fmt==='webp'||_fmt==='gif');
+
+_exportTransparentAlpha=exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif');
 const aa=S.aa,isNewton=S.fractalType.startsWith('newton'),isIFS=S.fractalType.startsWith('ifs_');
 if(_dzNeedsCpu(W2)&&await _renderDeepZoomForExport(octx,W2,H2,bar,status,signal)){   
 
@@ -64779,18 +64794,12 @@ await _tileRenderFractalGL(octx,W2,H2,bar,status,S.fractalType==='formula'?rende
 
 
 
-
-
-
-
-
-
 const CHUNK=16,sc=_pxScale(W2,H2,S.zoom),mi=S.maxIter,er2=S.escRad*S.escRad,img=octx.createImageData(W2,H2),d=img.data;
 const _bgFR=hexRgb(S.bgColor); 
 const _opacField=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
 const _itFnQ=(typeof IT_DISPATCH!=='undefined'&&IT_DISPATCH.get(S.fractalType))||itMandelbrot;   
-for(let py=0;py<H2;py+=CHUNK){if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');for(let row=py;row<Math.min(py+CHUNK,H2);row++){for(let px=0;px<W2;px++){let rA=0,gA=0,bA=0,lastT=0;for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){const spx=px+(sx+.5)/aa-.5,spy=row+(sy+.5)/aa-.5,cx=S.centerX+(spx-W2/2)*sc,cy=S.centerY+(spy-H2/2)*sc;const res=_itFnQ(cx,cy,mi,er2);const[iter,zx,zy]=res;let r,g,b;if(isNewton){[r,g,b]=newtonRGB(iter,zx,zy);if(typeof _newtonOpacT==='function')lastT=_newtonOpacT(zx,zy,iter);}else if(iter>=S.maxIter){[r,g,b]=interiorRGB(zx,zy,iter);if(typeof _interiorOpacT==='function')lastT=_interiorOpacT(zx,zy);}else{const tc=colorT(iter,zx,zy);lastT=tc;const rgba=palRGBA(tc);r=rgba[0];g=rgba[1];b=rgba[2];const a=rgba[3];if(a<0.999){r=_bgFR[0]*(1-a)+r*a|0;g=_bgFR[1]*(1-a)+g*a|0;b=_bgFR[2]*(1-a)+b*a|0;}}rA+=r;gA+=g;bA+=b;}const n=aa*aa,i4=(row*W2+px)*4;let mr=rA/n|0,mg=gA/n|0,mb=bA/n|0;if(_opacField){const fa=_pixelAlphaField(px,H2-1-row,W2,H2,lastT);if(fa<0.999){mr=_bgFR[0]*(1-fa)+mr*fa|0;mg=_bgFR[1]*(1-fa)+mg*fa|0;mb=_bgFR[2]*(1-fa)+mb*fa|0;}}d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255;}}octx.putImageData(img,0,0);bar.style.setProperty('--progress',Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)+'%');status.textContent=`Rendering… ${Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)}%`;await new Promise(r=>setTimeout(r,0));}}
-} finally { if(_upSub){ octx=_upOut; W2=_upW; H2=_upH; _densityBlit(octx,_upSub,W2,H2); _upSub.width=_upSub.height=0; } if(_lbFit){ octx=_lbOut; W2=_lbW; H2=_lbH; } }
+for(let py=0;py<H2;py+=CHUNK){if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');for(let row=py;row<Math.min(py+CHUNK,H2);row++){for(let px=0;px<W2;px++){let rA=0,gA=0,bA=0,lastT=0,nIn=0;for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){const spx=px+(sx+.5)/aa-.5,spy=row+(sy+.5)/aa-.5,cx=S.centerX+(spx-W2/2)*sc,cy=S.centerY+(spy-H2/2)*sc;const res=_itFnQ(cx,cy,mi,er2);const[iter,zx,zy]=res;if(_exportTransparentAlpha&&iter>=S.maxIter){nIn++;continue;}let r,g,b;if(isNewton){[r,g,b]=newtonRGB(iter,zx,zy);if(typeof _newtonOpacT==='function')lastT=_newtonOpacT(zx,zy,iter);}else if(iter>=S.maxIter){[r,g,b]=interiorRGB(zx,zy,iter);if(typeof _interiorOpacT==='function')lastT=_interiorOpacT(zx,zy);}else{const tc=colorT(iter,zx,zy);lastT=tc;const rgba=palRGBA(tc);r=rgba[0];g=rgba[1];b=rgba[2];const a=rgba[3];if(a<0.999){r=_bgFR[0]*(1-a)+r*a|0;g=_bgFR[1]*(1-a)+g*a|0;b=_bgFR[2]*(1-a)+b*a|0;}}rA+=r;gA+=g;bA+=b;}const n=aa*aa,nOut=(n-nIn)||1,i4=(row*W2+px)*4;let mr=rA/nOut|0,mg=gA/nOut|0,mb=bA/nOut|0;if(_opacField){const fa=_pixelAlphaField(px,H2-1-row,W2,H2,lastT);if(fa<0.999){mr=_bgFR[0]*(1-fa)+mr*fa|0;mg=_bgFR[1]*(1-fa)+mg*fa|0;mb=_bgFR[2]*(1-fa)+mb*fa|0;}}d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255*(n-nIn)/n|0;}}octx.putImageData(img,0,0);bar.style.setProperty('--progress',Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)+'%');status.textContent=`Rendering… ${Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)}%`;await new Promise(r=>setTimeout(r,0));}}
+} finally { _exportTransparentAlpha=false; if(_upSub){ octx=_upOut; W2=_upW; H2=_upH; _densityBlit(octx,_upSub,W2,H2); _upSub.width=_upSub.height=0; } if(_lbFit){ octx=_lbOut; W2=_lbW; H2=_lbH; } }
 if(_lbFit){
 
 if(_pfxAnyActive()){status.textContent='Post-FX…';bar.style.setProperty('--progress','92%');await new Promise(r=>setTimeout(r,10));await applyPostFXAsync(_lbSub.getContext('2d'),_lbSub.width,_lbSub.height,bar,status,signal);_pfxOnArt=true;}

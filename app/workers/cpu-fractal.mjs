@@ -34,7 +34,7 @@ const _RK4_SCRATCH = new Float64Array(12);
 
 let S = {}, W = 0, H = 0;
 
-let VCX = 0, VTX = 0, VFW = 0;   
+let VCX = 0, VTX = 0, VFW = 0, CLR = false;   
 
 
 
@@ -428,12 +428,13 @@ function _renderEscapeTime(oc, seq){
   for (var py = 0; py < H; py += CHUNK) {
     for (var row = py; row < Math.min(py + CHUNK, H); row++) {
       for (var px = 0; px < W; px++) {
-        var rA = 0, gA = 0, bA = 0, lastT = 0;
+        var rA = 0, gA = 0, bA = 0, lastT = 0, nIn = 0;
         for (var sy = 0; sy < aa; sy++) for (var sx = 0; sx < aa; sx++) {
           var spx = px + (sx + .5) / aa - .5,
               spy = row + (sy + .5) / aa - .5,
               res = iterate(spx, spy),
               iter = res[0], zx = res[1], zy = res[2];
+          if (CLR && iter >= mi) { nIn++; continue; }
           var r, g, b;
           if (isNewton) {
             var nrgb = newtonRGB(iter, zx, zy); r = nrgb[0]; g = nrgb[1]; b = nrgb[2];
@@ -457,8 +458,8 @@ function _renderEscapeTime(oc, seq){
           }
           rA += r; gA += g; bA += b;
         }
-        var nS = aa * aa, i4 = (row * W + px) * 4;
-        var mr = rA / nS | 0, mg = gA / nS | 0, mb = bA / nS | 0;
+        var nS = aa * aa, nOut = (nS - nIn) || 1, i4 = (row * W + px) * 4;
+        var mr = rA / nOut | 0, mg = gA / nOut | 0, mb = bA / nOut | 0;
         if (_opacField) {
           var fa = _pixelAlphaField(px + VTX, H - 1 - row, VFW || W, H, lastT);   
           if (fa < 0.999) {
@@ -467,7 +468,7 @@ function _renderEscapeTime(oc, seq){
             mb = bg[2] * (1 - fa) + mb * fa | 0;
           }
         }
-        data[i4] = mr; data[i4 + 1] = mg; data[i4 + 2] = mb; data[i4 + 3] = 255;
+        data[i4] = mr; data[i4 + 1] = mg; data[i4 + 2] = mb; data[i4 + 3] = 255 * (nS - nIn) / nS | 0;
       }
     }
     self.postMessage({type:'progress', seq: seq, pct: Math.min(99, Math.round(100 * py / H))});
@@ -570,7 +571,7 @@ self.onmessage = function(e){
   }
   if (d.type !== 'render') return;
   try {
-    S = d.S; W = d.W; H = d.H; VCX = (typeof d.VCX === 'number') ? d.VCX : W / 2; VTX = d.VTX || 0; VFW = d.VFW || W;
+    S = d.S; W = d.W; H = d.H; VCX = (typeof d.VCX === 'number') ? d.VCX : W / 2; VTX = d.VTX || 0; VFW = d.VFW || W; CLR = !!d.CLR;
     
     
     
@@ -605,7 +606,7 @@ self.onmessage = function(e){
       
       
       
-      self.postMessage({type:'frame', seq:d.seq, fractalType:d.S.fractalType, bmp:bmp, bbox:_bbox, dbg:_dbg}, [bmp]);
+      self.postMessage({type:'frame', seq:d.seq, fractalType:d.S.fractalType, bmp:bmp, bbox:_bbox, dbg:_dbg, clr:!!d.CLR}, [bmp]);
     }).catch(function(err){
       self.postMessage({type:'error', seq:d.seq, msg:'createImageBitmap: ' + (err && err.message || err)});
     });
