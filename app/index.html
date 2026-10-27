@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-4n7ouhM781K7WpDb6bqVAG1P6wDfW9FfyVdnUrSwpcQ=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-HcBC3ztLk5UDNAScRCKad9EAD6DrqXHM8LznMIlxPXs=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4261,12 +4261,12 @@
 
 
 
-<!-- build: 37df31d58310 -->
+<!-- build: 7d1f59346862 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.16
+ * AEON -- Universal Dynamics Reactor v7.3.17
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7530,7 +7530,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.16';
+const APP_VERSION='7.3.17';
 
 
 
@@ -7539,10 +7539,10 @@ const APP_VERSION='7.3.16';
 
 
 
-const MISSION_BUILD_HASH='37df31d58310';
-const MISSION_GIT_SHA='2f40a299795f6de6a5aa3a44fa25a17d37ff86ec';
+const MISSION_BUILD_HASH='7d1f59346862';
+const MISSION_GIT_SHA='f2efe8ce6cbdcda1d1ffa03ec5c78384363af697';
 
-const MISSION_RENDER_HASH='f872dc7a473e';
+const MISSION_RENDER_HASH='88c77b1c7d33';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -20988,6 +20988,18 @@ if(_escRadCtrl) _escRadCtrl.classList.toggle('is-hidden',!_is2DEscape);
 
 
 
+const _maxIterCtrl = document.getElementById('maxIter')?.closest('.ctrl');
+if(_maxIterCtrl) _maxIterCtrl.classList.toggle('is-hidden',['menger','sierp_tetra','qjulia'].includes(ft));
+
+
+const _miHint = _maxIterCtrl && _maxIterCtrl.querySelector('.fs-meta-dim-mt2');
+if(_miHint){
+if(!_miHint.dataset.text) _miHint.dataset.text = _miHint.textContent;
+_miHint.textContent = ['mandelbulb','mandelbox'].includes(ft) ? t('inspector.maxiter-3d-ceiling') : _miHint.dataset.text;
+}
+
+
+
 _applyAlgoApplicability(ft);
 show('sec-animate',   true);
 show('sec-gallery',   true);
@@ -25864,6 +25876,7 @@ en: {
 'pattern.head-lissajous':     'Lissajous Frequencies',
 'inspector.title-geometry':   'Inspector · Geometry',
 'inspector.title-fractal':    'Inspector · Fractal',
+'inspector.maxiter-3d-ceiling': 'This 3D type reads at most 256 iterations, so higher values change nothing.',
 'orbit.pinned-suffix':        ' · pinned (click to release)',
 'gallery.empty-count':        'No saved works yet',
 'motion.pause':               '⏸ Pause',
@@ -27327,6 +27340,8 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
     var effCycle = 4.0;
     if (p.type3d == 1u || p.type3d == 4u)      { effMax = 16.0; effCycle = 1.0; }
     else if (p.type3d == 2u)                   { effMax = 5.0;  effCycle = 1.0; }
+    else if (p.type3d == 0u)                   { effMax = 10.0; effCycle = 1.0; }
+    else if (p.type3d == 5u)                   { effMax = 24.0; effCycle = 1.0; }
     let iterT = fract(iterAtHit / effMax * p.colorCycle * effCycle + p.colorOffset);
     let baseCol = palLUT(iterT);
     let trapCol = palLUT(fract(iterT + 0.3));
@@ -28866,7 +28881,7 @@ vec4 fcOut(vec3 col, float colourT){
   if(_inSetPx&&u_clearInterior>0.5)return vec4(0.0);
   float a=_pixelAlpha(gl_FragCoord.xy,colourT);
   
-  if(u_clearInterior>0.5&&(a<1.0||_palA<1.0)){float A=a*_palA;return vec4(col*A,A);}
+  if(u_clearInterior>0.5&&(a<1.0||_palA<1.0)){float A=a*_palA;return vec4(clamp(col,0.,1.)*A,A);}
   return vec4(mix(u_bgColor,col,a),1.0);
 }
 
@@ -29729,10 +29744,12 @@ float _pixelAlpha3(vec2 fragCoord, float colourT){
 
 
 
+
+
 vec4 fcOut3(vec3 col, float colourT, float outA){
   float a=_pixelAlpha3(gl_FragCoord.xy+u_tileOffset,colourT);
   if(outA<0.5)return vec4(0.0);
-  if(u_exportTransparent>0.5&&(a<1.0||_hitA3<1.0)){float A=a*_hitA3;return vec4(col*A,A);}
+  if(u_exportTransparent>0.5&&(a<1.0||_hitA3<1.0)){float A=a*_hitA3;return vec4(clamp(col,0.,1.)*A,A);}
   return vec4(mix(u_bgColor,col,a),outA);
 }
 
@@ -29901,11 +29918,14 @@ void main(){
     
     
     
+    
     float effMax = float(u_maxIter);
     float effCycle = 4.0;
     if (u_type3d == 1)      { effMax = 16.0; effCycle = 1.0; }  
     else if (u_type3d == 2) { effMax = 5.0;  effCycle = 1.0; }  
     else if (u_type3d == 4) { effMax = 16.0; effCycle = 1.0; }  
+    else if (u_type3d == 0) { effMax = 10.0; effCycle = 1.0; }  
+    else if (u_type3d == 3) { effMax = 24.0; effCycle = 1.0; }  
     iterT=fract(res.y/effMax*u_colorCycle*effCycle+u_colorOffset);
     vec3 base=pal3(iterT);
     _hitA3=_palA3;
@@ -30212,7 +30232,7 @@ void main(){
     col = clamp(col*pow(shade, 0.7)*1.4, 0.0, 1.0);
   }
   float fa = _dzAlpha(u);
-  if (u_clearInterior > 0.5 && (fa < 1.0 || s.a < 1.0)) { float A = fa*s.a; fragColor = vec4(col*A, A); return; }
+  if (u_clearInterior > 0.5 && (fa < 1.0 || s.a < 1.0)) { float A = fa*s.a; fragColor = vec4(clamp(col, 0., 1.)*A, A); return; }
   fragColor = vec4(mix(u_bgColor, col, fa), 1.0);
 }`;
 
@@ -30484,7 +30504,7 @@ void main(){
     col = clamp(col*pow(shade, 0.7)*1.4, 0.0, 1.0);
   }
   float fa = _dz2Alpha(u);
-  if (u_clearInterior > 0.5 && (fa < 1.0 || s.a < 1.0)) { float A = fa*s.a; fragColor = vec4(col*A, A); return; }
+  if (u_clearInterior > 0.5 && (fa < 1.0 || s.a < 1.0)) { float A = fa*s.a; fragColor = vec4(clamp(col, 0., 1.)*A, A); return; }
   fragColor = vec4(mix(u_bgColor, col, fa), 1.0);
 }`;
 
@@ -50828,6 +50848,16 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.3.17',
+date:'2026-10-27',
+headline:'A Mandelbulb or Quaternion Julia set now uses its whole palette.',
+items:[
+'The surface of a Mandelbulb or a Quaternion Julia set took its colors from only the first eighth or so of the palette, so a rainbow palette drew it red to orange. The color now spans the whole palette, as it already did on the Mandelbox, Menger sponge and Sierpinski tetrahedron, and no longer changes with Max Iterations.',
+'On a 3D layer with Transparent background on, a half-transparent palette stop no longer makes a bright surface look brighter than half its opaque color.',
+'Max Iterations is hidden on the Quaternion Julia set, Menger sponge and Sierpinski tetrahedron, where it no longer changes the picture. On the Mandelbulb and Mandelbox its hint now says they read at most 256 iterations.',
+],
+},
+{
 version:'7.3.16',
 date:'2026-10-27',
 headline:'Palette transparency lets the layer below show through a 3D fractal layer with a transparent background.',
@@ -50893,14 +50923,6 @@ headline:'Variation sheets no longer freeze the app.',
 items:[
 'After File > Variation sheet the app could stop answering clicks and keys until a reload. Each cell now renders at the size it is shown, so a deep-zoom or 3D sheet no longer blocks the window, and one Undo returns the picture you had before the sheet.',
 'Keyboard focus stays in the status bar\'s More menu when the bar refolds its cells, and Enter on a folded Raise Max Iter raises it.',
-],
-},
-{
-version:'7.3.8',
-date:'2026-10-20',
-headline:'The status bar keeps one row.',
-items:[
-'When the status bar\'s readouts do not fit, the optional ones move into a More menu before the version label instead of wrapping onto extra rows or running off a narrow window. Every badge in the menu still works.',
 ],
 },
 

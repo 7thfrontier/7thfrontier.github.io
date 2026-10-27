@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.3.16</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.3.17</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.3.16</h2>
+    <h2>AEON · v7.3.17</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1162,18 +1162,18 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.3.16.</h2>
-    <p class="section-lede">Palette transparency lets the layer below show through a 3D fractal layer with a transparent background · 2026-10-27</p>
+    <h2 class="section-title">What's new<br>in 7.3.17.</h2>
+    <p class="section-lede">A Mandelbulb or Quaternion Julia set now uses its whole palette · 2026-10-27</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Palette transparency lets a lower layer show through a 3D fractal layer with Transparent background.</strong> On a Mandelbulb or another 3D fractal, a palette stop with partial opacity, or an Opacity Field, used to fade the surface toward the background color while the surface stayed opaque. On a layer with Transparent background on, the surface is now see-through by the same amount, so the layer beneath shows through it, on screen and in exports. The empty space around a 3D fractal on such a layer is now fully clear too: it used to lighten the layer beneath with a faint blue-grey, brighter near the fractal's glow. With the box off, and with a fully opaque palette, the fractal itself looks the same as before.</li>
+    <li><strong>A Mandelbulb or Quaternion Julia set now uses its whole palette.</strong> Their surfaces took color from only the first eighth or so of the chosen palette, so a rainbow palette rendered red to orange and most of any palette never showed. The color now spreads across the palette the way it already did on the Mandelbox, Menger sponge and Sierpinski tetrahedron, and the color scale no longer depends on Max Iterations. On a 3D layer with Transparent background, a half-transparent palette stop also no longer shows a bright surface brighter than half its opaque color. The fix now reaches the Quaternion Julia set under WebGPU too. Max Iterations is hidden for the Quaternion Julia set, Menger sponge and Sierpinski tetrahedron, where it no longer changes the picture, and on the Mandelbulb and Mandelbox its hint says they read at most 256 iterations.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.3.16</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.3.17</p>
 </footer>
 
 <script>

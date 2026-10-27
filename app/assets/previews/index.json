@@ -5,7 +5,7 @@
     120
   ],
   "canvas": "1440x900",
-  "totalBytes": 747335,
+  "totalBytes": 748822,
   "entries": [
     {
       "mode": "fractal",
@@ -275,7 +275,7 @@
       "mode": "fractal",
       "type": "mandelbulb",
       "file": "fractal-mandelbulb.jpg",
-      "bytes": 2354
+      "bytes": 2992
     },
     {
       "mode": "fractal",
@@ -335,7 +335,7 @@
       "mode": "fractal",
       "type": "qjulia",
       "file": "fractal-qjulia.jpg",
-      "bytes": 2724
+      "bytes": 3573
     },
     {
       "mode": "fractal",
