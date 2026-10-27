@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-a32g67VyVx/3VbZgl2zg2akriEyirKlKGX24ACY7vOM=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-2+2BV//fm6J4B+rVepYbRwyj8Ug9nbcBfb5KDcUuFaQ=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -2861,7 +2861,7 @@
         </div>
 
         
-        <div data-action="flameTogglePostAffine" class="inline-03" role="button" tabindex="0" aria-expanded="false" aria-controls="flame-pa-panel" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+        <div data-action="flameTogglePostAffine" class="inline-03" role="button" tabindex="0" aria-expanded="false" aria-controls="flame-pa-panel">
           <span id="flame-pa-icon" class="fs-9-dim">▶</span>
           <span class="eyebrow--strong">Post-Affine</span>
           <span id="flame-pa-badge" class="inline-34">off</span>
@@ -2908,7 +2908,7 @@
       </div>
 
       
-      <div data-action="flameToggleXaos" class="inline-04" role="button" tabindex="0" aria-expanded="false" aria-controls="flame-xaos-wrap" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+      <div data-action="flameToggleXaos" class="inline-04" role="button" tabindex="0" aria-expanded="false" aria-controls="flame-xaos-wrap">
         <span id="flame-xaos-icon" class="fs-9-dim">▶</span>
         <span class="eyebrow--strong">Xaos Matrix</span>
         <span class="inline-17">cross weights</span>
@@ -2944,7 +2944,7 @@
       </label>
 
       
-      <div id="flame-dropzone" data-action="importFlame" role="button" tabindex="0" aria-label="Import .flame file from Apophysis or Fractorium. Press Enter or Space to browse, or drop a file here" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="flameDropFile(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+      <div id="flame-dropzone" data-action="importFlame" role="button" tabindex="0" aria-label="Import .flame file from Apophysis or Fractorium. Press Enter or Space to browse, or drop a file here">
         ↓ Import .flame (Apophysis/Fractorium) · drop or click
       </div>
       <button type="button" class="btn ghost fs-10-row w-100" data-action="exportFlame">↑ Export .flame (Apophysis/Fractorium)</button>
@@ -3695,10 +3695,7 @@
         <button type="button" class="pfx-preview-btn fs-9-link" data-pfx-sub="lut" aria-label="LUT settings" aria-controls="pfx-lut-sub" aria-expanded="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-chev-down"/></svg></button>
       </div>
       <div class="pfx-sub" id="pfx-lut-sub">
-        <div id="lut-dropzone" data-action="pfxLoadLUT" role="button" tabindex="0" aria-label="Load .cube LUT file. Press Enter or Space to browse, or drop a file here" ondragover="event.preventDefault();this.classList.add('dragover')"
-          ondragleave="this.classList.remove('dragover')"
-          ondrop="event.preventDefault();this.classList.remove('dragover');pfxDropLUT(event)"
-          onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+        <div id="lut-dropzone" data-action="pfxLoadLUT" role="button" tabindex="0" aria-label="Load .cube LUT file. Press Enter or Space to browse, or drop a file here">
           Drop a .cube file here, or click to browse.
         </div>
         <div id="lut-name" class="inline-27"></div>
@@ -4264,12 +4261,12 @@
 
 
 
-<!-- build: a94e4df27d1e -->
+<!-- build: 2f5b2ba8786a -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.14
+ * AEON -- Universal Dynamics Reactor v7.3.15
  * Proprietary. See LICENSE for terms.
  */
 
@@ -6433,8 +6430,10 @@ const _dzBg=(typeof hexRgb==='function')?hexRgb(S.bgColor||'#000000'):[0,0,0];
 const _dzHavePal=(typeof palRGBA==='function');
 const _cyc=_dzCycleVal(), _coff=S.colorOffset||0;
 
+let _foldA=1;   
 function _palFold(u){
 const rgba=palRGBA(u),a=rgba[3];
+if(_clearInterior&&a<0.999){_foldA=a;return [rgba[0],rgba[1],rgba[2]];}
 return [_dzBg[0]+(rgba[0]-_dzBg[0])*a,_dzBg[1]+(rgba[1]-_dzBg[1])*a,_dzBg[2]+(rgba[2]-_dzBg[2])*a];
 }
 
@@ -6481,6 +6480,7 @@ function colorize(t, exv, i){
 const px=i%w, py=(i/w)|0;
 let col, u=0;
 if(_clearInterior&&t<=DZ_SENTINEL_MAX)return [0,0,0,0];
+_foldA=1;
 
 
 
@@ -6528,6 +6528,7 @@ const v=Math.floor(255*u);
 col=[v,v,v];
 }
 }
+const pA=_foldA;   
 
 
 if(_trapOn&&_dzHavePal&&_algo!==5&&trapData){
@@ -6545,8 +6546,9 @@ tc=_palFold(_dzCresT(trap*_cyc+_coff+0.3));
 const k=(S.trapMix??0.5)*(1-td);
 col=[col[0]+(tc[0]-col[0])*k,col[1]+(tc[1]-col[1])*k,col[2]+(tc[2]-col[2])*k];
 }
+const fa=(_oMode!==0)?_dzAlphaCPU(u, px, py):1;
+if(_clearInterior&&(fa<1||pA<0.999))return [col[0]|0,col[1]|0,col[2]|0,255*pA*fa|0];
 if(_oMode!==0){
-const fa=_dzAlphaCPU(u, px, py);
 col=[_dzBg[0]+(col[0]-_dzBg[0])*fa,_dzBg[1]+(col[1]-_dzBg[1])*fa,_dzBg[2]+(col[2]-_dzBg[2])*fa];
 }
 return [col[0]|0,col[1]|0,col[2]|0,255];
@@ -7528,7 +7530,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.14';
+const APP_VERSION='7.3.15';
 
 
 
@@ -7537,10 +7539,10 @@ const APP_VERSION='7.3.14';
 
 
 
-const MISSION_BUILD_HASH='a94e4df27d1e';
-const MISSION_GIT_SHA='e6625ca10bc13b25c43d81e773491f6af91bf087';
+const MISSION_BUILD_HASH='2f5b2ba8786a';
+const MISSION_GIT_SHA='32e8cc57cc139eba88543a41de562d12c96a3e9a';
 
-const MISSION_RENDER_HASH='3dfb6d005e0f';
+const MISSION_RENDER_HASH='8f2fe938c3ac';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11491,7 +11493,7 @@ _setPillProgress('CPU RENDER',Math.min(99,Math.round(100*py/H))+'%');
 
 for(let row=py;row<Math.min(py+CHUNK,H);row++){
 for(let px=0;px<W;px++){
-let rA=0,gA=0,bA=0,nIn=0;
+let rA=0,gA=0,bA=0,nIn=0,wA=0;
 let lastT=0;
 for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){
 const spx=px+(sx+.5)/aa-.5,
@@ -11514,17 +11516,26 @@ r=rgba[0];g=rgba[1];b=rgba[2];
 
 if(S.trapMode>0 && S.trapMix>0){ const _tc=_cpuTrapMixRGB(r,g,b,_cpuOrbitTrapMin(spx,spy)); r=_tc[0];g=_tc[1];b=_tc[2]; }
 const a=rgba[3];
+
+if(_clrIn&&a<0.999){rA+=r*a;gA+=g*a;bA+=b*a;wA+=a;continue;}
 if(a<0.999){
 r=_bgFR[0]*(1-a)+r*a|0;
 g=_bgFR[1]*(1-a)+g*a|0;
 b=_bgFR[2]*(1-a)+b*a|0;
 }
 }
-rA+=r;gA+=g;bA+=b;
+rA+=r;gA+=g;bA+=b;wA+=1;
 }
 const n=aa*aa,nOut=(n-nIn)||1,i4=(row*W+px)*4;
+const _fld=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
+if(_clrIn){
+let cov=255*wA/n;const wD=wA||1;   
+if(_fld){const _lt=_liveViewTile(W);const fa=_pixelAlphaField(px+(_lt?_lt.tx:0),H-1-row,_lt?_lt.fullW:W,H,lastT);if(fa<0.999)cov*=fa;}
+d[i4]=rA/wD|0;d[i4+1]=gA/wD|0;d[i4+2]=bA/wD|0;d[i4+3]=cov|0;
+continue;
+}
 let mr=rA/nOut|0,mg=gA/nOut|0,mb=bA/nOut|0;
-if(S.opacityFieldStroke&&S.opacityFieldStroke!=='constant'){
+if(_fld){
 const _lt=_liveViewTile(W);   
 const fa=_pixelAlphaField(px+(_lt?_lt.tx:0),H-1-row,_lt?_lt.fullW:W,H,lastT);   
 if(fa<0.999){
@@ -18591,6 +18602,11 @@ const _pixBuf=_u8cAcquire(_n);
 const pixels=new Uint8Array(_pixBuf.buffer);
 gl.readPixels(0,0,w,h,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
 
+
+if(_exportTransparentAlpha){
+for(let o=0;o<_n;o+=4){const a=pixels[o+3];if(a>0&&a<255){const k=255/a;pixels[o]=Math.min(255,pixels[o]*k+.5);pixels[o+1]=Math.min(255,pixels[o+1]*k+.5);pixels[o+2]=Math.min(255,pixels[o+2]*k+.5);}}
+}
+
 _histEqInPlace(pixels,w*h);
 
 
@@ -23525,7 +23541,8 @@ document.addEventListener('keydown',e=>{
 if(e.key!=='Enter'&&e.key!==' ')return;
 const t=e.target;
 if(!t||!t.matches)return;
-if(t.matches('.layer-item, .kf-item, .flame-xform-item, .flame-var-chip')){
+
+if(t.matches('.layer-item, .kf-item, .flame-xform-item, .flame-var-chip, div[role="button"][data-action]')){
 e.preventDefault();
 t.click();
 }
@@ -23714,6 +23731,20 @@ _bindLayerAndGalleryDelegates();
 _bindFormulaEditorHandlers();   
 _bindGenericInputDispatch();    
 _bindPNGStateDrop();            
+_bindFileDropzones();           
+}
+
+
+
+function _bindFileDropzones(){
+for (const [id, onDrop] of [['flame-dropzone', e => flameDropFile(e)], ['lut-dropzone', e => pfxDropLUT(e)]]) {
+const dz = document.getElementById(id);
+if (!dz) continue;
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); onDrop(e); });
+}
 }
 
 
@@ -28741,9 +28772,18 @@ float _resT(float t){
 }
 
 
+
+uniform float u_clearInterior;
+
+
+float _palA=1.0;
+
+
 vec3 pal(float t){
   t=_resT(t);
   vec4 s=texture(u_palette,vec2(t,0.5));
+  _palA=s.a;
+  if(u_clearInterior>0.5&&s.a<1.0)return s.rgb;
   return mix(u_bgColor,s.rgb,s.a);
 }
 
@@ -28819,13 +28859,12 @@ float _pixelAlpha(vec2 fragCoord, float colourT){
   t=clamp(t+u_opacityPhase,0.0,1.0);
   return clamp(u_opacityRange.x+(u_opacityRange.y-u_opacityRange.x)*t,0.0,1.0);
 }
-
-
-uniform float u_clearInterior;
 bool _inSetPx=false;
 vec4 fcOut(vec3 col, float colourT){
   if(_inSetPx&&u_clearInterior>0.5)return vec4(0.0);
   float a=_pixelAlpha(gl_FragCoord.xy,colourT);
+  
+  if(u_clearInterior>0.5&&(a<1.0||_palA<1.0)){float A=a*_palA;return vec4(col*A,A);}
   return vec4(mix(u_bgColor,col,a),1.0);
 }
 
@@ -30151,7 +30190,7 @@ void main(){
   u = _cresT(u);
   vec4 s = texture(u_palette, vec2(u, 0.5));
   
-  vec3 col = mix(u_bgColor, s.rgb, s.a);
+  vec3 col = (u_clearInterior > 0.5 && s.a < 1.0) ? s.rgb : mix(u_bgColor, s.rgb, s.a);
   if (u_colorAlgo == 5) {
     
     vec2 nrm = zFin / max(length(der), 1e-10);
@@ -30160,6 +30199,7 @@ void main(){
     col = clamp(col*pow(shade, 0.7)*1.4, 0.0, 1.0);
   }
   float fa = _dzAlpha(u);
+  if (u_clearInterior > 0.5 && (fa < 1.0 || s.a < 1.0)) { float A = fa*s.a; fragColor = vec4(col*A, A); return; }
   fragColor = vec4(mix(u_bgColor, col, fa), 1.0);
 }`;
 
@@ -30422,7 +30462,7 @@ void main(){
   u = _cresT(u);
   vec4 s = texture(u_palette, vec2(u, 0.5));
   
-  vec3 col = mix(u_bgColor, s.rgb, s.a);
+  vec3 col = (u_clearInterior > 0.5 && s.a < 1.0) ? s.rgb : mix(u_bgColor, s.rgb, s.a);
   if (u_colorAlgo == 5) {
     
     vec2 nrm = zFin / max(length(der), 1e-10);
@@ -30431,6 +30471,7 @@ void main(){
     col = clamp(col*pow(shade, 0.7)*1.4, 0.0, 1.0);
   }
   float fa = _dz2Alpha(u);
+  if (u_clearInterior > 0.5 && (fa < 1.0 || s.a < 1.0)) { float A = fa*s.a; fragColor = vec4(col*A, A); return; }
   fragColor = vec4(mix(u_bgColor, col, fa), 1.0);
 }`;
 
@@ -50774,6 +50815,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.3.15',
+date:'2026-10-26',
+headline:'Palette transparency lets the layer below show through a fractal layer with a transparent background.',
+items:[
+'On a layer with Transparent background on, a palette stop with partial opacity, or an Opacity Field, now makes those parts of the fractal see-through by the same amount, so the layer beneath shows through them, on screen and in exports. With the box off, or with a fully opaque palette, nothing changes.',
+'Dropping a .flame or .cube file on its drop zone imports it again instead of saying the file is not supported, and Enter or Space now works on the Post-Affine and Xaos Matrix headers and on both drop zones.',
+],
+},
+{
 version:'7.3.14',
 date:'2026-10-26',
 headline:'A fractal layer\'s transparent background lets the layer below show through the inside of the set.',
@@ -50840,15 +50890,6 @@ items:[
 'A large export first renders a small piece at its final size beside the same piece of the screen, says whether it comes out brighter or darker, and waits for Export or Cancel.',
 'The catalog\'s History chip lists the last 16 views you rendered, with a thumbnail each. One click returns to the exact state.',
 'A drag at deep zoom stays where you let go while the new frame renders, and idle thumbnails no longer redraw the picture over and over on some graphics setups.',
-],
-},
-{
-version:'7.3.6',
-date:'2026-10-20',
-headline:'Copy report, and an open coordinate editor stays open.',
-items:[
-'Help > Copy report puts the version, the build, a link to the exact view, the renderer and precision, the window size and the browser on the clipboard as plain text, ready to paste into a bug report.',
-'An open Zoom or Center editor no longer closes when a badge on the bar changes during a render. The bar catches up once you press Enter or Escape.',
 ],
 },
 
@@ -63617,7 +63658,7 @@ const CHUNK=8;
 for(let row=0;row<th;row+=CHUNK){
 for(let r=row;r<Math.min(row+CHUNK,th);r++){
 for(let px=0;px<tw;px++){
-let rA=0,gA=0,bA=0,lastT=0,nIn=0;
+let rA=0,gA=0,bA=0,lastT=0,nIn=0,wA=0;
 for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){
 const spx=(x0+px)+(sx+.5)/aa-.5,spy=(y0+r)+(sy+.5)/aa-.5;
 const cx=S.centerX+(spx-W2/2)*sc,cy=S.centerY+(spy-H2/2)*sc;
@@ -63626,10 +63667,16 @@ const[iter,zx,zy]=res;let rv,gv,bv;
 if(_exportTransparentAlpha&&iter>=mi){nIn++;continue;}   
 if(isNewton){[rv,gv,bv]=newtonRGB(iter,zx,zy);if(typeof _newtonOpacT==='function')lastT=_newtonOpacT(zx,zy,iter);}  
 else if(iter>=mi){[rv,gv,bv]=interiorRGB(zx,zy,iter);if(typeof _interiorOpacT==='function')lastT=_interiorOpacT(zx,zy);}  
-else{const tc=colorT(iter,zx,zy);lastT=tc;const rgba=palRGBA(tc);rv=rgba[0];gv=rgba[1];bv=rgba[2];const a=rgba[3];if(a<0.999){rv=_bgFR[0]*(1-a)+rv*a|0;gv=_bgFR[1]*(1-a)+gv*a|0;bv=_bgFR[2]*(1-a)+bv*a|0;}}
-rA+=rv;gA+=gv;bA+=bv;
+else{const tc=colorT(iter,zx,zy);lastT=tc;const rgba=palRGBA(tc);rv=rgba[0];gv=rgba[1];bv=rgba[2];const a=rgba[3];if(_exportTransparentAlpha&&a<0.999){rA+=rv*a;gA+=gv*a;bA+=bv*a;wA+=a;continue;}if(a<0.999){rv=_bgFR[0]*(1-a)+rv*a|0;gv=_bgFR[1]*(1-a)+gv*a|0;bv=_bgFR[2]*(1-a)+bv*a|0;}}   
+rA+=rv;gA+=gv;bA+=bv;wA+=1;
 }
 const n=aa*aa,nOut=(n-nIn)||1,i4=(r*tw+px)*4;
+if(_exportTransparentAlpha){
+let cov=255*wA/n;const wD=wA||1;   
+if(_opacField){const fa=_pixelAlphaField(x0+px,H2-1-(y0+r),W2,H2,lastT);if(fa<0.999)cov*=fa;}
+d[i4]=rA/wD|0;d[i4+1]=gA/wD|0;d[i4+2]=bA/wD|0;d[i4+3]=cov|0;
+continue;
+}
 let mr=rA/nOut|0,mg=gA/nOut|0,mb=bA/nOut|0;
 if(_opacField){const fa=_pixelAlphaField(x0+px,H2-1-(y0+r),W2,H2,lastT);if(fa<0.999){mr=_bgFR[0]*(1-fa)+mr*fa|0;mg=_bgFR[1]*(1-fa)+mg*fa|0;mb=_bgFR[2]*(1-fa)+mb*fa|0;}}  
 d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255*(n-nIn)/n|0;

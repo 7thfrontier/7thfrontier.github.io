@@ -428,7 +428,7 @@ function _renderEscapeTime(oc, seq){
   for (var py = 0; py < H; py += CHUNK) {
     for (var row = py; row < Math.min(py + CHUNK, H); row++) {
       for (var px = 0; px < W; px++) {
-        var rA = 0, gA = 0, bA = 0, lastT = 0, nIn = 0;
+        var rA = 0, gA = 0, bA = 0, lastT = 0, nIn = 0, wA = 0;
         for (var sy = 0; sy < aa; sy++) for (var sx = 0; sx < aa; sx++) {
           var spx = px + (sx + .5) / aa - .5,
               spy = row + (sy + .5) / aa - .5,
@@ -450,15 +450,23 @@ function _renderEscapeTime(oc, seq){
             
             if (S.trapMode > 0 && S.trapMix > 0) { var _ttc = _cpuTrapMixRGB(r, g, b, _cpuOrbitTrapMin(spx, spy)); r = _ttc[0]; g = _ttc[1]; b = _ttc[2]; }
             var a = rgba[3];
+            
+            if (CLR && a < 0.999) { rA += r * a; gA += g * a; bA += b * a; wA += a; continue; }
             if (a < 0.999) {
               r = bg[0] * (1 - a) + r * a | 0;
               g = bg[1] * (1 - a) + g * a | 0;
               b = bg[2] * (1 - a) + b * a | 0;
             }
           }
-          rA += r; gA += g; bA += b;
+          rA += r; gA += g; bA += b; wA += 1;
         }
         var nS = aa * aa, nOut = (nS - nIn) || 1, i4 = (row * W + px) * 4;
+        if (CLR) {
+          var cov = 255 * wA / nS, wD = wA || 1;   
+          if (_opacField) { var fa2 = _pixelAlphaField(px + VTX, H - 1 - row, VFW || W, H, lastT); if (fa2 < 0.999) cov *= fa2; }
+          data[i4] = rA / wD | 0; data[i4 + 1] = gA / wD | 0; data[i4 + 2] = bA / wD | 0; data[i4 + 3] = cov | 0;
+          continue;
+        }
         var mr = rA / nOut | 0, mg = gA / nOut | 0, mb = bA / nOut | 0;
         if (_opacField) {
           var fa = _pixelAlphaField(px + VTX, H - 1 - row, VFW || W, H, lastT);   

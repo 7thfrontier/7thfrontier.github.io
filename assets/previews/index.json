@@ -5,7 +5,7 @@
     120
   ],
   "canvas": "1440x900",
-  "totalBytes": 747330,
+  "totalBytes": 747335,
   "entries": [
     {
       "mode": "fractal",
@@ -833,7 +833,7 @@
       "mode": "geometry",
       "type": "hyperbolic-tiling",
       "file": "geometry-hyperbolic-tiling.jpg",
-      "bytes": 3770
+      "bytes": 3773
     },
     {
       "mode": "geometry",
@@ -1055,7 +1055,7 @@
       "mode": "geometry",
       "type": "poincare-disk",
       "file": "geometry-poincare-disk.jpg",
-      "bytes": 1734
+      "bytes": 1736
     },
     {
       "mode": "geometry",
