@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-2+2BV//fm6J4B+rVepYbRwyj8Ug9nbcBfb5KDcUuFaQ=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-4n7ouhM781K7WpDb6bqVAG1P6wDfW9FfyVdnUrSwpcQ=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4261,12 +4261,12 @@
 
 
 
-<!-- build: 2f5b2ba8786a -->
+<!-- build: 37df31d58310 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.15
+ * AEON -- Universal Dynamics Reactor v7.3.16
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7530,7 +7530,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.15';
+const APP_VERSION='7.3.16';
 
 
 
@@ -7539,10 +7539,10 @@ const APP_VERSION='7.3.15';
 
 
 
-const MISSION_BUILD_HASH='2f5b2ba8786a';
-const MISSION_GIT_SHA='32e8cc57cc139eba88543a41de562d12c96a3e9a';
+const MISSION_BUILD_HASH='37df31d58310';
+const MISSION_GIT_SHA='2f40a299795f6de6a5aa3a44fa25a17d37ff86ec';
 
-const MISSION_RENDER_HASH='8f2fe938c3ac';
+const MISSION_RENDER_HASH='f872dc7a473e';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -9851,10 +9851,12 @@ void main(){
     float u=fract(shade+u_colorOffset);
     vec4 ps=texture(u_palette,vec2(u,0.5));
     
+    
+    if(u_exportTransparent>0.5&&ps.a<1.0){fragColor=vec4(ps.rgb*lit*ps.a,ps.a);return;}
     vec3 col=mix(u_bgColor,ps.rgb,ps.a)*lit;
     fragColor=vec4(col,1.0);
   } else {
-    fragColor=vec4(0.05,0.06,0.08, u_exportTransparent>0.5?0.0:1.0);
+    fragColor=u_exportTransparent>0.5?vec4(0.0):vec4(0.05,0.06,0.08,1.0);   
   }
 }`;
 }
@@ -29665,8 +29667,14 @@ float _resT3(float t){
   if(u_colorRepeat>1.0)t=fract(t*u_colorRepeat);
   return fract(t+u_colorPhase);
 }
+
+
+
+float _palA3=1.0, _hitA3=1.0;
 vec3 pal3(float t){
   vec4 s=texture(u_palette,vec2(_resT3(t),0.5));
+  _palA3=s.a;
+  if(u_exportTransparent>0.5&&s.a<1.0)return s.rgb;
   return mix(u_bgColor,s.rgb,s.a);
 }
 
@@ -29719,8 +29727,12 @@ float _pixelAlpha3(vec2 fragCoord, float colourT){
   return clamp(u_opacityRange.x+(u_opacityRange.y-u_opacityRange.x)*t,0.0,1.0);
 }
 
+
+
 vec4 fcOut3(vec3 col, float colourT, float outA){
   float a=_pixelAlpha3(gl_FragCoord.xy+u_tileOffset,colourT);
+  if(outA<0.5)return vec4(0.0);
+  if(u_exportTransparent>0.5&&(a<1.0||_hitA3<1.0)){float A=a*_hitA3;return vec4(col*A,A);}
   return vec4(mix(u_bgColor,col,a),outA);
 }
 
@@ -29896,6 +29908,7 @@ void main(){
     else if (u_type3d == 4) { effMax = 16.0; effCycle = 1.0; }  
     iterT=fract(res.y/effMax*u_colorCycle*effCycle+u_colorOffset);
     vec3 base=pal3(iterT);
+    _hitA3=_palA3;
     col=base*(diff*.8+u_lightAmb)*ao+vec3(spec*.8)+pal3(fract(iterT+.3))*fres;
     col*=1.4;
     col=pow(col,vec3(.8));
@@ -50815,6 +50828,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.3.16',
+date:'2026-10-27',
+headline:'Palette transparency lets the layer below show through a 3D fractal layer with a transparent background.',
+items:[
+'On a Mandelbulb or another 3D fractal, on a layer with Transparent background on, a palette stop with partial opacity or an Opacity Field now makes the surface see-through by the same amount, so the layer beneath shows through it, on screen and in exports.',
+'The empty space around a 3D fractal on such a layer is now fully clear. It used to lighten the layer beneath with a faint blue-grey. With the box off, or with a fully opaque palette, the fractal looks the same as before.',
+],
+},
+{
 version:'7.3.15',
 date:'2026-10-26',
 headline:'Palette transparency lets the layer below show through a fractal layer with a transparent background.',
@@ -50879,17 +50901,6 @@ date:'2026-10-20',
 headline:'The status bar keeps one row.',
 items:[
 'When the status bar\'s readouts do not fit, the optional ones move into a More menu before the version label instead of wrapping onto extra rows or running off a narrow window. Every badge in the menu still works.',
-],
-},
-{
-version:'7.3.7',
-date:'2026-10-20',
-headline:'One Export image tab, a proof before a long export, and Render history.',
-items:[
-'Quick and Print / Hi-Res are now one Export image tab. Print options holds physical size, DPI and supersampling, and the Resolution row gains 8K and 16K.',
-'A large export first renders a small piece at its final size beside the same piece of the screen, says whether it comes out brighter or darker, and waits for Export or Cancel.',
-'The catalog\'s History chip lists the last 16 views you rendered, with a thumbnail each. One click returns to the exact state.',
-'A drag at deep zoom stays where you let go while the new frame renders, and idle thumbnails no longer redraw the picture over and over on some graphics setups.',
 ],
 },
 
