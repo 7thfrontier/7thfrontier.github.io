@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-cmQzaMTmFfSdO6n40H18wFwVXicuXcDW2d7FAxIblNM=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-I4yOB48mV0pw/RjCrvc9fGGsQvN5EiNyB5T5BVp6Roc=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4272,12 +4272,12 @@
 
 
 
-<!-- build: dd41960500bd -->
+<!-- build: 9ff508cbca26 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.4.0
+ * AEON -- Universal Dynamics Reactor v7.5.0
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7543,7 +7543,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.4.0';
+const APP_VERSION='7.5.0';
 
 
 
@@ -7552,10 +7552,10 @@ const APP_VERSION='7.4.0';
 
 
 
-const MISSION_BUILD_HASH='dd41960500bd';
-const MISSION_GIT_SHA='b6e2a9c3e2c4c4ede09a83f766b04957dbc690c4';
+const MISSION_BUILD_HASH='9ff508cbca26';
+const MISSION_GIT_SHA='640f2677f4c59462e74ac343ee8c2ac8c62fa16f';
 
-const MISSION_RENDER_HASH='ec271cf614ec';
+const MISSION_RENDER_HASH='2407ae52c804';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -26118,6 +26118,7 @@ en: {
 'deepzoom.precision-exhausted-title.coloring': 'This coloring mode has no deep-zoom path for this fractal type. Switch coloring to restore precision at this depth.',
 'deepzoom.precision-exhausted-title.unsupported-type': 'This fractal type has no deep-zoom path yet, so precision is capped at this depth.',
 'dataseed.applied':           'Data seed applied: {label}',
+'dataseed.arg-time':          'Time (blank for now)',
 'dataseed.error':             'Data seed error: {msg}',
 'dataseed.fetch-in-progress': 'Data fetch already in progress.',
 'dataseed.inspired':          'Inspired by data: {label}',
@@ -39484,6 +39485,16 @@ const days = (d.getTime() - ref) / 86400000;
 return ((days / 29.530588853) % 1 + 1) % 1;
 }
 
+function _ds_yearFraction(d) {
+const y = d.getUTCFullYear(), y0 = Date.UTC(y, 0, 1);
+return (d.getTime() - y0) / (Date.UTC(y + 1, 0, 1) - y0);
+}
+
+function _ds_instant(at) {
+const ms = at ? Date.parse(at) : NaN;
+return Number.isFinite(ms) ? ms : Date.now();
+}
+
 
 function _ds_sunPosition(d, latDeg, lonDeg) {
 const RAD = Math.PI / 180;
@@ -39663,8 +39674,7 @@ fetcher: async () => ({ now: Date.now() }),
 transformer: (raw) => {
 const d = new Date(raw.now);
 const hourOfDay = (d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds()) / 86400;
-const startOfYear = Date.UTC(d.getUTCFullYear(), 0, 1);
-const dayOfYear = ((d.getTime() - startOfYear) / 86400000) / 366;
+const dayOfYear = _ds_yearFraction(d);
 const weekday = (d.getDay()) / 7;
 const moon = _ds_moonPhase(d);
 const hash = _ds_fnv32(String(raw.now));
@@ -39684,9 +39694,10 @@ label: 'Astronomy (sun / moon, local)',
 argsSchema: {
 lat: { type: 'number', label: 'Latitude', default: 40.7128, min: -90, max: 90, step: 0.0001 },
 lon: { type: 'number', label: 'Longitude', default: -74.0060, min: -180, max: 180, step: 0.0001 },
+at: { type: 'datetime', label: t('dataseed.arg-time') },
 },
 fetcher: async (args) => ({
-now: Date.now(),
+now: _ds_instant(args.at),
 
 
 lat: args.lat !== '' && Number.isFinite(+args.lat) ? +args.lat : 40.7128,
@@ -39700,8 +39711,10 @@ const sunAltNorm = (alt / Math.PI) + 0.5;
 const sunAzNorm = ((az / Math.PI) + 1) / 2;
 const moon = _ds_moonPhase(d);
 const isDaylight = alt > 0 ? 1 : 0;
-const hourOfDay = (d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds()) / 86400;
-const dayOfYear = ((d.getTime() - Date.UTC(d.getUTCFullYear(), 0, 1)) / 86400000) / 366;
+
+
+const hourOfDay = ((((d.getTime() % 86400000) / 86400000 + raw.lon / 360) % 1) + 1) % 1;
+const dayOfYear = _ds_yearFraction(d);
 const hash = _ds_fnv32(String(raw.now) + ':' + raw.lat.toFixed(4) + ':' + raw.lon.toFixed(4));
 return _ds_makePayload(
 hash,
@@ -40585,6 +40598,24 @@ if (!file) return;
 e.preventDefault(); e.stopPropagation();
 try { const dt = new DataTransfer(); dt.items.add(file); el.files = dt.files; } catch (_e) {_swallowed('_ds_renderArgsPanel', _e);}
 el.dispatchEvent(new Event('change', { bubbles: true }));
+});
+el.id = 'ds-arg-' + key;
+el.dataset.dsArg = key;
+wrap.appendChild(el);
+argsDiv.appendChild(wrap);
+continue;
+} else if (schema.type === 'datetime') {
+
+
+el = document.createElement('input');
+el.type = 'datetime-local';
+el.step = 1;
+el.className = 'input-fs-10 flex-1';
+const ms = Date.parse(S.dataSeeds.args[key] || '');
+if (Number.isFinite(ms)) { const o = new Date(ms - new Date(ms).getTimezoneOffset() * 60000); el.value = o.toISOString().slice(0, 19); }
+el.addEventListener('input', () => {
+const when = el.value ? new Date(el.value).getTime() : NaN;
+S.dataSeeds.args[key] = Number.isFinite(when) ? new Date(when).toISOString().slice(0, 19) + 'Z' : '';
 });
 el.id = 'ds-arg-' + key;
 el.dataset.dsArg = key;
@@ -50912,6 +50943,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.5.0',
+date:'2026-10-28',
+headline:'The Astronomy data seed can show the sky at a chosen moment.',
+items:[
+'The Astronomy seed panel has a Time field, entered in your own time zone. Leave it blank for the current time. A share link keeps the moment, so everyone who opens it sees the same sky.',
+'The Astronomy seed\'s hour now follows the sun at its location instead of your own clock, so a seed set to Tokyo and opened in New York no longer pairs a New York hour with the Tokyo sun. The day of the year in the Date & Time and Astronomy seeds now counts a 365-day year as 365 days.',
+],
+},
+{
 version:'7.4.0',
 date:'2026-10-27',
 headline:'An elementary CA can start from any first row.',
@@ -50977,17 +51017,6 @@ items:[
 'A cell picks up where it left off when you interact, and ends exactly as an uninterrupted render would.',
 'An export started while a sheet refines its cells no longer fails with an interrupted render, and the layer previews no longer render at the export\'s size.',
 'Videos and PNG sequences keep a layer\'s transparent background, so each frame matches a still export of the same moment.',
-],
-},
-{
-version:'7.3.11',
-date:'2026-10-21',
-headline:'Variation sheets fill every cell, and the status bar fits a narrow window.',
-items:[
-'A variation sheet of a strange attractor or an IFS fractal now fills every cell, with no stray warning about an export.',
-'In a narrow window the status bar stays inside its frame: the coloring readout folds into More, and a bar that still cannot fit wraps onto a second row.',
-'The Center field accepts .5, a leading +, the − sign and a pair in parentheses, and catalog search treats a hyphen and a space alike.',
-'The new-version dot now sits on the Application menu, and the update banner has a What\'s New button that opens the notes after reloading.',
 ],
 },
 

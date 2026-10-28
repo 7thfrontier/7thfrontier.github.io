@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.4.0</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.5.0</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.4.0</h2>
+    <h2>AEON · v7.5.0</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1162,20 +1162,19 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.4.0.</h2>
-    <p class="section-lede">An elementary CA can start from any first row · 2026-10-27</p>
+    <h2 class="section-title">What's new<br>in 7.5.0.</h2>
+    <p class="section-lede">The Astronomy data seed can show the sky at a chosen moment · 2026-10-28</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Elementary CA can start from any first row.</strong> The Elementary CA panel has a Starting row choice: one center cell as before, a random row drawn from the Seed, or your own string of 0s and 1s placed at the center of the first row. A share link keeps the choice.</li>
-    <li><strong>Max Iterations on the Mandelbulb and Mandelbox stops at 256</strong>, the most these two types read. The slider used to run to 10000, and nothing above 256 changed the picture. A higher count from the previous fractal, a share link or the Iters readout is lowered to 256 when one of these types is shown, so the slider, its readout and a shared link agree.</li>
-    <li><strong>A landscape export with Distance Estimation coloring no longer has a seam down it.</strong> A wide export renders in tiles, a square one and the strip beside it, and the strip came out in different colors from the square, so a hard vertical line ran down the picture where the square ended. Every tile now colors by the zoom of the whole picture. This also applies to deep-zoom exports with Distance Estimation coloring.</li>
+    <li><strong>The Astronomy data seed can show the sky at a chosen moment.</strong> Its panel has a Time field, entered in your own time zone. Leave it blank for the current time. A share link keeps the moment, so everyone who opens it sees the same sky.</li>
+    <li><strong>The Astronomy data seed's hour now follows the sun at its location.</strong> Its hour of day used to come from your own clock, so a seed set to Tokyo and opened in New York paired a New York hour with the Tokyo sun. It is now the local solar time at the seed's longitude, which changes the hour a live Astronomy seed reports. The day of the year in both the Date &amp; Time and Astronomy seeds now counts a 365-day year as 365 days instead of 366.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.4.0</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.5.0</p>
 </footer>
 
 <script>

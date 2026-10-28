@@ -1,7 +1,6 @@
-An elementary CA can start from any first row · 2026-10-27
+The Astronomy data seed can show the sky at a chosen moment · 2026-10-28
 
-- **Elementary CA can start from any first row.** The Elementary CA panel has a Starting row choice: one center cell as before, a random row drawn from the Seed, or your own string of 0s and 1s placed at the center of the first row. A share link keeps the choice.
-- **Max Iterations on the Mandelbulb and Mandelbox stops at 256**, the most these two types read. The slider used to run to 10000, and nothing above 256 changed the picture. A higher count from the previous fractal, a share link or the Iters readout is lowered to 256 when one of these types is shown, so the slider, its readout and a shared link agree.
-- **A landscape export with Distance Estimation coloring no longer has a seam down it.** A wide export renders in tiles, a square one and the strip beside it, and the strip came out in different colors from the square, so a hard vertical line ran down the picture where the square ended. Every tile now colors by the zoom of the whole picture. This also applies to deep-zoom exports with Distance Estimation coloring.
+- **The Astronomy data seed can show the sky at a chosen moment.** Its panel has a Time field, entered in your own time zone. Leave it blank for the current time. A share link keeps the moment, so everyone who opens it sees the same sky.
+- **The Astronomy data seed's hour now follows the sun at its location.** Its hour of day used to come from your own clock, so a seed set to Tokyo and opened in New York paired a New York hour with the Tokyo sun. It is now the local solar time at the seed's longitude, which changes the hour a live Astronomy seed reports. The day of the year in both the Date & Time and Astronomy seeds now counts a 365-day year as 365 days instead of 366.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.
