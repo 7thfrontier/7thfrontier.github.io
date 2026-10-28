@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-I4yOB48mV0pw/RjCrvc9fGGsQvN5EiNyB5T5BVp6Roc=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-Nn/KFyUtMMQx1p0dY4bvf1JbYlTBgvbca/Ns8JB0SRU=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4272,12 +4272,12 @@
 
 
 
-<!-- build: 9ff508cbca26 -->
+<!-- build: 645b5fbd45ee -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.5.0
+ * AEON -- Universal Dynamics Reactor v7.5.1
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7543,7 +7543,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.5.0';
+const APP_VERSION='7.5.1';
 
 
 
@@ -7552,10 +7552,10 @@ const APP_VERSION='7.5.0';
 
 
 
-const MISSION_BUILD_HASH='9ff508cbca26';
-const MISSION_GIT_SHA='640f2677f4c59462e74ac343ee8c2ac8c62fa16f';
+const MISSION_BUILD_HASH='645b5fbd45ee';
+const MISSION_GIT_SHA='ee2e132652f2a41990371fc23f9a4941be0e805a';
 
-const MISSION_RENDER_HASH='2407ae52c804';
+const MISSION_RENDER_HASH='9a7c29adfc1e';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -24806,7 +24806,7 @@ _palPreviewStash=null;_palPreviewActive=false;
 
 function _palPreviewRevertSilent(){
 clearTimeout(_palPreviewT);_palPreviewT=null;
-if(_palPreviewStash!==null){S.palette=_palPreviewStash;_palPreviewStash=null;}
+if(_palPreviewStash!==null){S.palette=_palPreviewStash;_palPreviewStash=null;scheduleRender();}
 _palPreviewActive=false;
 }
 
@@ -47559,7 +47559,8 @@ async function resetAll(){
 if(typeof _exportBusyBail==='function' && _exportBusyBail(()=>resetAll()))return false;
 
 
-if(typeof _palPreviewCancel==='function')_palPreviewCancel();
+
+if(typeof _palPreviewExit==='function')_palPreviewExit();
 
 
 
@@ -50943,6 +50944,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.5.1',
+date:'2026-10-28',
+headline:'A palette preview no longer stays on the picture after it ends early.',
+items:[
+'Hovering a palette swatch right after an edit could leave the canvas showing the hovered palette once the edit was saved to history; it now repaints with the chosen palette. Pressing r over a hovered swatch and then cancelling Reset All no longer keeps the hovered palette as your palette.',
+],
+},
+{
 version:'7.5.0',
 date:'2026-10-28',
 headline:'The Astronomy data seed can show the sky at a chosen moment.',
@@ -51006,17 +51015,6 @@ items:[
 'Press Escape, or choose Close sheet in the corner of the canvas, to go back to the picture you had before a variation sheet. Undo brings the sheet back.',
 'On a Buddhabrot sheet, Undo works again: while the cells refined, each Undo landed back on the sheet.',
 'Record Video and Frame-Exact Export give every frame the same length at the chosen rate, so a deep zoom or a density fractal no longer stutters or drops frames. A video export now takes at least as long as the clip.',
-],
-},
-{
-version:'7.3.12',
-date:'2026-10-21',
-headline:'Density variation sheets answer you while they render, and videos keep transparent layers.',
-items:[
-'A variation sheet of a Buddhabrot, attractor, IFS or flame shows a quick draft of every cell within a second or two, then sharpens each one in the background while your clicks and keys take effect at once.',
-'A cell picks up where it left off when you interact, and ends exactly as an uninterrupted render would.',
-'An export started while a sheet refines its cells no longer fails with an interrupted render, and the layer previews no longer render at the export\'s size.',
-'Videos and PNG sequences keep a layer\'s transparent background, so each frame matches a still export of the same moment.',
 ],
 },
 
