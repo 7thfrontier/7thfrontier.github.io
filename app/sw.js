@@ -4,7 +4,7 @@
 
 
 
-const CACHE_VERSION = 'reactor-v7.3.17';
+const CACHE_VERSION = 'reactor-v7.4.0';
 
 
 

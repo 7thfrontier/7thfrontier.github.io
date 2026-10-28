@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.3.17</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.4.0</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.3.17</h2>
+    <h2>AEON · v7.4.0</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1162,18 +1162,20 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.3.17.</h2>
-    <p class="section-lede">A Mandelbulb or Quaternion Julia set now uses its whole palette · 2026-10-27</p>
+    <h2 class="section-title">What's new<br>in 7.4.0.</h2>
+    <p class="section-lede">An elementary CA can start from any first row · 2026-10-27</p>
   </header>
   <ul class="prose changes">
-    <li><strong>A Mandelbulb or Quaternion Julia set now uses its whole palette.</strong> Their surfaces took color from only the first eighth or so of the chosen palette, so a rainbow palette rendered red to orange and most of any palette never showed. The color now spreads across the palette the way it already did on the Mandelbox, Menger sponge and Sierpinski tetrahedron, and the color scale no longer depends on Max Iterations. On a 3D layer with Transparent background, a half-transparent palette stop also no longer shows a bright surface brighter than half its opaque color. The fix now reaches the Quaternion Julia set under WebGPU too. Max Iterations is hidden for the Quaternion Julia set, Menger sponge and Sierpinski tetrahedron, where it no longer changes the picture, and on the Mandelbulb and Mandelbox its hint says they read at most 256 iterations.</li>
+    <li><strong>Elementary CA can start from any first row.</strong> The Elementary CA panel has a Starting row choice: one center cell as before, a random row drawn from the Seed, or your own string of 0s and 1s placed at the center of the first row. A share link keeps the choice.</li>
+    <li><strong>Max Iterations on the Mandelbulb and Mandelbox stops at 256</strong>, the most these two types read. The slider used to run to 10000, and nothing above 256 changed the picture. A higher count from the previous fractal, a share link or the Iters readout is lowered to 256 when one of these types is shown, so the slider, its readout and a shared link agree.</li>
+    <li><strong>A landscape export with Distance Estimation coloring no longer has a seam down it.</strong> A wide export renders in tiles, a square one and the strip beside it, and the strip came out in different colors from the square, so a hard vertical line ran down the picture where the square ended. Every tile now colors by the zoom of the whole picture. This also applies to deep-zoom exports with Distance Estimation coloring.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.3.17</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.4.0</p>
 </footer>
 
 <script>

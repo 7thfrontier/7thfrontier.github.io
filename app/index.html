@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-HcBC3ztLk5UDNAScRCKad9EAD6DrqXHM8LznMIlxPXs=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-cmQzaMTmFfSdO6n40H18wFwVXicuXcDW2d7FAxIblNM=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -3077,6 +3077,17 @@
         <div class="rp-sub-head">Elementary CA</div>
         <div class="ctrl"><label for="caRule">Rule number <span class="badge" id="caRule-v">90</span></label><div class="slider-row"><input type="range" id="caRule" min="0" max="255" step="1" value="90" aria-describedby="slider-keys-hint"></div></div>
         <div class="ctrl-hint mt-2">30 = chaotic (Wolfram PRNG) · 90 = Sierpiński · 110 = Turing-complete · 184 = traffic</div>
+        <div class="ctrl mt-2"><label for="caStart">Starting row</label>
+          <select id="caStart">
+            <option value="center">One center cell</option>
+            <option value="random">Random (from Seed)</option>
+            <option value="bits">Custom bits</option>
+          </select>
+        </div>
+        <div class="ctrl is-hidden" id="caBits-row"><label for="caBits">Starting bits (0 and 1)</label>
+          <input type="text" id="caBits" maxlength="1023" value="" pattern="[01]*" spellcheck="false" autocomplete="off" class="input-mono-13">
+          <div class="ctrl-hint mt-2">Placed at the center of the first row. Other characters are dropped.</div>
+        </div>
       </div>
       
       <div id="kleinian-panel" class="is-hidden">
@@ -4261,12 +4272,12 @@
 
 
 
-<!-- build: 7d1f59346862 -->
+<!-- build: dd41960500bd -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.3.17
+ * AEON -- Universal Dynamics Reactor v7.4.0
  * Proprietary. See LICENSE for terms.
  */
 
@@ -4412,10 +4423,12 @@ info:{name:'Custom 3D DE',formula:'User-defined float DE(vec3 p), live GLSL reco
 desc:{f:'Custom DE function body',d:'Write a distance estimator in GLSL. Body returns a float distance to the nearest fractal surface. Default = standard Mandelbulb (power 8). Try Mandelbox (box-fold + sphere-fold + scale) or Sierpiński tetrahedron folds.'}},
 
 
-mandelbulb:{family:'3d',juliaMode:false,label:'Mandelbulb 3D',fd:{cx:0,cy:0,zoom:.8},
+
+
+mandelbulb:{family:'3d',juliaMode:false,label:'Mandelbulb 3D',fd:{cx:0,cy:0,zoom:.8},miMax:256,
 info:{name:'Mandelbulb 3D',formula:'rⁿ·trig(nθ,nφ) + c, n=power'},
 desc:{f:'rⁿ·trig(nθ, nφ) + c',d:'Spherical-coordinate 3D extension of Mandelbrot. Power-8 produces otherworldly alien coral forms.'}},
-mandelbox:{family:'3d',juliaMode:false,label:'Mandelbox 3D',fd:{cx:0,cy:0,zoom:1.0},
+mandelbox:{family:'3d',juliaMode:false,label:'Mandelbox 3D',fd:{cx:0,cy:0,zoom:1.0},miMax:256,
 info:{name:'Mandelbox 3D',formula:'spherefold(boxfold(z))·s + c'},
 desc:{f:'box fold → sphere fold → scale',d:'IFS iteration using box and sphere folds. Boxy crystalline structures at scale 2, more chaotic as the scale grows.'}},
 
@@ -5980,7 +5993,7 @@ let u;
 if(algo===1)u=ex/mi*cyc*8+off;
 else if(algo===2)u=(sm/mi+(ex/(2*Math.PI)+0.5))*cyc*0.5+off;
 else if(algo===3){const st=Math.sin(ex*10)*0.5+0.5;u=sm/mi*cyc+st*0.4+off;}
-else if(algo===4)u=Math.log(Math.max(ex*(S.zoom||1)*80,1e-4))*cyc*0.3+off;
+else if(algo===4)u=Math.log(Math.max(ex*(_colorZoom()||1)*80,1e-4))*cyc*0.3+off;
 else if(algo===5)u=sm/mi*cyc+off;
 else if(algo===6)u=(sm/mi+ex)*cyc+off;
 else if(algo===7)u=(sm/mi+ex)*cyc*0.5+off;
@@ -6170,7 +6183,7 @@ gl.uniform1f(u('u_escRad2'), _dzEscR2());
 
 
 gl.uniform1i(u('u_colorAlgo'), _GL_ALGO_MAP[S.colorAlgo]??0);
-gl.uniform1f(u('u_zoom'), Math.min(S.zoom||1, 1e30));
+gl.uniform1f(u('u_zoom'), Math.min(_colorZoom()||1, 1e30));
 
 
 
@@ -7530,7 +7543,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.3.17';
+const APP_VERSION='7.4.0';
 
 
 
@@ -7539,10 +7552,10 @@ const APP_VERSION='7.3.17';
 
 
 
-const MISSION_BUILD_HASH='7d1f59346862';
-const MISSION_GIT_SHA='f2efe8ce6cbdcda1d1ffa03ec5c78384363af697';
+const MISSION_BUILD_HASH='dd41960500bd';
+const MISSION_GIT_SHA='b6e2a9c3e2c4c4ede09a83f766b04957dbc690c4';
 
-const MISSION_RENDER_HASH='88c77b1c7d33';
+const MISSION_RENDER_HASH='ec271cf614ec';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -8159,6 +8172,8 @@ lsysCustomRules:'F=F+F-F-F+F',
 lsysCustomAngle:60,
 
 caRule:90,            
+caStart:'center',     
+caBits:'',            
 
 
 
@@ -9139,7 +9154,7 @@ gl.useProgram(glProg);
 
 for(const n of [
 
-'u_res','u_center','u_zoom',
+'u_res','u_center','u_zoom','u_deZoom',
 
 'u_maxIter','u_type','u_juliaC','u_escRad','u_power','u_phoenixP',
 
@@ -9644,6 +9659,10 @@ const _GL_INT_MAP  = Object.freeze({solid:0,trap:1,angle:2});
 
 
 let _oFieldTile=null;
+
+
+let _tileViewZoom=null;
+function _colorZoom(){return _tileViewZoom!=null?_tileViewZoom:S.zoom;}
 function renderFractalGL(w,h){
 if(!glReady||!glProg||!gl)return; 
 w=w||W;h=h||H;
@@ -9685,6 +9704,7 @@ gl.uniform2f(u('u_center'),S.centerX,S.centerY);
 
 gl.uniform1f(u('u_viewOff'),_viewOffPx(w));
 gl.uniform1f(u('u_zoom'),S.zoom);
+gl.uniform1f(u('u_deZoom'),_colorZoom());
 gl.uniform1i(u('u_maxIter'),S.maxIter);
 gl.uniform1f(u('u_escRad'),S.escRad);
 
@@ -10417,6 +10437,7 @@ gl.uniform2f(u('u_center'),S.centerX,S.centerY);
 
 gl.uniform1f(u('u_viewOff'),_viewOffPx(w));
 gl.uniform1f(u('u_zoom'),S.zoom);
+gl.uniform1f(u('u_deZoom'),_colorZoom());
 gl.uniform1i(u('u_maxIter'),S.maxIter);
 gl.uniform1f(u('u_escRad'),S.escRad);
 gl.uniform1i(u('u_type'),99); 
@@ -12872,7 +12893,7 @@ if(typeof updateCoordBar==='function')updateCoordBar();
 
 
 
-const _seedUsed=mode!=='geometry'||(typeof _SEED_AFFECTED_GEO!=='undefined'&&_SEED_AFFECTED_GEO.has(S.pattern));
+const _seedUsed=mode!=='geometry'||(typeof _SEED_AFFECTED_GEO!=='undefined'&&_patternUsesSeed(S.pattern));
 const _seedSec=document.getElementById('sec-seed');
 if(_seedSec)_seedSec.classList.toggle('is-hidden',!_seedUsed);
 const _seedBar=document.getElementById('rp-seed-bar');
@@ -13982,6 +14003,7 @@ const _SEED_AFFECTED_GEO=new Set([
 'gray-scott','lenia','gierer-meinhardt',
 'kleinian','dla','fbm-landscape',
 ]);
+function _patternUsesSeed(pattern){ return _SEED_AFFECTED_GEO.has(pattern)||(pattern==='elementary-ca'&&S.caStart==='random'); }
 
 
 
@@ -14301,6 +14323,9 @@ if(S.pattern==='elementary-ca'){
 const cr=document.getElementById('caRule');
 if(cr){cr.value=S.caRule!=null?S.caRule:90;
 document.getElementById('caRule-v').textContent=String(S.caRule!=null?S.caRule:90);}
+const cs=document.getElementById('caStart'); if(cs)cs.value=S.caStart||'center';
+const cb=document.getElementById('caBits'); if(cb)cb.value=S.caBits||'';
+const cbr=document.getElementById('caBits-row'); if(cbr)cbr.classList.toggle('is-hidden',S.caStart!=='bits');
 }
 }
 
@@ -14347,7 +14372,7 @@ btn.classList.toggle('active',(btn.dataset.geoVal==='true')===!!S.use4DSchlegel)
 
 
 
-const _seedUsed=S.mode!=='geometry'||_SEED_AFFECTED_GEO.has(S.pattern);
+const _seedUsed=S.mode!=='geometry'||_patternUsesSeed(S.pattern);
 const _seedSec=document.getElementById('sec-seed');
 if(_seedSec)_seedSec.classList.toggle('is-hidden',!_seedUsed);
 const _seedBar=document.getElementById('rp-seed-bar');
@@ -15272,7 +15297,7 @@ restored=true;
 const n=Math.round(parseFloat(t));
 if(Number.isFinite(n)&&n>0){
 pushHist();
-S.maxIter=Math.max(50,Math.min(10000,n));
+S.maxIter=Math.max(50,Math.min(_maxIterCap(S.fractalType),n));
 const mi=document.getElementById('maxIter');
 if(mi){ mi.value=String(S.maxIter); _setRangeFill(mi); }
 const mib=document.getElementById('maxIter-v');
@@ -17771,6 +17796,15 @@ let _drawStart=0;
 
 
 
+
+function _caInitialRow(cols, start, bits, seed){
+const row=new Uint8Array(cols);
+const b=start==='bits'?String(bits||'').replace(/[^01]/g,'').slice(0,cols):'';
+if(start==='random'){ const rng=mulberry32(seed|0); for(let i=0;i<cols;i++)row[i]=rng()<0.5?1:0; }
+else if(b){ const o=(cols-b.length)>>1; for(let i=0;i<b.length;i++)row[o+i]=b.charCodeAt(i)&1; }
+else row[(cols/2)|0]=1;
+return row;
+}
 const _GEOM_WORKER_SRC = `
 'use strict';
 
@@ -17785,6 +17819,7 @@ const TAU = Math.PI * 2;
 
 
 ${mulberry32.toString()}
+${_caInitialRow.toString()}
 function computeGrayScott(opts){
   const N=opts.N, F=opts.F, k=opts.k, steps=opts.steps, seed=opts.seed;
   const Du=0.16, Dv=0.08;
@@ -17906,8 +17941,7 @@ function computeDayAndNight(opts){
 function computeElementaryCA(opts){
   const rule=opts.rule|0, rows=opts.rows|0, cols=opts.cols|0;
   const ruleBits=[];for(let i=0;i<8;i++)ruleBits.push((rule>>i)&1);
-  let row=new Uint8Array(cols);
-  row[(cols/2)|0]=1;
+  let row=_caInitialRow(cols,opts.start,opts.bits,opts.seed);
   let next=new Uint8Array(cols);   
   const grid=new Uint8Array(rows*cols);
   for(let t=0;t<rows;t++){
@@ -18284,7 +18318,8 @@ function _golStateHash(){return _layerSeedStateHash();}
 function _bbStateHash(){return _layerSeedStateHash();}
 function _dnStateHash(){return _layerSeedStateHash();}
 function _caStateHash(){
-return [S.layers||3, S.caRule|0].join('_');
+const st=S.caStart==='random'||S.caStart==='bits'?S.caStart:'center';
+return [S.layers||3, S.caRule|0, st, st==='bits'?S.caBits||'':st==='random'?S.seed|0:''].join('_');
 }
 function _dlaStateHash(){return _layerSeedStateHash();}
 function _hyperStateHash(){
@@ -20822,6 +20857,29 @@ show('sec-layers',    true);
 if(typeof _exploreToolsSync==='function')_exploreToolsSync();
 }
 
+
+
+
+function _maxIterCap(ft){
+const r=(typeof FRACTAL_REGISTRY!=='undefined')&&FRACTAL_REGISTRY[ft], el=document.getElementById('maxIter');
+return (r&&r.miMax)||(el&&+(el.dataset.max||el.max))||10000;
+}
+function _syncMaxIterRange(ft){
+const el=document.getElementById('maxIter'); if(!el) return;
+if(!el.dataset.max) el.dataset.max=el.max;
+const cap=_maxIterCap(ft), hint=el.closest('.ctrl')?.querySelector('.fs-meta-dim-mt2');
+el.max=String(cap);
+if(S.maxIter>cap){
+S.maxIter=cap; el.value=String(cap);
+const b=document.getElementById('maxIter-v'); if(b) b.textContent=String(cap);
+}
+if(hint){
+if(!hint.dataset.text) hint.dataset.text=hint.textContent;
+hint.textContent=cap<+el.dataset.max ? t('inspector.maxiter-3d-ceiling',{n:cap}) : hint.dataset.text;
+}
+if(typeof _setRangeFill==='function') _setRangeFill(el);
+if(typeof _syncSliderAriaValuetext==='function') _syncSliderAriaValuetext(el);
+}
 function _inspectorFractalMode(ft, is3D, show){
 
 ['sec-geo-shape','sec-geo-appear','sec-geo-mirror','sec-geo-anim'].forEach(id=>{
@@ -20990,13 +21048,7 @@ if(_escRadCtrl) _escRadCtrl.classList.toggle('is-hidden',!_is2DEscape);
 
 const _maxIterCtrl = document.getElementById('maxIter')?.closest('.ctrl');
 if(_maxIterCtrl) _maxIterCtrl.classList.toggle('is-hidden',['menger','sierp_tetra','qjulia'].includes(ft));
-
-
-const _miHint = _maxIterCtrl && _maxIterCtrl.querySelector('.fs-meta-dim-mt2');
-if(_miHint){
-if(!_miHint.dataset.text) _miHint.dataset.text = _miHint.textContent;
-_miHint.textContent = ['mandelbulb','mandelbox'].includes(ft) ? t('inspector.maxiter-3d-ceiling') : _miHint.dataset.text;
-}
+_syncMaxIterRange(ft);
 
 
 
@@ -25876,7 +25928,7 @@ en: {
 'pattern.head-lissajous':     'Lissajous Frequencies',
 'inspector.title-geometry':   'Inspector · Geometry',
 'inspector.title-fractal':    'Inspector · Fractal',
-'inspector.maxiter-3d-ceiling': 'This 3D type reads at most 256 iterations, so higher values change nothing.',
+'inspector.maxiter-3d-ceiling': 'This 3D type reads at most {n} iterations.',
 'orbit.pinned-suffix':        ' · pinned (click to release)',
 'gallery.empty-count':        'No saved works yet',
 'motion.pause':               '⏸ Pause',
@@ -28690,6 +28742,7 @@ uniform vec2 u_res;
 uniform vec2 u_center;
 uniform float u_viewOff;    
 uniform float u_zoom;
+uniform float u_deZoom;     
 uniform int u_maxIter;
 uniform float u_escRad;
 uniform int u_type;
@@ -29594,7 +29647,7 @@ void main(){
         }
         float rDE=length(zDE),drDE=max(length(dzDE),1e-10);
         float dist=.5*rDE*log(max(rDE,1.))/drDE;
-        t=fract(log(max(dist*u_zoom*80.,1e-4))*cyc*.3+off);
+        t=fract(log(max(dist*u_deZoom*80.,1e-4))*cyc*.3+off);
       }
       col=pal(t);_opacT=_resT(t);
     }
@@ -41772,6 +41825,8 @@ mrk:((S.mirrorK|0)>1)?(S.mirrorK|0):undefined,
 spd:(S.spirographD!=null&&Math.abs(S.spirographD-0.6)>1e-3)?+S.spirographD.toFixed(3):undefined,
 
 car:((S.caRule|0)!==90)?(S.caRule|0):undefined,
+cas:(S.caStart==='random'||S.caStart==='bits')?S.caStart:undefined,
+cab:(S.caStart==='bits'&&S.caBits)?S.caBits:undefined,
 hp:((S.hyperP|0)!==7)?(S.hyperP|0):undefined,
 hq:((S.hyperQ|0)!==3)?(S.hyperQ|0):undefined,
 gsf:(S.grayScottF!=null&&Math.abs(S.grayScottF-0.054)>1e-5)?+S.grayScottF.toFixed(4):undefined,
@@ -42038,6 +42093,8 @@ mrv:  { type:'int',    min:0,     max:1 },
 mrk:  { type:'int',    min:1,     max:24 },                            
 spd:  { type:'number', min:0,     max:1.5 },                           
 car:  { type:'int',    min:0,     max:255 },                           
+cas:  { type:'enum',   values:['center','random','bits'] },           
+cab:  { type:'string', maxLen:1023, match:/^[01]*$/ },                 
 hp:   { type:'int',    min:3,     max:12 },                            
 hq:   { type:'int',    min:3,     max:12 },                            
 gsf:  { type:'number', min:0.014, max:0.08 },                          
@@ -42392,7 +42449,7 @@ glowIntensity: _HASH_SCHEMA.gi, dashPattern: _HASH_SCHEMA.dp, mirrorK: _HASH_SCH
 dashLen: _HASH_SCHEMA.dln, dashGap: _HASH_SCHEMA.dgp, dashOffset: _HASH_SCHEMA.dof,
 lineCap: _HASH_SCHEMA.lcp, lineJoin: _HASH_SCHEMA.ljn,
 fillRule: _HASH_SCHEMA.frl, fillBlend: _HASH_SCHEMA.fbl,
-spirographD: _HASH_SCHEMA.spd, caRule: _HASH_SCHEMA.car, hyperP: _HASH_SCHEMA.hp, hyperQ: _HASH_SCHEMA.hq,
+spirographD: _HASH_SCHEMA.spd, caRule: _HASH_SCHEMA.car, caStart: _HASH_SCHEMA.cas, caBits: _HASH_SCHEMA.cab, hyperP: _HASH_SCHEMA.hp, hyperQ: _HASH_SCHEMA.hq,
 grayScottF: _HASH_SCHEMA.gsf, grayScottK: _HASH_SCHEMA.gsk, polytope4dWRate: _HASH_SCHEMA.p4w,
 leniaMu: _HASH_SCHEMA.lnm, leniaSigma: _HASH_SCHEMA.lns, leniaR: _HASH_SCHEMA.lnr, gmA: _HASH_SCHEMA.gma, gmB: _HASH_SCHEMA.gmb, spectreCurvature: _HASH_SCHEMA.spc,
 chaosA: _HASH_SCHEMA.xa, chaosB: _HASH_SCHEMA.xb, chaosC: _HASH_SCHEMA.xc, chaosD: _HASH_SCHEMA.xd,
@@ -42784,7 +42841,7 @@ if(snap.ift==null) S.ifsCustomTf=null;
 }
 
 
-const _SNAP_FIELD_MAP=[['im','interiorMode'],['mqd','mandalaQuadrants'],['bg','bgColor'],['aaq','aa'],['jmr','juliaMorphR'],['so','strokeOpacity'],['fo','fillOpacity'],['gi','glowIntensity'],['dp','dashPattern'],['dln','dashLen'],['dgp','dashGap'],['dof','dashOffset'],['lcp','lineCap'],['ljn','lineJoin'],['frl','fillRule'],['fbl','fillBlend'],['mrk','mirrorK'],['spd','spirographD'],['car','caRule'],['hp','hyperP'],['hq','hyperQ'],['gsf','grayScottF'],['gsk','grayScottK'],['p4w','polytope4dWRate'],['xa','chaosA'],['xb','chaosB'],['xc','chaosC'],['xd','chaosD'],['cx0','chaosX0'],['cy0','chaosY0'],['cz0','chaosZ0'],['xit','chaosIter'],['cgv','cgVertices'],['cgr','cgRatio'],['bbx0','buddhabrotBBXMin'],['bbx1','buddhabrotBBXMax'],['bby0','buddhabrotBBYMin'],['bby1','buddhabrotBBYMax'],['bmi','buddhabrotMinIter'],['fbr','flameBrightness'],['fga','flameGamma'],['fit','flameIter'],['fvi','flameVibrancy'],['asp','animSpeed'],['afp','animFps'],['fls','flowSpeed'],['adir','animDir'],['lnm','leniaMu'],['lns','leniaSigma'],['lnr','leniaR'],['gma','gmA'],['gmb','gmB'],['spc','spectreCurvature']];
+const _SNAP_FIELD_MAP=[['im','interiorMode'],['mqd','mandalaQuadrants'],['bg','bgColor'],['aaq','aa'],['jmr','juliaMorphR'],['so','strokeOpacity'],['fo','fillOpacity'],['gi','glowIntensity'],['dp','dashPattern'],['dln','dashLen'],['dgp','dashGap'],['dof','dashOffset'],['lcp','lineCap'],['ljn','lineJoin'],['frl','fillRule'],['fbl','fillBlend'],['mrk','mirrorK'],['spd','spirographD'],['car','caRule'],['cas','caStart'],['cab','caBits'],['hp','hyperP'],['hq','hyperQ'],['gsf','grayScottF'],['gsk','grayScottK'],['p4w','polytope4dWRate'],['xa','chaosA'],['xb','chaosB'],['xc','chaosC'],['xd','chaosD'],['cx0','chaosX0'],['cy0','chaosY0'],['cz0','chaosZ0'],['xit','chaosIter'],['cgv','cgVertices'],['cgr','cgRatio'],['bbx0','buddhabrotBBXMin'],['bbx1','buddhabrotBBXMax'],['bby0','buddhabrotBBYMin'],['bby1','buddhabrotBBYMax'],['bmi','buddhabrotMinIter'],['fbr','flameBrightness'],['fga','flameGamma'],['fit','flameIter'],['fvi','flameVibrancy'],['asp','animSpeed'],['afp','animFps'],['fls','flowSpeed'],['adir','animDir'],['lnm','leniaMu'],['lns','leniaSigma'],['lnr','leniaR'],['gma','gmA'],['gmb','gmB'],['spc','spectreCurvature']];
 
 function _rollbackSharedStateApply(rollbackS, rollbackFlameSystem, rollbackLutData, rollbackLutName){
 Object.assign(S, rollbackS);   
@@ -45449,6 +45506,8 @@ int:      v => { const n=parseInt(v,10); return Number.isFinite(n)?n:undefined; 
 intLoose: v => { const n=parseInt(v,10); return Number.isFinite(n)?n:undefined; },
 float:    v => { const n=parseFloat(v); return Number.isFinite(n)?n:undefined; },
 str:      v => v,
+caStart:  v => (v==='random'||v==='bits')?v:'center',
+caBits:   v => String(v||'').replace(/[^01]/g,'').slice(0,1023),
 };
 
 
@@ -45494,6 +45553,11 @@ const INPUT_DISPATCH = {
 'hyperP':          { s:'hyperP',          parse:'int',   badge:'hyperP-v',          fmt:'intStr',  render:true, side:()=>_warnHyperPQ() },
 'hyperQ':          { s:'hyperQ',          parse:'int',   badge:'hyperQ-v',          fmt:'intStr',  render:true, side:()=>_warnHyperPQ() },
 'caRule':          { s:'caRule',          parse:'int',   badge:'caRule-v',          fmt:'intStr',  render:true },
+
+
+'caStart':         { s:'caStart',         parse:'caStart', render:true, side:()=>_syncPatternPanels() },
+'caBits':          { s:'caBits',          parse:'caBits',  render:true,
+side:()=>{ const el=document.getElementById('caBits'); if(el&&el.value!==S.caBits)el.value=S.caBits; } },
 
 'kleinianMuRe':    { s:'kleinianMuRe',    parse:'float', badge:'kleinianMuRe-v',    fmt:'fixed2',  render:true,
 side:()=>{ _workerComputeCache.clear(); } },
@@ -50848,6 +50912,16 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.4.0',
+date:'2026-10-27',
+headline:'An elementary CA can start from any first row.',
+items:[
+'The Elementary CA panel has a Starting row choice: one center cell as before, a random row drawn from the Seed, or your own string of 0s and 1s placed at the center of the first row. A share link keeps the choice.',
+'A wide export renders in tiles, a square one and the strip beside it, and with Distance Estimation coloring the strip came out in different colors, so a hard vertical line ran down the picture where the square ended. Every tile now colors by the zoom of the whole picture, deep-zoom exports included.',
+'Max Iterations on the Mandelbulb and Mandelbox stops at 256, the most these two types read. A higher count carried over from another fractal, a share link or the Iters readout is lowered to 256, so the slider, its readout and a shared link agree.',
+],
+},
+{
 version:'7.3.17',
 date:'2026-10-27',
 headline:'A Mandelbulb or Quaternion Julia set now uses its whole palette.',
@@ -50914,15 +50988,6 @@ items:[
 'In a narrow window the status bar stays inside its frame: the coloring readout folds into More, and a bar that still cannot fit wraps onto a second row.',
 'The Center field accepts .5, a leading +, the − sign and a pair in parentheses, and catalog search treats a hyphen and a space alike.',
 'The new-version dot now sits on the Application menu, and the update banner has a What\'s New button that opens the notes after reloading.',
-],
-},
-{
-version:'7.3.10',
-date:'2026-10-21',
-headline:'Variation sheets no longer freeze the app.',
-items:[
-'After File > Variation sheet the app could stop answering clicks and keys until a reload. Each cell now renders at the size it is shown, so a deep-zoom or 3D sheet no longer blocks the window, and one Undo returns the picture you had before the sheet.',
-'Keyboard focus stays in the status bar\'s More menu when the bar refolds its cells, and Enter on a folded Raise Max Iter raises it.',
 ],
 },
 
@@ -54724,7 +54789,7 @@ return;
 }
 let _caWorkerActive = _geomJobsInFlight.has(stateKey);
 if(typeof Worker!=='undefined' && !_geomJobsInFlight.has(stateKey)){
-const job=_runInGeomWorker('elementary-ca',{rule,rows,cols});
+const job=_runInGeomWorker('elementary-ca',{rule,rows,cols,start:S.caStart,bits:S.caBits,seed:S.seed});
 if(job){
 _geomJobsInFlight.add(stateKey);
 _caWorkerActive = true;
@@ -54735,8 +54800,7 @@ scheduleRender();
 }).catch(_workerCatch('Elementary CA')).finally(()=>_geomJobsInFlight.delete(stateKey));
 }
 }
-let row=new Uint8Array(cols);
-row[(cols/2)|0]=1;
+let row=_caInitialRow(cols,S.caStart,S.caBits,S.seed);
 let next=new Uint8Array(cols);   
 const grid=new Uint8Array(rows*cols);
 for(let t=0;t<rows;t++){
@@ -64260,6 +64324,7 @@ const TILE=Math.min(gl.drawingBufferWidth,gl.drawingBufferHeight,_glTileCostCap(
 
 
 const savedCX=S.centerX,savedCY=S.centerY,savedZoom=S.zoom;
+_tileViewZoom=savedZoom;
 const sc=_pxScale(W2,H2,savedZoom); 
 const tilesX=Math.ceil(cW/TILE),tilesY=Math.ceil(cH/TILE);
 const total=tilesX*tilesY;let done=0;
@@ -64294,6 +64359,7 @@ if(typeof window!=='undefined' && typeof window.__midRenderCheckpoint==='functio
 }finally{
 
 if(typeof _oFieldTile!=='undefined')_oFieldTile=null;
+_tileViewZoom=null;
 
 
 
