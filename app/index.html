@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-Nn/KFyUtMMQx1p0dY4bvf1JbYlTBgvbca/Ns8JB0SRU=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-99rYW8iq7H3bIHbK9h4lFM8aPn05+DEZxJPad9GiVgg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4272,12 +4272,12 @@
 
 
 
-<!-- build: 645b5fbd45ee -->
+<!-- build: fe69136f0a69 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.5.1
+ * AEON -- Universal Dynamics Reactor v7.5.2
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7543,7 +7543,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.5.1';
+const APP_VERSION='7.5.2';
 
 
 
@@ -7552,10 +7552,10 @@ const APP_VERSION='7.5.1';
 
 
 
-const MISSION_BUILD_HASH='645b5fbd45ee';
-const MISSION_GIT_SHA='ee2e132652f2a41990371fc23f9a4941be0e805a';
+const MISSION_BUILD_HASH='fe69136f0a69';
+const MISSION_GIT_SHA='ee54f55f12554607eb1ff93af053ca82222d61e4';
 
-const MISSION_RENDER_HASH='9a7c29adfc1e';
+const MISSION_RENDER_HASH='9f7388a78c1e';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -10818,6 +10818,9 @@ pill.classList.toggle('cancellable', !!on);
 }
 
 
+
+
+const IFS_MAX_ITER=8000000;
 async function renderIFS(t,opts={}){_pill().classList.add('show');_setPillCancellable(true);_setPillProgress('IFS',null);const def=getIFSDef(S.fractalType);if(!def){console.warn('Unknown IFS type:',S.fractalType);_pill().classList.remove('show');return;}
 
 
@@ -10834,7 +10837,7 @@ await new Promise(r=>setTimeout(r,0));
 
 
 
-const nIter=Math.min(8000000,S.ifsIter||200000),   
+const nIter=Math.min(IFS_MAX_ITER,S.ifsIter||200000),   
 scale=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom),
 nT=def.tf.length,
 _rs=(typeof _densityResumeFor==='function'?_densityResumeFor(opts.signal):null),_rsS=_rs&&_rs.state,
@@ -26146,6 +26149,8 @@ en: {
 'export.print-defaults-reset': '↺ Print settings reset to defaults',
 'export.wgpu-limit':          'A {w}×{h} export needs {need} MB GPU buffers and this GPU\'s {name} is {max} MB, so it renders on the CPU instead (much slower).',
 'export.attractor-capped':    'Attractor capped to {m}M points at this resolution so the export completes. It is darker and sparser than on screen.',
+'export.flame-capped':        'Flame capped to {m}M samples at this resolution. It is sparser than on screen.',
+'export.ifs-capped':          'IFS capped to {m}M points at this resolution. It is sparser than on screen.',
 'export.density-capped':      'Density capped to {m}M samples at this resolution so the export completes. Brightness is compensated; the image is grainier than on screen.',
 'export.recording-in-progress': 'Stop the screen recording first. It shares the canvas with this export.',
 'attractor.ic-settles.duffing': 'Duffing settles onto the same figure from any starting x, so x₀ is not shown.',
@@ -50944,6 +50949,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.5.2',
+date:'2026-10-28',
+headline:'A flame or IFS export that hits the sample limit now says so.',
+items:[
+'An export keeps the screen\'s density by scaling its sample count to the export size, but the flame and IFS renderers stop at 8 million samples, so a large export of a dense flame or IFS could come out sparser than the screen with no warning. A notice now tells you the export was capped, as the attractor export already did.',
+],
+},
+{
 version:'7.5.1',
 date:'2026-10-28',
 headline:'A palette preview no longer stays on the picture after it ends early.',
@@ -51005,16 +51018,6 @@ headline:'A fractal layer\'s transparent background lets the layer below show th
 items:[
 'Transparent background now works on escape-time fractals such as Multibrot. The inside of the set, drawn in the Interior color, turns transparent, so a layer beneath shows through it, on screen and in exports. The Export dialog offers Transparent background for these types too.',
 'A Buddhabrot variation sheet sharpens right away again. Its cells no longer sit at their quick, grainy picture for tens of seconds after the sheet appears, even while you keep working.',
-],
-},
-{
-version:'7.3.13',
-date:'2026-10-25',
-headline:'You can leave a variation sheet, and videos play smoothly at their frame rate.',
-items:[
-'Press Escape, or choose Close sheet in the corner of the canvas, to go back to the picture you had before a variation sheet. Undo brings the sheet back.',
-'On a Buddhabrot sheet, Undo works again: while the cells refined, each Undo landed back on the sheet.',
-'Record Video and Frame-Exact Export give every frame the same length at the chosen rate, so a deep zoom or a density fractal no longer stutters or drops frames. A video export now takes at least as long as the clip.',
 ],
 },
 
@@ -63738,6 +63741,15 @@ function _attractorCapNotice(){
 if(typeof ATTRACTOR_EXPORT_MAX_ITER==='number'&&S.chaosIter>ATTRACTOR_EXPORT_MAX_ITER&&typeof showToast==='function')
 showToast(t('export.attractor-capped',{m:(ATTRACTOR_EXPORT_MAX_ITER/1e6).toFixed(0)}),'info',6000);
 }
+
+
+function _densityCapNotice(){
+const ft=S.fractalType||'';
+const cap=ft==='fractal_flame'?(typeof FLAME_MAX_ITER==='number'?FLAME_MAX_ITER:0):(ft.startsWith('ifs_')&&typeof IFS_MAX_ITER==='number'?IFS_MAX_ITER:0);
+const n=ft==='fractal_flame'?S.flameIter:S.ifsIter;
+if(cap>0&&n>cap&&typeof showToast==='function')
+showToast(t(ft==='fractal_flame'?'export.flame-capped':'export.ifs-capped',{m:(cap/1e6).toFixed(0)}),'info',6000);
+}
 function _scaleDensitySamples(scale){
 const t=(typeof S!=='undefined'&&S.fractalType)||'';
 let key=null,dflt=0;
@@ -63748,6 +63760,8 @@ else if(t==='fractal_flame'){key='flameIter';dflt=1000000;}
 if(!key||!(scale>0)||scale===1)return ()=>{};
 const orig=S[key],base=orig||dflt;
 if(base>0)S[key]=Math.round(base*scale);
+
+if(key==='flameIter'||key==='ifsIter')_densityCapNotice();
 return ()=>{S[key]=orig;};
 }
 
@@ -63884,6 +63898,7 @@ if(_okBud)_densityBlit(rCtx,cv,rW,rH);
 
 
 if(_oIfsIter)S.ifsIter=Math.round(_oIfsIter*_densScale);   
+_densityCapNotice();
 ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,dW,dH);
 if(await _exportRenderRetryOnce(t=>renderIFS(t,{signal,onProgress:_densityExportProgress(bar,status,'IFS')})))_densityBlit(rCtx,cv,rW,rH);   
 } else { 
@@ -63891,6 +63906,7 @@ if(await _exportRenderRetryOnce(t=>renderIFS(t,{signal,onProgress:_densityExport
 
 
 S.flameIter=Math.round((_oFlameIter||1000000)*_densScale);   
+_densityCapNotice();
 ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,dW,dH);
 if(await _exportRenderRetryOnce(t=>renderFractalFlame(t,signal)))_densityBlit(rCtx,cv,rW,rH);   
 }
@@ -64760,6 +64776,7 @@ if(_dzNeedsCpu(W2)&&await _renderDeepZoomForExport(octx,W2,H2,bar,status,signal)
 
 const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
 const _oIfs=S.ifsIter;if(_oIfs)S.ifsIter=Math.round(_oIfs*((W2*H2)/Math.max(1,_densityScreenArea(W2,H2,oW,oH))));   
+_densityCapNotice();
 _beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
 try{ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderIFS(t,{signal,onProgress:_densityExportProgress(bar,status,'IFS')})))octx.drawImage(cv,0,0);}   
 finally{_endExportPaint();_exportTransparentAlpha=false;S.ifsIter=_oIfs;cv.width=oW;cv.height=oH;W=oW;H=oH;render();}
@@ -66014,6 +66031,8 @@ let _fhDragState=null;
 let _fhcv=null,_fhctx=null;
 
 
+
+const FLAME_MAX_ITER=8000000;
 const FLAME_VARIATIONS=[
 'linear','sinusoidal','spherical','swirl','horseshoe','polar',
 'handkerchief','heart','disc','spiral','hyperbolic','diamond',
@@ -66449,7 +66468,7 @@ const reg=flameFinals.length?sys.filter(tf=>!(tf&&tf.isFinal)):sys;
 
 
 
-const nT=reg.length,nIter=Math.min(8000000,Math.max(200000,S.flameIter||1000000)),CHUNK=50000;
+const nT=reg.length,nIter=Math.min(FLAME_MAX_ITER,Math.max(200000,S.flameIter||1000000)),CHUNK=50000;
 
 
 

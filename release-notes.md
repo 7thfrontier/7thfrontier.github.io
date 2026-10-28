@@ -1,5 +1,5 @@
-A palette preview no longer stays on the picture after it ends early · 2026-10-28
+A flame or IFS export that hits the sample limit now says so · 2026-10-28
 
-- **A palette preview no longer stays on the picture after it ends early.** Hovering a palette swatch right after an edit could leave the canvas showing the hovered palette once the edit was saved to history, even though the chosen palette was still selected; it now repaints with the chosen one. Pressing `r` over a hovered swatch and cancelling Reset All no longer keeps the hovered palette as your palette.
+- **A flame or IFS export that would need more samples than the renderer allows now says so.** An export keeps the screen's density by scaling the sample count to its size, but the flame and IFS renderers stop at 8 million, so a large export of a dense flame or IFS came out sparser than the screen without a word. A notice now says it was capped, as the attractor export already did.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.

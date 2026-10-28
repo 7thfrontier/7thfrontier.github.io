@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.5.1</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.5.2</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.5.1</h2>
+    <h2>AEON · v7.5.2</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1162,18 +1162,18 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.5.1.</h2>
-    <p class="section-lede">A palette preview no longer stays on the picture after it ends early · 2026-10-28</p>
+    <h2 class="section-title">What's new<br>in 7.5.2.</h2>
+    <p class="section-lede">A flame or IFS export that hits the sample limit now says so · 2026-10-28</p>
   </header>
   <ul class="prose changes">
-    <li><strong>A palette preview no longer stays on the picture after it ends early.</strong> Hovering a palette swatch right after an edit could leave the canvas showing the hovered palette once the edit was saved to history, even though the chosen palette was still selected; it now repaints with the chosen one. Pressing <code>r</code> over a hovered swatch and cancelling Reset All no longer keeps the hovered palette as your palette.</li>
+    <li><strong>A flame or IFS export that would need more samples than the renderer allows now says so.</strong> An export keeps the screen's density by scaling the sample count to its size, but the flame and IFS renderers stop at 8 million, so a large export of a dense flame or IFS came out sparser than the screen without a word. A notice now says it was capped, as the attractor export already did.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.5.1</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.5.2</p>
 </footer>
 
 <script>
