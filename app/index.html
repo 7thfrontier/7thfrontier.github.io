@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-cW160T5OSyKPzCBw1+6rZ64xB8n/f5FsPAz2muL8ZKs=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-jwKnb1M+VtCKrU0/sN5Z/cwFBeaOPAWqYwOOe9DnY70=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4274,12 +4274,12 @@
 
 
 
-<!-- build: 95c1fdd610c6 -->
+<!-- build: b0037c8fda83 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.6.0
+ * AEON -- Universal Dynamics Reactor v7.6.1
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7545,7 +7545,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.6.0';
+const APP_VERSION='7.6.1';
 
 
 
@@ -7554,10 +7554,10 @@ const APP_VERSION='7.6.0';
 
 
 
-const MISSION_BUILD_HASH='95c1fdd610c6';
-const MISSION_GIT_SHA='49becd4686de7325f793115e0de559d64c382f66';
+const MISSION_BUILD_HASH='b0037c8fda83';
+const MISSION_GIT_SHA='051fe031f0a61978167827461066cb7e14f305fc';
 
-const MISSION_RENDER_HASH='ce34c0c80560';
+const MISSION_RENDER_HASH='0129006a1d15';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -34149,7 +34149,6 @@ function _buildApolloGeometry(depth, r0, R){
 
 
 
-
 const MAX_CIRCLES=16000;
 const circles=[];
 
@@ -34162,57 +34161,30 @@ circles.push({x:0,y:-d,r:r1,k:1/r1,depth:0});
 circles.push({x:d*Math.sin(TAU/3),y:-d*Math.cos(TAU/3),r:r1,k:1/r1,depth:0});
 circles.push({x:d*Math.sin(2*TAU/3),y:-d*Math.cos(2*TAU/3),r:r1,k:1/r1,depth:0});
 const minR=R*0.01;
-const r0Plus=r0*1.01;
-function apolloFill(k1,k2,k3,x1,y1,x2,y2,x3,y3,curDepth){
-if(curDepth>=depth)return;
-if(circles.length>=MAX_CIRCLES)return;
-const ksum=k1+k2+k3;
-const ksqrt=Math.sqrt(Math.max(0,k1*k2+k2*k3+k3*k1));
-const k4a=ksum+2*ksqrt, k4b=ksum-2*ksqrt;
-for(let s=0;s<2;s++){
-const k4=s===0?k4a:k4b;
 
 
 
 
-if(!isFinite(k4)||k4===0)continue;
-const r4=1/Math.abs(k4);
-if(r4<minR||r4>r0)continue;
-
-const zr1=x1*k1, zi1=y1*k1, zr2=x2*k2, zi2=y2*k2, zr3=x3*k3, zi3=y3*k3;
-const sr=zr1+zr2+zr3, si=zi1+zi2+zi3;
-const p1r=k1*k2*(x1*x2-y1*y2), p1i=k1*k2*(x1*y2+x2*y1);
-const p2r=k2*k3*(x2*x3-y2*y3), p2i=k2*k3*(x2*y3+x3*y2);
-const p3r=k3*k1*(x3*x1-y3*y1), p3i=k3*k1*(x3*y1+x1*y3);
-const pr=p1r+p2r+p3r, pi=p1i+p2i+p3i;
-const pmag=Math.sqrt(Math.max(0,pr*pr+pi*pi));
-
-let sol0r, sol0i, sol1r, sol1i, nSol;
-if(pmag<1e-10){
-sol0r=sr; sol0i=si; nSol=1;
-}else{
-const halfArg=Math.atan2(pi,pr)*0.5;
-const sqMag=Math.sqrt(pmag);
-const sqr=sqMag*Math.cos(halfArg);
-const sqi=sqMag*Math.sin(halfArg);
-sol0r=sr+2*sqr; sol0i=si+2*sqi;
-sol1r=sr-2*sqr; sol1i=si-2*sqi;
-nSol=2;
+function apolloFill(a,b,c,opp,curDepth){
+if(curDepth>=depth||circles.length>=MAX_CIRCLES)return;
+const k=2*(a.k+b.k+c.k)-opp.k;
+if(!(k>0)||!isFinite(k))return;
+const r=1/k;
+if(r<minR)return;
+const x=(2*(a.k*a.x+b.k*b.x+c.k*c.x)-opp.k*opp.x)/k;
+const y=(2*(a.k*a.y+b.k*b.y+c.k*c.y)-opp.k*opp.y)/k;
+const n={x,y,r,k,depth:curDepth+1};
+circles.push(n);
+apolloFill(n,b,c,a,curDepth+1);
+apolloFill(a,n,c,b,curDepth+1);
+apolloFill(a,b,n,c,curDepth+1);
 }
-for(let m=0;m<nSol;m++){
-const z4r=m===0?sol0r:sol1r, z4i=m===0?sol0i:sol1i;
-const x4=z4r/k4, y4=z4i/k4;
 
-if(Math.sqrt(x4*x4+y4*y4)+r4>r0Plus)continue;
-circles.push({x:x4,y:y4,r:r4,k:k4,depth:curDepth+1});
-apolloFill(k4,k2,k3,x4,y4,x2,y2,x3,y3,curDepth+1);
-apolloFill(k1,k4,k3,x1,y1,x4,y4,x3,y3,curDepth+1);
-apolloFill(k1,k2,k4,x1,y1,x2,y2,x4,y4,curDepth+1);
-}
-}
-}
-apolloFill(circles[1].k,circles[2].k,circles[3].k,
-circles[1].x,circles[1].y,circles[2].x,circles[2].y,circles[3].x,circles[3].y,0);
+const [o,s1,s2,s3]=circles;
+apolloFill(s1,s2,s3,o,0);
+apolloFill(o,s2,s3,s1,0);
+apolloFill(o,s1,s3,s2,0);
+apolloFill(o,s1,s2,s3,0);
 
 
 circles.sort((a,b)=>b.r-a.r);
@@ -50964,6 +50936,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.6.1',
+date:'2026-10-28',
+headline:'The Apollonian Gasket pattern draws a true gasket.',
+items:[
+'The Apollonian Gasket pattern drew some circles twice, crowded the middle gap with overlapping circles and left the three gaps along the outer circle nearly empty. Each gap now gets exactly one circle per level, touching the three around it, and every gap is filled to the chosen depth.',
+'The command-line renderer reactor-render laid the page out with the inspector open, so a fractal sat left of center and a geometry image came out 384 px wider than --size. It now renders with the inspector folded, centered and at the size you ask for.',
+],
+},
+{
 version:'7.6.0',
 date:'2026-10-28',
 headline:'3D fractals have a Fog density control.',
@@ -51025,15 +51006,6 @@ headline:'Palette transparency lets the layer below show through a 3D fractal la
 items:[
 'On a Mandelbulb or another 3D fractal, on a layer with Transparent background on, a palette stop with partial opacity or an Opacity Field now makes the surface see-through by the same amount, so the layer beneath shows through it, on screen and in exports.',
 'The empty space around a 3D fractal on such a layer is now fully clear. It used to lighten the layer beneath with a faint blue-grey. With the box off, or with a fully opaque palette, the fractal looks the same as before.',
-],
-},
-{
-version:'7.3.15',
-date:'2026-10-26',
-headline:'Palette transparency lets the layer below show through a fractal layer with a transparent background.',
-items:[
-'On a layer with Transparent background on, a palette stop with partial opacity, or an Opacity Field, now makes those parts of the fractal see-through by the same amount, so the layer beneath shows through them, on screen and in exports. With the box off, or with a fully opaque palette, nothing changes.',
-'Dropping a .flame or .cube file on its drop zone imports it again instead of saying the file is not supported, and Enter or Space now works on the Post-Affine and Xaos Matrix headers and on both drop zones.',
 ],
 },
 

@@ -5,7 +5,7 @@
     120
   ],
   "canvas": "1440x900",
-  "totalBytes": 748822,
+  "totalBytes": 748231,
   "entries": [
     {
       "mode": "fractal",
@@ -371,7 +371,7 @@
       "mode": "geometry",
       "type": "apollonian",
       "file": "geometry-apollonian.jpg",
-      "bytes": 3375
+      "bytes": 2784
     },
     {
       "mode": "geometry",
