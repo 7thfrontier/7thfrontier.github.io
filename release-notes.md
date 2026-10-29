@@ -1,6 +1,5 @@
-reactor-render gains --list, --gallery and --version · 2026-10-28
+Exports frame the same with the inspector open or folded · 2026-10-29
 
-- **`reactor-render --list`, `--gallery` and `--version`.** `--list` prints every fractal type, pattern and palette key the app knows, read from the built app itself. `--gallery <dir>` renders one image of every fractal type into a directory in a single Chrome session, names each type that fails and exits 1 if any did. `--version` prints the version.
-- **`reactor-render` refuses an unknown type, pattern or palette key.** A mistyped `--fractal`, `--pattern` or `--palette` rendered the app's fallback (Mandelbrot, Flower of Life, or the first palette) and reported success. It now exits 2, names any close matches and points at `--list`; a retired pattern name still renders the pattern that replaced it.
+- **Exports frame the same with the inspector open or folded.** Attractors, geometry, and flame and IFS fractals draw on a canvas that runs under the inspector, and the export read that wider canvas as the screen's shape. With the inspector open, a 16:9 export of an attractor or an IFS fractal came out letterboxed to a wider shape with its subject about a fifth smaller, and Match canvas and the Motion panel's Screen size took the wider shape too. Exports now take the shape of the canvas area without the inspector, so they match the folded layout.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.

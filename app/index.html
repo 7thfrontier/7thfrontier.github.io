@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-dtVzu+lKbIdT7hickBk/rvwY5eZbWcFHjOpiLlI+mKM=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-NVO6xY+A/Ca0YpU7oxQuQRm+kUShsnBSeBzI9cZCQhg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4274,12 +4274,12 @@
 
 
 
-<!-- build: 98250a29ef5c -->
+<!-- build: e30e39a2a6e2 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.7.0
+ * AEON -- Universal Dynamics Reactor v7.7.1
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7545,7 +7545,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.7.0';
+const APP_VERSION='7.7.1';
 
 
 
@@ -7554,10 +7554,10 @@ const APP_VERSION='7.7.0';
 
 
 
-const MISSION_BUILD_HASH='98250a29ef5c';
-const MISSION_GIT_SHA='e0ae1ecbb8070c6b97d86da28a066ba366d0c902';
+const MISSION_BUILD_HASH='e30e39a2a6e2';
+const MISSION_GIT_SHA='9345ed662d58a0d71247abf2b6e64c5bf762fbc6';
 
-const MISSION_RENDER_HASH='0129006a1d15';
+const MISSION_RENDER_HASH='fb547f656f3d';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -7785,6 +7785,9 @@ const t=_liveViewTile(w);
 return t ? t.tx + w/2 - t.fullW/2 : 0;
 }
 function _viewCenterPx(w=W){ return w/2 - _viewOffPx(w); }
+let _vpArea=null;   
+
+function _screenAreaW(){ return _vpArea && _vpArea.w===W ? _vpArea.areaW : W; }
 function _refitCanvas(aspect){
 const w=cv.width, h=cv.height;
 _resizeCanvasForAspect(aspect);
@@ -7848,8 +7851,10 @@ const logH = Math.max(1, Math.round(_mh * _k));
 newW = Math.round(logW * _renderDPR);
 newH = Math.round(logH * _renderDPR);
 
-const _d = _tileOn && typeof getComputedStyle==='function' ? parseFloat(getComputedStyle(wrap).getPropertyValue('--vp-d')) || 0 : 0;
+const _dAll = typeof getComputedStyle==='function' ? parseFloat(getComputedStyle(wrap).getPropertyValue('--vp-d')) || 0 : 0;
+const _d = _tileOn ? _dAll : 0;
 const _s = newW / _mw;
+_vpArea = !_tileOn && _dAll ? { w: newW, areaW: newW - Math.round(Math.abs(_dAll) * _s) } : null;
 const _nt = _d ? { tx: Math.round(Math.max(0, -_d) * _s), fullW: newW + Math.round(Math.abs(_d) * _s), w: newW } : null;
 const _tileMoved = JSON.stringify(_nt) !== JSON.stringify(_vpTile);
 _vpTile = _nt;
@@ -50936,6 +50941,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.7.1',
+date:'2026-10-29',
+headline:'Exports frame the same with the inspector open or folded.',
+items:[
+'With the inspector open, a 16:9 export of an attractor, a geometry pattern or a flame or IFS fractal came out letterboxed to a wider shape with its subject about a fifth smaller. Exports, Match canvas and the Motion panel\'s Screen size now take the shape of the canvas area beside the inspector, so they match the folded layout.',
+],
+},
+{
 version:'7.7.0',
 date:'2026-10-28',
 headline:'reactor-render gains --list, --gallery and --version.',
@@ -50996,16 +51009,6 @@ items:[
 'The Elementary CA panel has a Starting row choice: one center cell as before, a random row drawn from the Seed, or your own string of 0s and 1s placed at the center of the first row. A share link keeps the choice.',
 'A wide export renders in tiles, a square one and the strip beside it, and with Distance Estimation coloring the strip came out in different colors, so a hard vertical line ran down the picture where the square ended. Every tile now colors by the zoom of the whole picture, deep-zoom exports included.',
 'Max Iterations on the Mandelbulb and Mandelbox stops at 256, the most these two types read. A higher count carried over from another fractal, a share link or the Iters readout is lowered to 256, so the slider, its readout and a shared link agree.',
-],
-},
-{
-version:'7.3.17',
-date:'2026-10-27',
-headline:'A Mandelbulb or Quaternion Julia set now uses its whole palette.',
-items:[
-'The surface of a Mandelbulb or a Quaternion Julia set took its colors from only the first eighth or so of the palette, so a rainbow palette drew it red to orange. The color now spans the whole palette, as it already did on the Mandelbox, Menger sponge and Sierpinski tetrahedron, and no longer changes with Max Iterations.',
-'On a 3D layer with Transparent background on, a half-transparent palette stop no longer makes a bright surface look brighter than half its opaque color.',
-'Max Iterations is hidden on the Quaternion Julia set, Menger sponge and Sierpinski tetrahedron, where it no longer changes the picture. On the Mandelbulb and Mandelbox its hint now says they read at most 256 iterations.',
 ],
 },
 
@@ -59035,8 +59038,8 @@ c.drawImage(src, x, (sh - h * k) / 2, w * k, h * k, 0, 0, w, h);
 
 
 function _screenShape(short){
-const a = (W && H) ? Math.max(W, H) / Math.min(W, H) : 1, L = 2 * Math.round(short * a / 2);
-return W >= H ? [L, short] : [short, L];
+const w = _screenAreaW(), a = (w && H) ? Math.max(w, H) / Math.min(w, H) : 1, L = 2 * Math.round(short * a / 2);
+return w >= H ? [L, short] : [short, L];
 }
 
 function _syncAnimScreenChip(){
@@ -59046,7 +59049,7 @@ if (el) el.textContent = r[0] + '×' + r[1];
 
 
 function _screenFit(W2, H2){
-const a = (W && H) ? W / H : 1;
+const w = _screenAreaW(), a = (w && H) ? w / H : 1;
 return [Math.min(W2, Math.round(H2 * a)), Math.min(H2, Math.round(W2 / a))];
 }
 
@@ -63621,7 +63624,7 @@ if(dpiLbl)dpiLbl.textContent=_isPxPreset?'DPI · fixed-pixel preset, print metad
 
 const composeRow=document.getElementById('compose-row');
 if(composeRow){
-const isSquare=Math.abs(aw/ah-((W&&H)?W/H:1))<1e-3;   
+const isSquare=Math.abs(aw/ah-((W&&H)?_screenAreaW()/H:1))<1e-3;   
 composeRow.querySelectorAll('.size-chip').forEach(c=>{
 c.classList.toggle('is-disabled',isSquare);
 c.setAttribute('aria-disabled',isSquare?'true':'false');
