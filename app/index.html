@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-99rYW8iq7H3bIHbK9h4lFM8aPn05+DEZxJPad9GiVgg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-cW160T5OSyKPzCBw1+6rZ64xB8n/f5FsPAz2muL8ZKs=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -2696,7 +2696,9 @@
       <div class="ctrl-hint mtn2-mb6">DE safety factor · lower = safer (no overshoot) but slower</div>
       <div class="ctrl"><label for="aoFactor">Ambient occlusion <span class="badge" id="aoFactor-v">0.30</span></label><div class="slider-row"><input type="range" id="aoFactor" min="0" max="1" step="0.01" value="0.3" aria-describedby="slider-keys-hint"></div></div>
       <div class="ctrl"><label for="fogStart">Fog distance <span class="badge" id="fogStart-v">1.00×</span></label><div class="slider-row"><input type="range" id="fogStart" min="0" max="3" step="0.05" value="1" aria-describedby="slider-keys-hint"></div></div>
-      <div class="ctrl-hint mtn2-mb6">0 = fog at camera · 1 = legacy · 3 = far horizon</div>
+      <div class="ctrl-hint mtn2-mb6">Where fog begins · 0 = fog at camera · 1 = legacy · 3 = far horizon</div>
+      <div class="ctrl"><label for="fogDensity">Fog density <span class="badge" id="fogDensity-v">1.00×</span></label><div class="slider-row"><input type="range" id="fogDensity" min="0" max="50" step="0.5" value="1" aria-describedby="slider-keys-hint"></div></div>
+      <div class="ctrl-hint mtn2-mb6">How thick the fog is · raise it for close or interior fog, which distance alone cannot make</div>
       <div class="btn-row mt-6"><button type="button" class="btn ghost fs-10-row" data-action="resetSection" data-section-id="sec-3d-quality"><svg class="ic" aria-hidden="true" focusable="false"><use href="#ic-reset"/></svg> Reset Quality</button></div>
     </div>
 
@@ -4272,12 +4274,12 @@
 
 
 
-<!-- build: fe69136f0a69 -->
+<!-- build: 95c1fdd610c6 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.5.2
+ * AEON -- Universal Dynamics Reactor v7.6.0
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7543,7 +7545,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.5.2';
+const APP_VERSION='7.6.0';
 
 
 
@@ -7552,10 +7554,10 @@ const APP_VERSION='7.5.2';
 
 
 
-const MISSION_BUILD_HASH='fe69136f0a69';
-const MISSION_GIT_SHA='ee54f55f12554607eb1ff93af053ca82222d61e4';
+const MISSION_BUILD_HASH='95c1fdd610c6';
+const MISSION_GIT_SHA='49becd4686de7325f793115e0de559d64c382f66';
 
-const MISSION_RENDER_HASH='9f7388a78c1e';
+const MISSION_RENDER_HASH='ce34c0c80560';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -8207,6 +8209,7 @@ hitEps:0.0008,
 stepK:0.5,            
 aoFactor:0.3,         
 fogStart:1.0,         
+fogDensity:1.0,       
 
 
 
@@ -10094,6 +10097,7 @@ gl.uniform1f(u('u_hitEps'),       S.hitEps!=null  ? S.hitEps  : 0.0008);
 gl.uniform1f(u('u_stepK'),        S.stepK!=null   ? S.stepK   : 0.5);
 gl.uniform1f(u('u_aoFactor'),     S.aoFactor!=null? S.aoFactor: 0.3);
 gl.uniform1f(u('u_fogStart'),     S.fogStart!=null? S.fogStart: 1.0);
+gl.uniform1f(u('u_fogDensity'),   S.fogDensity!=null? S.fogDensity: 1.0);
 
 
 
@@ -17321,13 +17325,14 @@ sliders: [
 ],
 },
 'sec-3d-quality': {
-state: { raySteps:400, hitEps:0.0008, stepK:0.5, aoFactor:0.3, fogStart:1.0 },
+state: { raySteps:400, hitEps:0.0008, stepK:0.5, aoFactor:0.3, fogStart:1.0, fogDensity:1.0 },
 sliders: [
 ['raySteps','raySteps-v', v=>String(v)],
 ['hitEps','hitEps-v', v=>(+v).toFixed(4)],
 ['stepK','stepK-v', v=>(+v).toFixed(2)],
 ['aoFactor','aoFactor-v', v=>(+v).toFixed(2)],
 ['fogStart','fogStart-v', v=>(+v).toFixed(2)+'×'],
+['fogDensity','fogDensity-v', v=>(+v).toFixed(2)+'×'],
 ],
 },
 
@@ -19642,6 +19647,7 @@ gl.uniform1f(u('u_hitEps'), S.hitEps != null ? S.hitEps : 0.0008);
 gl.uniform1f(u('u_stepK'), S.stepK != null ? S.stepK : 0.5);
 gl.uniform1f(u('u_aoFactor'), S.aoFactor != null ? S.aoFactor : 0.3);
 gl.uniform1f(u('u_fogStart'), S.fogStart != null ? S.fogStart : 1);
+gl.uniform1f(u('u_fogDensity'), S.fogDensity != null ? S.fogDensity : 1);
 gl.uniform1i(u('u_projection'), 0);
 const qj = S.qjulia || [-0.2, 0.6, 0.2, 0.0];
 const qjLoc = u('u_qjulia');
@@ -27046,6 +27052,7 @@ struct Params {
   aoFactor:      f32,
   glow3d:        f32,   
   fogStart:      f32,   
+  fogDensity:    f32,   
 };
 @group(0) @binding(0) var<uniform> p: Params;
 @group(0) @binding(1) var<storage, read_write> out: array<u32>;
@@ -27417,9 +27424,10 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
     
     
     
-    let fogStart3D = select(select(4.0, 0.07, p.type3d == 1u), 1.5, p.type3d == 0u || p.type3d == 3u) * p.fogStart;
+    
+    let fogStart3D = select(select(4.0, 0.07, p.type3d == 1u), 1.5, p.type3d == 0u || p.type3d == 5u) * p.fogStart;
     let fogRate3D  = select(0.1, 0.2, p.type3d == 0u);
-    let fogD = max(t - fogStart3D, 0.0) * fogRate3D;
+    let fogD = max(t - fogStart3D, 0.0) * fogRate3D * p.fogDensity;
     color = mix(vec3<f32>(0.005), color, exp(-fogD));
   } else {
     
@@ -28241,6 +28249,7 @@ dv.setUint32 (100, (S.projection3D==='equirect')?1:0,  true);
 dv.setFloat32(104, S.aoFactor ?? 0.3,                  true); 
 dv.setFloat32(108, (S.glow&&(S.glowIntensity||0)>0)?S.glowIntensity:0, true); 
 dv.setFloat32(112, S.fogStart != null ? S.fogStart : 1.0, true); 
+dv.setFloat32(116, S.fogDensity != null ? S.fogDensity : 1.0, true); 
 
 
 
@@ -29694,6 +29703,7 @@ uniform float u_hitEps;
 uniform float u_stepK;        
 uniform float u_aoFactor;     
 uniform float u_fogStart;     
+uniform float u_fogDensity;   
 
 
 
@@ -29997,7 +30007,7 @@ void main(){
     
     float fogStart3D = (u_type3d==0||u_type3d==3?1.5:u_type3d==1?0.07:4.0) * u_fogStart;
     float fogRate3D  = (u_type3d==0?0.2:0.1);
-    float fogD=max(t-fogStart3D,0.)*fogRate3D;
+    float fogD=max(t-fogStart3D,0.)*fogRate3D*u_fogDensity;
     col=mix(vec3(.005),col,exp(-fogD));
   }else{
     
@@ -41718,6 +41728,7 @@ hep:+(S.hitEps??0.0008).toFixed(5),
 stk:+(S.stepK??0.5).toFixed(3),
 aof:+(S.aoFactor??0.3).toFixed(3),
 fog:+(S.fogStart??1).toFixed(3),
+fgd:(S.fogDensity??1)!==1?+(+S.fogDensity).toFixed(3):undefined,   
 
 
 p3d:S.projection3D==='equirect'?'equirect':undefined,
@@ -42337,6 +42348,7 @@ hep:  { type:'number', min:0.00005, max:0.01 },
 stk:  { type:'number', min:0.1,  max:1 },         
 aof:  { type:'number', min:0,    max:1 },         
 fog:  { type:'number', min:0,    max:5 },         
+fgd:  { type:'number', min:0,    max:50 },        
 
 p3d:  { type:'enum',   values:['perspective','equirect'] }, 
 
@@ -42572,6 +42584,7 @@ hitEps: _HASH_SCHEMA.hep,
 stepK: _HASH_SCHEMA.stk,
 aoFactor: _HASH_SCHEMA.aof,
 fogStart: _HASH_SCHEMA.fog,
+fogDensity: _HASH_SCHEMA.fgd,
 
 projection3D: _HASH_SCHEMA.p3d,
 
@@ -43351,6 +43364,7 @@ if(snap.hep!=null)S.hitEps=snap.hep;
 if(snap.stk!=null)S.stepK=snap.stk;
 if(snap.aof!=null)S.aoFactor=snap.aof;
 if(snap.fog!=null)S.fogStart=snap.fog;
+if(snap.fgd!=null)S.fogDensity=snap.fgd;
 
 if(snap.p3d!=null)S.projection3D=snap.p3d;
 
@@ -45617,6 +45631,7 @@ side:()=>{ _workerComputeCache.clear(); } },
 'stepK':           { s:'stepK',           parse:'float', badge:'stepK-v',           fmt:'fixed2',  render:true },
 'aoFactor':        { s:'aoFactor',        parse:'float', badge:'aoFactor-v',        fmt:'fixed2',  render:true },
 'fogStart':        { s:'fogStart',        parse:'float', badge:'fogStart-v',        fmt:'fixed2x', render:true },
+'fogDensity':      { s:'fogDensity',      parse:'float', badge:'fogDensity-v',      fmt:'fixed2x', render:true },
 
 'lyapunov-seq':    { handler:(_,v)=>{
 const cleaned=_sanitizeLyapunovSeq(v);
@@ -50949,6 +50964,16 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.6.0',
+date:'2026-10-28',
+headline:'3D fractals have a Fog density control.',
+items:[
+'A new Fog density slider in 3D Quality sets how thick the fog is. Fog distance only moves where the fog begins, so inside a Mandelbox or close to a surface the fog never showed. Raise Fog density for close or interior fog. At its default of 1 every existing view looks the same as before.',
+'On WebGPU the fog in front of a Quaternion Julia set began more than twice as far away as on WebGL. It now starts in the same place, so Fog distance and Fog density work on it.',
+'The command-line renderer reactor-render writes images again. Every render waited for a frame that never came and gave up without writing a file.',
+],
+},
+{
 version:'7.5.2',
 date:'2026-10-28',
 headline:'A flame or IFS export that hits the sample limit now says so.',
@@ -51009,15 +51034,6 @@ headline:'Palette transparency lets the layer below show through a fractal layer
 items:[
 'On a layer with Transparent background on, a palette stop with partial opacity, or an Opacity Field, now makes those parts of the fractal see-through by the same amount, so the layer beneath shows through them, on screen and in exports. With the box off, or with a fully opaque palette, nothing changes.',
 'Dropping a .flame or .cube file on its drop zone imports it again instead of saying the file is not supported, and Enter or Space now works on the Post-Affine and Xaos Matrix headers and on both drop zones.',
-],
-},
-{
-version:'7.3.14',
-date:'2026-10-26',
-headline:'A fractal layer\'s transparent background lets the layer below show through the inside of the set.',
-items:[
-'Transparent background now works on escape-time fractals such as Multibrot. The inside of the set, drawn in the Interior color, turns transparent, so a layer beneath shows through it, on screen and in exports. The Export dialog offers Transparent background for these types too.',
-'A Buddhabrot variation sheet sharpens right away again. Its cells no longer sit at their quick, grainy picture for tens of seconds after the sheet appears, even while you keep working.',
 ],
 },
 
