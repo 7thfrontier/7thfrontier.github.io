@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-jwKnb1M+VtCKrU0/sN5Z/cwFBeaOPAWqYwOOe9DnY70=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-dtVzu+lKbIdT7hickBk/rvwY5eZbWcFHjOpiLlI+mKM=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4274,12 +4274,12 @@
 
 
 
-<!-- build: b0037c8fda83 -->
+<!-- build: 98250a29ef5c -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.6.1
+ * AEON -- Universal Dynamics Reactor v7.7.0
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7545,7 +7545,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.6.1';
+const APP_VERSION='7.7.0';
 
 
 
@@ -7554,8 +7554,8 @@ const APP_VERSION='7.6.1';
 
 
 
-const MISSION_BUILD_HASH='b0037c8fda83';
-const MISSION_GIT_SHA='051fe031f0a61978167827461066cb7e14f305fc';
+const MISSION_BUILD_HASH='98250a29ef5c';
+const MISSION_GIT_SHA='e0ae1ecbb8070c6b97d86da28a066ba366d0c902';
 
 const MISSION_RENDER_HASH='0129006a1d15';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
@@ -50936,6 +50936,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.7.0',
+date:'2026-10-28',
+headline:'reactor-render gains --list, --gallery and --version.',
+items:[
+'The command-line renderer reactor-render has three new flags. --list prints every fractal type, pattern and palette key the app knows. --gallery renders one image of every fractal type into a folder in a single run and names any type that fails. --version prints the version.',
+'reactor-render refuses a mistyped fractal type, pattern or palette instead of quietly rendering the fallback and reporting success. It names any close matches and points at --list.',
+],
+},
+{
 version:'7.6.1',
 date:'2026-10-28',
 headline:'The Apollonian Gasket pattern draws a true gasket.',
@@ -50997,15 +51006,6 @@ items:[
 'The surface of a Mandelbulb or a Quaternion Julia set took its colors from only the first eighth or so of the palette, so a rainbow palette drew it red to orange. The color now spans the whole palette, as it already did on the Mandelbox, Menger sponge and Sierpinski tetrahedron, and no longer changes with Max Iterations.',
 'On a 3D layer with Transparent background on, a half-transparent palette stop no longer makes a bright surface look brighter than half its opaque color.',
 'Max Iterations is hidden on the Quaternion Julia set, Menger sponge and Sierpinski tetrahedron, where it no longer changes the picture. On the Mandelbulb and Mandelbox its hint now says they read at most 256 iterations.',
-],
-},
-{
-version:'7.3.16',
-date:'2026-10-27',
-headline:'Palette transparency lets the layer below show through a 3D fractal layer with a transparent background.',
-items:[
-'On a Mandelbulb or another 3D fractal, on a layer with Transparent background on, a palette stop with partial opacity or an Opacity Field now makes the surface see-through by the same amount, so the layer beneath shows through it, on screen and in exports.',
-'The empty space around a 3D fractal on such a layer is now fully clear. It used to lighten the layer beneath with a faint blue-grey. With the box off, or with a fully opaque palette, the fractal looks the same as before.',
 ],
 },
 
