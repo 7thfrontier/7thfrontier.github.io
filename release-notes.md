@@ -1,4 +1,4 @@
-The census climbs through forwarders, and a land reuses its pre-launch fast tier and leaves a post-land record · 2026-10-29
+2026-10-29
 
 - A maintenance release with no change you can see in AEON.
 
