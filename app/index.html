@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-NVO6xY+A/Ca0YpU7oxQuQRm+kUShsnBSeBzI9cZCQhg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-3zCII0wURbMlAOJqpaFt4xMnfjyxQcXTfzwRlwlJ6M4=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4274,12 +4274,12 @@
 
 
 
-<!-- build: e30e39a2a6e2 -->
+<!-- build: 72120f54faca -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.7.1
+ * AEON -- Universal Dynamics Reactor v7.7.2
  * Proprietary. See LICENSE for terms.
  */
 
@@ -4382,7 +4382,7 @@ desc:{f:'z → ¼(2+7z−(2+5z)cos(πz))',d:'Complex extension of the 3n+1 conje
 biomorph:{glType:21,family:'escape',juliaMode:true,label:'Biomorph',fd:{cx:0,cy:0,zoom:1.0},escR:10,
 info:{name:'Biomorph',formula:'z₀=pixel, z→z³+c (fixed c), body: |Re(z)|<R or |Im(z)|<R at escape'},
 desc:{f:'z₀=pixel, z→z³+c (fixed c), Pickover body test',d:"Pickover's biological fractal. z starts at each pixel with a fixed c (the Julia parameter) and iterates z³+c until |z| passes R. A point is part of the organism when, at that moment, |Re(z)| or |Im(z)| is still under R, which grows the spines and cilia. The exponent is fixed at 3, so the Power control does not apply to this type. Adjust the Julia C sliders to change the creature."}},
-burningship_julia:{glType:22,family:'escape',juliaMode:true,label:'B-Ship Julia',fd:{cx:0,cy:0,zoom:1.0},
+burningship_julia:{glType:22,family:'escape',juliaMode:true,label:'B-Ship Julia',fd:{cx:0,cy:0,zoom:0.85},juliaC:{re:-1.755,im:-0.03},
 info:{name:'Burning Ship Julia',formula:'f(z) = (|Re|+i|Im|)² + c, c fixed'},
 desc:{f:'(|Re|+i|Im|)² + c, c fixed',d:'Julia variant of the Burning Ship. Fixed c produces jagged silhouettes, ship hulls and spines at every scale, mirror-symmetric in both axes because the fold discards both signs.'}},
 
@@ -7545,7 +7545,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.7.1';
+const APP_VERSION='7.7.2';
 
 
 
@@ -7554,10 +7554,10 @@ const APP_VERSION='7.7.1';
 
 
 
-const MISSION_BUILD_HASH='e30e39a2a6e2';
-const MISSION_GIT_SHA='9345ed662d58a0d71247abf2b6e64c5bf762fbc6';
+const MISSION_BUILD_HASH='72120f54faca';
+const MISSION_GIT_SHA='d3d3ba52291dfd0c8d246b71723933a236f6138d';
 
-const MISSION_RENDER_HASH='fb547f656f3d';
+const MISSION_RENDER_HASH='72ed44ae4f52';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -17710,6 +17710,11 @@ const _reg=(typeof FRACTAL_REGISTRY!=='undefined')&&FRACTAL_REGISTRY[S.fractalTy
 S.fractalPower=(_reg&&_reg.power!=null)?_reg.power:2.0;
 }
 
+if(sectionId==='sec-julia-pad'){
+const _reg=(typeof FRACTAL_REGISTRY!=='undefined')&&FRACTAL_REGISTRY[S.fractalType];
+if(_reg&&_reg.juliaC){S.juliaReal=_reg.juliaC.re;S.juliaImag=_reg.juliaC.im;}
+}
+
 for(const [id,vid,fmt] of (cfg.sliders||[])){
 const el=document.getElementById(id), bv=document.getElementById(vid);
 if(!el) continue;
@@ -19462,6 +19467,10 @@ const _miEl=document.getElementById('maxIter'),_miVEl=document.getElementById('m
 if(_miEl)_miEl.value=S.maxIter;
 if(_miVEl)_miVEl.textContent=S.maxIter;
 }
+
+
+const _jc=(_reg&&_reg.juliaC)?_reg.juliaC:((_prevReg&&_prevReg.juliaC&&_prevType!==type)?{re:DS.juliaReal,im:DS.juliaImag}:null);
+if(_jc&&typeof setJulia==='function')setJulia(_jc.re,_jc.im,true);
 }
 if(is3D||isChaos&&(typeof IS_3D_ATTRACTORS!=='undefined'&&IS_3D_ATTRACTORS.has(type))){cv.dataset.cursor='grab';}else{cv.dataset.cursor='crosshair';}
 
@@ -34226,9 +34235,11 @@ const baseAlpha=S.strokeOpacity;
 
 
 
+
+
 let startIdx=0;
 if(outerNeg){
-c.globalAlpha=baseAlpha*0.4;
+c.globalAlpha=baseAlpha;
 while(startIdx<N && circles[startIdx].depth===0){
 const cc=circles[startIdx];
 c.strokeStyle=geoElemColor(startIdx,maxCircles,0,r0);
@@ -43578,6 +43589,16 @@ if(_erVEl2)_erVEl2.textContent=S.escRad;
 
 
 
+if(snap.mi){
+S.maxIter=snap.mi;
+const _miEl2=document.getElementById('maxIter'),_miVEl2=document.getElementById('maxIter-v');
+if(_miEl2)_miEl2.value=S.maxIter;
+if(_miVEl2)_miVEl2.textContent=S.maxIter;
+}
+if(snap.jr!=null&&snap.ji!=null&&typeof setJulia==='function')setJulia(snap.jr,snap.ji,true);
+
+
+
 
 
 
@@ -49222,6 +49243,7 @@ return Object.assign(p, { mode: 'fractal', fractalType: type, centerX: d.cx, cen
 centerXStr: String(d.cx), centerYStr: String(d.cy), _3dRotX: 0, _3dRotY: 0,
 fractalPower: reg.power != null ? reg.power : 2.0, escRad: reg.escR != null ? reg.escR : 4, ifsWeights: null, ifsCustomTf: null },
 reg.mi != null ? { maxIter: reg.mi } : {},
+reg.juliaC ? { juliaReal: reg.juliaC.re, juliaImag: reg.juliaC.im } : {},   
 type.startsWith('attractor_') ? _attractorPickDefaults(type) : {});
 }
 
@@ -50941,6 +50963,16 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.7.2',
+date:'2026-10-29',
+headline:'Burning Ship Julia opens on its set.',
+items:[
+'Burning Ship Julia opened on a dark, nearly empty frame, and its Catalog thumbnail showed the same. It now opens at a c of its own that draws a chain of spined ship shapes. The Julia section\'s Reset returns to that c, and a saved view or share link keeps the c it was made with.',
+'A shared Nova link keeps its own iteration count instead of falling back to 64.',
+'The Apollonian Gasket\'s outer circle and its three starting circles draw at full strength again, so its frame reads bold, most visibly in the Catalog preview.',
+],
+},
+{
 version:'7.7.1',
 date:'2026-10-29',
 headline:'Exports frame the same with the inspector open or folded.',
@@ -50999,16 +51031,6 @@ headline:'The Astronomy data seed can show the sky at a chosen moment.',
 items:[
 'The Astronomy seed panel has a Time field, entered in your own time zone. Leave it blank for the current time. A share link keeps the moment, so everyone who opens it sees the same sky.',
 'The Astronomy seed\'s hour now follows the sun at its location instead of your own clock, so a seed set to Tokyo and opened in New York no longer pairs a New York hour with the Tokyo sun. The day of the year in the Date & Time and Astronomy seeds now counts a 365-day year as 365 days.',
-],
-},
-{
-version:'7.4.0',
-date:'2026-10-27',
-headline:'An elementary CA can start from any first row.',
-items:[
-'The Elementary CA panel has a Starting row choice: one center cell as before, a random row drawn from the Seed, or your own string of 0s and 1s placed at the center of the first row. A share link keeps the choice.',
-'A wide export renders in tiles, a square one and the strip beside it, and with Distance Estimation coloring the strip came out in different colors, so a hard vertical line ran down the picture where the square ended. Every tile now colors by the zoom of the whole picture, deep-zoom exports included.',
-'Max Iterations on the Mandelbulb and Mandelbox stops at 256, the most these two types read. A higher count carried over from another fractal, a share link or the Iters readout is lowered to 256, so the slider, its readout and a shared link agree.',
 ],
 },
 

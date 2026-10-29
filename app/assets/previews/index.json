@@ -5,7 +5,7 @@
     120
   ],
   "canvas": "1440x900",
-  "totalBytes": 748231,
+  "totalBytes": 749034,
   "entries": [
     {
       "mode": "fractal",
@@ -149,7 +149,7 @@
       "mode": "fractal",
       "type": "burningship_julia",
       "file": "fractal-burningship_julia.jpg",
-      "bytes": 1238
+      "bytes": 1752
     },
     {
       "mode": "fractal",
@@ -371,7 +371,7 @@
       "mode": "geometry",
       "type": "apollonian",
       "file": "geometry-apollonian.jpg",
-      "bytes": 2784
+      "bytes": 3073
     },
     {
       "mode": "geometry",
