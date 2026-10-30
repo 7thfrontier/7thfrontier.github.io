@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-Z+dL1sheoBHmnZRAyHLGaVyiK2m0boXjQPF4G5Yhwe4=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-+4YHJFpr1822VuvuAHfC62NGClgyMlEoAnUH15rIpiA=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4274,12 +4274,12 @@
 
 
 
-<!-- build: 2fb2996f5b73 -->
+<!-- build: 683f26f18d16 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.7.6
+ * AEON -- Universal Dynamics Reactor v7.7.7
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7545,7 +7545,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.7.6';
+const APP_VERSION='7.7.7';
 
 
 
@@ -7554,10 +7554,10 @@ const APP_VERSION='7.7.6';
 
 
 
-const MISSION_BUILD_HASH='2fb2996f5b73';
-const MISSION_GIT_SHA='84ea65827505f55febd251abd8ae988ffb887fd0';
+const MISSION_BUILD_HASH='683f26f18d16';
+const MISSION_GIT_SHA='723c58c159a1cf7bc8fb23f3eb0454eabcc2d7f2';
 
-const MISSION_RENDER_HASH='0c66a5cf2db9';
+const MISSION_RENDER_HASH='42c21837fa5c';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -16246,6 +16246,7 @@ let u8 = new Uint8Array(buf);
 
 const dpi = (typeof _exportResolvedDPI!=='undefined' && _exportResolvedDPI) || (S && S.exportDPI) || 300;   
 u8 = injectPNGPhys(u8, dpi);
+u8 = injectPNGProvenance(u8);
 u8 = injectPNGMetadata(u8, 'reactor-state', _buildStateUrl());
 const stampedBlob = new Blob([u8], { type: 'image/png' });
 
@@ -50991,6 +50992,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.7.7',
+date:'2026-10-30',
+headline:'Exported PNGs carry their maker and copyright.',
+items:[
+'Every PNG you export, each frame of a PNG sequence included, now records AEON and its version as the Software, and 7th Frontier, Inc. as the Copyright, in the standard fields that many image viewers and asset managers show. JPEG and WebP exports are unchanged.',
+],
+},
+{
 version:'7.7.6',
 date:'2026-10-30',
 headline:'WebGPU draws one frame at a time.',
@@ -51050,14 +51059,6 @@ items:[
 'A new Fog density slider in 3D Quality sets how thick the fog is. Fog distance only moves where the fog begins, so inside a Mandelbox or close to a surface the fog never showed. Raise Fog density for close or interior fog. At its default of 1 every existing view looks the same as before.',
 'On WebGPU the fog in front of a Quaternion Julia set began more than twice as far away as on WebGL. It now starts in the same place, so Fog distance and Fog density work on it.',
 'The command-line renderer reactor-render writes images again. Every render waited for a frame that never came and gave up without writing a file.',
-],
-},
-{
-version:'7.5.2',
-date:'2026-10-28',
-headline:'A flame or IFS export that hits the sample limit now says so.',
-items:[
-'An export keeps the screen\'s density by scaling its sample count to the export size, but the flame and IFS renderers stop at 8 million samples, so a large export of a dense flame or IFS could come out sparser than the screen with no warning. A notice now tells you the export was capped, as the attractor export already did.',
 ],
 },
 
@@ -57448,6 +57449,7 @@ continue;
 let bytes=new Uint8Array(await blob.arrayBuffer());
 
 try {
+if(typeof injectPNGProvenance==='function'){ bytes=injectPNGProvenance(bytes); }
 if(typeof injectPNGMetadata==='function'){ bytes=injectPNGMetadata(bytes,'reactor-state',_buildStateUrl()); }
 if(typeof injectPNGPhys==='function'){ bytes=injectPNGPhys(bytes,(S.exportDPI|0)||300); }
 } catch (_) {  }
@@ -63156,6 +63158,12 @@ return out;
 console.warn('PNG metadata inject failed:',e);
 return u8;
 }
+}
+
+
+function injectPNGProvenance(u8){
+u8=injectPNGMetadata(u8,'Copyright','Copyright (c) '+new Date().getFullYear()+' 7th Frontier, Inc.');
+return injectPNGMetadata(u8,'Software','AEON '+APP_VERSION);
 }
 
 

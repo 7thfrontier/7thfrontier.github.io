@@ -1,5 +1,5 @@
-WebGPU draws one frame at a time · 2026-10-30
+Exported PNGs carry their maker and copyright · 2026-10-30
 
-- **WebGPU draws one frame at a time.** Switching between Buddhabrot and Anti-Buddhabrot while WebGPU was still drawing could leave the old picture on screen until the next change, and exporting a composite with a WebGPU Buddhabrot layer while the screen was still drawing could mix that drawing into the exported layer. A new WebGPU draw now waits for the one in progress, and a type that does not use WebGPU still draws at once.
+- **Exported PNGs name the app, version and copyright holder.** Every PNG export and every frame of a PNG sequence now carries the two standard text fields that many image viewers and asset managers show: Software (AEON and the version) and Copyright (7th Frontier, Inc.). `reactor-render`'s PNGs carry them too. JPEG and WebP files are unchanged.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.
