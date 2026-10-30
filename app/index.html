@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-LqvJOYjSi01S4uM3/gsux9wyomiefemsHvKuGZ1N6Ag=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-6kWm4Krvsn1mSNudMlPcIv3o/drDPPmV0xffak9HxFI=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4274,12 +4274,12 @@
 
 
 
-<!-- build: dfbb0ba09922 -->
+<!-- build: a3fd55380467 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.7.4
+ * AEON -- Universal Dynamics Reactor v7.7.5
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7545,7 +7545,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.7.4';
+const APP_VERSION='7.7.5';
 
 
 
@@ -7554,10 +7554,10 @@ const APP_VERSION='7.7.4';
 
 
 
-const MISSION_BUILD_HASH='dfbb0ba09922';
-const MISSION_GIT_SHA='867d6c5648cfbea50b4832a06b3fe154da7c77aa';
+const MISSION_BUILD_HASH='a3fd55380467';
+const MISSION_GIT_SHA='f729dc1f7e765a7aebac277b0b6d23fd7dfb8038';
 
-const MISSION_RENDER_HASH='72ed44ae4f52';
+const MISSION_RENDER_HASH='94ce560377c8';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -12205,6 +12205,10 @@ if(typeof scheduleRender==='function')scheduleRender();
 
 
 function _recoverWgpu(){
+
+
+
+if(_wgpuExportSince && Date.now()-_wgpuExportSince<_WGPU_EXPORT_HOLD_MS){ _armStuckWatchdog(()=>_wgpuRenderInFlight, ()=>_wgpuRenderInFlightSince, _recoverWgpu); return; }
 console.warn(`_wgpuRenderInFlight stuck for ${Date.now()-_wgpuRenderInFlightSince}ms — watchdog force-clearing flag. The prior WGPU dispatch likely crashed silently.`);
 _wgpuRenderInFlight=false;_wgpuRenderInFlightSince=0;
 if(typeof scheduleRender==='function')scheduleRender();
@@ -12235,6 +12239,9 @@ let _wgpuRenderInFlight = false;
 
 
 let _wgpuRenderInFlightSince = 0;
+
+let _wgpuExportSince = 0;
+const _WGPU_EXPORT_HOLD_MS = 120000;
 
 
 
@@ -50963,6 +50970,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.7.5',
+date:'2026-10-30',
+headline:'A long WebGPU export keeps the GPU to itself.',
+items:[
+'An export whose WebGPU render ran past 15 seconds, such as an 8K Buddhabrot on a slower GPU or the first WebGPU use in a session, could be colored from the screen\'s own render instead of its own. The export now keeps the GPU until it finishes, for up to two minutes.',
+],
+},
+{
 version:'7.7.2',
 date:'2026-10-29',
 headline:'Burning Ship Julia opens on its set.',
@@ -51022,15 +51037,6 @@ date:'2026-10-28',
 headline:'A palette preview no longer stays on the picture after it ends early.',
 items:[
 'Hovering a palette swatch right after an edit could leave the canvas showing the hovered palette once the edit was saved to history; it now repaints with the chosen palette. Pressing r over a hovered swatch and then cancelling Reset All no longer keeps the hovered palette as your palette.',
-],
-},
-{
-version:'7.5.0',
-date:'2026-10-28',
-headline:'The Astronomy data seed can show the sky at a chosen moment.',
-items:[
-'The Astronomy seed panel has a Time field, entered in your own time zone. Leave it blank for the current time. A share link keeps the moment, so everyone who opens it sees the same sky.',
-'The Astronomy seed\'s hour now follows the sun at its location instead of your own clock, so a seed set to Tokyo and opened in New York no longer pairs a New York hour with the Tokyo sun. The day of the year in the Date & Time and Astronomy seeds now counts a 365-day year as 365 days.',
 ],
 },
 
@@ -64866,6 +64872,7 @@ try{
 if(typeof _wgpuRenderInFlight!=='undefined'){
 _wgpuRenderInFlight=true;
 if(typeof _wgpuRenderInFlightSince!=='undefined')_wgpuRenderInFlightSince=Date.now();
+if(typeof _wgpuExportSince!=='undefined')_wgpuExportSince=Date.now();   
 
 
 
@@ -64906,6 +64913,7 @@ _wgpuExportOk = false;
 } finally {
 _endExportPaint();
 if(typeof _wgpuRenderInFlight!=='undefined'){_wgpuRenderInFlight=false;if(typeof _wgpuRenderInFlightSince!=='undefined')_wgpuRenderInFlightSince=0;}
+if(typeof _wgpuExportSince!=='undefined')_wgpuExportSince=0;
 cv.width=_oCvW;cv.height=_oCvH;W=oW;H=oH;
 }
 if(!_wgpuExportOk){
