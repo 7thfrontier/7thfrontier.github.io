@@ -1,5 +1,5 @@
-A long WebGPU export keeps the GPU to itself · 2026-10-30
+WebGPU draws one frame at a time · 2026-10-30
 
-- **A long WebGPU export keeps the GPU to itself.** An export whose WebGPU dispatch ran past 15 seconds (an 8K Buddhabrot on a slower GPU, or the first WebGPU use in a session) was taken for a hung one, and the screen started a render into the same GPU buffers while the export still used them, so the export could be colored from the screen render's density instead of its own. The export now keeps the GPU until it finishes, for up to two minutes.
+- **WebGPU draws one frame at a time.** Switching between Buddhabrot and Anti-Buddhabrot while WebGPU was still drawing could leave the old picture on screen until the next change, and exporting a composite with a WebGPU Buddhabrot layer while the screen was still drawing could mix that drawing into the exported layer. A new WebGPU draw now waits for the one in progress, and a type that does not use WebGPU still draws at once.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.

@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-6kWm4Krvsn1mSNudMlPcIv3o/drDPPmV0xffak9HxFI=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-Z+dL1sheoBHmnZRAyHLGaVyiK2m0boXjQPF4G5Yhwe4=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4274,12 +4274,12 @@
 
 
 
-<!-- build: a3fd55380467 -->
+<!-- build: 2fb2996f5b73 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.7.5
+ * AEON -- Universal Dynamics Reactor v7.7.6
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7545,7 +7545,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.7.5';
+const APP_VERSION='7.7.6';
 
 
 
@@ -7554,10 +7554,10 @@ const APP_VERSION='7.7.5';
 
 
 
-const MISSION_BUILD_HASH='a3fd55380467';
-const MISSION_GIT_SHA='f729dc1f7e765a7aebac277b0b6d23fd7dfb8038';
+const MISSION_BUILD_HASH='2fb2996f5b73';
+const MISSION_GIT_SHA='84ea65827505f55febd251abd8ae988ffb887fd0';
 
-const MISSION_RENDER_HASH='94ce560377c8';
+const MISSION_RENDER_HASH='0c66a5cf2db9';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11249,15 +11249,14 @@ return _renderFractalCPUPath(isBuddhab).finally(() => { _cpuPathInFlight--; });
 async function _tryRenderWGPU(kernel, opts){
 glcv.classList.remove('is-shown');
 if(typeof cv!=='undefined' && cv)cv.classList.remove('is-hidden');
-_wgpuRenderInFlight = true;
-_wgpuRenderInFlightSince = Date.now();
 
 
-
-_armStuckWatchdog(()=>_wgpuRenderInFlight, ()=>_wgpuRenderInFlightSince, _recoverWgpu);
+const req = ++_wgpuScreenReq;
+const o = await _wgpuOwn('screen');
+if(req !== _wgpuScreenReq){ _wgpuDisown(o); return true; }
 let ok = false;
 try { ok = await kernel(); }
-finally { _wgpuRenderInFlight = false; _wgpuRenderInFlightSince = 0; }
+finally { _wgpuDisown(o); }
 _wgpuMarkDispatch(ok);
 if(ok && opts && opts.markPainted) _wgpuBuddhaHasPainted = true;
 return ok;
@@ -12208,9 +12207,10 @@ function _recoverWgpu(){
 
 
 
-if(_wgpuExportSince && Date.now()-_wgpuExportSince<_WGPU_EXPORT_HOLD_MS){ _armStuckWatchdog(()=>_wgpuRenderInFlight, ()=>_wgpuRenderInFlightSince, _recoverWgpu); return; }
+const o=_wgpuOwner;
+if(_wgpuExportSince && Date.now()-_wgpuExportSince<_WGPU_EXPORT_HOLD_MS){ _armStuckWatchdog(()=>_wgpuOwner===o, ()=>_wgpuRenderInFlightSince, _recoverWgpu); return; }
 console.warn(`_wgpuRenderInFlight stuck for ${Date.now()-_wgpuRenderInFlightSince}ms — watchdog force-clearing flag. The prior WGPU dispatch likely crashed silently.`);
-_wgpuRenderInFlight=false;_wgpuRenderInFlightSince=0;
+_wgpuDisown(o);
 if(typeof scheduleRender==='function')scheduleRender();
 }
 
@@ -12242,6 +12242,25 @@ let _wgpuRenderInFlightSince = 0;
 
 let _wgpuExportSince = 0;
 const _WGPU_EXPORT_HOLD_MS = 120000;
+
+
+
+
+let _wgpuOwner = null;
+let _wgpuScreenReq = 0;
+async function _wgpuOwn(kind){
+while(_wgpuOwner) await _wgpuOwner.done;
+const o={kind}; o.done=new Promise(r=>{ o.release=r; });
+_wgpuOwner=o; _wgpuRenderInFlight=true; _wgpuRenderInFlightSince=Date.now();
+if(kind==='export')_wgpuExportSince=Date.now();
+_armStuckWatchdog(()=>_wgpuOwner===o, ()=>_wgpuRenderInFlightSince, _recoverWgpu);
+return o;
+}
+
+function _wgpuDisown(o){
+if(_wgpuOwner===o){ _wgpuOwner=null; _wgpuRenderInFlight=false; _wgpuRenderInFlightSince=0; _wgpuExportSince=0; }
+if(o)o.release();
+}
 
 
 
@@ -19561,6 +19580,7 @@ if (_lbl) _lbl.textContent = '';
 if (_prg) _prg.textContent = '';
 }
 } catch (_e) {_swallowed('_finishSelectType', _e);}
+
 if (typeof _wgpuRenderInFlight !== 'undefined') _wgpuRenderInFlight = false;
 if (typeof _renderRafId !== 'undefined' && _renderRafId) {
 try { cancelAnimationFrame(_renderRafId); } catch (_e) {  }
@@ -27883,6 +27903,7 @@ if (typeof _wgpuRenderInFlight !== 'undefined') {
 _wgpuRenderInFlight = false;
 _wgpuRenderInFlightSince = 0;
 }
+if (typeof _wgpuOwner !== 'undefined' && _wgpuOwner) _wgpuDisown(_wgpuOwner);   
 if (typeof updateCoordBar === 'function') {
 try { updateCoordBar(); } catch (_e) {  }
 }
@@ -50970,6 +50991,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.7.6',
+date:'2026-10-30',
+headline:'WebGPU draws one frame at a time.',
+items:[
+'Switching between Buddhabrot and Anti-Buddhabrot while WebGPU was still drawing could leave the old picture on screen until the next change, and a composite export with a WebGPU Buddhabrot layer could pick up the drawing still on screen. A new WebGPU draw now waits for the one in progress.',
+],
+},
+{
 version:'7.7.5',
 date:'2026-10-30',
 headline:'A long WebGPU export keeps the GPU to itself.',
@@ -51029,14 +51058,6 @@ date:'2026-10-28',
 headline:'A flame or IFS export that hits the sample limit now says so.',
 items:[
 'An export keeps the screen\'s density by scaling its sample count to the export size, but the flame and IFS renderers stop at 8 million samples, so a large export of a dense flame or IFS could come out sparser than the screen with no warning. A notice now tells you the export was capped, as the attractor export already did.',
-],
-},
-{
-version:'7.5.1',
-date:'2026-10-28',
-headline:'A palette preview no longer stays on the picture after it ends early.',
-items:[
-'Hovering a palette swatch right after an edit could leave the canvas showing the hovered palette once the edit was saved to history; it now repaints with the chosen palette. Pressing r over a hovered swatch and then cancelling Reset All no longer keeps the hovered palette as your palette.',
 ],
 },
 
@@ -60630,8 +60651,10 @@ if (!S.useWebGPU || typeof _wgpuAvailable === 'undefined' || !_wgpuAvailable || 
 || typeof _wgpuSupportsType !== 'function' || !_wgpuSupportsType(S.fractalType) || typeof renderBuddhabrotWebGPU !== 'function') return false;
 if (typeof _wgpuBbLimit === 'function' && _wgpuBbLimit(cv.width, cv.height, _wgpu.device.limits)) return false;
 const g = _buddhaExportSamples(S.buddhabrotSamples, densScale, 1, 20);
+const o = await _wgpuOwn('export');   
 try { return !!(await renderBuddhabrotWebGPU({ totalSamples: g.samples, densityComp: g.comp, forExport: true })); }
 catch (e) { console.warn('composite export: WGPU Buddhabrot layer failed, rendering on the CPU:', e && e.message); return false; }
+finally { _wgpuDisown(o); }
 }
 
 
@@ -64851,12 +64874,7 @@ bar.style.setProperty('--progress','40%');status.textContent='GPU rendering (Web
 
 
 
-
-if(typeof _wgpuRenderInFlight!=='undefined'){
-const _wq0=(typeof performance!=='undefined'?performance.now():Date.now());
-while(_wgpuRenderInFlight && ((typeof performance!=='undefined'?performance.now():Date.now())-_wq0)<16000)
-await new Promise(r=>setTimeout(r,16));
-}
+const _wgpuO=await _wgpuOwn('export');
 const oW=W,oH=H,_oCvW=cv.width,_oCvH=cv.height;
 
 
@@ -64869,18 +64887,8 @@ _beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
 try{
 
 
-if(typeof _wgpuRenderInFlight!=='undefined'){
-_wgpuRenderInFlight=true;
-if(typeof _wgpuRenderInFlightSince!=='undefined')_wgpuRenderInFlightSince=Date.now();
-if(typeof _wgpuExportSince!=='undefined')_wgpuExportSince=Date.now();   
 
 
-
-
-
-
-if(typeof _armStuckWatchdog==='function')_armStuckWatchdog(()=>_wgpuRenderInFlight, ()=>_wgpuRenderInFlightSince, _recoverWgpu);
-}
 ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);
 
 
@@ -64912,8 +64920,7 @@ console.warn('doExport: WGPU export dispatch threw — falling back to WebGL2/CP
 _wgpuExportOk = false;
 } finally {
 _endExportPaint();
-if(typeof _wgpuRenderInFlight!=='undefined'){_wgpuRenderInFlight=false;if(typeof _wgpuRenderInFlightSince!=='undefined')_wgpuRenderInFlightSince=0;}
-if(typeof _wgpuExportSince!=='undefined')_wgpuExportSince=0;
+_wgpuDisown(_wgpuO);
 cv.width=_oCvW;cv.height=_oCvH;W=oW;H=oH;
 }
 if(!_wgpuExportOk){
