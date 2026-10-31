@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-wB2thXE/dmG8psnmBpnZbWVShPqueffNq5KkNxe2c9s=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-hUowFpw70gFCeTmTZMgEDXawYdt5XRE6TTYt8Iajk2k=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4280,12 +4280,12 @@
 
 
 
-<!-- build: 67dcf079f763 -->
+<!-- build: 754dfecb14f4 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.7.13
+ * AEON -- Universal Dynamics Reactor v7.7.14
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7435,7 +7435,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.7.13';
+const APP_VERSION='7.7.14';
 
 
 
@@ -7444,10 +7444,10 @@ const APP_VERSION='7.7.13';
 
 
 
-const MISSION_BUILD_HASH='67dcf079f763';
-const MISSION_GIT_SHA='17cd7783468e5b169bce861f4f0fd3e24a637c37';
+const MISSION_BUILD_HASH='754dfecb14f4';
+const MISSION_GIT_SHA='7d21595ccad66593015e185cdc0ad7e921a3291f';
 
-const MISSION_RENDER_HASH='dff90d4773cf';
+const MISSION_RENDER_HASH='8cb1cf0c99e3';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11989,7 +11989,9 @@ if(typeof _updateCanvasA11y==='function') _updateCanvasA11y();
 
 
 
-if(typeof COMP_LAYERS!=='undefined'){const _al=COMP_LAYERS[_activeCompLayerIdx];if(_al&&_al._taCache){_freeCanvas(_al._taCache);_al._taCache=null;}}
+
+
+if(typeof COMP_LAYERS!=='undefined'){const _al=COMP_LAYERS[_activeCompLayerIdx];if(_al&&_al._taCache&&!_taCacheCurrent(_al._taCache)){_freeCanvas(_al._taCache);_al._taCache=null;}}
 if(_renderRafId) return;
 
 
@@ -50880,6 +50882,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.7.14',
+date:'2026-10-31',
+headline:'Keys respond at once while a transparent Buddhabrot layer redraws.',
+items:[
+'With Transparent background on, a Buddhabrot layer keeps its picture until something changes, and a key pressed while it redraws takes effect at once.',
+],
+},
+{
 version:'7.7.12',
 date:'2026-10-31',
 headline:'A PNG Sequence leaves the inside of the set transparent.',
@@ -50936,14 +50946,6 @@ items:[
 'Burning Ship Julia opened on a dark, nearly empty frame, and its Catalog thumbnail showed the same. It now opens at a c of its own that draws a chain of spined ship shapes. The Julia section\'s Reset returns to that c, and a saved view or share link keeps the c it was made with.',
 'A shared Nova link keeps its own iteration count instead of falling back to 64.',
 'The Apollonian Gasket\'s outer circle and its three starting circles draw at full strength again, so its frame reads bold, most visibly in the Catalog preview.',
-],
-},
-{
-version:'7.7.1',
-date:'2026-10-29',
-headline:'Exports frame the same with the inspector open or folded.',
-items:[
-'With the inspector open, a 16:9 export of an attractor, a geometry pattern or a flame or IFS fractal came out letterboxed to a wider shape with its subject about a fifth smaller. Exports, Match canvas and the Motion panel\'s Screen size now take the shape of the canvas area beside the inspector, so they match the folded layout.',
 ],
 },
 
@@ -53847,6 +53849,7 @@ return !!_varSheet && COMP_LAYERS.map((l) => l.id).join() === _varSheet.ids;
 function exitVariationSheet() {
 if (!_varSheetActive()) return false;
 if (typeof _densityRefineAbort === 'function') _densityRefineAbort();
+if (typeof _taRefreshAbort === 'function') _taRefreshAbort();   
 
 if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(exitVariationSheet, 'varsheet-exit')) return true;
 if (typeof _stopBackgroundRenderLoops === 'function') _stopBackgroundRenderLoops();
@@ -59337,6 +59340,7 @@ const t = e.target;
 
 
 if (typeof _densityRefineAbort === 'function') _densityRefineAbort();
+if (typeof _taRefreshAbort === 'function') _taRefreshAbort();   
 e.preventDefault(); e.stopImmediatePropagation();
 const replay = () => { const c = new e.constructor(e.type, e); c.__aeonReplay = true; t.dispatchEvent(c); };   
 if (e.type === 'input' || e.type === 'change') _deferDuringLayerSwap(replay, ((t.__aeonSwapKeys = t.__aeonSwapKeys || {})[e.type] = t.__aeonSwapKeys[e.type] || {})); else _swapDeferred.push(replay);
@@ -60304,6 +60308,22 @@ if (_layerMoveDrag) { _layerMoveDrag = null; _pushLayerHist(); }
 
 
 
+
+
+
+
+const _taKeys = new WeakMap();
+let _taInFlight = null;   
+
+
+
+function _taStateKey() {
+const pal = typeof PALS !== 'undefined' && PALS ? PALS[S.palette] : null;
+const flame = S.fractalType === 'fractal_flame' && typeof flameSystem !== 'undefined' ? flameSystem : null;
+return (typeof cv !== 'undefined' && cv ? cv.width + 'x' + cv.height : '') + '@' + JSON.stringify([S, pal, flame]);
+}
+function _taCacheCurrent(c) { return _taKeys.get(c) === _taStateKey(); }
+function _taRefreshAbort() { if (_taInFlight) _taInFlight.abort(); }
 let _taRefreshTimer = null;
 function _scheduleActiveTATransparent() {
 clearTimeout(_taRefreshTimer);
@@ -60319,10 +60339,14 @@ if (typeof cv === 'undefined' || !cv) return;
 
 
 if (typeof _exportOwnsCanvas === 'function' && _exportOwnsCanvas()) return;
-const W2 = cv.width, H2 = cv.height;
+const W2 = cv.width, H2 = cv.height, key = _taStateKey();
+if (layer._taCache && _taKeys.get(layer._taCache) === key) return;   
+
+const dens = _isDensityLayer({ params: S }), ctl = dens ? (_taInFlight = new AbortController()) : null;
 let tc = null;
-try { tc = await _renderLayerToCanvas({ params: structuredClone(S), transparentBg: true }); }
-catch { return; }
+try { tc = await _renderLayerToCanvas({ params: structuredClone(S), transparentBg: true, keepScreen: dens }, dens ? 1 : undefined, false, ctl ? ctl.signal : undefined); }
+catch { if (ctl && ctl.signal.aborted) _scheduleActiveTATransparent(); return; }
+finally { if (ctl && _taInFlight === ctl) _taInFlight = null; }
 if (typeof _exportOwnsCanvas === 'function' && _exportOwnsCanvas()) { _freeCanvas(tc); return; }   
 
 
@@ -60333,6 +60357,7 @@ const cur = COMP_LAYERS[_activeCompLayerIdx];
 if (!cur || cur !== layer || !cur.transparentBg || !tc || tc.width !== cv.width || tc.height !== cv.height) { _freeCanvas(tc); return; }
 if (cv.width !== W2 || cv.height !== H2) { _freeCanvas(tc); return; }
 cur._taCache = _swapLayerCanvas(cur._taCache, tc);
+_taKeys.set(tc, key);
 
 
 
@@ -61578,6 +61603,7 @@ throw e;
 
 function _populateLayerCaches() {
 if (typeof _densityRefineAbort === 'function') _densityRefineAbort();   
+if (typeof _taRefreshAbort === 'function') _taRefreshAbort();   
 const _run = _thumbRefreshChain.then(() => _populateLayerCachesOnce());
 _thumbRefreshChain = _run.catch(() => {});   
 return _run;
