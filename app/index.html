@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-Y6C4pYsLOuLFfNz2SAkcx41r67hDtcqhd6btm0cYGY0=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-LmC89U2d90wpGG9/Q49o8wEN5bcaTt2sckWONvCTu0w=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4280,12 +4280,12 @@
 
 
 
-<!-- build: d64cbf4e72e9 -->
+<!-- build: 2c59bbe1d12a -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.7.9
+ * AEON -- Universal Dynamics Reactor v7.7.10
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7435,7 +7435,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.7.9';
+const APP_VERSION='7.7.10';
 
 
 
@@ -7444,10 +7444,10 @@ const APP_VERSION='7.7.9';
 
 
 
-const MISSION_BUILD_HASH='d64cbf4e72e9';
-const MISSION_GIT_SHA='c1145e4939f21333b10a53c6ece9c45b2b0631f9';
+const MISSION_BUILD_HASH='2c59bbe1d12a';
+const MISSION_GIT_SHA='6b7d1b0a00c424223414e3e78d9348e937e3637f';
 
-const MISSION_RENDER_HASH='7145510b8157';
+const MISSION_RENDER_HASH='f60fa5eee7f1';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -15797,6 +15797,7 @@ _pfxSyncUI();
 
 
 
+if(typeof _syncExportPrintFromState==='function')_syncExportPrintFromState();
 {
 const phw=document.getElementById('phys-w'),phh=document.getElementById('phys-h'),phu=document.getElementById('phys-unit');
 if(phw&&S.exportPhysicalW!=null)phw.value=(+S.exportPhysicalW).toFixed(2);
@@ -42305,7 +42306,7 @@ ofx:  { type:'number', min:0,    max:1 },
 owf:  { type:'enum',   values:['linear','ease-in','ease-out','ease-inout','triangle','log','pow','smoothstep','sine','exp','gain'] },   
 opf:  { type:'number', min:0,    max:1 },         
 
-edp:  { type:'int',    min:36,   max:1200 },      
+edp:  { type:'int',    min:72,   max:2400 },      
 epu:  { type:'enum',   values:['in','mm','cm','px'] }, 
 epw:  { type:'number', min:0.5,  max:200 },       
 eph:  { type:'number', min:0.5,  max:200 },       
@@ -45832,6 +45833,8 @@ function _syncInputsFromState(){
 
 
 { const _lc=document.getElementById('layer-live-composite'); if(_lc&&'liveComposite' in S)_lc.checked=!!S.liveComposite; }
+
+if(typeof _syncExportPrintFromState==='function')_syncExportPrintFromState();
 
 
 
@@ -50877,6 +50880,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.7.10',
+date:'2026-10-30',
+headline:'Shared links keep their print settings.',
+items:[
+'A link that carries print settings now opens with the Export window showing what the export will use: its Compose, supersample and DPI chips, its size fields and its preset. The link keeps its print size, and its DPI stays within 72 to 2400, the range the DPI setting allows.',
+'A PNG Sequence with Transparent background on leaves its letterbox bars transparent, as a still PNG does.',
+],
+},
+{
 version:'7.7.9',
 date:'2026-10-30',
 headline:'Video exports keep the whole view.',
@@ -50933,15 +50945,6 @@ headline:'reactor-render gains --list, --gallery and --version.',
 items:[
 'The command-line renderer reactor-render has three new flags. --list prints every fractal type, pattern and palette key the app knows. --gallery renders one image of every fractal type into a folder in a single run and names any type that fails. --version prints the version.',
 'reactor-render refuses a mistyped fractal type, pattern or palette instead of quietly rendering the fallback and reporting success. It names any close matches and points at --list.',
-],
-},
-{
-version:'7.6.1',
-date:'2026-10-28',
-headline:'The Apollonian Gasket pattern draws a true gasket.',
-items:[
-'The Apollonian Gasket pattern drew some circles twice, crowded the middle gap with overlapping circles and left the three gaps along the outer circle nearly empty. Each gap now gets exactly one circle per level, touching the three around it, and every gap is filled to the chosen depth.',
-'The command-line renderer reactor-render laid the page out with the inspector open, so a fractal sat left of center and a geometry image came out 384 px wider than --size. It now renders with the inspector folded, centered and at the size you ask for.',
 ],
 },
 
@@ -57178,7 +57181,7 @@ totalFrames=ZIP_MAX_FRAMES;
 
 
 
-const _pngFraming=_motionFraming(...(_ANIM_RES[_animResKey]||[CANVAS_SIZE,CANVAS_SIZE])), _pngExpW=_pngFraming.w, _pngExpH=_pngFraming.h;
+const _pngFraming=_motionFraming(...(_ANIM_RES[_animResKey]||[CANVAS_SIZE,CANVAS_SIZE]),true), _pngExpW=_pngFraming.w, _pngExpH=_pngFraming.h;
 _pngOrigW=cv.width;_pngOrigH=cv.height;_pngOrigGlW=glcv?glcv.width:null;_pngOrigGlH=glcv?glcv.height:null;_pngOrigGW=W;_pngOrigGH=H;
 cv.width=_pngExpW;cv.height=_pngExpH;if(glcv){glcv.width=_pngExpW;glcv.height=_pngExpH;}W=_pngExpW;H=_pngExpH;
 cv.classList.add('no-pointer-events');if(glcv)glcv.classList.add('no-pointer-events');   
@@ -57699,12 +57702,12 @@ vertical:[1080,1920],
 };
 
 
-function _motionFraming(preW,preH){
+function _motionFraming(preW,preH,alphaCapable){
 const fit=_fractalLetterboxFit(preW,preH);
 if(!fit)return {w:preW,h:preH,out:null,frame:(src)=>src};
 const out=document.createElement('canvas'); out.width=preW; out.height=preH;
 const c=out.getContext('2d'), x=Math.round((preW-fit[0])/2), y=Math.round((preH-fit[1])/2);
-return {w:fit[0],h:fit[1],out,frame:(src)=>{ _exportBgFill(c,preW,preH,false); c.drawImage(src,x,y); return out; }};
+return {w:fit[0],h:fit[1],out,frame:(src)=>{ _exportBgFill(c,preW,preH,!!alphaCapable); c.drawImage(src,x,y); return out; }};
 }
 
 
@@ -63522,6 +63525,24 @@ document.querySelectorAll('#compose-row .size-chip, #anim-compose-row .size-chip
 
 if(typeof pfxPreviewUpdate==='function')pfxPreviewUpdate();
 _syncPrintOptionsSummary();
+}
+
+
+function _syncExportPrintFromState(){
+const put=(id,v)=>{ const el=document.getElementById(id); if(el&&v!=null&&el!==document.activeElement)el.value=v; };
+put('phys-w',S.exportPhysicalW!=null?(+S.exportPhysicalW).toFixed(2):null);
+put('phys-h',S.exportPhysicalH!=null?(+S.exportPhysicalH).toFixed(2):null);
+put('phys-unit',S.exportPhysicalUnit||null);
+
+const fits=(id)=>{ const p=PHYS_PRESETS[id]; return !!p&&(S.exportPhysicalUnit||'in')==='in'&&Math.abs(p[0]-S.exportPhysicalW)<0.01&&Math.abs(p[1]-S.exportPhysicalH)<0.01; };
+if(_physPreset!=='custom'&&!fits(_physPreset))_physPreset=Object.keys(PHYS_PRESETS).find(fits)||'custom';
+const cr=document.getElementById('phys-custom-row');
+if(cr)cr.classList.toggle('show',_physPreset==='custom');
+const on=(attr,v)=>document.querySelectorAll('.size-chip['+attr+']').forEach(c=>c.classList.toggle('active',c.getAttribute(attr)===String(v)));
+on('data-phys-preset',_physPreset);
+on('data-dpi',S.exportDPI);
+on('data-ss',S.exportSupersample);
+on('data-compose',S.exportFractalCompose);
 }
 
 
