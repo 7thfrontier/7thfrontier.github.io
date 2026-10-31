@@ -1,7 +1,5 @@
-Shared links keep their print settings · 2026-10-30
+A census leaves out the fast suites its own pre-check passed on the same tree · 2026-10-31
 
-- **A shared link's print settings show in the Export window and keep their print size.** Opening a link that carried print settings showed the default chips (Letterbox, 1x, 300 DPI, 16x20) while the export used the link's Compose, supersample and DPI. The link's physical print size was dropped as the page opened. A fixed-pixel preset such as 4K UHD, picked before opening a link or before Reset All, kept its pixel size under the new print size, and Reset All left the Compose chips on Extend. After any restore, the chips, the size fields and the preset now show what the export will use.
-- **A link's DPI stays within the range the app uses.** A link or saved state could carry a DPI below 72. Stills then exported at 72 DPI while PNG Sequence frames were stamped with the lower value, and no DPI chip was active. A restored DPI is now clamped to 72-2400, the range the DPI setting itself keeps.
-- **A PNG Sequence keeps transparent letterbox bars when Transparent background is on.** Since video exports began to letterbox like stills in 7.7.9, a PNG Sequence whose shape differs from the screen filled its bars with the background color even with Transparent background on, while a still PNG of the same view left them transparent. Its bars are now transparent too. Record Video and Frame-Exact keep colored bars, since video carries no transparency.
+- A maintenance release with no change you can see in AEON.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.
