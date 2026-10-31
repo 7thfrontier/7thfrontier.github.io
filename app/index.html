@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-fGF8eghjhUP+naG7UMTf8s067g5E1klw4X9dq6wy6Iw=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-Y6C4pYsLOuLFfNz2SAkcx41r67hDtcqhd6btm0cYGY0=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4017,6 +4017,12 @@
         <button type="button" class="anim-res-chip" id="vres-hd" data-anim-res="hd" role="radio" aria-checked="false">1920×1080</button>
         <button type="button" class="anim-res-chip" id="vres-vert" data-anim-res="vertical" role="radio" aria-checked="false">1080×1920</button>
       </div>
+      <div class="export-lbl" id="anim-compose-label">Framing <span class="inline-29 lp-letter-spacing-0">(fractal, other shape than the screen)</span></div>
+      <div class="size-chips mb-8" id="anim-compose-row" data-desc="anim-compose-desc" aria-describedby="anim-compose-desc">
+        <div class="size-chip active" data-compose="letterbox" title="Keep the whole view and pad it with the background color, as still exports do.">Letterbox</div>
+        <div class="size-chip" data-compose="extend" title="Fill the frame from the plane, which can cut or add view at the edges.">Extend</div>
+      </div>
+      <div class="ctrl-hint mb-8" id="anim-compose-desc">Letterbox keeps the whole view on bars, as still exports do. Extend fills the frame, which can cut or add view at the edges.</div>
       <button type="button" class="btn mb-4" id="anim-rec-btn" data-action="recordAnimation">⏺ Record Video</button>
       <button type="button" class="btn ghost mb-4" id="anim-png-seq-btn" data-action="recordAnimationAsPNGSequence" aria-label="Record animation as a PNG image sequence (folder on Chrome/Edge, ZIP on Firefox/Safari)">PNG Sequence</button>
       <button type="button" class="btn ghost mb-5" id="anim-export-btn" data-action="exportAnimFrames">Frame-Exact Export</button>
@@ -4274,12 +4280,12 @@
 
 
 
-<!-- build: dc3c0a6529cb -->
+<!-- build: d64cbf4e72e9 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.7.8
+ * AEON -- Universal Dynamics Reactor v7.7.9
  * Proprietary. See LICENSE for terms.
  */
 
@@ -6914,124 +6920,8 @@ _glDeepProg = prog;
 return prog;
 }
 
-
-function renderDeepZoomGPUSeriesApprox(){
-
-
-
-
-
-
-
-
-
-
-return false;
-if(!S.useGPUSeriesApprox)return false;
-if(!gl)return false;
-
-const ext=gl.getExtension('EXT_color_buffer_float');
-if(!ext)return false;
-
-const prog=_compileDeepShader();
-if(!prog)return false;
-const maxIter=Math.min(4000, Math.max(500, S.maxIter||1000));
-const cx=_hiCenterStr('x'), cy=_hiCenterStr('y');
-const pixelScale=_pxScale(W,H,S.zoom||1);
-
-
-
-const _vt=_liveViewTile(W);
-const pixelMaxMag=pixelScale*Math.hypot(_vt ? _vt.fullW/2 : W/2, H/2);   
-
-
-const useDeg3=(S.zoom||1) > 1e40;
-let series, skipStep;
-try{
-if(useDeg3){
-series=_computeReferenceOrbitWithSeries3(cx, cy, maxIter, 256);
-skipStep=_chooseSeriesSkipStep3(series.seriesA, series.seriesB, series.seriesC, series.validity, pixelMaxMag, maxIter, 1e-8);
-} else {
-series=_computeReferenceOrbitWithSeries(cx, cy, maxIter, 256);
-skipStep=_chooseSeriesSkipStep(series.seriesA, series.seriesB, series.validity, pixelMaxMag, maxIter, 1e-6);
-}
-}
-catch(err){console.warn('GPU SA: series computation failed:', err); return false}
-const {orbit}=series;
-
-
-if(skipStep < 64){
-console.info('GPU SA: skip step too small ('+skipStep+'); falling back to plain GPU perturbation.');
-return false;
-}
-if(useDeg3)console.info('GPU SA degree-3 selected at zoom '+(S.zoom||1).toExponential(2));
-
-
-let validLen=0;
-for(let i=skipStep;i<orbit.length/2;i++){
-if(Number.isNaN(orbit[2*i])){break}
-validLen++;
-}
-if(validLen < 32){
-console.info('GPU SA: suffix orbit too short after skip; falling back.');
-return false;
-}
-
-
-
-{ const _maxTex=(gl&&gl.getParameter(gl.MAX_TEXTURE_SIZE))||2048; validLen=Math.min(validLen,_maxTex); }   
-const suffix=new Float32Array(validLen*2);
-for(let i=0;i<validLen;i++){
-suffix[2*i]=orbit[2*(skipStep+i)];
-suffix[2*i+1]=orbit[2*(skipStep+i)+1];
-}
-
-{ const _newDeepOrbitTex=!_glDeepOrbitTex; if(_newDeepOrbitTex)_glDeepOrbitTex=gl.createTexture();
-gl.bindTexture(gl.TEXTURE_2D, _glDeepOrbitTex);
-gl.texImage2D(gl.TEXTURE_2D, 0, gl.RG32F, validLen, 1, 0, gl.RG, gl.FLOAT, suffix);
-if(_newDeepOrbitTex){   
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-} }
-
-
-
-
-gl.useProgram(prog);
-const u=name=>_dzUniformLoc(prog, name);
-gl.uniform2f(u('u_res'), W, H);
-
-gl.uniform2f(u('u_center'), _viewCenterPx(), H/2);
-{ const _t=_liveViewTile(W); gl.uniform1f(u('u_viewTx'), _t?_t.tx:0); gl.uniform1f(u('u_viewFullW'), _t?_t.fullW:W); }
-gl.uniform2f(u('u_deltaScale'), pixelScale, -pixelScale);
-gl.uniform1i(u('u_orbitLen'), validLen);
-gl.uniform1i(u('u_maxIter'), maxIter - skipStep);
-_uploadDeepColorUniforms(u); 
-
-
-
-if(typeof updatePalTex==='function')updatePalTex();
-if(palTex){gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, palTex); gl.uniform1i(u('u_palette'), 1)}
-gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, _glDeepOrbitTex); gl.uniform1i(u('u_orbit'), 0);
-if(!_quadVbo){_quadVbo=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER, _quadVbo);gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW)}
-gl.bindBuffer(gl.ARRAY_BUFFER, _quadVbo);
-const a=_glProgAttribLoc(prog, 'a_pos');
-_glUseScratchVao();   
-gl.enableVertexAttribArray(a);
-gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
-gl.drawArrays(gl.TRIANGLES, 0, 3);
-_glRestoreVao();
-console.info('GPU SA: skipStep='+skipStep+', suffixLen='+validLen+' (deg-2 SA, tol=1e-6).');
-return true;
-}
-
-
 function renderDeepZoomGL(){
 if(!gl)return false;
-
-if(S.useGPUSeriesApprox){
-if(renderDeepZoomGPUSeriesApprox())return true;
-}
 const prog=_compileDeepShader();
 if(!prog)return false;
 const ext=gl.getExtension('EXT_color_buffer_float');
@@ -7545,7 +7435,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.7.8';
+const APP_VERSION='7.7.9';
 
 
 
@@ -7554,10 +7444,10 @@ const APP_VERSION='7.7.8';
 
 
 
-const MISSION_BUILD_HASH='dc3c0a6529cb';
-const MISSION_GIT_SHA='f55f8f166cbcbaf6e0ff9585c3b815724aca789a';
+const MISSION_BUILD_HASH='d64cbf4e72e9';
+const MISSION_GIT_SHA='c1145e4939f21333b10a53c6ece9c45b2b0631f9';
 
-const MISSION_RENDER_HASH='42c21837fa5c';
+const MISSION_RENDER_HASH='7145510b8157';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -8233,14 +8123,6 @@ showMandelbrotFeatures:false,
 
 juliaExplorer:false,
 orbitViz:false,
-
-
-
-
-
-
-
-
 
 useGPUSeriesApprox:false,
 
@@ -24023,6 +23905,9 @@ else if(q && q.has('showcase'))openShowcase();
 
 
 if(q && q.has('schlegel'))S.use4DSchlegel=true;
+
+
+
 if(q && q.has('gpusa'))S.useGPUSeriesApprox=true;
 if(q && q.has('features'))S.showMandelbrotFeatures=true;
 }catch(_e){}
@@ -50992,6 +50877,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.7.9',
+date:'2026-10-30',
+headline:'Video exports keep the whole view.',
+items:[
+'A square or vertical video of a wide view now shows the whole picture on bars of the background color, as still exports do, instead of cutting off its sides. Record Video, PNG Sequence and Frame-Exact follow the same Letterbox or Extend choice as stills, and the Motion panel now has those two chips under its resolution chips.',
+],
+},
+{
 version:'7.7.7',
 date:'2026-10-30',
 headline:'Exported PNGs carry their maker and copyright.',
@@ -51049,16 +50942,6 @@ headline:'The Apollonian Gasket pattern draws a true gasket.',
 items:[
 'The Apollonian Gasket pattern drew some circles twice, crowded the middle gap with overlapping circles and left the three gaps along the outer circle nearly empty. Each gap now gets exactly one circle per level, touching the three around it, and every gap is filled to the chosen depth.',
 'The command-line renderer reactor-render laid the page out with the inspector open, so a fractal sat left of center and a geometry image came out 384 px wider than --size. It now renders with the inspector folded, centered and at the size you ask for.',
-],
-},
-{
-version:'7.6.0',
-date:'2026-10-28',
-headline:'3D fractals have a Fog density control.',
-items:[
-'A new Fog density slider in 3D Quality sets how thick the fog is. Fog distance only moves where the fog begins, so inside a Mandelbox or close to a surface the fog never showed. Raise Fog density for close or interior fog. At its default of 1 every existing view looks the same as before.',
-'On WebGPU the fog in front of a Quaternion Julia set began more than twice as far away as on WebGL. It now starts in the same place, so Fog distance and Fog density work on it.',
-'The command-line renderer reactor-render writes images again. Every render waited for a frame that never came and gave up without writing a file.',
 ],
 },
 
@@ -56859,6 +56742,7 @@ const mimeType=await _pickRecorderMime(o.bitrate);
 
 
 const src=glcv&&glcv.classList.contains('is-shown')?glcv:cv;
+const frame=(o.framing&&o.framing.frame)||((s)=>s);   
 
 
 
@@ -56877,7 +56761,8 @@ if(!gen){
 
 
 
-stream=cv.captureStream(0);
+
+stream=((o.framing&&o.framing.out)||cv).captureStream(0);
 videoTrack=stream.getVideoTracks()[0];
 }
 
@@ -57040,7 +56925,7 @@ if(writer){
 
 
 
-const fsrc=_fpGlSnap||cv;
+const fsrc=frame(_fpGlSnap||cv);
 let vf=null;
 try{ vf=new VideoFrame(fsrc,{timestamp:Math.round(f*usPerFrame),duration:Math.round(usPerFrame)}); await writer.write(vf); }
 catch(err){ console.warn('frame pump: VideoFrame write failed:', err&&err.message||err); }
@@ -57053,6 +56938,7 @@ finally{ if(vf)vf.close(); }
 if(_fpGlSnap){
 try{ cv.getContext('2d').drawImage(_fpGlSnap,0,0,cv.width,cv.height); }catch(_e){  }
 }
+frame(cv);
 videoTrack.requestFrame();
 }
 
@@ -57138,7 +57024,7 @@ seekAnimStart();
 
 
 
-const [expW,expH]=(typeof _ANIM_RES!=='undefined'&&_ANIM_RES[_animResKey])||[cv.width,cv.height];
+const framing=_motionFraming(...((typeof _ANIM_RES!=='undefined'&&_ANIM_RES[_animResKey])||[cv.width,cv.height])), expW=framing.w, expH=framing.h;
 origW=cv.width;origH=cv.height;origGlW=glcv?glcv.width:null;origGlH=glcv?glcv.height:null;origGW=W;origGH=H;
 cv.width=expW;cv.height=expH;
 if(glcv){glcv.width=expW;glcv.height=expH;}
@@ -57154,7 +57040,7 @@ if(btn)btn.textContent='⏹ Stop Recording';
 if(st)st.textContent=`Recording ${totalFrames} frames… (tab-safe: pauses while hidden, resumes to complete)`;
 
 result=await _runFramePump({
-fps, totalFrames, totalSec:total, bitrate:8_000_000,
+fps, totalFrames, totalSec:total, bitrate:8_000_000, framing,
 liveW:origGW, liveH:origGH,   
 shouldAbort:()=>_recordAbort,
 onProgress:(f,tot)=>{ if(st)st.textContent=`Recording… ${f}/${tot}${_recordAbort?' (stopping)':''}`; },
@@ -57291,7 +57177,8 @@ totalFrames=ZIP_MAX_FRAMES;
 
 
 
-const [_pngExpW,_pngExpH]=_ANIM_RES[_animResKey]||[CANVAS_SIZE,CANVAS_SIZE];
+
+const _pngFraming=_motionFraming(...(_ANIM_RES[_animResKey]||[CANVAS_SIZE,CANVAS_SIZE])), _pngExpW=_pngFraming.w, _pngExpH=_pngFraming.h;
 _pngOrigW=cv.width;_pngOrigH=cv.height;_pngOrigGlW=glcv?glcv.width:null;_pngOrigGlH=glcv?glcv.height:null;_pngOrigGW=W;_pngOrigGH=H;
 cv.width=_pngExpW;cv.height=_pngExpH;if(glcv){glcv.width=_pngExpW;glcv.height=_pngExpH;}W=_pngExpW;H=_pngExpH;
 cv.classList.add('no-pointer-events');if(glcv)glcv.classList.add('no-pointer-events');   
@@ -57424,7 +57311,7 @@ _pngGlSnap=null;
 await new Promise(r=>requestAnimationFrame(()=>r()));
 
 
-const src=_pngGlSnap||(glcv&&glcv.classList.contains('is-shown')?glcv:cv);
+const src=_pngFraming.frame(_pngGlSnap||(glcv&&glcv.classList.contains('is-shown')?glcv:cv));
 
 
 
@@ -57812,6 +57699,15 @@ vertical:[1080,1920],
 };
 
 
+function _motionFraming(preW,preH){
+const fit=_fractalLetterboxFit(preW,preH);
+if(!fit)return {w:preW,h:preH,out:null,frame:(src)=>src};
+const out=document.createElement('canvas'); out.width=preW; out.height=preH;
+const c=out.getContext('2d'), x=Math.round((preW-fit[0])/2), y=Math.round((preH-fit[1])/2);
+return {w:fit[0],h:fit[1],out,frame:(src)=>{ _exportBgFill(c,preW,preH,false); c.drawImage(src,x,y); return out; }};
+}
+
+
 function setAnimRes(key,el){
 if(!_ANIM_RES[key])return;
 _animResKey=key;
@@ -57857,7 +57753,7 @@ let result=null;
 let fps=30;
 try {
 fps=Math.max(1,Math.min(60,S.animFps||30));
-const [expW,expH]=_ANIM_RES[_animResKey]||[CANVAS_SIZE,CANVAS_SIZE];
+const framing=_motionFraming(...(_ANIM_RES[_animResKey]||[CANVAS_SIZE,CANVAS_SIZE])), expW=framing.w, expH=framing.h;
 const total=_animTotalDuration();
 const totalFrames=_animFrameCount(total,fps);   
 
@@ -57907,7 +57803,7 @@ W=expW;H=expH;
 
 
 result=await _runFramePump({
-fps, totalFrames, totalSec:total, bitrate:12_000_000,
+fps, totalFrames, totalSec:total, bitrate:12_000_000, framing,
 liveW:origGW, liveH:origGH,   
 onProgress:(f,tot)=>{ const pct=Math.round(f/tot*100); if(bar)bar.style.setProperty('--progress',pct+'%'); if(st)st.textContent=`Exporting… ${pct}%`; },
 });
@@ -63620,7 +63516,8 @@ _syncPrintOptionsSummary();
 
 function setExportFractalCompose(mode){
 S.exportFractalCompose=(mode==='extend')?'extend':'letterbox';
-document.querySelectorAll('#compose-row .size-chip').forEach(c=>c.classList.toggle('active',c.getAttribute('data-compose')===S.exportFractalCompose));
+
+document.querySelectorAll('#compose-row .size-chip, #anim-compose-row .size-chip').forEach(c=>c.classList.toggle('active',c.getAttribute('data-compose')===S.exportFractalCompose));
 
 
 if(typeof pfxPreviewUpdate==='function')pfxPreviewUpdate();
