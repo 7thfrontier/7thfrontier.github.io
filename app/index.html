@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-87Hab2eugcvMJSUxkzxHJTDnpg5m6Z7izDJQIy5d8AI=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-fcRNLe5kJnQi2WhVTWE0RNEk0PdyN0dfsBhKkiRth0I=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4280,12 +4280,12 @@
 
 
 
-<!-- build: 1a869e37e685 -->
+<!-- build: b8ed84c4bcd3 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.7.11
+ * AEON -- Universal Dynamics Reactor v7.7.12
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7435,7 +7435,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.7.11';
+const APP_VERSION='7.7.12';
 
 
 
@@ -7444,10 +7444,10 @@ const APP_VERSION='7.7.11';
 
 
 
-const MISSION_BUILD_HASH='1a869e37e685';
-const MISSION_GIT_SHA='a43ad2dca489205ed8c6119061d1a89c74a79e93';
+const MISSION_BUILD_HASH='b8ed84c4bcd3';
+const MISSION_GIT_SHA='2368c8699fa7159f58da2a937c0feb32b55f483f';
 
-const MISSION_RENDER_HASH='f60fa5eee7f1';
+const MISSION_RENDER_HASH='dff90d4773cf';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -50880,6 +50880,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.7.12',
+date:'2026-10-31',
+headline:'A PNG Sequence leaves the inside of the set transparent.',
+items:[
+'With Transparent background on, every frame of a PNG Sequence now leaves the inside of the set transparent, as a still PNG does.',
+],
+},
+{
 version:'7.7.10',
 date:'2026-10-30',
 headline:'Shared links keep their print settings.',
@@ -50936,15 +50944,6 @@ date:'2026-10-29',
 headline:'Exports frame the same with the inspector open or folded.',
 items:[
 'With the inspector open, a 16:9 export of an attractor, a geometry pattern or a flame or IFS fractal came out letterboxed to a wider shape with its subject about a fifth smaller. Exports, Match canvas and the Motion panel\'s Screen size now take the shape of the canvas area beside the inspector, so they match the folded layout.',
-],
-},
-{
-version:'7.7.0',
-date:'2026-10-28',
-headline:'reactor-render gains --list, --gallery and --version.',
-items:[
-'The command-line renderer reactor-render has three new flags. --list prints every fractal type, pattern and palette key the app knows. --gallery renders one image of every fractal type into a folder in a single run and names any type that fails. --version prints the version.',
-'reactor-render refuses a mistyped fractal type, pattern or palette instead of quietly rendering the fallback and reporting success. It names any close matches and points at --list.',
 ],
 },
 
@@ -57120,6 +57119,7 @@ _motionBusy='pngseq';
 
 
 let _pngOrigW=null,_pngOrigH=null,_pngOrigGlW=null,_pngOrigGlH=null,_pngOrigGW=null,_pngOrigGH=null;
+let _pngPrevTA=null;
 let _rdPngMotion=()=>{};
 try {
 if(btn)btn.textContent='⏹ Stop PNG Sequence';
@@ -57204,6 +57204,8 @@ _animDsKf=-1;
 
 
 let _pngGlSnap=null;
+
+_pngPrevTA=_exportTransparentAlpha; _exportTransparentAlpha=!!exportTransparent;
 for(let i=0;i<totalFrames;i++){
 if(_animRecorder==='PNG_SEQ_ABORT')break;
 if(st)st.textContent=`Rendering ${i+1}/${totalFrames}…`;
@@ -57442,6 +57444,7 @@ st.textContent=_animRecorder==='PNG_SEQ_ABORT'
 :`Saved ${saved} frame${saved===1?'':'s'}${dirHandle?' to chosen folder':' as ZIP'}`;
 }
 } finally {
+if(_pngPrevTA!==null)_exportTransparentAlpha=_pngPrevTA;   
 if(typeof _restoreLayerCachesAfterMotionExport==='function')_restoreLayerCachesAfterMotionExport();   
 _animRecorder=null;
 _motionBusy='';   
