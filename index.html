@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.0</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.1</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.9.0</h2>
+    <h2>AEON · v7.9.1</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1163,20 +1163,18 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.9.0.</h2>
-    <p class="section-lede">Choose the export's aspect ratio · 2026-11-02</p>
+    <h2 class="section-title">What's new<br>in 7.9.1.</h2>
+    <p class="section-lede">A turned deep zoom renders on the GPU · 2026-11-02</p>
   </header>
   <ul class="prose changes">
-    <li><strong>A turned view stays on WebGPU.</strong> With View Rotation set, an escape-time fractal renders on WebGPU as an unturned one does, and the engine badge no longer reports a WebGL2 fallback for the turn.</li>
-    <li><strong>Report a bug from the website.</strong> The AEON site links to a bug form on GitHub, which asks for your version, your browser and system, and the steps that lead to the problem.</li>
-    <li><strong>Choose the export's aspect ratio.</strong> The Export modal has an Aspect row under Resolution: 1:1 (the default), 16:9, 16:10, 21:9, 3:2, 4:3, 9:16 or a custom width to height. The Resolution preset becomes the long edge, so 4K at 16:9 saves 4096 × 2304. A fractal fills the wider or taller frame with more of the plane at the same center and zoom, with no bars and no stretching, and so do Layer Studio composites and supersampled exports from Print options. Match canvas and Custom size keep their own shape, and picking an aspect under either switches to the nearest preset. Motion exports keep their own Screen, Square, HD and Vertical sizes for now.</li>
+    <li><strong>A turned deep zoom renders on the GPU.</strong> With View Rotation set, a deep Mandelbrot or Julia view renders on the GPU as an unturned one does, where it used to take the slower CPU path.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.0</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.1</p>
 </footer>
 
 <script>

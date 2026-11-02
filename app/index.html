@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-7kAtO/DbOmIME6YHMD7amcg5nUQEj+UtP0Xcfr6Quag=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-FxeDFc2o3Jzi9KKEwOgSVX6SQKn5qq4tWY4a0iVtNsk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: dcfb7a3ff4a1 -->
+<!-- build: a4fc91251d21 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.0
+ * AEON -- Universal Dynamics Reactor v7.9.1
  * Proprietary. See LICENSE for terms.
  */
 
@@ -6088,6 +6088,10 @@ function _dzUploadDeltaScaleDS(u, scale){
 const sHi=Math.fround(scale), sLo=scale-sHi;
 gl.uniform2f(u('u_deltaScale'), sHi, -sHi);
 gl.uniform2f(u('u_deltaScaleLo'), sLo, -sLo);
+
+const cs=_viewRotCS();
+gl.uniform1i(u('u_rotOn'), cs?1:0);
+if(cs){ const a=scale*cs[0], b=scale*cs[1], aHi=Math.fround(a), bHi=Math.fround(b); gl.uniform2f(u('u_rotAB'), aHi, bHi); gl.uniform2f(u('u_rotABLo'), a-aHi, b-bHi); }
 }
 
 
@@ -6796,13 +6800,17 @@ const scale=_pxScale(W,H,S.zoom||1);
 
 
 const _hib=_bigCreate(256);
-const fcx=_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('x')), _hib.fromNum((cluster.cxPx - _viewCenterPx())*scale)), 76);
+let fcx=_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('x')), _hib.fromNum((cluster.cxPx - _viewCenterPx())*scale)), 76);
 
 
 
 
 
-const fcy=_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('y')), _hib.fromNum((H/2 - cluster.cyPx)*scale)), 76);
+let fcy=_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('y')), _hib.fromNum((H/2 - cluster.cyPx)*scale)), 76);
+
+{ const _cs=_viewRotCS(); if(_cs){ const ox=cluster.cxPx-_viewCenterPx(), oy=cluster.cyPx-H/2;
+fcx=_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('x')), _hib.fromNum((_cs[0]*ox+_cs[1]*oy)*scale)), 76);
+fcy=_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('y')), _hib.fromNum((_cs[1]*ox-_cs[0]*oy)*scale)), 76); } }
 const altOrbit=_computeReferenceOrbit(fcx, fcy, maxIter, 256, _jre, _jim);
 let validLen=altOrbit.length/2;
 for(let i=0;i<altOrbit.length;i+=2){if(Number.isNaN(altOrbit[i])){validLen=i/2;break}}
@@ -7453,7 +7461,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.0';
+const APP_VERSION='7.9.1';
 
 
 
@@ -7462,10 +7470,10 @@ const APP_VERSION='7.9.0';
 
 
 
-const MISSION_BUILD_HASH='dcfb7a3ff4a1';
-const MISSION_GIT_SHA='f7a47d3fb280369825314c0af1259cda1245d1ec';
+const MISSION_BUILD_HASH='a4fc91251d21';
+const MISSION_GIT_SHA='990a8eb003054cf348f3f5a0f6da6098f7bc7427';
 
-const MISSION_RENDER_HASH='395764cd6273';
+const MISSION_RENDER_HASH='e9c03928998f';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11071,7 +11079,6 @@ const _gpuEligible=(S.zoom||1)<=1e25
 && (S.trapMode||0)===0
 && (S.interiorMode||'solid')==='solid'
 && (_OPAC_FIELD_CODES[S.opacityFieldStroke]||0)===0
-&& !_viewRotCS()                                             
 && typeof _dzGpuDsKAT==='function' && _dzGpuDsKAT();
 let usedGPU=false;
 if(_gpuEligible){
@@ -30035,6 +30042,9 @@ uniform int u_orbitLen;
 uniform int u_refEscaped;   
 uniform vec2 u_deltaScale;   
 uniform vec2 u_deltaScaleLo; 
+uniform int u_rotOn;         
+uniform vec2 u_rotAB;        
+uniform vec2 u_rotABLo;      
 uniform vec2 u_center;
 uniform vec2 u_centerOffset; 
 uniform float u_viewTx;        
@@ -30195,6 +30205,13 @@ void main(){
   vec2 dcyD = dsMul(vec2(off.y, 0.0), vec2(u_deltaScale.y, u_deltaScaleLo.y));
   
   
+  if (u_rotOn == 1) {
+    vec2 aD = vec2(u_rotAB.x, u_rotABLo.x), bD = vec2(u_rotAB.y, u_rotABLo.y), oxD = vec2(off.x, 0.0), oyD = vec2(off.y, 0.0);
+    dcxD = dsAdd(dsMul(oxD, aD), dsMul(oyD, bD));
+    dcyD = dsAdd(dsMul(oxD, bD), dsNeg(dsMul(oyD, aD)));
+  }
+  
+  
   vec2 dxD = u_juliaMode == 1 ? dcxD : vec2(0.0);
   vec2 dyD = u_juliaMode == 1 ? dcyD : vec2(0.0);
   bool escaped = false;
@@ -30313,6 +30330,9 @@ uniform int u_orbitLen;
 uniform int u_refEscaped;       
 uniform vec2 u_deltaScale;     
 uniform vec2 u_deltaScaleLo;   
+uniform int u_rotOn;           
+uniform vec2 u_rotAB;          
+uniform vec2 u_rotABLo;        
 uniform vec2 u_center;         
 uniform float u_viewTx;        
 uniform float u_viewFullW;     
@@ -30465,6 +30485,13 @@ void main(){
   vec2 off = gl_FragCoord.xy - u_center;
   vec2 dcxD = dsMul(vec2(off.x, 0.0), vec2(u_deltaScale.x, u_deltaScaleLo.x));
   vec2 dcyD = dsMul(vec2(off.y, 0.0), vec2(u_deltaScale.y, u_deltaScaleLo.y));
+  
+  
+  if (u_rotOn == 1) {
+    vec2 aD = vec2(u_rotAB.x, u_rotABLo.x), bD = vec2(u_rotAB.y, u_rotABLo.y), oxD = vec2(off.x, 0.0), oyD = vec2(off.y, 0.0);
+    dcxD = dsAdd(dsMul(oxD, aD), dsMul(oyD, bD));
+    dcyD = dsAdd(dsMul(oxD, bD), dsNeg(dsMul(oyD, aD)));
+  }
   
   
   vec2 dxD = u_juliaMode == 1 ? dcxD : vec2(0.0);
@@ -50966,6 +50993,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.1',
+date:'2026-11-02',
+headline:'A turned deep zoom stays on the GPU.',
+items:[
+'With View Rotation set, a deep Mandelbrot or Julia view now renders on the GPU just as an unturned one does, where it used to drop to the slower CPU path.',
+],
+},
+{
 version:'7.9.0',
 date:'2026-11-02',
 headline:'Choose the export\'s aspect ratio.',
@@ -51023,14 +51058,6 @@ date:'2026-10-30',
 headline:'Exported PNGs carry their maker and copyright.',
 items:[
 'Every PNG you export, each frame of a PNG sequence included, now records AEON and its version as the Software, and 7th Frontier, Inc. as the Copyright, in the standard fields that many image viewers and asset managers show. JPEG and WebP exports are unchanged.',
-],
-},
-{
-version:'7.7.6',
-date:'2026-10-30',
-headline:'WebGPU draws one frame at a time.',
-items:[
-'Switching between Buddhabrot and Anti-Buddhabrot while WebGPU was still drawing could leave the old picture on screen until the next change, and a composite export with a WebGPU Buddhabrot layer could pick up the drawing still on screen. A new WebGPU draw now waits for the one in progress.',
 ],
 },
 
