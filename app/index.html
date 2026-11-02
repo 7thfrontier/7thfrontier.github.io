@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-kF+4Yfbni2YdIBtho1rtcBT1VTcrB/GZr0ocDJhjCn0=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-7kAtO/DbOmIME6YHMD7amcg5nUQEj+UtP0Xcfr6Quag=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4085,6 +4085,18 @@
             <div class="size-chip" data-select-size="custom">Custom…</div>
           </div>
           <div class="custom-size" id="custom-size-row"><div class="export-lbl">Custom size (100–32768 px)</div><input type="number" id="custom-w" value="3000" min="100" max="32768" aria-label="Custom export width in pixels"><span>× </span><input type="number" id="custom-h" value="3000" min="100" max="32768" aria-label="Custom export height in pixels"><span>px</span></div>
+          <div class="export-lbl" title="The Resolution preset sets the long edge. A shape other than 1:1 shows more of the plane at the same center and zoom.">Aspect</div>
+          <div class="size-chips" id="export-aspect-row">
+            <div class="size-chip" data-select-aspect="1:1">1:1</div>
+            <div class="size-chip" data-select-aspect="16:9">16:9</div>
+            <div class="size-chip" data-select-aspect="16:10">16:10</div>
+            <div class="size-chip" data-select-aspect="21:9">21:9</div>
+            <div class="size-chip" data-select-aspect="3:2">3:2</div>
+            <div class="size-chip" data-select-aspect="4:3">4:3</div>
+            <div class="size-chip" data-select-aspect="9:16">9:16</div>
+            <div class="size-chip" data-select-aspect="custom">Custom…</div>
+          </div>
+          <div class="custom-size" id="custom-aspect-row"><div class="export-lbl">Custom aspect (1–100 each)</div><input type="number" id="custom-ar-w" value="16" min="1" max="100" step="any" aria-label="Custom aspect width"><span>: </span><input type="number" id="custom-ar-h" value="9" min="1" max="100" step="any" aria-label="Custom aspect height"></div>
           <div id="export-caveat-quick" class="ctrl-inactive-hint is-hidden" role="status" aria-live="polite"></div>
           <div id="jpeg-quality-row" class="is-hidden"><div class="ctrl"><label class="inline-25" for="jpeg-quality">JPEG Quality <span class="badge" id="jpeg-q-v">92</span></label><div class="slider-row"><input type="range" id="jpeg-quality" min="60" max="100" step="1" value="92" aria-label="JPEG quality, percent (60–100)" aria-describedby="slider-keys-hint"></div></div></div>
           <div id="export-transparent-row" class="is-hidden"><label class="row-meta-clickable" title="Export with a transparent background instead of the background color. PNG, WebP, and GIF only; JPEG, TIFF and EXR stay opaque."><input type="checkbox" id="exportTransparent"> Transparent background</label></div>
@@ -4281,12 +4293,12 @@
 
 
 
-<!-- build: aeea02e22a32 -->
+<!-- build: dcfb7a3ff4a1 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.8.0
+ * AEON -- Universal Dynamics Reactor v7.9.0
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7441,7 +7453,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.8.0';
+const APP_VERSION='7.9.0';
 
 
 
@@ -7450,10 +7462,10 @@ const APP_VERSION='7.8.0';
 
 
 
-const MISSION_BUILD_HASH='aeea02e22a32';
-const MISSION_GIT_SHA='a65ee57ac5be212a7931814c443baeff89444b24';
+const MISSION_BUILD_HASH='dcfb7a3ff4a1';
+const MISSION_GIT_SHA='f7a47d3fb280369825314c0af1259cda1245d1ec';
 
-const MISSION_RENDER_HASH='9d8ec6302dd0';
+const MISSION_RENDER_HASH='395764cd6273';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -10903,7 +10915,7 @@ async function renderFractal(){
 
 
 
-if(S.useWebGPU&&_wgpuAvailable&&WGPU_TYPES.has(S.fractalType)&&!_f64NeedsCpu()&&!_dzNeedsCpu()&&(S.colorWarp==null||S.colorWarp==='linear')&&((S.colorRepeat||1)<=1)&&((S.colorPhase||0)===0)&&!_viewRotCS()&&!((S.trapMode||0)>0&&(S.trapMix||0)>0)&&S.colorAlgo!=='histogram'&&(_OPAC_FIELD_CODES[S.opacityFieldStroke]||0)===0&&!_activePaletteHasAlpha()){
+if(S.useWebGPU&&_wgpuAvailable&&WGPU_TYPES.has(S.fractalType)&&!_f64NeedsCpu()&&!_dzNeedsCpu()&&(S.colorWarp==null||S.colorWarp==='linear')&&((S.colorRepeat||1)<=1)&&((S.colorPhase||0)===0)&&!((S.trapMode||0)>0&&(S.trapMix||0)>0)&&S.colorAlgo!=='histogram'&&(_OPAC_FIELD_CODES[S.opacityFieldStroke]||0)===0&&!_activePaletteHasAlpha()){
 
 
 
@@ -15726,6 +15738,7 @@ sw.style.setProperty('--swatch-bg',_palStopCss(s));c.appendChild(sw)})}
 
 
 let exportFormat='png',exportSize='screen',exportTransparent=false;   
+let exportAspect='1:1';   
 
 
 
@@ -16075,6 +16088,7 @@ exportSize=sz;
 document.querySelectorAll('#export-size-row .size-chip').forEach(c=>c.classList.remove('active'));
 if(el)el.classList.add('active');
 document.getElementById('custom-size-row').classList.toggle('show',sz==='custom');
+_syncAspectRow();
 _updateExportCaveat();
 
 
@@ -23328,6 +23342,10 @@ const el=e.target.closest('[data-select-size]');if(!el)return;
 selectSize(el.dataset.selectSize,el);
 });
 document.addEventListener('click',e=>{
+const el=e.target.closest('[data-select-aspect]');if(!el)return;
+selectAspect(el.dataset.selectAspect);
+});
+document.addEventListener('click',e=>{
 const el=e.target.closest('[data-plotter-size]');if(!el)return;
 selectPlotterSize(el.dataset.plotterSize,el);
 });
@@ -23394,6 +23412,11 @@ if(typeof _updateExportCaveat==='function')_updateExportCaveat();
 if(typeof _recomputePhysResolved==='function')_recomputePhysResolved();
 if(typeof pfxPreviewUpdate==='function')pfxPreviewUpdate();
 });
+});
+
+['custom-ar-w','custom-ar-h'].forEach(id=>{
+const el=document.getElementById(id);
+if(el)el.addEventListener('input',()=>selectSize(exportSize,document.querySelector('#export-size-row .size-chip.active')));
 });
 
 
@@ -26304,6 +26327,8 @@ struct Params {
   interiorMode: u32,  
   interiorColor: vec3<f32>,  
   clearInterior: u32,  
+  rotC:        f32,   
+  rotS:        f32,   
 }
 @group(0) @binding(0) var<uniform> p: Params;
 @group(0) @binding(1) var<storage, read_write> out: array<u32>;
@@ -26938,8 +26963,10 @@ fn palRGB(t: f32) -> vec3<f32> {
 fn main(@builtin(global_invocation_id) id: vec3<u32>) {
   if (id.x >= p.width || id.y >= p.height) { return; }
   let sc = 3.5 / (f32(min(p.width, p.height)) * p.zoom);
-  let px = p.cx + (f32(id.x) - f32(p.width)  * 0.5) * sc;
-  let py = p.cy + (f32(id.y) - f32(p.height) * 0.5) * sc;
+  
+  let o = vec2<f32>(f32(id.x) - f32(p.width) * 0.5, f32(id.y) - f32(p.height) * 0.5);
+  let px = p.cx + (p.rotC * o.x - p.rotS * o.y) * sc;
+  let py = p.cy + (p.rotS * o.x + p.rotC * o.y) * sc;
   let result = escapeTime(vec2<f32>(px, py));
   var rgb: vec3<f32>;
   if (result.x < -1.5) {
@@ -27690,8 +27717,6 @@ if (S.colorAlgo === 'histogram') return 'Coloring Algorithm (Hist EQ)';
 
 if ((S.trapMode || 0) > 0 && (S.trapMix || 0) > 0) return 'Orbit Trap';
 
-if (typeof _viewRotCS === 'function' && _viewRotCS()) return 'View Rotation';
-
 if ((typeof _f64NeedsCpu === 'function' && _f64NeedsCpu())
 || (typeof _dzNeedsCpu === 'function' && _dzNeedsCpu())) return 'Deep Zoom';
 }
@@ -28020,14 +28045,16 @@ _wgpu.W = w; _wgpu.H = h;
 
 _wgpuUploadPaletteLUT(queue);
 
-const params = new ArrayBuffer(80);
+const params = new ArrayBuffer(96);
 
 const dv = new DataView(params);
+
+
+const _vcs = (typeof _viewRotCS === 'function' && _viewRotCS()) || [1, 0], _vsh = _viewOffPx(w) * _pxScale(w, h, S.zoom);
 dv.setUint32( 0, w,                          true); 
 dv.setUint32( 4, h,                          true); 
-
-dv.setFloat32( 8, S.centerX + _viewOffPx(w) * _pxScale(w, h, S.zoom), true); 
-dv.setFloat32(12, S.centerY,                 true); 
+dv.setFloat32( 8, S.centerX + _vcs[0] * _vsh, true); 
+dv.setFloat32(12, S.centerY + _vcs[1] * _vsh, true); 
 dv.setFloat32(16, S.zoom,                    true); 
 dv.setUint32( 20, S.maxIter,                 true); 
 dv.setFloat32(24, S.colorOffset,             true); 
@@ -28053,6 +28080,8 @@ dv.setFloat32(64, (_ic[0] || 0) / 255, true);
 dv.setFloat32(68, (_ic[1] || 0) / 255, true); 
 dv.setFloat32(72, (_ic[2] || 0) / 255, true); 
 dv.setUint32( 76, _exportTransparentAlpha ? 1 : 0, true); 
+dv.setFloat32(80, _vcs[0], true); 
+dv.setFloat32(84, _vcs[1], true); 
 
 
 
@@ -28060,7 +28089,7 @@ dv.setUint32( 76, _exportTransparentAlpha ? 1 : 0, true);
 
 if (!_wgpu._escParamBuf) {
 _wgpu._escParamBuf = device.createBuffer({
-size: 80,
+size: 96,
 usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
 });
 }
@@ -50937,6 +50966,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.0',
+date:'2026-11-02',
+headline:'Choose the export\'s aspect ratio.',
+items:[
+'The Export modal has an Aspect row under Resolution: 1:1, 16:9, 16:10, 21:9, 3:2, 4:3, 9:16 or a custom ratio. The Resolution preset sets the long edge, and a fractal fills the wider or taller frame with more of the plane at the same center and zoom, with no bars and no stretching. Motion exports keep their own sizes for now.',
+'With View Rotation set, an escape-time fractal now renders on WebGPU just as an unturned one does, and the engine badge no longer reports a fall back to WebGL2 for the turn. GPU deep zoom does not turn yet.',
+],
+},
+{
 version:'7.8.0',
 date:'2026-11-01',
 headline:'Turn an escape-time fractal in the frame.',
@@ -50993,14 +51031,6 @@ date:'2026-10-30',
 headline:'WebGPU draws one frame at a time.',
 items:[
 'Switching between Buddhabrot and Anti-Buddhabrot while WebGPU was still drawing could leave the old picture on screen until the next change, and a composite export with a WebGPU Buddhabrot layer could pick up the drawing still on screen. A new WebGPU draw now waits for the one in progress.',
-],
-},
-{
-version:'7.7.5',
-date:'2026-10-30',
-headline:'A long WebGPU export keeps the GPU to itself.',
-items:[
-'An export whose WebGPU render ran past 15 seconds, such as an 8K Buddhabrot on a slower GPU or the first WebGPU use in a session, could be colored from the screen\'s own render instead of its own. The export now keeps the GPU until it finishes, for up to two minutes.',
 ],
 },
 
@@ -60758,8 +60788,10 @@ const _equirect = (typeof _equirectExportActive === 'function') && _equirectExpo
 const [_fW, _fH] = _screenFit(W2, H2);
 
 
-const _letterbox = W2 !== H2 && ((S.exportFractalCompose || 'letterbox') === 'letterbox') && _hasFractalLayer && !_equirect
-|| (_fW !== W2 || _fH !== H2) && (S.exportFractalCompose || 'letterbox') === 'letterbox' && _hasFractalLayer && !_equirect;
+
+const _fills = _exportAspectFills();
+const _letterbox = W2 !== H2 && ((S.exportFractalCompose || 'letterbox') === 'letterbox') && _hasFractalLayer && !_equirect && !_fills
+|| (_fW !== W2 || _fH !== H2) && (S.exportFractalCompose || 'letterbox') === 'letterbox' && _hasFractalLayer && !_equirect && !_fills;
 const _dW = _letterbox ? _fW : W2, _dH = _letterbox ? _fH : H2;
 const _offX = _letterbox ? Math.round((W2 - _fW) / 2) : 0, _offY = _letterbox ? Math.round((H2 - _fH) / 2) : 0;
 const oCvW = cv.width, oCvH = cv.height, oW = W, oH = H;
@@ -63558,7 +63590,39 @@ if(exportSize==='custom'){
 const v=(id)=>Math.min(32768,Math.max(100,parseInt(document.getElementById(id).value, 10)||3000));
 return [v('custom-w'),v('custom-h')];
 }
-return [+exportSize,+exportSize];
+
+const n=+exportSize, r=_exportAspectRatio();
+return r>=1?[n,Math.max(100,Math.round(n/r))]:[Math.max(100,Math.round(n*r)),n];
+}
+
+function _exportAspectRatio(){
+if(exportAspect==='custom'){
+const v=(id,d)=>{ const n=parseFloat((document.getElementById(id)||{}).value); return Number.isFinite(n)?Math.min(100,Math.max(1,n)):d; };
+return v('custom-ar-w',16)/v('custom-ar-h',9);
+}
+const [a,b]=exportAspect.split(':').map(Number);
+return a>0&&b>0?a/b:1;
+}
+
+function _exportAspectFills(){
+return _printMode!=='physical' && /^\d+$/.test(exportSize) && Math.abs(_exportAspectRatio()-1)>1e-9;
+}
+
+function selectAspect(a){
+exportAspect=a;
+let sz=exportSize;
+if(!/^\d+$/.test(sz)){
+const L=Math.max(..._quickExportPixels()), ps=[...document.querySelectorAll('#export-size-row [data-select-size]')].map(c=>+c.dataset.selectSize).filter(n=>n>0).sort((x,y)=>x-y);
+sz=String(ps.find(n=>n>=L)||ps[ps.length-1]);
+}
+selectSize(sz,document.querySelector(`#export-size-row [data-select-size="${sz}"]`));
+}
+
+function _syncAspectRow(){
+const on=/^\d+$/.test(exportSize);
+document.querySelectorAll('#export-aspect-row .size-chip').forEach(c=>c.classList.toggle('active',on&&c.dataset.selectAspect===exportAspect));
+const cr=document.getElementById('custom-aspect-row');
+if(cr)cr.classList.toggle('show',on&&exportAspect==='custom');
 }
 
 function _exportNeedsPrintPath(){
@@ -63776,11 +63840,12 @@ if(dpiLbl)dpiLbl.textContent=_isPxPreset?'DPI · fixed-pixel preset, print metad
 
 const composeRow=document.getElementById('compose-row');
 if(composeRow){
-const isSquare=Math.abs(aw/ah-((W&&H)?_screenAreaW()/H:1))<1e-3;   
+
+const off=_exportAspectFills()||Math.abs(aw/ah-((W&&H)?_screenAreaW()/H:1))<1e-3;   
 composeRow.querySelectorAll('.size-chip').forEach(c=>{
-c.classList.toggle('is-disabled',isSquare);
-c.setAttribute('aria-disabled',isSquare?'true':'false');
-if(isSquare){
+c.classList.toggle('is-disabled',off);
+c.setAttribute('aria-disabled',off?'true':'false');
+if(off){
 c.setAttribute('tabindex','-1');
 } else if(c.classList.contains('active')){
 c.setAttribute('tabindex','0');
@@ -64292,7 +64357,7 @@ await _compositeLayersToExport(octx,W2,H2,_pfmtAlpha,signal);
 
 
 
-const _lbFit = _fractalLetterboxFit(W2, H2);
+const _lbFit = _fractalLetterboxFit(W2, H2, true);
 const fractalLetterbox = !!_lbFit;
 let renderCtx, renderW, renderH, subCanvas = null;
 if(fractalLetterbox){
@@ -64698,8 +64763,10 @@ return false;
 
 
 
-function _fractalLetterboxFit(W2,H2){
+
+function _fractalLetterboxFit(W2,H2,still){
 if(S.mode!=='fractal'||_equirectExportActive()||(S.exportFractalCompose||'letterbox')!=='letterbox')return null;
+if(still&&_exportAspectFills())return null;
 
 
 const [fitW,fitH]=_screenFit(W2,H2);
@@ -64892,7 +64959,7 @@ _drawGeomWithMirrors(c,bR);c.restore();octx.drawImage(oc2,0,0);
 
 
 
-const _lbFit=_fractalLetterboxFit(W2,H2), _lbAlpha=_fmt==='png'||_fmt==='webp'||_fmt==='gif';
+const _lbFit=_fractalLetterboxFit(W2,H2,true), _lbAlpha=_fmt==='png'||_fmt==='webp'||_fmt==='gif';
 const _lbOut=octx, _lbW=W2, _lbH=H2; let _lbSub=null;
 if(_lbFit){ _lbSub=_trackCanvas(document.createElement('canvas')); [_lbSub.width,_lbSub.height]=_lbFit; octx=_lbSub.getContext('2d'); [W2,H2]=_lbFit; }
 
@@ -65520,7 +65587,7 @@ else{
 if(_equirectExportActive()){ H2=Math.min(H2,16384); W2=2*H2; }
 }
 if(exportFormat==='webp' && Math.max(W2,H2)>_WEBP_MAX_DIM)[W2,H2]=_webpFit(W2,H2,_equirectExportActive());
-const fit=_fractalLetterboxFit(W2,H2)||[W2,H2];
+const fit=_fractalLetterboxFit(W2,H2,true)||[W2,H2];
 return {print,W2,H2,ss,artW:fit[0],artH:fit[1]};
 }
 

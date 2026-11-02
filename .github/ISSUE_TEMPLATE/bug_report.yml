@@ -1,0 +1,42 @@
+name: Report a bug
+description: Something in AEON or on this site does not work as it should.
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The last label on the bar along the bottom of the picture in the studio.
+      placeholder: v7.8.0
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and system
+      placeholder: Chrome 131 on macOS 15
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps that lead to the problem
+      placeholder: |
+        1. Open the studio
+        2. Choose ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead
+      description: A screenshot helps.
+    validations:
+      required: true

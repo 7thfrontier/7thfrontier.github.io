@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.8.0</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.0</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.8.0</h2>
+    <h2>AEON · v7.9.0</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1156,27 +1156,27 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
   <div class="prose">
     <p>AEON runs in your browser with nothing to install. <a href="./app/">Open the studio</a>, then choose Install in the address bar (Chrome, Edge) or File, Add to Dock (Safari). The installed app opens in its own window and works offline.</p>
     <p>To run it from your own computer instead, download <a href="https://github.com/7thfrontier/7thfrontier.github.io/releases/latest/download/aeon-web.zip">aeon-web.zip</a> and serve the unzipped folder from any local web server; opened straight from disk, its workers and offline mode cannot start. Every version is on the <a href="https://github.com/7thfrontier/7thfrontier.github.io/releases">releases page</a>.</p>
+    <p>Something not working? <a href="https://github.com/7thfrontier/7thfrontier.github.io/issues/new?template=bug_report.yml">Report a bug</a> on GitHub (you need a GitHub account to file one). The form asks for your version, your browser and system, and the steps that lead to the problem.</p>
   </div>
 </section>
 
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.8.0.</h2>
-    <p class="section-lede">Turn an escape-time fractal in the frame · 2026-11-01</p>
+    <h2 class="section-title">What's new<br>in 7.9.0.</h2>
+    <p class="section-lede">Choose the export's aspect ratio · 2026-11-02</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Animated exports keep their frame timing.</strong> A frame that was slow to render, or an export left running in a background tab, could stay on screen longer than one frame in the saved video, so motion stuttered: frames landed 51 to 133 ms apart at 24 fps, where 42 is right. Where the browser can encode VP9 or VP8 through WebCodecs, as Chrome, Edge and the Munder Difflin app do, Frame-Exact Export and Record Video now stamp every frame at its exact time and write the WebM themselves, with no added library. An MP4 recording, and a browser without that encoder, keep the previous recorder.</li>
-    <li><strong>Move, Scale and Rotate work on a single layer.</strong> With one layer in Layer Studio, turning it (a Buddhabrot or any other type) stored the angle and left the picture as it was, because a layer's move, scale and turn were drawn only by Live Composite with two or more visible layers. A lone layer you move, scale or turn now shows that way on screen and in its exports, with Live Composite on or off, and Move on canvas opens with one layer.</li>
-    <li><strong>Variation sheet cells keep sharpening while you press keys.</strong> Since 7.7.14, in a variation sheet of attractors, IFS fractals, flames or Buddhabrots, refinement could stall for as long as you kept pressing keys: each key restarted the active cell's transparent picture, and the other cells waited behind it at their quick preview. An interrupted picture now waits for the other cells, which sharpen between keys, and lands after them.</li>
-    <li><strong>Turn an escape-time fractal in the frame.</strong> A View Rotation slider under Navigate turns the picture about its center, so a form can lie at any angle in a wide or tall composition instead of only the angle its formula gives it. Panning, zooming, the Julia picker, orbit tracing, exports, share links, view history and motion keyframes all follow the turn. WebGPU and GPU deep zoom do not turn yet, so a turned view renders on WebGL2 or the CPU, and the WebGPU badge names View Rotation as the reason.</li>
+    <li><strong>A turned view stays on WebGPU.</strong> With View Rotation set, an escape-time fractal renders on WebGPU as an unturned one does, and the engine badge no longer reports a WebGL2 fallback for the turn.</li>
+    <li><strong>Report a bug from the website.</strong> The AEON site links to a bug form on GitHub, which asks for your version, your browser and system, and the steps that lead to the problem.</li>
+    <li><strong>Choose the export's aspect ratio.</strong> The Export modal has an Aspect row under Resolution: 1:1 (the default), 16:9, 16:10, 21:9, 3:2, 4:3, 9:16 or a custom width to height. The Resolution preset becomes the long edge, so 4K at 16:9 saves 4096 × 2304. A fractal fills the wider or taller frame with more of the plane at the same center and zoom, with no bars and no stretching, and so do Layer Studio composites and supersampled exports from Print options. Match canvas and Custom size keep their own shape, and picking an aspect under either switches to the nearest preset. Motion exports keep their own Screen, Square, HD and Vertical sizes for now.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.8.0</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.0</p>
 </footer>
 
 <script>
