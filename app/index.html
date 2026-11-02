@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-8PpYmnSq0mGCYdZ0hyS0KZKIuPOe3dPDAW9wqoSYRCE=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-BlfFSP02hkJgiCrvVdGpl0utcICVJS34LghSNn3Lctk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: 1ad02361d1ff -->
+<!-- build: 4d73a1029c01 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.2
+ * AEON -- Universal Dynamics Reactor v7.9.3
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7461,7 +7461,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.2';
+const APP_VERSION='7.9.3';
 
 
 
@@ -7470,10 +7470,10 @@ const APP_VERSION='7.9.2';
 
 
 
-const MISSION_BUILD_HASH='1ad02361d1ff';
-const MISSION_GIT_SHA='18eb0d7a33a7a5d5e101a1857667e06aefd5792d';
+const MISSION_BUILD_HASH='4d73a1029c01';
+const MISSION_GIT_SHA='5c2aa35afcaf8cc54db36661c3035c591427b1bd';
 
-const MISSION_RENDER_HASH='e9c03928998f';
+const MISSION_RENDER_HASH='cc97eb56166f';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -50993,6 +50993,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.3',
+date:'2026-11-02',
+headline:'Variation sheet cells finish sharpening.',
+items:[
+'In a variation sheet of attractors, IFS fractals, flames or Buddhabrots, cells that were still sharpening when Live Composite was turned off now finish once it is turned back on, where they used to stay at their quick preview until something else redrew them.',
+],
+},
+{
 version:'7.9.1',
 date:'2026-11-02',
 headline:'A turned deep zoom stays on the GPU.',
@@ -51050,14 +51058,6 @@ date:'2026-10-30',
 headline:'Video exports keep the whole view.',
 items:[
 'A square or vertical video of a wide view now shows the whole picture on bars of the background color, as still exports do, instead of cutting off its sides. Record Video, PNG Sequence and Frame-Exact follow the same Letterbox or Extend choice as stills, and the Motion panel now has those two chips under its resolution chips.',
-],
-},
-{
-version:'7.7.7',
-date:'2026-10-30',
-headline:'Exported PNGs carry their maker and copyright.',
-items:[
-'Every PNG you export, each frame of a PNG sequence included, now records AEON and its version as the Software, and 7th Frontier, Inc. as the Copyright, in the standard fields that many image viewers and asset managers show. JPEG and WebP exports are unchanged.',
 ],
 },
 
@@ -59315,6 +59315,7 @@ let _compositeOut = null;
 
 
 let _compositeOnScreen = false;
+let _densityRefineParked = false;   
 function _ensureCompositeWorkspace(W2, H2) {
 if (!_compositeActiveImg) _compositeActiveImg = document.createElement('canvas');
 if (_compositeActiveImg.width !== W2 || _compositeActiveImg.height !== H2) {
@@ -59396,6 +59397,9 @@ _compositeOnScreen = false;
 
 _exitLayerMoveIfInvalid();
 if (!_compositeWouldEngage()) return;
+
+
+if (_densityRefineParked && S.liveComposite && typeof _scheduleDensityRefine === 'function') { _densityRefineParked = false; _scheduleDensityRefine(); }
 const _cset = _compositeLayerSet(), visibleLayers = _cset.length ? _cset : COMP_LAYERS.filter(l => l.visible);
 
 if (typeof cv === 'undefined' || !cv) return;
@@ -65562,7 +65566,8 @@ if(!layer){_densityResumeDrop();return;}
 
 
 
-if(!_compositeWouldEngage()||!S.liveComposite)return;   
+if(!_compositeWouldEngage()||!S.liveComposite){_densityRefineParked=true;return;}   
+_densityRefineParked=false;
 const idle=performance.now()-_densityLastInputMs;
 if(idle<_DENSITY_REFINE_IDLE_MS||!_renderSettled()||_layerSwapInProgress()||_exportOwnsCanvas()){_scheduleDensityRefine(Math.max(50,_DENSITY_REFINE_IDLE_MS-idle));return;}
 const W2=cv.width,H2=cv.height,key=JSON.stringify(layer.params),ctl=_densityRefineCtl=new AbortController();
