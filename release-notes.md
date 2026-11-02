@@ -1,5 +1,5 @@
-Variation sheet cells finish sharpening · 2026-11-02
+Moved transparent layers show the background color · 2026-11-02
 
-- **Variation sheet cells finish sharpening after Live Composite is turned off and on.** In a variation sheet of attractors, IFS fractals, flames or Buddhabrots, turning Live Composite off while cells were still sharpening and then back on left those cells at their quick preview until something else redrew them.
+- **A moved layer with Transparent background shows the background color around its picture.** With a single layer moved, scaled or turned in Layer Studio, the area its picture leaves clear showed the fractal's own background where the background color belonged, on screen and in motion exports, unless Live Composite was on with a second visible layer. Escape-time and 3D fractals showed it most.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.

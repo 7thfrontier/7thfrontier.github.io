@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-BlfFSP02hkJgiCrvVdGpl0utcICVJS34LghSNn3Lctk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-rDtvbuqsiel1c9u/Y//pcTIh+gi7dCwRZJMCW5qPJqk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: 4d73a1029c01 -->
+<!-- build: 78ed86659616 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.3
+ * AEON -- Universal Dynamics Reactor v7.9.4
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7461,7 +7461,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.3';
+const APP_VERSION='7.9.4';
 
 
 
@@ -7470,10 +7470,10 @@ const APP_VERSION='7.9.3';
 
 
 
-const MISSION_BUILD_HASH='4d73a1029c01';
-const MISSION_GIT_SHA='5c2aa35afcaf8cc54db36661c3035c591427b1bd';
+const MISSION_BUILD_HASH='78ed86659616';
+const MISSION_GIT_SHA='5c79f8650e017f7f0548637af0f2aa485a0df4ab';
 
-const MISSION_RENDER_HASH='cc97eb56166f';
+const MISSION_RENDER_HASH='e3fdb6124f86';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -50993,6 +50993,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.4',
+date:'2026-11-02',
+headline:'Moved transparent layers show the background color.',
+items:[
+'A layer with Transparent background that is moved, scaled or turned in Layer Studio now shows the background color where its picture is clear, on screen and in motion exports. It used to show the fractal\'s own background there unless Live Composite was on with a second visible layer.',
+],
+},
+{
 version:'7.9.3',
 date:'2026-11-02',
 headline:'Variation sheet cells finish sharpening.',
@@ -51050,14 +51058,6 @@ headline:'Shared links keep their print settings.',
 items:[
 'A link that carries print settings now opens with the Export window showing what the export will use: its Compose, supersample and DPI chips, its size fields and its preset. The link keeps its print size, and its DPI stays within 72 to 2400, the range the DPI setting allows.',
 'A PNG Sequence with Transparent background on leaves its letterbox bars transparent, as a still PNG does.',
-],
-},
-{
-version:'7.7.9',
-date:'2026-10-30',
-headline:'Video exports keep the whole view.',
-items:[
-'A square or vertical video of a wide view now shows the whole picture on bars of the background color, as still exports do, instead of cutting off its sides. Record Video, PNG Sequence and Frame-Exact follow the same Letterbox or Extend choice as stills, and the Motion panel now has those two chips under its resolution chips.',
 ],
 },
 
@@ -60531,8 +60531,9 @@ _taRefreshTimer = setTimeout(() => { _thumbRefreshChain = _thumbRefreshChain.the
 }
 async function _activeTATransparentOnce() {
 const layer = COMP_LAYERS[_activeCompLayerIdx];
-if (!layer || !layer.transparentBg || !S.liveComposite) return;
-if (COMP_LAYERS.filter(l => l.visible).length < 2) return;
+
+
+if (!layer || !layer.transparentBg || !_compositeLayerSet().includes(layer)) return;
 if (typeof cv === 'undefined' || !cv) return;
 
 
@@ -60547,7 +60548,8 @@ const dens = _isDensityLayer({ params: S });
 
 
 
-if (dens && _taAfterInput && typeof _densityRefineCell === 'function' && _densityRefineCell()) { _scheduleDensityRefine(0); _scheduleActiveTATransparent(); return; }
+
+if (dens && _taAfterInput && S.liveComposite && typeof _densityRefineCell === 'function' && _densityRefineCell()) { _scheduleDensityRefine(0); _scheduleActiveTATransparent(); return; }
 _taAfterInput = false;
 const ctl = dens ? (_taInFlight = new AbortController()) : null;
 let tc = null;
@@ -60904,7 +60906,7 @@ catch (_e) {  }
 let _motionFrameTAWritten = null;
 async function _motionFrameTransparentActive() {
 const layer = COMP_LAYERS[_activeCompLayerIdx];
-if (!layer || !layer.transparentBg || !S.liveComposite || COMP_LAYERS.filter(l => l.visible).length < 2) return;
+if (!layer || !layer.transparentBg || !_compositeLayerSet().includes(layer)) return;   
 const tc = await _renderLayerToCanvas({ params: structuredClone(S), transparentBg: true });
 layer._taCache = _swapLayerCanvas(layer._taCache, tc);
 _motionFrameTAWritten = layer;
