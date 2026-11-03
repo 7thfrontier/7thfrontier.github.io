@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-rDtvbuqsiel1c9u/Y//pcTIh+gi7dCwRZJMCW5qPJqk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-noz4Jj7yVskxMRpkQeOD+E3NEeVSr9Oz0IHXzR3fEeo=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: 78ed86659616 -->
+<!-- build: bff8fa0905ca -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.4
+ * AEON -- Universal Dynamics Reactor v7.9.5
  * Proprietary. See LICENSE for terms.
  */
 
@@ -6325,8 +6325,8 @@ orbit=_dzGetOrbit(cx, cy, maxIter, _jre, _jim, _orbType);
 }
 const scale=_pxScale(w,h,S.zoom);
 
-const _dzVt=(typeof _liveViewTile==='function')?_liveViewTile(w):null;
-const _dzCx=(typeof _viewCenterPx==='function')?_viewCenterPx(w):w/2, _dzTx=_dzVt?_dzVt.tx:0, _dzFw=_dzVt?_dzVt.fullW:w;
+const _dzFf=(typeof _liveFieldFrame==='function')?_liveFieldFrame(w):null;
+const _dzCx=(typeof _viewCenterPx==='function')?_viewCenterPx(w):w/2, _dzTx=_dzFf?_dzFf.ox:0, _dzFw=_dzFf?_dzFf.rw:w;
 
 
 results=_floatAcquire(w*h);   
@@ -6834,7 +6834,7 @@ const u=name=>_dzUniformLoc(rebaseProg, name);
 gl.uniform2f(u('u_res'), W, H);
 
 gl.uniform2f(u('u_center'), _viewCenterPx(), H/2);
-{ const _t=_liveViewTile(W); gl.uniform1f(u('u_viewTx'), _t?_t.tx:0); gl.uniform1f(u('u_viewFullW'), _t?_t.fullW:W); }
+{ const _f=_liveFieldFrame(W); gl.uniform1f(u('u_viewTx'), _f?_f.ox:0); gl.uniform1f(u('u_viewFullW'), _f?_f.rw:W); }
 gl.uniform2f(u('u_centerOffset'), cluster.cxPx-_viewCenterPx(), cluster.cyPx-H/2);
 _dzUploadDeltaScaleDS(u, scale);
 gl.uniform1i(u('u_orbitLen'), validLen);
@@ -6894,7 +6894,7 @@ const u=name=>_dzUniformLoc(prog, name);
 gl.uniform2f(u('u_res'), W, H);
 
 gl.uniform2f(u('u_center'), _viewCenterPx(), H/2);
-{ const _t=_liveViewTile(W); gl.uniform1f(u('u_viewTx'), _t?_t.tx:0); gl.uniform1f(u('u_viewFullW'), _t?_t.fullW:W); }
+{ const _f=_liveFieldFrame(W); gl.uniform1f(u('u_viewTx'), _f?_f.ox:0); gl.uniform1f(u('u_viewFullW'), _f?_f.rw:W); }
 const scale=_pxScale(W,H,S.zoom||1);
 _dzUploadDeltaScaleDS(u, scale);
 gl.uniform1i(u('u_orbitLen'), validLen);
@@ -6977,7 +6977,7 @@ const u=name=>_dzUniformLoc(prog, name);
 gl.uniform2f(u('u_res'), W, H);
 
 gl.uniform2f(u('u_center'), _viewCenterPx(), H/2);
-{ const _t=_liveViewTile(W); gl.uniform1f(u('u_viewTx'), _t?_t.tx:0); gl.uniform1f(u('u_viewFullW'), _t?_t.fullW:W); }
+{ const _f=_liveFieldFrame(W); gl.uniform1f(u('u_viewTx'), _f?_f.ox:0); gl.uniform1f(u('u_viewFullW'), _f?_f.rw:W); }
 const scale=_pxScale(W,H,S.zoom||1);
 _dzUploadDeltaScaleDS(u, scale); 
 gl.uniform1i(u('u_orbitLen'), validLen);
@@ -7461,7 +7461,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.4';
+const APP_VERSION='7.9.5';
 
 
 
@@ -7470,10 +7470,10 @@ const APP_VERSION='7.9.4';
 
 
 
-const MISSION_BUILD_HASH='78ed86659616';
-const MISSION_GIT_SHA='5c79f8650e017f7f0548637af0f2aa485a0df4ab';
+const MISSION_BUILD_HASH='bff8fa0905ca';
+const MISSION_GIT_SHA='1c48e203091fa2e9ceb29171dff923819a7778e8';
 
-const MISSION_RENDER_HASH='e3fdb6124f86';
+const MISSION_RENDER_HASH='aced1c06f4da';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -7713,6 +7713,20 @@ function _viewCenterPx(w=W){ return w/2 - _viewOffPx(w); }
 let _vpArea=null;   
 
 function _screenAreaW(){ return _vpArea && _vpArea.w===W ? _vpArea.areaW : W; }
+
+function _liveFrame(w){
+if(w!==W || (typeof _exportOwnsCanvas==='function' && _exportOwnsCanvas())) return null;
+
+const t=_liveViewTile(w);
+const f=t ? { cx: t.fullW/2 - t.tx, areaW: w, visW: 2*w - t.fullW }
+: (_vpArea && _vpArea.w===w ? { cx: w/2, areaW: _vpArea.areaW, visW: 2*_vpArea.areaW - w } : null);
+return f && f.visW>0 ? f : null;
+}
+
+function _liveFieldFrame(w){
+const f=_liveFrame(w);
+return f ? { ox: f.areaW/2 - f.cx, rw: f.areaW } : null;
+}
 function _refitCanvas(aspect){
 const w=cv.width, h=cv.height;
 _resizeCanvasForAspect(aspect);
@@ -9622,8 +9636,8 @@ gl.uniform2f(u('u_res'),w,h);
 
 
 
-const _lvt=_liveViewTile(w);
-const _oft=(typeof _oFieldTile!=='undefined'&&_oFieldTile)?_oFieldTile:(_lvt?{ox:_lvt.tx,oy:0,rw:_lvt.fullW,rh:h}:null);
+const _lff=_liveFieldFrame(w);
+const _oft=(typeof _oFieldTile!=='undefined'&&_oFieldTile)?_oFieldTile:(_lff?{ox:_lff.ox,oy:0,rw:_lff.rw,rh:h}:null);
 gl.uniform2f(u('u_oFieldOff'),_oft?_oft.ox:0,_oft?_oft.oy:0);
 gl.uniform2f(u('u_oFieldRes'),_oft?_oft.rw:0,_oft?_oft.rh:0);
 gl.uniform2f(u('u_center'),S.centerX,S.centerY);
@@ -9890,6 +9904,7 @@ gl.viewport(0,0,gw,gh);
 const u=(name)=>_glProgUniformLoc(gl3dCustomProg,name);
 gl.uniform2f(u('u_res'),fullW,fullH);
 gl.uniform2f(u('u_tileOffset'),tileX,tileY);
+{ const _f=opts?null:_liveFieldFrame(gw); gl.uniform2f(u('u_oFieldOff'),_f?_f.ox:0,0); gl.uniform2f(u('u_oFieldRes'),_f?_f.rw:0,_f?gh:0); }   
 gl.uniform1f(u('u_exportTransparent'), (typeof _exportTransparentAlpha!=='undefined'&&_exportTransparentAlpha)?1:0);  
 gl.uniform1f(u('u_zoom'),S.zoom||1);
 gl.uniform2f(u('u_mouse'),S._3dRotY||0,S._3dRotX||0);   
@@ -9993,6 +10008,7 @@ gl.uniform1i(u('u_palette'),0);
 gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, palTex); gl.uniform1i(u('u_orbit'),1); gl.activeTexture(gl.TEXTURE0);
 gl.uniform2f(u('u_res'),fullW,fullH);
 gl.uniform2f(u('u_tileOffset'),tileX,tileY);
+{ const _f=opts?null:_liveFieldFrame(w); gl.uniform2f(u('u_oFieldOff'),_f?_f.ox:0,0); gl.uniform2f(u('u_oFieldRes'),_f?_f.rw:0,_f?h:0); }   
 gl.uniform1f(u('u_zoom'),S.zoom);
 gl.uniform1i(u('u_maxIter'),Math.min(S.maxIter,256));
 gl.uniform1i(u('u_type3d'),S.fractalType==='mandelbox'?1:(S.fractalType==='menger'?2:(S.fractalType==='qjulia'?3:(S.fractalType==='sierp_tetra'?4:0))));
@@ -10357,8 +10373,8 @@ gl.uniform2f(u('u_res'),w,h);
 
 
 
-const _lvt=_liveViewTile(w);
-const _oft=(typeof _oFieldTile!=='undefined'&&_oFieldTile)?_oFieldTile:(_lvt?{ox:_lvt.tx,oy:0,rw:_lvt.fullW,rh:h}:null);
+const _lff=_liveFieldFrame(w);
+const _oft=(typeof _oFieldTile!=='undefined'&&_oFieldTile)?_oFieldTile:(_lff?{ox:_lff.ox,oy:0,rw:_lff.rw,rh:h}:null);
 gl.uniform2f(u('u_oFieldOff'),_oft?_oft.ox:0,_oft?_oft.oy:0);
 gl.uniform2f(u('u_oFieldRes'),_oft?_oft.rw:0,_oft?_oft.rh:0);
 gl.uniform2f(u('u_center'),S.centerX,S.centerY);
@@ -10872,6 +10888,7 @@ const d=_u8cAcquire(W*H*4),bg=hexRgb(S.bgColor),logMax=Math.log((typeof _density
 
 const warp=S.colorWarp,rep=Math.max(1,Math.min(8,S.colorRepeat||1)),ph=S.colorPhase||0;
 const opacField=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
+const _ff=opacField?_liveFieldFrame(W):null, _fOx=_ff?_ff.ox:0, _fW=_ff?_ff.rw:W;   
 for(let i=0;i<W*H;i++){
 const cnt=density[i];
 if(cnt===0){if(_exportTransparentAlpha){d[i*4+3]=0;continue}d[i*4]=bg[0];d[i*4+1]=bg[1];d[i*4+2]=bg[2];d[i*4+3]=255;continue}
@@ -10889,7 +10906,7 @@ const[r,g,b,pa]=palRGBA(tc);
 let a=pa;
 if(opacField){
 const px=i%W,py=(i/W)|0;
-a=pa*_pixelAlphaField(px,py,W,H,tc);
+a=pa*_pixelAlphaField(px+_fOx,py,_fW,H,tc);
 }
 if(_exportTransparentAlpha){
 
@@ -11276,7 +11293,8 @@ const _cwzMain=(typeof _attrDepthMeanForDispatch==='function')?_attrDepthMeanFor
 if(_cwzMain!=null) _snap._attrCwz=_cwzMain;
 _cpuFracWorkerBusy=true;_cpuFracWorkerBusySince=Date.now();
 _armStuckWatchdog(()=>_cpuFracWorkerBusy, ()=>_cpuFracWorkerBusySince, _recoverCpuFracWorkerViaSchedule);
-_cpuFracWorker.postMessage({type:'render',seq,S:_snap,W,H,pal:_geoActivePal()});
+const _lff=_liveFieldFrame(W);   
+_cpuFracWorker.postMessage({VTX:_lff?_lff.ox:0,VFW:_lff?_lff.rw:W,type:'render',seq,S:_snap,W,H,pal:_geoActivePal()});
 updateCoordBar();return;
 }
 if(S.fractalType.startsWith('ifs_')){await renderIFS(t);return}
@@ -11381,8 +11399,8 @@ const _wOk=await new Promise(res=>{
 
 
 
-const _lt=_liveViewTile(W);   
-const msg={type:'render',seq:++_cpuFracSeq,S,_origType:S.fractalType,W,H,VCX:_viewCenterPx(),VTX:_lt?_lt.tx:0,VFW:_lt?_lt.fullW:W,CLR:!!_exportTransparentAlpha,pal:_geoActivePal()};   
+const _lff=_liveFieldFrame(W);   
+const msg={type:'render',seq:++_cpuFracSeq,S,_origType:S.fractalType,W,H,VCX:_viewCenterPx(),VTX:_lff?_lff.ox:0,VFW:_lff?_lff.rw:W,CLR:!!_exportTransparentAlpha,pal:_geoActivePal()};   
 _cpuFracEscapeWaiters.set(msg.seq,res);
 _pill().classList.add('show');
 _setPillProgress('CPU RENDER',null);
@@ -11488,14 +11506,14 @@ const n=aa*aa,nOut=(n-nIn)||1,i4=(row*W+px)*4;
 const _fld=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
 if(_clrIn){
 let cov=255*wA/n;const wD=wA||1;   
-if(_fld){const _lt=_liveViewTile(W);const fa=_pixelAlphaField(px+(_lt?_lt.tx:0),H-1-row,_lt?_lt.fullW:W,H,lastT);if(fa<0.999)cov*=fa;}
+if(_fld){const _lff=_liveFieldFrame(W);const fa=_pixelAlphaField(px+(_lff?_lff.ox:0),H-1-row,_lff?_lff.rw:W,H,lastT);if(fa<0.999)cov*=fa;}
 d[i4]=rA/wD|0;d[i4+1]=gA/wD|0;d[i4+2]=bA/wD|0;d[i4+3]=cov|0;
 continue;
 }
 let mr=rA/nOut|0,mg=gA/nOut|0,mb=bA/nOut|0;
 if(_fld){
-const _lt=_liveViewTile(W);   
-const fa=_pixelAlphaField(px+(_lt?_lt.tx:0),H-1-row,_lt?_lt.fullW:W,H,lastT);   
+const _lff=_liveFieldFrame(W);   
+const fa=_pixelAlphaField(px+(_lff?_lff.ox:0),H-1-row,_lff?_lff.rw:W,H,lastT);   
 if(fa<0.999){
 mr=_bgFR[0]*(1-fa)+mr*fa|0;
 mg=_bgFR[1]*(1-fa)+mg*fa|0;
@@ -12479,6 +12497,7 @@ const pe=_cpuFracWorkerPending;_cpuFracWorkerPending=null;
 try{ pe.S=structuredClone(S); }catch(_e){  }
 if(typeof W==='number')pe.W=W; if(typeof H==='number')pe.H=H;
 pe.pal=_geoActivePal();   
+{ const _f=_liveFieldFrame(pe.W); pe.VCX=_viewCenterPx(pe.W); pe.VTX=_f?_f.ox:0; pe.VFW=_f?_f.rw:pe.W; }   
 _cpuFracWorkerBusy=true;_cpuFracWorkerBusySince=Date.now();
 _armStuckWatchdog(()=>_cpuFracWorkerBusy, ()=>_cpuFracWorkerBusySince, _recoverCpuFracWorkerViaSchedule);
 _cpuFracWorker.postMessage(pe);
@@ -12514,6 +12533,7 @@ if(p.S && typeof window!=='undefined' && window.location && /[?&]debug=attractor
 
 if(typeof W==='number')p.W=W; if(typeof H==='number')p.H=H;
 p.pal=_geoActivePal();   
+{ const _f=_liveFieldFrame(p.W); p.VTX=_f?_f.ox:0; p.VFW=_f?_f.rw:p.W; }   
 
 
 
@@ -19604,6 +19624,7 @@ updatePalTex();
 gl.uniform1i(u('u_palette'), 0);
 gl.uniform2f(u('u_res'), w, h);
 gl.uniform2f(u('u_tileOffset'), 0, 0);
+gl.uniform2f(u('u_oFieldOff'), 0, 0); gl.uniform2f(u('u_oFieldRes'), 0, 0);   
 gl.uniform1f(u('u_zoom'), S.zoom || 0.8);
 gl.uniform1i(u('u_maxIter'), Math.min(S.maxIter || 256, 256));
 gl.uniform1i(u('u_type3d'), typeIdx | 0);
@@ -29715,6 +29736,8 @@ uniform float u_fogDensity;
 
 
 uniform vec2 u_tileOffset;
+uniform vec2 u_oFieldOff;   
+uniform vec2 u_oFieldRes;   
 
 
 uniform int u_projection;
@@ -29799,18 +29822,20 @@ float _gpuNoise3(float i){
 }
 float _pixelAlpha3(vec2 fragCoord, float colourT){
   if(u_opacityMode==0)return 1.0;
-  vec2 c=u_res*0.5;
+  
+  vec2 res=u_res; if(u_oFieldRes.x>0.5){ res=u_oFieldRes; fragCoord=gl_FragCoord.xy+u_oFieldOff; }
+  vec2 c=res*0.5;
   vec2 d=fragCoord-c;
   float maxR=max(1.0,length(c));
   float t=0.0;
   if(u_opacityMode==1)t=fract(colourT);
-  else if(u_opacityMode==2)t=fragCoord.x/max(1.0,u_res.x-1.0);
+  else if(u_opacityMode==2)t=fragCoord.x/max(1.0,res.x-1.0);
   else if(u_opacityMode==3)t=length(d)/maxR;
   else if(u_opacityMode==4)t=atan(d.y,d.x)/6.28318530718+0.5;
   else if(u_opacityMode==5){float B=max(2.0,min(32.0,u_colorBands));float u=length(d)/maxR;t=min(B-1.0,floor(u*B))/max(1.0,B-1.0);}
   else if(u_opacityMode==6)t=_gpuNoise3(floor(fragCoord.y)*7919.0+floor(fragCoord.x));
   else if(u_opacityMode==7){float ang=radians(u_colorAxisAngle);t=0.5+0.5*((d.x*cos(ang)+d.y*sin(ang))/maxR);}
-  else if(u_opacityMode==8)t=mod(((fragCoord.x-0.5)+(fragCoord.y-0.5))/(u_res.x+u_res.y),1.0); 
+  else if(u_opacityMode==8)t=mod(((fragCoord.x-0.5)+(fragCoord.y-0.5))/(res.x+res.y),1.0); 
   t=clamp(t,0.0,1.0);
   if(u_opacityWarp!=0)t=_warpA3(t);
   t=clamp(t+u_opacityPhase,0.0,1.0);
@@ -50993,6 +51018,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.5',
+date:'2026-11-02',
+headline:'The vignette and opacity fields look the same with the inspector open.',
+items:[
+'With the inspector open, the Post-FX vignette now darkens the edges you can see as much as it does with the inspector folded. It used to be sized for the whole canvas, including the strips under the inspector and off the left edge, so the visible edges barely darkened.',
+'Opening the inspector no longer changes how an opacity field fades the art. On screen the field now uses the frame an export uses, so the art looks the same with the inspector open or folded.',
+],
+},
+{
 version:'7.9.4',
 date:'2026-11-02',
 headline:'Moved transparent layers show the background color.',
@@ -51049,15 +51083,6 @@ date:'2026-10-31',
 headline:'A PNG Sequence leaves the inside of the set transparent.',
 items:[
 'With Transparent background on, every frame of a PNG Sequence now leaves the inside of the set transparent, as a still PNG does.',
-],
-},
-{
-version:'7.7.10',
-date:'2026-10-30',
-headline:'Shared links keep their print settings.',
-items:[
-'A link that carries print settings now opens with the Export window showing what the export will use: its Compose, supersample and DPI chips, its size fields and its preset. The link keeps its print size, and its DPI stays within 72 to 2400, the range the DPI setting allows.',
-'A PNG Sequence with Transparent background on leaves its letterbox bars transparent, as a still PNG does.',
 ],
 },
 
@@ -62254,8 +62279,8 @@ function applyVignette(ctx,W,H){
 
 const fade=Math.max(0.01,Math.min(0.99,+S.pfxVigR||0.01));
 const str=Math.max(0,Math.min(1,+S.pfxVigStr||0));
-const _vt=(typeof _liveViewTile==='function')?_liveViewTile(W):null;
-const fw=_vt?_vt.fullW:W, vx=fw/2-(_vt?_vt.tx:0);
+const _lf=(typeof _liveFrame==='function')?_liveFrame(W):null;
+const fw=_lf?_lf.visW:W, vx=_lf?_lf.cx:W/2;
 const key=W+'|'+H+'|'+fw+'|'+vx+'|'+fade.toFixed(4)+'|'+str.toFixed(2);
 if(_vigCtx!==ctx||_vigKey!==key){
 const gr=ctx.createRadialGradient(vx,H/2,0,vx,H/2,Math.max(fw,H)/2);
@@ -66839,6 +66864,7 @@ const vib=S.flameVibrancy!==undefined?S.flameVibrancy:1;
 
 
 const opacField=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
+const _ff=opacField?_liveFieldFrame(W):null, _fOx=_ff?_ff.ox:0, _fW=_ff?_ff.rw:W;   
 for(let i=0;i<W*H;i++){
 
 
@@ -66857,7 +66883,7 @@ const px=i%W,py=(i/W)|0;
 
 
 const tWeight=wAcc[i]>0?tAcc[i]/wAcc[i]:0;
-const fa=_pixelAlphaField(px,py,W,H,tWeight);
+const fa=_pixelAlphaField(px+_fOx,py,_fW,H,tWeight);
 const alpha=baseAlpha*fa,oneMa=1-alpha;
 id[i*4]  =Math.min(255,alpha*(vib*avgR+(1-vib)*255)+oneMa*bg[0])|0;
 id[i*4+1]=Math.min(255,alpha*(vib*avgG+(1-vib)*255)+oneMa*bg[1])|0;

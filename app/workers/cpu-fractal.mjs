@@ -34,6 +34,7 @@ const _RK4_SCRATCH = new Float64Array(12);
 
 let S = {}, W = 0, H = 0;
 
+
 let VCX = 0, VTX = 0, VFW = 0, CLR = false;   
 
 
@@ -126,7 +127,7 @@ function _renderIFS(oc){
     var tc=((_t+_ph)%1+1)%1;
     var rgba=palRGBA(tc),pa=rgba[3];
     var a=pa;
-    if(_opacField){var px=ii%W,py=(ii/W)|0;a=pa*_pixelAlphaField(px,py,W,H,tc);}
+    if(_opacField){var px=ii%W,py=(ii/W)|0;a=pa*_pixelAlphaField(px+VTX,py,VFW||W,H,tc);}
     var nR=rgba[0]*brt|0,nG=rgba[1]*brt|0,nB=rgba[2]*brt|0;
     if(a<0.999){nR=bg[0]*(1-a)+nR*a|0;nG=bg[1]*(1-a)+nG*a|0;nB=bg[2]*(1-a)+nB*a|0;}
     dd[ii*4]=Math.min(255,nR);dd[ii*4+1]=Math.min(255,nG);dd[ii*4+2]=Math.min(255,nB);dd[ii*4+3]=255;
@@ -348,7 +349,7 @@ function _renderAttractor(oc){
       var tc=((_t+_ph)%1+1)%1;
       var rgba=palRGBA(tc),pa=rgba[3];
       var a=pa;
-      if(_opacField){var px=ii%W,py=(ii/W)|0;a=pa*_pixelAlphaField(px,py,W,H,tc);}
+      if(_opacField){var px=ii%W,py=(ii/W)|0;a=pa*_pixelAlphaField(px+VTX,py,VFW||W,H,tc);}
       var nR=rgba[0]*brt|0,nG=rgba[1]*brt|0,nB=rgba[2]*brt|0;
       if(a<0.999){nR=bg[0]*(1-a)+nR*a|0;nG=bg[1]*(1-a)+nG*a|0;nB=bg[2]*(1-a)+nB*a|0;}
       dd[ii*4]=Math.min(255,nR);dd[ii*4+1]=Math.min(255,nG);dd[ii*4+2]=Math.min(255,nB);dd[ii*4+3]=255;
