@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.5</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.6</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.9.5</h2>
+    <h2>AEON · v7.9.6</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1163,19 +1163,18 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.9.5.</h2>
-    <p class="section-lede">The vignette and opacity fields with the inspector open · 2026-11-02</p>
+    <h2 class="section-title">What's new<br>in 7.9.6.</h2>
+    <p class="section-lede">Newton Cayley's fourth basin · 2026-11-02</p>
   </header>
   <ul class="prose changes">
-    <li><strong>The vignette frames what you see with the inspector open.</strong> With the inspector open, the on-screen Post-FX vignette was sized for the whole canvas, including the strip under the inspector and the strip off the left edge, so the visible left and right edges came out barely darkened (about 0.09 against 0.65 with the inspector folded). It now darkens the visible edges the same way open or folded, in every family. Exports are unchanged.</li>
-    <li><strong>Opening the inspector no longer changes how an opacity field fades the art.</strong> A per-pixel stroke opacity field (radial, banded, angular, gradient, spectrum) took its center and size from the whole canvas, which with the inspector open includes the strip under the inspector and the strip off the left edge. Opening the inspector faded the art more, and the screen no longer matched the export. On screen the field now uses the frame the export uses, so the art fades the same with the inspector open or folded. Exports are unchanged.</li>
+    <li><strong>Newton Cayley shows the regions that reach no root in their own color.</strong> The starting points that Newton's method sends back and forth between 0 and 1 forever were drawn in the interior color, the same as points still converging slowly at a basin's edge. They now form a fourth basin with its own palette color, shaded like the three root basins by how quickly each point settles, on every renderer.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.5</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.6</p>
 </footer>
 
 <script>

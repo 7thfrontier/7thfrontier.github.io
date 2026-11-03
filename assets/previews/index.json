@@ -5,7 +5,7 @@
     120
   ],
   "canvas": "1440x900",
-  "totalBytes": 749034,
+  "totalBytes": 748985,
   "entries": [
     {
       "mode": "fractal",
@@ -299,7 +299,7 @@
       "mode": "fractal",
       "type": "newton_cayley",
       "file": "fractal-newton_cayley.jpg",
-      "bytes": 3182
+      "bytes": 3133
     },
     {
       "mode": "fractal",

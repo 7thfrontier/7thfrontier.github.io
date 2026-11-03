@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-noz4Jj7yVskxMRpkQeOD+E3NEeVSr9Oz0IHXzR3fEeo=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-IwzjMizBxg016RAcCVOEkMGCJJYzu32zU2dqnGTkGzg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: bff8fa0905ca -->
+<!-- build: b93f5f87ee34 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.5
+ * AEON -- Universal Dynamics Reactor v7.9.6
  * Proprietary. See LICENSE for terms.
  */
 
@@ -4668,7 +4668,9 @@ const IFS_GAMMA = 0.45;
 function itNewton(zx,zy,n,mi){for(let i=0;i<mi;i++){const[znx,zny]=cpow(zx,zy,n),[zn1x,zn1y]=cpow(zx,zy,n-1);const denomR=n*zn1x,denomI=n*zn1y;const d=denomR*denomR+denomI*denomI;if(d<NEWTON_DENOM_MIN){zx+=1e-4;zy+=1e-4;continue}const[dx,dy]=cdiv(znx-1,zny,denomR,denomI);zx-=dx;zy-=dy;if(dx*dx+dy*dy<NEWTON_EPS)return[i,zx,zy]}return[mi,zx,zy]}
 
 
-function itNewtonCayley(zx,zy,mi){for(let i=0;i<mi;i++){const z2x=zx*zx-zy*zy,z2y=2*zx*zy,z3x=zx*z2x-zy*z2y,z3y=zx*z2y+zy*z2x;const fx=z3x-2*zx+2,fy=z3y-2*zy,fpx=3*z2x-2,fpy=3*z2y;const d=fpx*fpx+fpy*fpy;if(d<NEWTON_DENOM_MIN){zx+=1e-4;zy+=1e-4;continue}const dx=(fx*fpx+fy*fpy)/d,dy=(fy*fpx-fx*fpy)/d;zx-=dx;zy-=dy;if(dx*dx+dy*dy<NEWTON_EPS)return[i,zx,zy]}return[mi,zx,zy]}
+
+
+function itNewtonCayley(zx,zy,mi){for(let i=0;i<mi;i++){const z2x=zx*zx-zy*zy,z2y=2*zx*zy,z3x=zx*z2x-zy*z2y,z3y=zx*z2y+zy*z2x;const fx=z3x-2*zx+2,fy=z3y-2*zy,fpx=3*z2x-2,fpy=3*z2y;const d=fpx*fpx+fpy*fpy;if(d<NEWTON_DENOM_MIN){zx+=1e-4;zy+=1e-4;continue}const dx=(fx*fpx+fy*fpy)/d,dy=(fy*fpx-fx*fpy)/d;zx-=dx;zy-=dy;if(dx*dx+dy*dy<NEWTON_EPS||zx*zx+zy*zy<NEWTON_EPS||(zx-1)*(zx-1)+zy*zy<NEWTON_EPS)return[i,zx,zy]}return[mi,zx,zy]}
 
 function itMandelbrot(cx,cy,mi,er2){let zx=0,zy=0,zx2=0,zy2=0;for(let i=0;i<mi;i++){zy=2*zx*zy+cy;zx=zx2-zy2+cx;zx2=zx*zx;zy2=zy*zy;if(zx2+zy2>er2)return[i,zx,zy]}return[mi,zx,zy]}
 
@@ -7461,7 +7463,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.5';
+const APP_VERSION='7.9.6';
 
 
 
@@ -7470,10 +7472,10 @@ const APP_VERSION='7.9.5';
 
 
 
-const MISSION_BUILD_HASH='bff8fa0905ca';
-const MISSION_GIT_SHA='1c48e203091fa2e9ceb29171dff923819a7778e8';
+const MISSION_BUILD_HASH='b93f5f87ee34';
+const MISSION_GIT_SHA='55c1fa8775e706e322e2bc6590b66bec7cde14a1';
 
-const MISSION_RENDER_HASH='aced1c06f4da';
+const MISSION_RENDER_HASH='e372b5e43ecf';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -10507,7 +10509,9 @@ return 0;
 function _newtonOpacT(zx,zy,iter){
 if(iter>=Math.max(1,S.maxIter))return 0;
 const a=Math.atan2(zy,zx)/(2*Math.PI)+0.5;
-return _resTcpu(a*S.colorCycle+S.colorOffset);
+const t=_resTcpu(a*S.colorCycle+S.colorOffset);
+
+return S.fractalType==='newton_cayley'&&(zx*zx+zy*zy<1e-6||(zx-1)*(zx-1)+zy*zy<1e-6)?_resTcpu(0.2032*S.colorCycle+S.colorOffset):t;
 }
 
 function newtonRGB(iter, zx, zy){
@@ -26553,6 +26557,11 @@ fn newtonTime(pixel: vec2<f32>) -> vec2<f32> {
     let dz = cdiv(num, denom);
     z = z - dz;
     
+    
+    if (p.formulaId == 16u && (dot(z, z) < 1e-12 || dot(z - vec2<f32>(1.0, 0.0), z - vec2<f32>(1.0, 0.0)) < 1e-12)) {
+      return vec2<f32>(0.2032, pow(1.0 - f32(i) / f32(p.maxIter), 0.35));
+    }
+    
     if (dot(dz, dz) < eps * eps) {
       
       
@@ -29112,7 +29121,8 @@ vec4 cayleyIter(vec2 z){
     if(d<1e-28){z.x+=1e-4;z.y+=1e-4;continue;}   
     vec2 dz=cdiv(f,fp);z-=dz;
     trapMin=updateTrap(trapMin,z);
-    if(dot(dz,dz)<1e-12)return vec4(float(i),z,trapMin);
+    
+    if(dot(dz,dz)<1e-12||dot(z,z)<1e-12||dot(z-vec2(1,0),z-vec2(1,0))<1e-12)return vec4(float(i),z,trapMin);
   }
   return vec4(float(u_maxIter),z,trapMin);
 }
@@ -29507,6 +29517,11 @@ void main(){
 
   if(isN){
     if(it>=mi){col=u_interiorColor;_inSetPx=true;}
+    else if(u_type==12&&(dot(z,z)<1e-6||dot(z-vec2(1,0),z-vec2(1,0))<1e-6)){
+      
+      
+      float t=fract(.2032*u_colorCycle+u_colorOffset);float b=pow(1.-it/mi,.35);col=pal(t)*b;_opacT=_resT(t);
+    }
     else if(u_type==99&&u_customBasin==1){
       
       
@@ -51018,6 +51033,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.6',
+date:'2026-11-02',
+headline:'Newton Cayley shows the points that reach no root in their own color.',
+items:[
+'Starting points that Newton\'s method sends back and forth between 0 and 1 forever were drawn in the interior color, like points still settling at the edge of a basin. They now form a fourth basin with its own palette color, shaded like the three root basins by how quickly each point settles.',
+],
+},
+{
 version:'7.9.5',
 date:'2026-11-02',
 headline:'The vignette and opacity fields look the same with the inspector open.',
@@ -51075,14 +51098,6 @@ date:'2026-10-31',
 headline:'Keys respond at once while a transparent Buddhabrot layer redraws.',
 items:[
 'With Transparent background on, a Buddhabrot layer keeps its picture until something changes, and a key pressed while it redraws takes effect at once.',
-],
-},
-{
-version:'7.7.12',
-date:'2026-10-31',
-headline:'A PNG Sequence leaves the inside of the set transparent.',
-items:[
-'With Transparent background on, every frame of a PNG Sequence now leaves the inside of the set transparent, as a still PNG does.',
 ],
 },
 
