@@ -384,7 +384,7 @@ function _cpuOrbitTrapMin(px,py){
   var ft=S.fractalType, pw=(S.fractalPower==null?2:S.fractalPower);
   var zx,zy,cx,cy,kind;
   var sc = FRACTAL_VIEW_WIDTH / (Math.min(W, H) * S.zoom);   
-  var dx=(px-(VCX||W/2))*sc, dy=(py-H/2)*sc, _cs=_viewRotCS();
+  var dx=(px+.5-(VCX||W/2))*sc, dy=(py+.5-H/2)*sc, _cs=_viewRotCS();   
   if(_cs){ var t=_cs[0]*dx-_cs[1]*dy; dy=_cs[1]*dx+_cs[0]*dy; dx=t; }   
   var px0=S.centerX+dx, py0=S.centerY+dy;
   if(ft==='mandelbrot' && Math.abs(pw-2)<0.001){ zx=0;zy=0;cx=px0;cy=py0;kind=0; }
@@ -422,7 +422,7 @@ function _renderEscapeTime(oc, seq){
   var mi = S.maxIter, er2 = S.escRad * S.escRad;
   var _cs = _viewRotCS();
   var iterate = function(px, py){
-    var dx = (px - (VCX || W / 2)) * sc, dy = (py - H / 2) * sc;
+    var dx = (px + .5 - (VCX || W / 2)) * sc, dy = (py + .5 - H / 2) * sc;   
     if (_cs) { var t = _cs[0] * dx - _cs[1] * dy; dy = _cs[1] * dx + _cs[0] * dy; dx = t; }   
     var cx = S.centerX + dx;
     var cy = S.centerY + dy;

@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-IwzjMizBxg016RAcCVOEkMGCJJYzu32zU2dqnGTkGzg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-amVBDPrszAQxHVsxxdckjzuELCW5U3t4iO7rlxaClKk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: b93f5f87ee34 -->
+<!-- build: 59bc5a34debd -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.6
+ * AEON -- Universal Dynamics Reactor v7.9.7
  * Proprietary. See LICENSE for terms.
  */
 
@@ -6328,7 +6328,8 @@ orbit=_dzGetOrbit(cx, cy, maxIter, _jre, _jim, _orbType);
 const scale=_pxScale(w,h,S.zoom);
 
 const _dzFf=(typeof _liveFieldFrame==='function')?_liveFieldFrame(w):null;
-const _dzCx=(typeof _viewCenterPx==='function')?_viewCenterPx(w):w/2, _dzTx=_dzFf?_dzFf.ox:0, _dzFw=_dzFf?_dzFf.rw:w;
+
+const _dzCx=((typeof _viewCenterPx==='function')?_viewCenterPx(w):w/2)-.5, _dzCy=h/2-.5, _dzTx=_dzFf?_dzFf.ox:0, _dzFw=_dzFf?_dzFf.rw:w;
 
 
 results=_floatAcquire(w*h);   
@@ -6366,7 +6367,7 @@ if((py & 31) === 0) _setPillProgress(_zTag, Math.round(100*py/h)+'%');
 const _vcs=_viewRotCS();
 for(let px=0;px<w;px++){
 let dcx=(px-_dzCx)*scale;
-let dcy=(py-h/2)*scale;
+let dcy=(py-_dzCy)*scale;
 if(_vcs){ const _t=_vcs[0]*dcx-_vcs[1]*dcy; dcy=_vcs[1]*dcx+_vcs[0]*dcy; dcx=_t; }   
 let r;
 if(useSeries3 && skipN>0){
@@ -6412,10 +6413,10 @@ if(_demoted)console.warn(`[Aeon] deep zoom: ${_demoted} outlived pixels with no 
 
 
 let rebases=0;
-const _mainRef={px:_dzCx, py:h/2, o:orbit}, _refs=[_mainRef];
+const _mainRef={px:_dzCx, py:_dzCy, o:orbit}, _refs=[_mainRef];
 const _hib=_bigCreate(256);
 
-const _refAt=(c)=>{ const _o=_rotV((c.px - _dzCx)*scale, (c.py - h/2)*scale); return _computeReferenceOrbit(_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('x')), _hib.fromNum(_o[0])), 76),
+const _refAt=(c)=>{ const _o=_rotV((c.px - _dzCx)*scale, (c.py - _dzCy)*scale); return _computeReferenceOrbit(_hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('x')), _hib.fromNum(_o[0])), 76),
 _hib.toStr(_hib.add(_hib.fromStr(_hiCenterStr('y')), _hib.fromNum(_o[1])), 76), maxIter, 256, _jre, _jim, _orbType); };
 while(rebases<8){
 if(token!==tok){ _setPillProgress(null,null); if(_pillEl) _pillEl.classList.remove('show'); return; }   
@@ -6538,7 +6539,7 @@ col=[_icSolid[0],_icSolid[1],_icSolid[2]];
 
 
 const fzx=fzData?fzData[2*i]:0, fzy=fzData?fzData[2*i+1]:0;
-let dcx=(px-_dzCx)*scale, dcy=(py-h/2)*scale;
+let dcx=(px-_dzCx)*scale, dcy=(py-_dzCy)*scale;
 const _vcs=_viewRotCS(); if(_vcs){ const _t=_vcs[0]*dcx-_vcs[1]*dcy; dcy=_vcs[1]*dcx+_vcs[0]*dcy; dcx=_t; }   
 const cpx=isJulia?_jre:(S.centerX+dcx), cpy=isJulia?_jim:(S.centerY+dcy);
 
@@ -7463,7 +7464,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.6';
+const APP_VERSION='7.9.7';
 
 
 
@@ -7472,10 +7473,10 @@ const APP_VERSION='7.9.6';
 
 
 
-const MISSION_BUILD_HASH='b93f5f87ee34';
-const MISSION_GIT_SHA='55c1fa8775e706e322e2bc6590b66bec7cde14a1';
+const MISSION_BUILD_HASH='59bc5a34debd';
+const MISSION_GIT_SHA='f488af92cd1ddf7a3acf7daf2be5fb4b5227b437';
 
-const MISSION_RENDER_HASH='e372b5e43ecf';
+const MISSION_RENDER_HASH='5c688abf0612';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -9749,6 +9750,7 @@ return `#version 300 es
 precision highp float;
 uniform vec2 u_res;
 uniform vec2 u_tileOffset;         
+uniform float u_short;             
 uniform float u_exportTransparent; 
 uniform float u_zoom;
 uniform vec2 u_mouse;
@@ -9772,7 +9774,7 @@ float DE(vec3 p){
 vec3 rotY(vec3 v,float a){float c=cos(a),s=sin(a);return vec3(c*v.x-s*v.z,v.y,s*v.x+c*v.z);}
 vec3 rotX(vec3 v,float a){float c=cos(a),s=sin(a);return vec3(v.x,c*v.y+s*v.z,-s*v.y+c*v.z);}
 void main(){
-  vec2 uv=((gl_FragCoord.xy+u_tileOffset)*2.0-u_res.xy)/min(u_res.x,u_res.y);
+  vec2 uv=((gl_FragCoord.xy+u_tileOffset)*2.0-u_res.xy)/(u_short>0.5?u_short:min(u_res.x,u_res.y));
   
   
   
@@ -9906,6 +9908,7 @@ gl.viewport(0,0,gw,gh);
 const u=(name)=>_glProgUniformLoc(gl3dCustomProg,name);
 gl.uniform2f(u('u_res'),fullW,fullH);
 gl.uniform2f(u('u_tileOffset'),tileX,tileY);
+gl.uniform1f(u('u_short'),opts?Math.min(fullW,fullH):Math.min(gw,gh));   
 { const _f=opts?null:_liveFieldFrame(gw); gl.uniform2f(u('u_oFieldOff'),_f?_f.ox:0,0); gl.uniform2f(u('u_oFieldRes'),_f?_f.rw:0,_f?gh:0); }   
 gl.uniform1f(u('u_exportTransparent'), (typeof _exportTransparentAlpha!=='undefined'&&_exportTransparentAlpha)?1:0);  
 gl.uniform1f(u('u_zoom'),S.zoom||1);
@@ -10010,6 +10013,7 @@ gl.uniform1i(u('u_palette'),0);
 gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, palTex); gl.uniform1i(u('u_orbit'),1); gl.activeTexture(gl.TEXTURE0);
 gl.uniform2f(u('u_res'),fullW,fullH);
 gl.uniform2f(u('u_tileOffset'),tileX,tileY);
+gl.uniform1f(u('u_short'),opts?Math.min(fullW,fullH):Math.min(w,h));   
 { const _f=opts?null:_liveFieldFrame(w); gl.uniform2f(u('u_oFieldOff'),_f?_f.ox:0,0); gl.uniform2f(u('u_oFieldRes'),_f?_f.rw:0,_f?h:0); }   
 gl.uniform1f(u('u_zoom'),S.zoom);
 gl.uniform1i(u('u_maxIter'),Math.min(S.maxIter,256));
@@ -10596,7 +10600,7 @@ const IT_DISPATCH=new Map([
 
 function iterate(px,py){
 const sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);   
-let dx=(px-_viewCenterPx())*sc, dy=(py-H/2)*sc;   
+let dx=(px+.5-_viewCenterPx())*sc, dy=(py+.5-H/2)*sc;   
 const _cs=_viewRotCS(); if(_cs){ const t=_cs[0]*dx-_cs[1]*dy; dy=_cs[1]*dx+_cs[0]*dy; dx=t; }   
 const cx=S.centerX+dx;
 const cy=S.centerY+dy;
@@ -10620,7 +10624,7 @@ if(mode<=0 || !(S.trapMix>0)) return 1e10;
 const ft=S.fractalType, pw=S.fractalPower??2;
 let zx,zy,cx,cy,kind;
 const sc=FRACTAL_VIEW_WIDTH/(Math.min(W,H)*S.zoom);   
-let dx=(px-_viewCenterPx())*sc, dy=(py-H/2)*sc;
+let dx=(px+.5-_viewCenterPx())*sc, dy=(py+.5-H/2)*sc;   
 const _cs=_viewRotCS(); if(_cs){ const t=_cs[0]*dx-_cs[1]*dy; dy=_cs[1]*dx+_cs[0]*dy; dx=t; }   
 const px0=S.centerX+dx, py0=S.centerY+dy;
 if(ft==='mandelbrot' && Math.abs(pw-2)<0.001){ zx=0;zy=0;cx=px0;cy=py0;kind=0; }
@@ -19628,6 +19632,7 @@ updatePalTex();
 gl.uniform1i(u('u_palette'), 0);
 gl.uniform2f(u('u_res'), w, h);
 gl.uniform2f(u('u_tileOffset'), 0, 0);
+gl.uniform1f(u('u_short'), 0);   
 gl.uniform2f(u('u_oFieldOff'), 0, 0); gl.uniform2f(u('u_oFieldRes'), 0, 0);   
 gl.uniform1f(u('u_zoom'), S.zoom || 0.8);
 gl.uniform1i(u('u_maxIter'), Math.min(S.maxIter || 256, 256));
@@ -27001,7 +27006,8 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
   if (id.x >= p.width || id.y >= p.height) { return; }
   let sc = 3.5 / (f32(min(p.width, p.height)) * p.zoom);
   
-  let o = vec2<f32>(f32(id.x) - f32(p.width) * 0.5, f32(id.y) - f32(p.height) * 0.5);
+  
+  let o = vec2<f32>(f32(id.x) + 0.5 - f32(p.width) * 0.5, f32(id.y) + 0.5 - f32(p.height) * 0.5);
   let px = p.cx + (p.rotC * o.x - p.rotS * o.y) * sc;
   let py = p.cy + (p.rotS * o.x + p.rotC * o.y) * sc;
   let result = escapeTime(vec2<f32>(px, py));
@@ -27311,9 +27317,12 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
   let W = select(f32(p.width), p.cy, p.cy > 0.0);
   let H = max(f32(p.height), 1.0);
   let uv = vec2<f32>(
-    (f32(id.x) + p.cx - 0.5 * W) / H,
-    (0.5 * H - f32(id.y)) / H
+    (f32(id.x) + 0.5 + p.cx - 0.5 * W) / H,
+    (0.5 * H - f32(id.y) - 0.5) / H
   );
+  
+  
+  let uvP = uv * (H / min(f32(p.width), H));
   
   
   
@@ -27330,7 +27339,7 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
   let ay = p.rotY * 0.01;   
   var rayDir: vec3<f32>;
   if (p.projection == 0u) {
-    rayDir = normalize(glRotY(glRotX(vec3<f32>(uv * fov, 1.0), ax), ay));
+    rayDir = normalize(glRotY(glRotX(vec3<f32>(uvP * fov, 1.0), ax), ay));
   } else {
     
     
@@ -29751,6 +29760,7 @@ uniform float u_fogDensity;
 
 
 uniform vec2 u_tileOffset;
+uniform float u_short;      
 uniform vec2 u_oFieldOff;   
 uniform vec2 u_oFieldRes;   
 
@@ -29971,6 +29981,9 @@ void main(){
   vec2 uv=(gl_FragCoord.xy+u_tileOffset-u_res*.5)/u_res.y;
   
   
+  vec2 uvP=uv*(u_res.y/(u_short>0.5?u_short:min(u_res.x,u_res.y)));
+  
+  
   
   
   float camDist=u_type3d==0?2.5:(u_type3d==2?3.5:(u_type3d==3?2.5:(u_type3d==4?4.0:4.5)));
@@ -29982,7 +29995,7 @@ void main(){
   
   vec3 rd;
   if (u_projection == 0) {
-    rd = normalize(rot * vec3(uv * fov, 1.0));
+    rd = normalize(rot * vec3(uvP * fov, 1.0));
   } else {
     float lon = uv.x * 3.14159265;
     float lat = uv.y * 3.14159265;  
@@ -51033,6 +51046,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.7',
+date:'2026-11-03',
+headline:'3D fractals keep their size in a portrait frame, and every renderer draws a pixel from its center.',
+items:[
+'The 3D types sized the picture by the frame\'s height, so in a portrait frame the subject came out up to 1.8 times larger than in a square export of the same view, and at 9:16 some ran off both sides. They now size it by the short side, as the 2D families do. Square and landscape frames are unchanged.',
+'The GPU drew each pixel from its center while the CPU, WebGPU, deep-zoom and CPU export paths drew it from its corner, so a view moved half a pixel when it changed renderer and View Rotation turned half a pixel off center. Every path now draws from the pixel center.',
+],
+},
+{
 version:'7.9.6',
 date:'2026-11-02',
 headline:'Newton Cayley shows the points that reach no root in their own color.',
@@ -51090,14 +51112,6 @@ items:[
 'A View Rotation slider under Navigate turns the picture about its center, so a form can lie at any angle in a wide or tall composition, and the turn carries into exports and share links. A turned view renders on WebGL2 or the CPU, since WebGPU and GPU deep zoom do not turn yet.',
 'Animated exports keep their frame timing. Where the browser encodes VP9 or VP8 through WebCodecs, as Chrome, Edge and the Munder Difflin app do, every frame of a Frame-Exact Export or Record Video lands exactly one frame apart, even when a frame is slow to render or the tab is in the background.',
 'Layer Studio\'s transform controls work on a single layer. A lone layer you transform now shows that way on screen and in its exports, with Live Composite on or off.',
-],
-},
-{
-version:'7.7.14',
-date:'2026-10-31',
-headline:'Keys respond at once while a transparent Buddhabrot layer redraws.',
-items:[
-'With Transparent background on, a Buddhabrot layer keeps its picture until something changes, and a key pressed while it redraws takes effect at once.',
 ],
 },
 
@@ -64080,7 +64094,7 @@ for(let px=0;px<tw;px++){
 let rA=0,gA=0,bA=0,lastT=0,nIn=0,wA=0;
 for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){
 const spx=(x0+px)+(sx+.5)/aa-.5,spy=(y0+r)+(sy+.5)/aa-.5;
-const _o=_rotV((spx-W2/2)*sc,(spy-H2/2)*sc),cx=S.centerX+_o[0],cy=S.centerY+_o[1];   
+const _o=_rotV((spx+.5-W2/2)*sc,(spy+.5-H2/2)*sc),cx=S.centerX+_o[0],cy=S.centerY+_o[1];   
 const res=_itFn(cx,cy,mi,er2);
 const[iter,zx,zy]=res;let rv,gv,bv;
 if(_exportTransparentAlpha&&iter>=mi){nIn++;continue;}   
@@ -65259,7 +65273,7 @@ const CHUNK=16,sc=_pxScale(W2,H2,S.zoom),mi=S.maxIter,er2=S.escRad*S.escRad,img=
 const _bgFR=hexRgb(S.bgColor); 
 const _opacField=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
 const _itFnQ=(typeof IT_DISPATCH!=='undefined'&&IT_DISPATCH.get(S.fractalType))||itMandelbrot;   
-for(let py=0;py<H2;py+=CHUNK){if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');for(let row=py;row<Math.min(py+CHUNK,H2);row++){for(let px=0;px<W2;px++){let rA=0,gA=0,bA=0,lastT=0,nIn=0;for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){const spx=px+(sx+.5)/aa-.5,spy=row+(sy+.5)/aa-.5,_o=_rotV((spx-W2/2)*sc,(spy-H2/2)*sc),cx=S.centerX+_o[0],cy=S.centerY+_o[1];const res=_itFnQ(cx,cy,mi,er2);const[iter,zx,zy]=res;if(_exportTransparentAlpha&&iter>=S.maxIter){nIn++;continue;}let r,g,b;if(isNewton){[r,g,b]=newtonRGB(iter,zx,zy);if(typeof _newtonOpacT==='function')lastT=_newtonOpacT(zx,zy,iter);}else if(iter>=S.maxIter){[r,g,b]=interiorRGB(zx,zy,iter);if(typeof _interiorOpacT==='function')lastT=_interiorOpacT(zx,zy);}else{const tc=colorT(iter,zx,zy);lastT=tc;const rgba=palRGBA(tc);r=rgba[0];g=rgba[1];b=rgba[2];const a=rgba[3];if(a<0.999){r=_bgFR[0]*(1-a)+r*a|0;g=_bgFR[1]*(1-a)+g*a|0;b=_bgFR[2]*(1-a)+b*a|0;}}rA+=r;gA+=g;bA+=b;}const n=aa*aa,nOut=(n-nIn)||1,i4=(row*W2+px)*4;let mr=rA/nOut|0,mg=gA/nOut|0,mb=bA/nOut|0;if(_opacField){const fa=_pixelAlphaField(px,H2-1-row,W2,H2,lastT);if(fa<0.999){mr=_bgFR[0]*(1-fa)+mr*fa|0;mg=_bgFR[1]*(1-fa)+mg*fa|0;mb=_bgFR[2]*(1-fa)+mb*fa|0;}}d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255*(n-nIn)/n|0;}}octx.putImageData(img,0,0);bar.style.setProperty('--progress',Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)+'%');status.textContent=`Rendering… ${Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)}%`;await new Promise(r=>setTimeout(r,0));}}
+for(let py=0;py<H2;py+=CHUNK){if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');for(let row=py;row<Math.min(py+CHUNK,H2);row++){for(let px=0;px<W2;px++){let rA=0,gA=0,bA=0,lastT=0,nIn=0;for(let sy=0;sy<aa;sy++)for(let sx=0;sx<aa;sx++){const spx=px+(sx+.5)/aa-.5,spy=row+(sy+.5)/aa-.5,_o=_rotV((spx+.5-W2/2)*sc,(spy+.5-H2/2)*sc),cx=S.centerX+_o[0],cy=S.centerY+_o[1];const res=_itFnQ(cx,cy,mi,er2);const[iter,zx,zy]=res;if(_exportTransparentAlpha&&iter>=S.maxIter){nIn++;continue;}let r,g,b;if(isNewton){[r,g,b]=newtonRGB(iter,zx,zy);if(typeof _newtonOpacT==='function')lastT=_newtonOpacT(zx,zy,iter);}else if(iter>=S.maxIter){[r,g,b]=interiorRGB(zx,zy,iter);if(typeof _interiorOpacT==='function')lastT=_interiorOpacT(zx,zy);}else{const tc=colorT(iter,zx,zy);lastT=tc;const rgba=palRGBA(tc);r=rgba[0];g=rgba[1];b=rgba[2];const a=rgba[3];if(a<0.999){r=_bgFR[0]*(1-a)+r*a|0;g=_bgFR[1]*(1-a)+g*a|0;b=_bgFR[2]*(1-a)+b*a|0;}}rA+=r;gA+=g;bA+=b;}const n=aa*aa,nOut=(n-nIn)||1,i4=(row*W2+px)*4;let mr=rA/nOut|0,mg=gA/nOut|0,mb=bA/nOut|0;if(_opacField){const fa=_pixelAlphaField(px,H2-1-row,W2,H2,lastT);if(fa<0.999){mr=_bgFR[0]*(1-fa)+mr*fa|0;mg=_bgFR[1]*(1-fa)+mg*fa|0;mb=_bgFR[2]*(1-fa)+mb*fa|0;}}d[i4]=mr;d[i4+1]=mg;d[i4+2]=mb;d[i4+3]=255*(n-nIn)/n|0;}}octx.putImageData(img,0,0);bar.style.setProperty('--progress',Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)+'%');status.textContent=`Rendering… ${Math.min(99,((py+CHUNK)/H2*100)).toFixed(0)}%`;await new Promise(r=>setTimeout(r,0));}}
 } finally { _exportTransparentAlpha=false; if(_upSub){ octx=_upOut; W2=_upW; H2=_upH; _densityBlit(octx,_upSub,W2,H2); _upSub.width=_upSub.height=0; } if(_lbFit){ octx=_lbOut; W2=_lbW; H2=_lbH; } }
 if(_lbFit){
 
