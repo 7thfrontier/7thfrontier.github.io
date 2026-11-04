@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-amVBDPrszAQxHVsxxdckjzuELCW5U3t4iO7rlxaClKk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-0kn2fpYRcyJ+9sazlShKt9VcvFCEHYEvMJEFYCyWEko=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: 59bc5a34debd -->
+<!-- build: 9ec84341dba9 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.7
+ * AEON -- Universal Dynamics Reactor v7.9.8
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7464,7 +7464,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.7';
+const APP_VERSION='7.9.8';
 
 
 
@@ -7473,10 +7473,10 @@ const APP_VERSION='7.9.7';
 
 
 
-const MISSION_BUILD_HASH='59bc5a34debd';
-const MISSION_GIT_SHA='f488af92cd1ddf7a3acf7daf2be5fb4b5227b437';
+const MISSION_BUILD_HASH='9ec84341dba9';
+const MISSION_GIT_SHA='704231b221137fc2c9a2b09b125fde93f591cf1a';
 
-const MISSION_RENDER_HASH='5c688abf0612';
+const MISSION_RENDER_HASH='6da05d8dc4c4';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -51046,6 +51046,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.8',
+date:'2026-11-03',
+headline:'A single layer\'s Opacity, Blend and Transparent background take effect without moving it, and a click zoom shows the new view\'s picture at once.',
+items:[
+'On a lone layer, Opacity, Blend and Transparent background did nothing until the layer was moved, even by half a pixel, and then all of them appeared at once. They now take effect as soon as they are set, in exports as well as on screen. A layer left at its defaults draws exactly as before.',
+'With a layer\'s Transparent background on, zooming with a click could leave the previous view\'s picture on screen until the next edit. The new view\'s picture now replaces it.',
+],
+},
+{
 version:'7.9.7',
 date:'2026-11-03',
 headline:'3D fractals keep their size in a portrait frame, and every renderer draws a pixel from its center.',
@@ -51102,16 +51111,6 @@ headline:'Choose the export\'s aspect ratio.',
 items:[
 'The Export modal has an Aspect row under Resolution: 1:1, 16:9, 16:10, 21:9, 3:2, 4:3, 9:16 or a custom ratio. The Resolution preset sets the long edge, and a fractal fills the wider or taller frame with more of the plane at the same center and zoom, with no bars and no stretching. Motion exports keep their own sizes for now.',
 'With View Rotation set, an escape-time fractal now renders on WebGPU just as an unturned one does, and the engine badge no longer reports a fall back to WebGL2 for the turn. GPU deep zoom does not turn yet.',
-],
-},
-{
-version:'7.8.0',
-date:'2026-11-01',
-headline:'Turn an escape-time fractal in the frame.',
-items:[
-'A View Rotation slider under Navigate turns the picture about its center, so a form can lie at any angle in a wide or tall composition, and the turn carries into exports and share links. A turned view renders on WebGL2 or the CPU, since WebGPU and GPU deep zoom do not turn yet.',
-'Animated exports keep their frame timing. Where the browser encodes VP9 or VP8 through WebCodecs, as Chrome, Edge and the Munder Difflin app do, every frame of a Frame-Exact Export or Record Video lands exactly one frame apart, even when a frame is slow to render or the tab is in the background.',
-'Layer Studio\'s transform controls work on a single layer. A lone layer you transform now shows that way on screen and in its exports, with Live Composite on or off.',
 ],
 },
 
@@ -57072,12 +57071,13 @@ if(o.shouldAbort&&o.shouldAbort()){aborted=true;break;}
 const elapsed=(f===o.totalFrames-1)?o.totalSec:f*dt;
 _animInterpolate(elapsed);
 _cancelScheduledRender();
-if(typeof _motionFrameTransparentActive==='function')await _motionFrameTransparentActive();   
+
 
 
 
 
 if(o.totalSec>0)S.flameMotionTime=Math.min(1, elapsed/o.totalSec);
+if(typeof _motionFrameTransparentActive==='function')await _motionFrameTransparentActive();   
 
 
 
@@ -57463,10 +57463,11 @@ if(st)st.textContent=`Rendering ${i+1}/${totalFrames}…`;
 const _pngFrameT=(i===totalFrames-1)?totalSec:i/fps;
 _animInterpolate(_pngFrameT);
 _cancelScheduledRender();
-if(typeof _motionFrameTransparentActive==='function')await _motionFrameTransparentActive();   
+
 
 
 if(totalSec>0)S.flameMotionTime=Math.min(1, _pngFrameT/totalSec);
+if(typeof _motionFrameTransparentActive==='function')await _motionFrameTransparentActive();   
 
 
 
@@ -59430,15 +59431,20 @@ if (_compositeLayerSet().length) return true;
 return !!(_layerMoveActive && S.liveComposite && COMP_LAYERS.some(l => l.visible));
 }
 
+function _loneLayerComposites(l) {
+return !!l && (!_layerXformIdentity(l.transform) || (typeof l.opacity === 'number' && l.opacity < 1)
+|| _validBlend(l.blend) !== 'source-over' || !!l.transparentBg);
+}
+
 function _compositeLayerSet() {
 if (typeof S === 'undefined' || typeof COMP_LAYERS === 'undefined') return [];
 if (!S.liveComposite) {
 
 const a = COMP_LAYERS[_activeCompLayerIdx];
-return (a && !_layerXformIdentity(a.transform)) ? [a] : [];
+return _loneLayerComposites(a) ? [a] : [];
 }
 const vis = COMP_LAYERS.filter(l => l.visible);
-return (vis.length >= 2 || (vis.length === 1 && !_layerXformIdentity(vis[0].transform))) ? vis : [];
+return (vis.length >= 2 || (vis.length === 1 && _loneLayerComposites(vis[0]))) ? vis : [];
 }
 
 function _applyLiveCompositeOnScreen(reuseActiveStash) {
@@ -59492,7 +59498,9 @@ if (layer === COMP_LAYERS[_activeCompLayerIdx]) {
 
 
 
-if (layer.transparentBg && layer._taCache && layer._taCache.width === W2 && layer._taCache.height === H2) {
+
+
+if (layer.transparentBg && layer._taCache && layer._taCache.width === W2 && layer._taCache.height === H2 && _taCacheCurrent(layer._taCache)) {
 layerCanvas = layer._taCache;
 } else {
 layerCanvas = activeImg;
@@ -59738,8 +59746,8 @@ const note = document.getElementById('layer-inert-note');
 if (!note) return;
 const engaged = (typeof _compositeWouldEngage === 'function') ? _compositeWouldEngage() : true;
 const liveOn = !!(typeof S !== 'undefined' && S.liveComposite);
-const enoughLayers = (typeof COMP_LAYERS !== 'undefined') && COMP_LAYERS.length >= 2;
-const tooFewVisible = liveOn && enoughLayers && !engaged;
+const act = (typeof COMP_LAYERS !== 'undefined') ? COMP_LAYERS[_activeCompLayerIdx] : null;
+const tooFewVisible = liveOn && !!act && !act.visible;
 const tog = (el) => { if (el) el.classList.toggle('is-faded', tooFewVisible); };
 const blendEl = document.getElementById('layer-blend-sel');
 const opEl = document.getElementById('layer-opacity-sl');
@@ -59748,7 +59756,7 @@ tog(blendEl && blendEl.closest ? blendEl.closest('.layer-prop-row') : null);
 tog(opEl && opEl.closest ? opEl.closest('.layer-prop-row') : null);
 tog(tbEl && tbEl.closest ? tbEl.closest('label') : null);
 note.textContent = tooFewVisible
-? 'Blend, Opacity and Transparent background (and this layer\'s own eye toggle) take effect only with 2+ visible layers.'
+? `This layer is hidden, so its Blend, Opacity and Transparent background have no effect.${engaged ? '' : ' With fewer than two visible layers the canvas still shows the selected layer.'}`
 : '';
 note.classList.toggle('is-hidden', !tooFewVisible);
 }
@@ -60963,6 +60971,7 @@ const layer = COMP_LAYERS[_activeCompLayerIdx];
 if (!layer || !layer.transparentBg || !_compositeLayerSet().includes(layer)) return;   
 const tc = await _renderLayerToCanvas({ params: structuredClone(S), transparentBg: true });
 layer._taCache = _swapLayerCanvas(layer._taCache, tc);
+_taKeys.set(tc, _taStateKey());   
 _motionFrameTAWritten = layer;
 }
 function _restoreLayerCachesAfterMotionExport() {
