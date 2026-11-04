@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.8</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.9</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.9.8</h2>
+    <h2>AEON · v7.9.9</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1163,21 +1163,23 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.9.8.</h2>
-    <p class="section-lede">Blending on a single layer · 2026-11-03</p>
+    <h2 class="section-title">What's new<br>in 7.9.9.</h2>
+    <p class="section-lede">Sliders that fit a restored value · 2026-11-04</p>
   </header>
   <ul class="prose changes">
-    <li><strong>A single layer's blending settings now work without moving it.</strong> On a lone layer, Opacity, Blend and Transparent background did nothing until the layer's transform was changed, and then all of them appeared at once, even for a move of half a pixel. They now take effect as soon as they are set, in exports as well as on screen. A layer left at its defaults draws exactly as before.</li>
-    <li><strong>Transparent background no longer keeps an old view's picture after a click zoom.</strong> With a layer's Transparent background on, zooming with a click could leave the previous view's picture on screen until the next edit.</li>
-    <li><strong>A batch re-cut that drops one member reruns only what that member reached.</strong> Before, removing a member from a batch after its release check went red meant running the whole check again. Now the new check keeps the earlier run's passes for every test the dropped member could not affect, and reruns the rest along with anything that was red, skipped or unmeasured. A check that itself kept earlier passes can now be the source for the next re-cut too, as long as every kept pass traces back to a run that really ran it.</li>
-    <li><strong>The test render cache no longer piles up in the temp directory.</strong> It kept one folder of about 48 MB per build and never removed an old one; a busy day left more than a gigabyte. Starting a new build's folder now removes cache folders nobody has used for six hours, and a folder still being read counts as used.</li>
+    <li><strong>A slider now shows a value that a link restored outside its range.</strong> Opening a link with a value beyond a slider's own range, such as a Superformula n1 of 0.02 on a slider that starts at 0.1, left the thumb pinned at the slider's end while the badge showed the real value, and the first nudge jumped from that end. The slider now stretches to include the restored value, so the thumb sits on it and one step moves one notch from it. It goes back to its usual range once a value fits again.</li>
+    <li><strong>Undo now brings back a variation sheet that was closed right after it appeared.</strong> Closing a variation sheet with its Close button or Escape within a second or two of making it dropped the sheet from history, so Undo went to the picture before the sheet instead of bringing the sheet back. The sheet is now kept in history however soon it is closed.</li>
+    <li><strong>Test transcripts now show where each browser test's time goes.</strong> Every browser test prints how long its browser took to start and to close, how long each page took to load, and how long the app took to boot, and the test runner prints the time each test started. A release check's record can then split the fixed start-up cost from the time spent testing, which is the number needed to judge whether reusing one warm browser across light tests is worth it. These lines appear only in tests the runner starts itself, so a command-line tool such as <code>render.mjs --list</code> prints none of them, even when a test runs it.</li>
+    <li><strong>A change to a test helper now selects the tests that run a command-line tool built on it.</strong> The release check already took the tests that start a tool importing a changed file directly. It missed a tool that reaches the file through other modules, so a change to the test render cache left out the preview tests that run the preview recorder. Now any tool that reaches the change, at any depth, counts, and a tool's file name no longer matches inside a longer test name.</li>
+    <li><strong>Two gate-timing tests now run, and a test in <code>bin/</code> can no longer be forgotten.</strong> The test of the time-left estimate for a running release check had been failing for two weeks without anyone seeing it, because no test run included it. Its fixture used fixed dates from before the machine last restarted, so the check read its running gate as one that had died. It now uses the current time, both gate-timing tests are registered, and the test registry check covers test files in <code>bin/</code> as well.</li>
+    <li><strong>A failed exit-code check in the landing tool's test now shows why.</strong> Each such check prints the land's exit code and the end of its output when it fails, so a one-off failure can be diagnosed without running it again.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.8</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.9</p>
 </footer>
 
 <script>

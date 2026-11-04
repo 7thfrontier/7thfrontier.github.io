@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-0kn2fpYRcyJ+9sazlShKt9VcvFCEHYEvMJEFYCyWEko=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-S2Po1vYCNVLdEUMtLYfprwFMzfMUe3X23PzcHQdvkVs=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: 9ec84341dba9 -->
+<!-- build: de6b242370c4 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.8
+ * AEON -- Universal Dynamics Reactor v7.9.9
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7464,7 +7464,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.8';
+const APP_VERSION='7.9.9';
 
 
 
@@ -7473,10 +7473,10 @@ const APP_VERSION='7.9.8';
 
 
 
-const MISSION_BUILD_HASH='9ec84341dba9';
-const MISSION_GIT_SHA='704231b221137fc2c9a2b09b125fde93f591cf1a';
+const MISSION_BUILD_HASH='de6b242370c4';
+const MISSION_GIT_SHA='33b74e93fd20afd777dc93d69f616babf767487d';
 
-const MISSION_RENDER_HASH='6da05d8dc4c4';
+const MISSION_RENDER_HASH='819abfd1f4c9';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -14634,6 +14634,8 @@ const idx=((S.layers||7)-1)%17;
 const h=document.getElementById('layers-hint');
 if(h)h.textContent=`Group ${idx+1}/17: ${wgs[idx]}`;
 }
+
+if(typeof _fitRangesToState==='function')_fitRangesToState();
 }
 
 function _finalizePatternChange(){
@@ -20771,6 +20773,8 @@ if(typeof _syncOpacityFieldRelevance==='function')_syncOpacityFieldRelevance();
 show('viewRot-ctrl', mode==='fractal' && GL_FTYPE[ft]!==undefined);
 if(mode==='geometry') _inspectorGeometryMode(show);
 else _inspectorFractalMode(ft, is3D, show);
+
+if(typeof _fitRangesToState==='function')_fitRangesToState();
 _updateMathNextRow();
 }
 
@@ -45986,7 +45990,45 @@ return true;
 }
 
 
+
+function _fitRangeToValue(el, v, floor, sync) {
+if (!Number.isFinite(v)) return;
+const d = el.dataset;
+
+const ownLo = (d.fitMin != null && el.min === d.fitMin) ? d.ownMin : el.min, lo0 = +ownLo;
+const ownHi = (d.fitMax != null && el.max === d.fitMax) ? d.ownMax : el.max, hi0 = +ownHi;
+const st = el.step === 'any' ? 0 : (+el.step || 1), hi = Math.max(hi0, v);
+let lo = Math.min(lo0, v);
+const n = st ? (v - lo) / st : 0;
+
+if (v > hi0 && Math.abs(n - Math.round(n)) > 1e-6) {
+lo = +(v - Math.ceil(n) * st).toPrecision(12);
+if (lo < floor) lo = +(lo + st).toPrecision(12);
+}
+const was = el.min + ' ' + el.max;
+if (lo === lo0 && hi === hi0) {
+if (d.fitMin != null) { el.min = ownLo; el.max = ownHi; }
+delete d.fitMin; delete d.fitMax; delete d.ownMin; delete d.ownMax;
+} else {
+el.min = String(lo); el.max = String(hi);
+d.ownMin = ownLo; d.ownMax = ownHi; d.fitMin = el.min; d.fitMax = el.max;
+}
+
+if (sync || el.min + ' ' + el.max !== was) el.value = String(v);
+}
+
+const _RANGE_RENDER_CLAMPS = { layers: () => true, fractalPower: () => S.fractalType === 'newton3' };
+function _fitRangesToState(sync) {
+if (typeof _S_BOUNDS === 'undefined' || typeof S === 'undefined') return;
+for (const k in _S_BOUNDS) {
+const b = _S_BOUNDS[k], el = document.getElementById(k), c = _RANGE_RENDER_CLAMPS[k];
+if (b && (b.type === 'number' || b.type === 'int') && el && el.type === 'range' && typeof S[k] === 'number' && !(c && c())) _fitRangeToValue(el, S[k], b.min, sync);
+}
+}
+
 function _syncInputsFromState(){
+
+_fitRangesToState(true);
 
 
 
@@ -46042,9 +46084,12 @@ const el=document.getElementById(id); if(el && (id in S) && S[id]!=null) el.valu
 
 
 
+
 [['layers','layers','layers-v',v=>String(v)],
 ['symmetry','symmetry','symmetry-v',v=>String(v)],
-['lineWeight','lineWeight','lineWeight-v',v=>(+v).toFixed(1)]].forEach(([id,key,badgeId,fmt])=>{
+['lineWeight','lineWeight','lineWeight-v',v=>(+v).toFixed(1)],
+['geoScale','geoScale','geoScale-v',v=>(+v).toFixed(1)+'×'],
+['lsysCustomAngle','lsysCustomAngle','lsysCustomAngle-v',v=>String(v)]].forEach(([id,key,badgeId,fmt])=>{
 const el=document.getElementById(id); if(!el || S[key]==null) return;
 el.value=S[key];
 const b=document.getElementById(badgeId); if(b) b.textContent=fmt(S[key]);
@@ -51046,6 +51091,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.9',
+date:'2026-11-04',
+headline:'A slider opened from a link with a value outside its usual range now stretches to show that value, so its thumb and its badge agree.',
+items:[
+'Opening a link with a value beyond a slider\'s own range, such as a Superformula n1 of 0.02 on a slider that starts at 0.1, left the thumb pinned at the end while the badge showed the real value, and the first nudge jumped from that end. The slider now stretches to include the value, so one step moves one notch from it, and it returns to its usual range once a value fits again.',
+'Closing a variation sheet within a second or two of making it, then pressing Undo, went to the picture before the sheet. Undo now brings the sheet back however soon it was closed.',
+],
+},
+{
 version:'7.9.8',
 date:'2026-11-03',
 headline:'A single layer\'s Opacity, Blend and Transparent background take effect without moving it, and a click zoom shows the new view\'s picture at once.',
@@ -51102,15 +51156,6 @@ date:'2026-11-02',
 headline:'A turned deep zoom stays on the GPU.',
 items:[
 'With View Rotation set, a deep Mandelbrot or Julia view now renders on the GPU just as an unturned one does, where it used to drop to the slower CPU path.',
-],
-},
-{
-version:'7.9.0',
-date:'2026-11-02',
-headline:'Choose the export\'s aspect ratio.',
-items:[
-'The Export modal has an Aspect row under Resolution: 1:1, 16:9, 16:10, 21:9, 3:2, 4:3, 9:16 or a custom ratio. The Resolution preset sets the long edge, and a fractal fills the wider or taller frame with more of the plane at the same center and zoom, with no bars and no stretching. Motion exports keep their own sizes for now.',
-'With View Rotation set, an escape-time fractal now renders on WebGPU just as an unturned one does, and the engine badge no longer reports a fall back to WebGL2 for the turn. GPU deep zoom does not turn yet.',
 ],
 },
 
@@ -54018,6 +54063,8 @@ if (typeof _taRefreshAbort === 'function') _taRefreshAbort();
 
 if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(exitVariationSheet, 'varsheet-exit')) return true;
 if (typeof _stopBackgroundRenderLoops === 'function') _stopBackgroundRenderLoops();
+
+if (typeof _histRecordLive === 'function') _histRecordLive();
 _histPause = true;
 try { _applyHist(_varSheet.pre); } finally { _histPause = false; }
 pushHist();
@@ -59604,7 +59651,13 @@ const t = e.target;
 if (typeof _densityRefineAbort === 'function') _densityRefineAbort();
 if (typeof _taRefreshAbort === 'function') _taRefreshAbort(true);   
 e.preventDefault(); e.stopImmediatePropagation();
-const replay = () => { const c = new e.constructor(e.type, e); c.__aeonReplay = true; t.dispatchEvent(c); };   
+
+
+const kept = (e.type !== 'input' && e.type !== 'change') || t.type === 'file' ? null : t.type === 'checkbox' || t.type === 'radio' ? t.checked : t.value;
+const replay = () => {
+if (kept != null) { if (typeof kept === 'boolean') t.checked = kept; else if (t.value !== kept) t.value = kept; }
+const c = new e.constructor(e.type, e); c.__aeonReplay = true; t.dispatchEvent(c);
+};   
 if (e.type === 'input' || e.type === 'change') _deferDuringLayerSwap(replay, ((t.__aeonSwapKeys = t.__aeonSwapKeys || {})[e.type] = t.__aeonSwapKeys[e.type] || {})); else _swapDeferred.push(replay);
 }
 function _replayHeldLayerSwapEvents() { while (_swapDeferred.length && !_layerSwapInProgress()) { try { _swapDeferred.shift()(); } catch (err) { console.error('[layer-swap] deferred call failed', err); } } }
