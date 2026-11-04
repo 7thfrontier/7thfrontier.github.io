@@ -1,10 +1,5 @@
-Gate limits fit today's full tier, and checks name what they saw · 2026-11-04
+The test runner names the pass line it rejected · 2026-11-04
 
-- **The documented full-tier runtime is the measured one.** The developer docs said the full test tier took about 85 minutes, a figure from v6.64.9 when it held 143 tests. On 7.9.8 it ran 742 suites in 3h16m. The docs now give that measurement with the version it was taken on, and say how to take it again.
-- **The landing check names the real problem when it is run from the wrong shell.** Sourced from zsh, the check that a release has a passed gate could not find its own folder and said the gate ledger query had failed. It now says it needs bash, and a copy outside the repository says which file it could not find.
-- **Gate time limits fit a full test run as long as today's.** Three limits assumed the full tier took about 85 minutes; on 7.9.8 it took 3h16m. The on-demand nightly run would have been stopped at 3 hours, the lock's liveness fallback stopped counting a running gate after 3 hours, and a version number claimed at the bump could be taken by another seat after 2 hours. All three now allow 6 hours.
-- **The test runner's rule for whether a suite proved anything is now shared with the member check.** The member check used a looser pattern of its own, so a suite could pass there and fail the release census on the same output. The runner now exposes its rule for the member check to apply.
-- **A comment that names a file that does not exist is now caught at commit time.** The check that every cited file exists ran only with the full lint pass, so such a comment surfaced hours after the commit. The commit check now runs it on the files being committed and refuses the commit, naming the line.
-- **Tests that run with no hive no longer stop for the hive's floor hold.** A test that cleared its hive settings still read the real hive's floor hold, so it refused whenever a release check held the floor unless it carried its own exemption. With no hive named, the fast tier and the lint run now read no hold at all.
+- **The test runner now says why it rejected a suite's pass line.** When a suite printed a ratio summary with more than four words before "passed", the runner said it printed no summary at all, which sent 7.9.9's check hunting for a missing line. It now quotes the line and says how many words sit where it reads at most four.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.
