@@ -99,8 +99,8 @@ function _renderIFS(oc){
     var nx=a*x+b*y+e,ny=c*x+d*y+f;x=nx;y=ny;
     if(i<20)continue;
     var py_ifs=def.yup?-y:y;
-    var px=Math.round((x-S.centerX)/scale+(VCX||W/2))|0;   
-    var py=Math.round((py_ifs-S.centerY)/scale+H/2)|0;
+    var px=Math.floor((x-S.centerX)/scale+(VCX||W/2))|0;   
+    var py=Math.floor((py_ifs-S.centerY)/scale+H/2)|0;
     if(px>=0&&px<W&&py>=0&&py<H){
       var idx=py*W+px;density[idx]++;colorAcc[idx]+=ti/nT;
       if(density[idx]>maxD)maxD=density[idx];
@@ -315,8 +315,8 @@ function _renderAttractor(oc){
       if(py2d<bbMinY)bbMinY=py2d;
       if(py2d>bbMaxY)bbMaxY=py2d;
     }
-    var ppx=Math.round((px2d-S.centerX)/sc+(VCX||W/2))|0;   
-    var ppy=Math.round((py2d-S.centerY)/sc+H/2)|0;
+    var ppx=Math.floor((px2d-S.centerX)/sc+(VCX||W/2))|0;   
+    var ppy=Math.floor((py2d-S.centerY)/sc+H/2)|0;
     if(dbg){
       if(dbg.first.length<10)dbg.first.push([+x.toFixed(4),+y.toFixed(4),+z.toFixed(4),ppx,ppy]);
       if(dbg.last.length>=10)dbg.last.shift();

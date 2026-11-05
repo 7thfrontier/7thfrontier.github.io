@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.12</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.13</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.9.12</h2>
+    <h2>AEON · v7.9.13</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1163,19 +1163,20 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.9.12.</h2>
-    <p class="section-lede">The release check finds browser tests that reach a changed function · 2026-11-04</p>
+    <h2 class="section-title">What's new<br>in 7.9.13.</h2>
+    <p class="section-lede">Plotted points on the same pixel grid as everything else · 2026-11-05</p>
   </header>
   <ul class="prose changes">
-    <li><strong>Test runs can record which app functions each browser test exercises.</strong> With <code>REACTOR_COVERAGE_DIR</code> set, every browser test writes the names of the functions it ran, and <code>bin/coverage-map.mjs</code> turns those records into a map from function to tests. It can pick the tests a change needs from that map and score the pick against past release checks. Nothing uses the map to choose tests yet; it is measured beside the current rules first.</li>
-    <li><strong>A change to a function that tests reach only through the interface now selects those tests.</strong> A test that clicks through the app, such as the user journeys, never names the functions behind the clicks, so the release check could not tell it ran them. The selection now also takes the tests the coverage recording saw run a changed function, when fewer than one test in ten ran it. It only adds tests, and names the function that added each one.</li>
+    <li><strong>Attractors, IFS, flames and the Buddhabrot now plot each point in the same pixel the GPU and the pointer use.</strong> These renderers rounded a point to the nearest pixel edge, so every plotted point sat half a pixel down and to the right of where an escape-time layer, the orbit probe and click-to-center put it. They now use the same pixel grid as everything else.</li>
+    <li><strong>Backend parity tests now catch a picture that is uniformly brighter, darker or recolored.</strong> Six tests compared two renders by correlation alone, which reads a perfect 1.000 when one side is shifted by a tenth of the color range, so a gamma, palette or brightness slip on one backend passed them. They now share one comparator that also bounds the mean color error, and a unit test plants that shift and watches it fail.</li>
+    <li><strong>A feature registry generated from source lists which controls apply to each subject.</strong> <code>bin/gen-feature-registry.mjs</code> writes <code>data/feature-registry.json</code>: every fractal, pattern, palette and data seed, and for each fractal and pattern the registered controls that are visible and active for it. It runs the app's own inspector routines once per subject against the page's markup, without a browser, so nothing is listed by hand. It also lists the post-FX, motion, deep-zoom, engine and export paths. A new test regenerates the file and fails when it no longer matches the source, so a feature walk or an art draw that reads it cannot pair a control with a subject that hides it.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.12</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.13</p>
 </footer>
 
 <script>

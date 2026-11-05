@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-q75XWm2i7Fi2yRJ9Qu0/P9HADOHdZ583k8qJokpPS6U=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-ha9ErNwLOkD0aZ+y7hbW5tMmAGqyFSJXEU4+SNCVIMk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: 635b9f7e2417 -->
+<!-- build: 9c24768927e8 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.12
+ * AEON -- Universal Dynamics Reactor v7.9.13
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7464,7 +7464,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.12';
+const APP_VERSION='7.9.13';
 
 
 
@@ -7473,10 +7473,10 @@ const APP_VERSION='7.9.12';
 
 
 
-const MISSION_BUILD_HASH='635b9f7e2417';
-const MISSION_GIT_SHA='0532207ca4755019650808fcde12df2534804a25';
+const MISSION_BUILD_HASH='9c24768927e8';
+const MISSION_GIT_SHA='399e4c88cfbf17e999ed452a7940e3e491bd7d8a';
 
-const MISSION_RENDER_HASH='819abfd1f4c9';
+const MISSION_RENDER_HASH='2ce329713406';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -10852,8 +10852,8 @@ const nx=a*x+b*y+e,ny=c*x+d*y+f;
 x=nx;y=ny;
 if(i<20)continue;
 const py_ifs=def.yup?-y:y;
-const px=Math.round((x-S.centerX)/scale+_viewCenterPx())|0,   
-py=Math.round((py_ifs-S.centerY)/scale+H/2)|0;
+const px=Math.floor((x-S.centerX)/scale+_viewCenterPx())|0,   
+py=Math.floor((py_ifs-S.centerY)/scale+H/2)|0;
 if(px>=0&&px<W&&py>=0&&py<H){
 const idx=py*W+px;
 density[idx]++;
@@ -18858,10 +18858,10 @@ if(!anti && orbLen < _minOrb) continue;
 
 for(let i=1; i<orbLen; i++){
 const ox=orbX[i], oy=orbY[i];
-const px=Math.round((ox-S.centerX)/sc+_viewCenterPx())|0;   
+const px=Math.floor((ox-S.centerX)/sc+_viewCenterPx())|0;   
 if(px<0||px>=W) continue;
 
-const py0=Math.round((oy-S.centerY)/sc+H/2)|0;
+const py0=Math.floor((oy-S.centerY)/sc+H/2)|0;
 if(py0>=0&&py0<H){
 const idx=py0*W+px;
 rBuf[idx]++; if(rBuf[idx]>maxR) maxR=rBuf[idx];
@@ -18869,7 +18869,7 @@ if(i<depths[1]){gBuf[idx]++; if(gBuf[idx]>maxG) maxG=gBuf[idx]}
 if(i<depths[2]){bBuf[idx]++; if(bBuf[idx]>maxB) maxB=bBuf[idx]}
 }
 
-const py1=Math.round((-oy-S.centerY)/sc+H/2)|0;
+const py1=Math.floor((-oy-S.centerY)/sc+H/2)|0;
 if(py1!==py0&&py1>=0&&py1<H){
 const idx=py1*W+px;
 rBuf[idx]++; if(rBuf[idx]>maxR) maxR=rBuf[idx];
@@ -27626,8 +27626,8 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
     let fy = (zy - p.cy) * scl + f32(p.height) * 0.5;
     
     if (i > 0u && fx >= 0.0 && fx < f32(p.width) && fy >= 0.0 && fy < f32(p.height)) {
-      let px = u32(min(round(fx), wMax));
-      let py = u32(min(round(fy), hMax));
+      let px = u32(min(floor(fx), wMax));
+      let py = u32(min(floor(fy), hMax));
       let idx = py * p.width + px;
       atomicAdd(&densityR[idx], 1u);
       if (i < depthG) { atomicAdd(&densityG[idx], 1u); }
@@ -27637,7 +27637,7 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
       
       let fyConj = (-zy - p.cy) * scl + f32(p.height) * 0.5;
       if (fyConj >= 0.0 && fyConj < f32(p.height)) {
-        let pyConj = u32(min(round(fyConj), hMax));
+        let pyConj = u32(min(floor(fyConj), hMax));
         if (pyConj != py) {
           let idxConj = pyConj * p.width + px;
           atomicAdd(&densityR[idxConj], 1u);
@@ -51091,6 +51091,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.13',
+date:'2026-11-05',
+headline:'Attractors, IFS, flames and the Buddhabrot now draw each point in the same pixel that the pointer and the other renderers use.',
+items:[
+'These renderers rounded each point to a pixel edge, so every point sat half a pixel down and to the right of where an escape-time layer, the orbit probe and click-to-center put it. They now use the same pixel grid, so a plotted layer lines up with the layers around it.',
+],
+},
+{
 version:'7.9.9',
 date:'2026-11-04',
 headline:'A slider opened from a link with a value outside its usual range now stretches to show that value, so its thumb and its badge agree.',
@@ -51148,14 +51156,6 @@ date:'2026-11-02',
 headline:'Variation sheet cells finish sharpening.',
 items:[
 'In a variation sheet of attractors, IFS fractals, flames or Buddhabrots, cells that were still sharpening when Live Composite was turned off now finish once it is turned back on, where they used to stay at their quick preview until something else redrew them.',
-],
-},
-{
-version:'7.9.1',
-date:'2026-11-02',
-headline:'A turned deep zoom stays on the GPU.',
-items:[
-'With View Rotation set, a deep Mandelbrot or Julia view now renders on the GPU just as an unturned one does, where it used to drop to the slower CPU path.',
 ],
 },
 
@@ -66913,9 +66913,8 @@ if(!isFinite(px)||!isFinite(py))continue;
 
 
 
-
-const ppx=Math.round((px-S.centerX)/sc+_viewCenterPx())|0;   
-const ppy=Math.round((py-S.centerY)/sc+H/2)|0;
+const ppx=Math.floor((px-S.centerX)/sc+_viewCenterPx())|0;   
+const ppy=Math.floor((py-S.centerY)/sc+H/2)|0;
 if(ppx>=0&&ppx<W&&ppy>=0&&ppy<H&&i>=20){
 const idx=ppy*W+ppx;
 const op=reg[ti].opacity!==undefined?reg[ti].opacity:1;
@@ -68362,8 +68361,8 @@ if(!isFinite(x)||!isFinite(y)||!isFinite(z)){
 if(_attrDbg)_dbgNaNCount++;
 [x,y,z]=_reseedICs();continue;
 }
-const ppx=Math.round((px2d-S.centerX)/sc+_viewCenterPx())|0;   
-const ppy=Math.round((py2d-S.centerY)/sc+H/2)|0;
+const ppx=Math.floor((px2d-S.centerX)/sc+_viewCenterPx())|0;   
+const ppy=Math.floor((py2d-S.centerY)/sc+H/2)|0;
 if(_attrDbg){
 _dbgTotalCount++;
 if(_dbgMinX>x)_dbgMinX=x;if(_dbgMaxX<x)_dbgMaxX=x;
@@ -68549,7 +68548,7 @@ for(let i=0;i<n;i++){
 const x=pts[i*3], y=pts[i*3+1], z=pts[i*3+2];
 let wx,wy,wz; if(proj==='xz'){wx=x;wy=z;wz=y;}else if(proj==='xy'){wx=x;wy=y;wz=z;}else{wx=y;wy=z;wz=x;}
 let px,py; if(rot){ const ax=wx-cx, az=wz-cwz, nx=ax*cRY+az*sRY, nz=-ax*sRY+az*cRY; px=nx+cx; py=(wy-cy)*cRX-nz*sRX+cy; } else { px=wx; py=wy; }   
-const sx=Math.round((px-cx)/sc+_viewCenterPx())|0, sy=Math.round((py-cy)/sc+H*0.5)|0;   
+const sx=Math.floor((px-cx)/sc+_viewCenterPx())|0, sy=Math.floor((py-cy)/sc+H*0.5)|0;   
 if(sx<0||sx>=W||sy<0||sy>=H) continue;
 const idx=(sy*W+sx)*4;   
 data[idx]=Math.max(0,Math.min(255,data[idx]+_pvSign*60)); data[idx+1]=Math.max(0,Math.min(255,data[idx+1]+_pvSign*42)); data[idx+2]=Math.max(0,Math.min(255,data[idx+2]+_pvSign*16));

@@ -5,115 +5,115 @@
     120
   ],
   "canvas": "1440x900",
-  "totalBytes": 748985,
+  "totalBytes": 748458,
   "entries": [
     {
       "mode": "fractal",
       "type": "attractor_aizawa",
       "file": "fractal-attractor_aizawa.jpg",
-      "bytes": 2242
+      "bytes": 2199
     },
     {
       "mode": "fractal",
       "type": "attractor_chen_lee",
       "file": "fractal-attractor_chen_lee.jpg",
-      "bytes": 1671
+      "bytes": 1664
     },
     {
       "mode": "fractal",
       "type": "attractor_chua",
       "file": "fractal-attractor_chua.jpg",
-      "bytes": 2319
+      "bytes": 2267
     },
     {
       "mode": "fractal",
       "type": "attractor_clifford",
       "file": "fractal-attractor_clifford.jpg",
-      "bytes": 2281
+      "bytes": 2284
     },
     {
       "mode": "fractal",
       "type": "attractor_dadras",
       "file": "fractal-attractor_dadras.jpg",
-      "bytes": 1869
+      "bytes": 1918
     },
     {
       "mode": "fractal",
       "type": "attractor_dejong",
       "file": "fractal-attractor_dejong.jpg",
-      "bytes": 3653
+      "bytes": 3613
     },
     {
       "mode": "fractal",
       "type": "attractor_duffing",
       "file": "fractal-attractor_duffing.jpg",
-      "bytes": 1834
+      "bytes": 1814
     },
     {
       "mode": "fractal",
       "type": "attractor_gumowski_mira",
       "file": "fractal-attractor_gumowski_mira.jpg",
-      "bytes": 2142
+      "bytes": 2056
     },
     {
       "mode": "fractal",
       "type": "attractor_halvorsen",
       "file": "fractal-attractor_halvorsen.jpg",
-      "bytes": 2700
+      "bytes": 2707
     },
     {
       "mode": "fractal",
       "type": "attractor_henon",
       "file": "fractal-attractor_henon.jpg",
-      "bytes": 1572
+      "bytes": 1571
     },
     {
       "mode": "fractal",
       "type": "attractor_hopalong",
       "file": "fractal-attractor_hopalong.jpg",
-      "bytes": 3541
+      "bytes": 3586
     },
     {
       "mode": "fractal",
       "type": "attractor_ikeda",
       "file": "fractal-attractor_ikeda.jpg",
-      "bytes": 1809
+      "bytes": 1807
     },
     {
       "mode": "fractal",
       "type": "attractor_lorenz",
       "file": "fractal-attractor_lorenz.jpg",
-      "bytes": 2406
+      "bytes": 2359
     },
     {
       "mode": "fractal",
       "type": "attractor_pickover",
       "file": "fractal-attractor_pickover.jpg",
-      "bytes": 1564
+      "bytes": 1551
     },
     {
       "mode": "fractal",
       "type": "attractor_rossler",
       "file": "fractal-attractor_rossler.jpg",
-      "bytes": 1921
+      "bytes": 1930
     },
     {
       "mode": "fractal",
       "type": "attractor_sprott_b",
       "file": "fractal-attractor_sprott_b.jpg",
-      "bytes": 3493
+      "bytes": 3439
     },
     {
       "mode": "fractal",
       "type": "attractor_thomas",
       "file": "fractal-attractor_thomas.jpg",
-      "bytes": 3289
+      "bytes": 3227
     },
     {
       "mode": "fractal",
       "type": "attractor_tinkerbell",
       "file": "fractal-attractor_tinkerbell.jpg",
-      "bytes": 1212
+      "bytes": 1225
     },
     {
       "mode": "fractal",
@@ -125,13 +125,13 @@
       "mode": "fractal",
       "type": "buddhabrot",
       "file": "fractal-buddhabrot.jpg",
-      "bytes": 10126
+      "bytes": 9986
     },
     {
       "mode": "fractal",
       "type": "buddhabrot_anti",
       "file": "fractal-buddhabrot_anti.jpg",
-      "bytes": 2807
+      "bytes": 2788
     },
     {
       "mode": "fractal",
@@ -185,49 +185,49 @@
       "mode": "fractal",
       "type": "fractal_flame",
       "file": "fractal-fractal_flame.jpg",
-      "bytes": 1709
+      "bytes": 1684
     },
     {
       "mode": "fractal",
       "type": "ifs_cantor_dust",
       "file": "fractal-ifs_cantor_dust.jpg",
-      "bytes": 2102
+      "bytes": 2060
     },
     {
       "mode": "fractal",
       "type": "ifs_carpet",
       "file": "fractal-ifs_carpet.jpg",
-      "bytes": 4668
+      "bytes": 4652
     },
     {
       "mode": "fractal",
       "type": "ifs_dragon",
       "file": "fractal-ifs_dragon.jpg",
-      "bytes": 1685
+      "bytes": 1677
     },
     {
       "mode": "fractal",
       "type": "ifs_fern",
       "file": "fractal-ifs_fern.jpg",
-      "bytes": 2003
+      "bytes": 2008
     },
     {
       "mode": "fractal",
       "type": "ifs_levy",
       "file": "fractal-ifs_levy.jpg",
-      "bytes": 2757
+      "bytes": 2752
     },
     {
       "mode": "fractal",
       "type": "ifs_polygon",
       "file": "fractal-ifs_polygon.jpg",
-      "bytes": 2730
+      "bytes": 2741
     },
     {
       "mode": "fractal",
       "type": "ifs_sierpinski",
       "file": "fractal-ifs_sierpinski.jpg",
-      "bytes": 1584
+      "bytes": 1597
     },
     {
       "mode": "fractal",
