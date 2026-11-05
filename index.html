@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.11</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.9.12</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.9.11</h2>
+    <h2>AEON · v7.9.12</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1163,18 +1163,19 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.9.11.</h2>
-    <p class="section-lede">The test runner names the pass line it rejected · 2026-11-04</p>
+    <h2 class="section-title">What's new<br>in 7.9.12.</h2>
+    <p class="section-lede">The release check finds browser tests that reach a changed function · 2026-11-04</p>
   </header>
   <ul class="prose changes">
-    <li><strong>The test runner now says why it rejected a suite's pass line.</strong> When a suite printed a ratio summary with more than four words before &quot;passed&quot;, the runner said it printed no summary at all, which sent 7.9.9's check hunting for a missing line. It now quotes the line and says how many words sit where it reads at most four.</li>
+    <li><strong>Test runs can record which app functions each browser test exercises.</strong> With <code>REACTOR_COVERAGE_DIR</code> set, every browser test writes the names of the functions it ran, and <code>bin/coverage-map.mjs</code> turns those records into a map from function to tests. It can pick the tests a change needs from that map and score the pick against past release checks. Nothing uses the map to choose tests yet; it is measured beside the current rules first.</li>
+    <li><strong>A change to a function that tests reach only through the interface now selects those tests.</strong> A test that clicks through the app, such as the user journeys, never names the functions behind the clicks, so the release check could not tell it ran them. The selection now also takes the tests the coverage recording saw run a changed function, when fewer than one test in ten ran it. It only adds tests, and names the function that added each one.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.11</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.9.12</p>
 </footer>
 
 <script>
