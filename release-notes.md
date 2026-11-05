@@ -1,7 +1,5 @@
-Plotted points on the same pixel grid as everything else · 2026-11-05
+Release checks name a stalled step and cover every render store · 2026-11-05
 
-- **Attractors, IFS, flames and the Buddhabrot now plot each point in the same pixel the GPU and the pointer use.** These renderers rounded a point to the nearest pixel edge, so every plotted point sat half a pixel down and to the right of where an escape-time layer, the orbit probe and click-to-center put it. They now use the same pixel grid as everything else.
-- **Backend parity tests now catch a picture that is uniformly brighter, darker or recolored.** Six tests compared two renders by correlation alone, which reads a perfect 1.000 when one side is shifted by a tenth of the color range, so a gamma, palette or brightness slip on one backend passed them. They now share one comparator that also bounds the mean color error, and a unit test plants that shift and watches it fail.
-- **A feature registry generated from source lists which controls apply to each subject.** `bin/gen-feature-registry.mjs` writes `data/feature-registry.json`: every fractal, pattern, palette and data seed, and for each fractal and pattern the registered controls that are visible and active for it. It runs the app's own inspector routines once per subject against the page's markup, without a browser, so nothing is listed by hand. It also lists the post-FX, motion, deep-zoom, engine and export paths. A new test regenerates the file and fails when it no longer matches the source, so a feature walk or an art draw that reads it cannot pair a control with a subject that hides it.
+- A maintenance release with no change you can see in AEON.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.
