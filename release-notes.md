@@ -1,4 +1,4 @@
-Every gate run keeps its own ledger, and a re-cut census credits its own fast check · 2026-11-06
+Census selection follows .cjs helpers, and new checks refuse stubbed executors and a stale export renderer · 2026-11-06
 
 - A maintenance release with no change you can see in AEON.
 
