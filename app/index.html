@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-VLGtUp7WPk4N3QjiBYMHIMInTpbaMA0X2/GMjYeUnZg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-/EIuvY8gJjgm2KcJADnjsIvtkThpIosBH4SZjHqpdoE=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: e8f0de2ccb30 -->
+<!-- build: a438ea777c59 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.17
+ * AEON -- Universal Dynamics Reactor v7.9.18
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7464,7 +7464,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.17';
+const APP_VERSION='7.9.18';
 
 
 
@@ -7473,10 +7473,10 @@ const APP_VERSION='7.9.17';
 
 
 
-const MISSION_BUILD_HASH='e8f0de2ccb30';
-const MISSION_GIT_SHA='5650c03e055b18e7855c44a7fe464e1770372cbd';
+const MISSION_BUILD_HASH='a438ea777c59';
+const MISSION_GIT_SHA='3c0460b3c2cbe4fe2749b8f9193bf82437b3bc6f';
 
-const MISSION_RENDER_HASH='2f66a795543f';
+const MISSION_RENDER_HASH='ca283c68a68f';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11195,6 +11195,7 @@ _cpuPathInFlight++;
 return _renderFractalCPUPath(isBuddhab).finally(() => { _cpuPathInFlight--; });
 }
 
+let _wgpuScreenOkN=0;   
 async function _tryRenderWGPU(kernel, opts){
 glcv.classList.remove('is-shown');
 if(typeof cv!=='undefined' && cv)cv.classList.remove('is-hidden');
@@ -11207,6 +11208,7 @@ let ok = false;
 try { ok = await kernel(); }
 finally { _wgpuDisown(o); }
 _wgpuMarkDispatch(ok);
+if(ok)_wgpuScreenOkN++;
 if(ok && opts && opts.markPainted) _wgpuBuddhaHasPainted = true;
 return ok;
 }
@@ -16208,6 +16210,7 @@ let u8 = new Uint8Array(buf);
 
 const dpi = (typeof _exportResolvedDPI!=='undefined' && _exportResolvedDPI) || (S && S.exportDPI) || 300;   
 u8 = injectPNGPhys(u8, dpi);
+if (_exportEngines && _exportEngines.size) u8 = injectPNGMetadata(u8, 'Renderer', [..._exportEngines].join(', '));
 u8 = injectPNGProvenance(u8);
 u8 = injectPNGMetadata(u8, 'reactor-state', _buildStateUrl());
 const stampedBlob = new Blob([u8], { type: 'image/png' });
@@ -60810,7 +60813,7 @@ return tg;
 }
 }
 if (S.mode === 'geometry') {
-renderGeometry();
+_noteExportEngine('Canvas 2D'); renderGeometry();
 
 
 
@@ -60856,10 +60859,10 @@ ctx.fillStyle = S.bgColor; ctx.fillRect(0, 0, W, H);
 
 
 
-if (_ft.startsWith('attractor_')) await _exportRenderRetryOnce(t=>renderAttractor(t, signal || null));
+if (!_ft.startsWith('buddhabrot')) _noteExportEngine('CPU'); if (_ft.startsWith('attractor_')) await _exportRenderRetryOnce(t=>renderAttractor(t, signal || null));
 else if (_ft.startsWith('ifs_')) await _exportRenderRetryOnce(t=>renderIFS(t, signal ? { signal } : undefined));
 else if (_ft === 'fractal_flame') await _exportRenderRetryOnce(t=>renderFractalFlame(t, signal));
-else if (!(await _wgpuBuddhaExportLayer(_densScale))) {
+else if (await _wgpuBuddhaExportLayer(_densScale)) _noteExportEngine('WebGPU'); else { _noteExportEngine('CPU');
 
 
 
@@ -60868,7 +60871,7 @@ S.buddhabrotSamples = _bx.samples; _buddhaDensityComp = _bx.comp;
 try { await _exportRenderRetryOnce(t=>renderBuddhabrot(t, _ft === 'buddhabrot_anti', signal)); }
 finally { _buddhaDensityComp = 1; S.buddhabrotSamples = _bbSamples; }
 }
-} else await renderFractal();
+} else { const _wq = _wgpuScreenOkN; await renderFractal(); _noteExportEngine(_wgpuScreenOkN !== _wq ? 'WebGPU' : (typeof glcv !== 'undefined' && glcv && glcv.classList.contains('is-shown')) ? 'WebGL2' : 'CPU'); }   
 }
 
 
@@ -63427,6 +63430,11 @@ return injectPNGMetadata(u8,'Software','AEON '+APP_VERSION);
 }
 
 
+
+let _exportEngines=null;
+function _noteExportEngine(name){ if(_exportEngines)_exportEngines.add(name); }
+
+
 function injectPNGPhys(u8,dpi){
 try{
 
@@ -64222,7 +64230,7 @@ if(await _renderDeepZoomForExport(rCtx,rW,rH,bar,status,signal))return;
 
 if(/^(buddhabrot|buddhabrot_anti|attractor_|fractal_flame|ifs_)/.test(S.fractalType)){
 bar&&bar.style.setProperty('--progress','30%');status.textContent='Native rendering…';await new Promise(r=>setTimeout(r,10));
-_beginExportPaint(_densityScreenArea(rW,rH,W,H));   
+_noteExportEngine('CPU'); _beginExportPaint(_densityScreenArea(rW,rH,W,H));   
 const oW=W,oH=H,[dW,dH]=_densityRenderSize(S.fractalType,rW,rH,_densityScreenArea(rW,rH,W,H));   
 
 
@@ -64373,7 +64381,7 @@ if(_pendingCloseModalTimer){clearTimeout(_pendingCloseModalTimer);_pendingCloseM
 
 
 _exportAbortController = new AbortController();
-const signal = _exportAbortController.signal;
+_exportEngines = new Set(); const signal = _exportAbortController.signal;
 
 
 
@@ -64529,7 +64537,7 @@ renderCtx = octx; renderW = W2; renderH = H2;
 
 if(S.mode==='geometry'){
 
-const oW=W,oH=H;W=W2;H=H2;
+_noteExportEngine('Canvas 2D'); const oW=W,oH=H;W=W2;H=H2;
 try{
 const oc2=_trackCanvas(document.createElement('canvas'));oc2.width=W2;oc2.height=H2;
 const c=oc2.getContext('2d');const bR=Math.min(W2,H2)*.15;
@@ -64626,12 +64634,12 @@ try { if (typeof scheduleRender === 'function') scheduleRender(); } catch (_) { 
 
 _freeExportScratch();
 _exportAbortController = null; 
-}
+_exportEngines = null; }
 }
 
 
 async function _tileRenderFractal(octx,W2,H2,bar,status,signal,crop){
-const TILE=512;
+_noteExportEngine('CPU'); const TILE=512;
 const cx0=crop?crop.x:0, cy0=crop?crop.y:0, cW=crop?crop.w:W2, cH=crop?crop.h:H2;   
 const tilesX=Math.ceil(cW/TILE),tilesY=Math.ceil(cH/TILE);
 const total=tilesX*tilesY;let done=0;
@@ -64708,7 +64716,7 @@ if(!ok) throw new Error('the custom formula does not compile, so it would export
 }
 async function _tileRenderFractalGL(octx,W2,H2,bar,status,renderFn,signal,crop){
 if(!gl||!glReady)return;
-
+_noteExportEngine('WebGL2'); 
 
 const cx0=crop?crop.x:0, cy0=crop?crop.y:0, cW=crop?crop.w:W2, cH=crop?crop.h:H2;
 renderFn=renderFn||renderFractalGL;
@@ -64834,7 +64842,7 @@ return false;
 }
 cv.width=oCW;cv.height=oCH;W=oW;H=oH;
 if(typeof render==='function')render();   
-return true;
+_noteExportEngine('CPU'); return true;
 }
 
 
@@ -64842,7 +64850,7 @@ async function _tileRenderFractal3D(octx,W2,H2,bar,status,signal,transparent,cro
 const cx0=crop?crop.x:0, cy0=crop?crop.y:0, cW=crop?crop.w:W2, cH=crop?crop.h:H2;   
 if(!gl||!glReady)return;
 if(!gl3dProg){initGL3D();if(!gl3dProg)return;}
-
+_noteExportEngine('WebGL2'); 
 
 const _isCustom3D=(S.fractalType==='custom_3d');
 if(_isCustom3D)_refuseUncompilableFormulaExport(true);
@@ -65042,7 +65050,7 @@ if(S.mode==='geometry'){await doSVGExport();return;}
 if(_pendingCloseModalTimer){clearTimeout(_pendingCloseModalTimer);_pendingCloseModalTimer=null;}
 
 _exportAbortController = new AbortController();
-const signal = _exportAbortController.signal;
+_exportEngines = new Set(); const signal = _exportAbortController.signal;
 let _pfxOnArt=false;
 
 
@@ -65097,7 +65105,7 @@ if(_exVis.length){
 status.textContent=t(_exVis.length>1?'export.compositing-layers':'export.compositing-layer',{n:_exVis.length});
 await _compositeLayersToExport(octx,W2,H2,_fmt==='png'||_fmt==='webp'||_fmt==='gif',signal);
 } else if(S.mode==='geometry'){
-const oW=W,oH=H;W=W2;H=H2;
+_noteExportEngine('Canvas 2D'); const oW=W,oH=H;W=W2;H=H2;
 try{
 const oc2=_trackCanvas(document.createElement('canvas'));oc2.width=W2;oc2.height=H2;const c=oc2.getContext('2d');
 const bR=Math.min(W2,H2)*.15;_exportBgFill(c,W2,H2,_fmt==='png'||_fmt==='webp'||_fmt==='gif');
@@ -65140,7 +65148,7 @@ if(_dzNeedsCpu(W2)&&await _renderDeepZoomForExport(octx,W2,H2,bar,status,signal)
 
 
 
-const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
+_noteExportEngine('CPU'); const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
 const _oIfs=S.ifsIter;if(_oIfs)S.ifsIter=Math.round(_oIfs*((W2*H2)/Math.max(1,_densityScreenArea(W2,H2,oW,oH))));   
 _densityCapNotice();
 _beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
@@ -65150,7 +65158,7 @@ finally{_endExportPaint();_exportTransparentAlpha=false;S.ifsIter=_oIfs;cv.width
 
 
 bar.style.setProperty('--progress','20%');status.textContent='Computing attractor…';await new Promise(r=>setTimeout(r,10));
-const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
+_noteExportEngine('CPU'); const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
 const _rdAttr=_scaleDensitySamples((W2*H2)/Math.max(1,_densityScreenArea(W2,H2,oW,oH)));_attractorCapNotice();   
 _beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
 try{ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderAttractor(t,signal,{onProgress:_densityExportProgress(bar,status,'Attractor')})))octx.drawImage(cv,0,0);}   
@@ -65163,7 +65171,7 @@ finally{_endExportPaint();_exportTransparentAlpha=false;_rdAttr();cv.width=oW;cv
 
 
 bar.style.setProperty('--progress','20%');status.textContent='Computing flame…';await new Promise(r=>setTimeout(r,10));
-const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
+_noteExportEngine('CPU'); const oW=W,oH=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
 const _rdFlame=_scaleDensitySamples((W2*H2)/Math.max(1,_densityScreenArea(W2,H2,oW,oH)));   
 _beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
 try{ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderFractalFlame(t,signal)))octx.drawImage(cv,0,0);}   
@@ -65238,7 +65246,7 @@ _wgpuExportOpts={ totalSamples: _bxG.samples, densityComp: _bxG.comp, forExport:
 if(_dispatch===renderBuddhabrotWebGPU)_bbLim=_wgpuBbLimit(W2,H2,_wgpu.device.limits);
 if(_bbLim&&typeof showToast==='function')showToast(t('export.wgpu-limit',{w:W2,h:H2,need:_bbLim.need,name:_bbLim.name,max:_bbLim.max}),'info',8000);
 _wgpuExportOk = !_bbLim && await _dispatch(_wgpuExportOpts);
-if(_wgpuExportOk) octx.drawImage(cv,0,0);
+if(_wgpuExportOk){ octx.drawImage(cv,0,0); _noteExportEngine('WebGPU'); }
 } catch(e){
 console.warn('doExport: WGPU export dispatch threw — falling back to WebGL2/CPU path:', e && e.message);
 _wgpuExportOk = false;
@@ -65260,7 +65268,7 @@ status.textContent=_bbLim?'Too large for this GPU, rendering on the CPU…':'Web
 if(S.fractalType==='buddhabrot'||S.fractalType==='buddhabrot_anti'){
 
 
-const oW2=W,oH2=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
+_noteExportEngine('CPU'); const oW2=W,oH2=H;cv.width=W2;cv.height=H2;W=W2;H=H2;
 const _oBudSamp2=S.buddhabrotSamples;
 _beginExportPaint(_densityScreenArea(W2,H2,oW,oH));
 try{const _bxF=_buddhaExportSamples(_oBudSamp2,W2*H2,_densityScreenArea(W2,H2,oW,oH));S.buddhabrotSamples=_bxF.samples;_buddhaDensityComp=_bxF.comp;ctx.fillStyle=S.bgColor;ctx.fillRect(0,0,W2,H2);_exportTransparentAlpha=(exportTransparent&&(_fmt==='png'||_fmt==='webp'||_fmt==='gif'));if(await _exportRenderRetryOnce(t=>renderBuddhabrot(t,S.fractalType==='buddhabrot_anti',signal,_densityExportProgress(bar,status,'Buddhabrot'))))octx.drawImage(cv,0,0);}   
@@ -65295,7 +65303,7 @@ try { ctx.putImageData(_cvSnapWgpu, 0, 0); } catch (_e) { render(); }
 
 
 bar.style.setProperty('--progress','20%');status.textContent='Computing Buddhabrot…';await new Promise(r=>setTimeout(r,10));
-const oW=W,oH=H;
+_noteExportEngine('CPU'); const oW=W,oH=H;
 let _cvSnap=null;
 try { _cvSnap = ctx.getImageData(0,0,oW,oH); } catch(_e) {  }
 const _origSamples = S.buddhabrotSamples;
@@ -65336,7 +65344,7 @@ await _tileRenderFractalGL(octx,W2,H2,bar,status,S.fractalType==='formula'?rende
 
 
 
-const CHUNK=16,sc=_pxScale(W2,H2,S.zoom),mi=S.maxIter,er2=S.escRad*S.escRad,img=octx.createImageData(W2,H2),d=img.data;
+_noteExportEngine('CPU'); const CHUNK=16,sc=_pxScale(W2,H2,S.zoom),mi=S.maxIter,er2=S.escRad*S.escRad,img=octx.createImageData(W2,H2),d=img.data;
 const _bgFR=hexRgb(S.bgColor); 
 const _opacField=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
 const _itFnQ=(typeof IT_DISPATCH!=='undefined'&&IT_DISPATCH.get(S.fractalType))||itMandelbrot;   
@@ -65376,7 +65384,7 @@ try { if (typeof scheduleRender === 'function') scheduleRender(); } catch (_) { 
 
 _freeExportScratch();
 _exportAbortController = null;
-}
+_exportEngines = null; }
 }
 
 
