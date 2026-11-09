@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-2YElVhvDRg3rcZX5ocU85ldD+SZSkyW8fg2rY+AJlWE=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-VLGtUp7WPk4N3QjiBYMHIMInTpbaMA0X2/GMjYeUnZg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4293,12 +4293,12 @@
 
 
 
-<!-- build: 28974049d704 -->
+<!-- build: e8f0de2ccb30 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.16
+ * AEON -- Universal Dynamics Reactor v7.9.17
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7464,7 +7464,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.16';
+const APP_VERSION='7.9.17';
 
 
 
@@ -7473,10 +7473,10 @@ const APP_VERSION='7.9.16';
 
 
 
-const MISSION_BUILD_HASH='28974049d704';
-const MISSION_GIT_SHA='52f9286f37b4478947c7d8fb183e2fdeb63f9759';
+const MISSION_BUILD_HASH='e8f0de2ccb30';
+const MISSION_GIT_SHA='5650c03e055b18e7855c44a7fe464e1770372cbd';
 
-const MISSION_RENDER_HASH='2ce329713406';
+const MISSION_RENDER_HASH='2f66a795543f';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -14848,6 +14848,7 @@ _t('opacity-ctrl',!on||inert);_t('ctrl-fillrule',!on||inert);_t('ctrl-fillblend'
 const _solid=((S&&S.dashPattern)||'solid')==='solid';
 _t('ctrl-dashLen',_solid);_t('ctrl-dashGap',_solid);_t('ctrl-dashOffset',_solid);
 _t('fill-inert-hint',!inert);
+if(typeof _syncOpacityFillVisibility==='function')_syncOpacityFillVisibility();
 
 _t('seg-fill-desc',inert);
 document.querySelectorAll('#seg-fill .seg-opt').forEach(b=>{
@@ -23311,12 +23312,15 @@ _syncExportTransparentUI();
 document.addEventListener('change',e=>{
 if(e.target.id==='vesicaCanonical'){S.vesicaCanonical=!!e.target.checked;const _vlc=document.getElementById('layers-ctrl');if(_vlc){const _vfade=S.vesicaCanonical!==false;_vlc.classList.toggle('is-faded',_vfade);const _vin=_vlc.querySelector('input');if(_vin)_vin.setAttribute('aria-disabled',_vfade?'true':'false');}scheduleRender();return;}
 
-if(e.target.id==='fruitOfLife3D'){S.fruitOfLife3D=!!e.target.checked;scheduleRender();return;}
-if(e.target.id==='eggOfLife3D'){S.eggOfLife3D=!!e.target.checked;scheduleRender();return;}
-if(e.target.id==='flowerOfLife3D'){S.flowerOfLife3D=!!e.target.checked;scheduleRender();return;}
-if(e.target.id==='metatronsCube3D'){S.metatronsCube3D=!!e.target.checked;const _mhr=document.getElementById('metatron-hex-row');if(_mhr)_mhr.classList.toggle('is-hidden',S.metatronsCube3D);scheduleRender();return;}
-if(e.target.id==='fibonacci3D'){S.fibonacci3D=!!e.target.checked;scheduleRender();return;}
-if(e.target.id==='phyllotaxis3D'){S.phyllotaxis3D=!!e.target.checked;scheduleRender();return;}
+
+
+const _fillCapResync=()=>{if(typeof _syncFillRows==='function')_syncFillRows();if(typeof _syncOpacityFieldRelevance==='function')_syncOpacityFieldRelevance();if(typeof _syncColorFieldRelevance==='function')_syncColorFieldRelevance();};
+if(e.target.id==='fruitOfLife3D'){S.fruitOfLife3D=!!e.target.checked;_fillCapResync();scheduleRender();return;}
+if(e.target.id==='eggOfLife3D'){S.eggOfLife3D=!!e.target.checked;_fillCapResync();scheduleRender();return;}
+if(e.target.id==='flowerOfLife3D'){S.flowerOfLife3D=!!e.target.checked;_fillCapResync();scheduleRender();return;}
+if(e.target.id==='metatronsCube3D'){S.metatronsCube3D=!!e.target.checked;const _mhr=document.getElementById('metatron-hex-row');if(_mhr)_mhr.classList.toggle('is-hidden',S.metatronsCube3D);_fillCapResync();scheduleRender();return;}
+if(e.target.id==='fibonacci3D'){S.fibonacci3D=!!e.target.checked;_fillCapResync();scheduleRender();return;}
+if(e.target.id==='phyllotaxis3D'){S.phyllotaxis3D=!!e.target.checked;_fillCapResync();scheduleRender();return;}
 });
 }
 
@@ -50185,7 +50189,8 @@ if((+S[kMax])<lim){ S[kMax]=lim; _syncOpacRangeSlider(kMax); }
 function _syncOpacityFillVisibility(){
 const wrap=document.getElementById('opacity-field-fill-wrap');
 if(!wrap)return;
-wrap.classList.toggle('is-hidden', (S&&S.mode)==='fractal');
+const strokesOnly=(S&&S.mode)==='geometry'&&typeof patternSupportsFill==='function'&&!patternSupportsFill(S.pattern);
+wrap.classList.toggle('is-hidden', (S&&S.mode)==='fractal'||strokesOnly);
 }
 
 
@@ -51091,6 +51096,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.9.17',
+date:'2026-11-08',
+headline:'The Opacity Field\'s Fill controls now appear only on patterns that draw fills.',
+items:[
+'On patterns that draw strokes only, the Fill Field could be set with no effect, and its sliders stayed greyed out with no way to turn them on. They are now hidden there, as Fill Opacity, Fill Rule and Fill Blend already were, and they come back when you switch to a pattern that fills. Turning on 3D for Phyllotaxis, which fills in 2D but not in 3D, now updates the Fill controls straight away.',
+],
+},
+{
 version:'7.9.13',
 date:'2026-11-05',
 headline:'Attractors, IFS, flames and the Buddhabrot now draw each point in the same pixel that the pointer and the other renderers use.',
@@ -51148,14 +51161,6 @@ date:'2026-11-02',
 headline:'Moved transparent layers show the background color.',
 items:[
 'A layer with Transparent background that is moved, scaled or turned in Layer Studio now shows the background color where its picture is clear, on screen and in motion exports. It used to show the fractal\'s own background there unless Live Composite was on with a second visible layer.',
-],
-},
-{
-version:'7.9.3',
-date:'2026-11-02',
-headline:'Variation sheet cells finish sharpening.',
-items:[
-'In a variation sheet of attractors, IFS fractals, flames or Buddhabrots, cells that were still sharpening when Live Composite was turned off now finish once it is turned back on, where they used to stay at their quick preview until something else redrew them.',
 ],
 },
 
