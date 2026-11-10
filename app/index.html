@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-w8DxeubmYbkxaUM36rb9bQWbwMrmSqalMV7t06wP74E=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-GMcasrgiUGc2cdQ0K9YcNQe8YOQwgQqo1lzRYem84Uk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -2822,6 +2822,7 @@
       <div class="ctrl"><label for="chaos-iter">Iterations <span class="badge" id="chaos-iter-v">500K</span></label><div class="slider-row"><input type="range" id="chaos-iter" min="100000" max="5000000" step="100000" value="500000" aria-describedby="slider-keys-hint"></div></div>
       <label class="row-meta-clickable"><input type="checkbox" id="chaosAnimate"> Animate emergence <button type="button" class="ctrl-help" aria-label="Show attractor emergence animation details" aria-describedby="cth-18">?<span class="ctrl-help-tip" role="tooltip" id="cth-18">Draw the attractor point by point as the orbit accumulates, rather than showing it all at once</span></button></label>
       <div class="ctrl mb-4"><label>Projection <span class="badge" id="chaos-proj-v">XZ</span></label><div class="seg" id="seg-chaos-proj"><button type="button" class="seg-opt active" data-seg-prop="chaosProj" data-seg-val="xz" data-seg-badge="chaos-proj-v" data-seg-badge-text="XZ">XZ</button><button type="button" class="seg-opt" data-seg-prop="chaosProj" data-seg-val="xy" data-seg-badge="chaos-proj-v" data-seg-badge-text="XY">XY</button><button type="button" class="seg-opt" data-seg-prop="chaosProj" data-seg-val="yz" data-seg-badge="chaos-proj-v" data-seg-badge-text="YZ">YZ</button></div></div>
+      <div class="ctrl mb-4"><label>Color by <span class="badge" id="chaos-color-v">Angle</span></label><div class="seg" id="seg-chaos-color"><button type="button" class="seg-opt active" data-seg-prop="chaosColor" data-seg-val="angle" data-seg-badge="chaos-color-v" data-seg-badge-text="Angle">Angle</button><button type="button" class="seg-opt" data-seg-prop="chaosColor" data-seg-val="density" data-seg-badge="chaos-color-v" data-seg-badge-text="Density">Density</button></div></div>
       <div class="rp-sub-head mt-8">Initial Conditions</div>
       <div class="ctrl" id="chaos-x0-ctrl"><label for="chaos-x0">x₀ <span class="badge" id="chaos-x0-v">0.10</span></label><div class="slider-row"><input type="range" id="chaos-x0" min="-2" max="2" step="0.01" value="0.1" aria-describedby="slider-keys-hint"></div></div>
       <div class="ctrl" id="chaos-y0-ctrl"><label for="chaos-y0">y₀ <span class="badge" id="chaos-y0-v">0.00</span></label><div class="slider-row"><input type="range" id="chaos-y0" min="-2" max="2" step="0.01" value="0" aria-describedby="slider-keys-hint"></div></div>
@@ -4293,12 +4294,12 @@
 
 
 
-<!-- build: 713c89b4b800 -->
+<!-- build: 8a83078674a2 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.9.19
+ * AEON -- Universal Dynamics Reactor v7.10.0
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7464,7 +7465,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.9.19';
+const APP_VERSION='7.10.0';
 
 
 
@@ -7473,10 +7474,10 @@ const APP_VERSION='7.9.19';
 
 
 
-const MISSION_BUILD_HASH='713c89b4b800';
-const MISSION_GIT_SHA='ab97ecaf6c54ea0e2a9f1cf4abecea80ce680545';
+const MISSION_BUILD_HASH='8a83078674a2';
+const MISSION_GIT_SHA='d2069fa00797d8430ba22a2fb379b78612e50709';
 
-const MISSION_RENDER_HASH='ca283c68a68f';
+const MISSION_RENDER_HASH='507543b35025';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -8232,6 +8233,8 @@ qjulia:[-0.2,0.6,0.2,0.0],
 
 chaosA:10, chaosB:28, chaosC:2.667, chaosD:0.7,
 chaosIter:500000, chaosProj:'xz',
+
+chaosColor:'angle',
 chaosX0:0.1, chaosY0:0.0, chaosZ0:0.0,
 
 fractalPower:2.0,
@@ -8424,6 +8427,7 @@ c:    'chaosC',
 d:    'chaosD',
 iter: 'chaosIter',
 proj: 'chaosProj',
+color: 'chaosColor',
 x0:   'chaosX0',
 y0:   'chaosY0',
 z0:   'chaosZ0',
@@ -41824,6 +41828,7 @@ lsca:+(S.lsysCustomAngle??60).toFixed(2),
 
 
 cpj:S.chaosProj||'xz',
+xcm:S.chaosColor==='density'?'density':undefined,
 ifw:Array.isArray(S.ifsWeights)?S.ifsWeights.slice(0,64).map(n=>+(+n||0).toFixed(5)):undefined,
 ift:Array.isArray(S.ifsCustomTf)?S.ifsCustomTf.slice(0,64).map(row=>Array.isArray(row)?row.slice(0,6).map(n=>+(+n||0).toFixed(6)):[0,0,0,0,0,0]):undefined,   
 lxa:typeof S.lsysCustomAxiom==='string'?S.lsysCustomAxiom.slice(0,256):undefined,
@@ -42331,6 +42336,7 @@ r3y:  { type:'number', min:-1e4, max:1e4 },
 qj:   { type:'array',  length:4, item:{ type:'number', min:-2, max:2 } }, 
 
 cpj:  { type:'enum',   values:['xy','yz','xz'] },                         
+xcm:  { type:'enum',   values:['angle','density'] },                      
 ifw:  { type:'array',  maxLen:64, item:{ type:'number', min:0, max:1e9 } }, 
 ift:  { type:'array',  maxLen:64, item:{ type:'array', length:6, item:{ type:'number', min:-1e6, max:1e6 } } }, 
 lxa:  { type:'string', maxLen:256 },                                      
@@ -42600,6 +42606,7 @@ _3dRotY: _HASH_SCHEMA.r3y,
 qjulia: _HASH_SCHEMA.qj,
 
 chaosProj: _HASH_SCHEMA.cpj,
+chaosColor: _HASH_SCHEMA.xcm,
 ifsWeights: _HASH_SCHEMA.ifw,
 lsysCustomAxiom: _HASH_SCHEMA.lxa,
 lsysCustomRules: _HASH_SCHEMA.lxr,
@@ -43361,6 +43368,7 @@ if(snap.pfl!=null)S.polyFill=!!snap.pfl;
 if(snap.lsca!=null)S.lsysCustomAngle=snap.lsca;
 
 if(snap.cpj!=null)S.chaosProj=snap.cpj;
+if(snap.xcm!=null)S.chaosColor=snap.xcm;
 if(Array.isArray(snap.ifw))S.ifsWeights=snap.ifw.slice();
 if(Array.isArray(snap.ift))S.ifsCustomTf=snap.ift.map(r=>r.slice());   
 if(snap.lxa!=null)S.lsysCustomAxiom=snap.lxa;
@@ -51099,6 +51107,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.10.0',
+date:'2026-11-10',
+headline:'Strange attractors can be colored by how densely the orbit fills each spot.',
+items:[
+'Attractor Parameters has a new Color by choice. Angle, the default, colors each point by its angle about the origin, as before. Density colors each point by how often the orbit lands there, so the dense core and the sparse halo take opposite ends of the palette. It works in the live view, in Animate emergence and in exports, and share links keep it.',
+],
+},
+{
 version:'7.9.17',
 date:'2026-11-08',
 headline:'The Opacity Field\'s Fill controls now appear only on patterns that draw fills.',
@@ -51156,14 +51172,6 @@ headline:'The vignette and opacity fields look the same with the inspector open.
 items:[
 'With the inspector open, the Post-FX vignette now darkens the edges you can see as much as it does with the inspector folded. It used to be sized for the whole canvas, including the strips under the inspector and off the left edge, so the visible edges barely darkened.',
 'Opening the inspector no longer changes how an opacity field fades the art. On screen the field now uses the frame an export uses, so the art looks the same with the inspector open or folded.',
-],
-},
-{
-version:'7.9.4',
-date:'2026-11-02',
-headline:'Moved transparent layers show the background color.',
-items:[
-'A layer with Transparent background that is moved, scaled or turned in Layer Studio now shows the background color where its picture is clear, on screen and in motion exports. It used to show the fractal\'s own background there unless Live Composite was on with a second visible layer.',
 ],
 },
 
@@ -67951,6 +67959,12 @@ b.classList.toggle('active', b.dataset.segVal===projVal);
 });
 const projBadge=document.getElementById('chaos-proj-v');
 if(projBadge)projBadge.textContent=projVal.toUpperCase();
+const colorVal=S.chaosColor==='density'?'density':'angle';
+const colorBadge=document.getElementById('chaos-color-v');
+document.querySelectorAll('#seg-chaos-color .seg-opt').forEach(b=>{
+const on=b.dataset.segVal===colorVal;b.classList.toggle('active', on);
+if(on&&colorBadge)colorBadge.textContent=b.dataset.segBadgeText;
+});
 
 
 
@@ -68409,13 +68423,15 @@ const img=ctx.createImageData(W,H),id=img.data,bg=hexRgb(S.bgColor),lm=Math.log(
 
 const _wp=S.colorWarp,_rep=Math.max(1,Math.min(8,S.colorRepeat||1)),_ph=S.colorPhase||0;
 const opacField=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
+const byDensity=S.chaosColor==='density';
 for(let i=0;i<W*H;i++){
 if(density[i]===0){if(_exportTransparentAlpha){id[i*4+3]=0;continue}id[i*4]=bg[0];id[i*4+1]=bg[1];id[i*4+2]=bg[2];id[i*4+3]=255;continue}
 
 
 
 const brt=Math.min(1,Math.pow(Math.log(density[i]+1)/lm,0.5));
-const raw=colorAcc[i]/density[i];
+
+const raw=byDensity?Math.min(brt,0.9999):colorAcc[i]/density[i];
 
 
 

@@ -337,11 +337,13 @@ function _renderAttractor(oc){
     
     var _wp=S.colorWarp,_rep=Math.max(1,Math.min(8,S.colorRepeat||1)),_ph=S.colorPhase||0;
     var _opacField=S.opacityFieldStroke&&S.opacityFieldStroke!=='constant';
+    var _byDen=S.chaosColor==='density';
     for(var ii=0;ii<W*H;ii++){
       if(density[ii]===0){dd[ii*4]=bg[0];dd[ii*4+1]=bg[1];dd[ii*4+2]=bg[2];dd[ii*4+3]=255;continue;}
       
       var brt=Math.pow(Math.log(density[ii]+1)/lm,0.5);
-      var raw=colorAcc[ii]/density[ii];
+      
+      var raw=_byDen?Math.min(brt,0.9999):colorAcc[ii]/density[ii];
       
       var _t=((raw*S.colorCycle+S.colorOffset)%1+1)%1;
       if(_wp&&_wp!=='linear')_t=_warpT(_t,_wp,S.colorWarpAmt||1);
