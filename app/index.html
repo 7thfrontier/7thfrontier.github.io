@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-GMcasrgiUGc2cdQ0K9YcNQe8YOQwgQqo1lzRYem84Uk=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-K/NNrEQWfA9ffzLrntWSZl6TtBy+1TWF49X9G0PlGKE=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4294,12 +4294,12 @@
 
 
 
-<!-- build: 8a83078674a2 -->
+<!-- build: f2de28e47698 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.10.0
+ * AEON -- Universal Dynamics Reactor v7.11.0
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7465,7 +7465,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.10.0';
+const APP_VERSION='7.11.0';
 
 
 
@@ -7474,10 +7474,10 @@ const APP_VERSION='7.10.0';
 
 
 
-const MISSION_BUILD_HASH='8a83078674a2';
-const MISSION_GIT_SHA='d2069fa00797d8430ba22a2fb379b78612e50709';
+const MISSION_BUILD_HASH='f2de28e47698';
+const MISSION_GIT_SHA='7628d029d8875db9bdc13d3aad64db2ec5a14b7e';
 
-const MISSION_RENDER_HASH='507543b35025';
+const MISSION_RENDER_HASH='896540892cd1';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11182,7 +11182,9 @@ const isCPUOnly=isBuddhab||S.fractalType.startsWith('ifs_')||S.fractalType.start
 
 
 
-if(!isCPUOnly&&!GL_3D_TYPES.has(S.fractalType)&&glReady&&!_f64NeedsCpu()){
+
+const _gscCpu=_glSelfCheckBad&&(S.fractalType==='mandelbrot'||S.fractalType==='julia'||_F64_CPU_TYPES.has(S.fractalType));
+if(!isCPUOnly&&!GL_3D_TYPES.has(S.fractalType)&&glReady&&!_f64NeedsCpu()&&!_gscCpu){
 
 
 
@@ -22703,6 +22705,7 @@ try { _initCPUFractalWorker(); } catch (_) {  }
 
 
 _deferIdle(_initWebGPU, { timeout: 1500, label: 'initWebGPU' });
+_deferIdle(_gpuSelfCheckGL, { timeout: 2000, label: 'gpuSelfCheck' });   
 
 
 
@@ -25870,7 +25873,7 @@ configurable: true,
 }
 
 
-const _I18N_TOAST_KINDS = {"tour.ui.complete": "success", "gpu.webgpu-failed": "warning", "gpu.custom-render-fail": "error", "state.share-copied": "success", "state.share-copy-failed": "warning", "report.copied": "success", "report.copy-failed": "warning", "state.png-restored": "success", "state.png-no-state": "warning", "state.png-bad-fragment": "warning", "state.png-read-failed": "warning", "state.drop-unsupported": "warning", "state.share-unknown-ft": "warning", "state.share-unknown-pat": "warning", "state.load-unknown-ft": "warning", "seed.invalid": "warning", "shader.unbounded-loop": "warning", "shader.huge-loop": "warning", "shader.3d-rejected": "warning", "shader.webgl2-unavailable": "warning", "shader.formula-empty": "warning", "shader.formula-applied": "success", "shader.formula-blank": "warning", "shader.basin-colouring-off": "warning", "export.svg-failed": "warning", "export.image-copied": "success", "state.load-failed": "warning", "state.save-success": "success", "autosave.restore-failed": "warning", "state.load-success": "success", "bookmark.not-found": "warning", "bookmark.save.failed": "warning", "bookmark.delete.failed": "warning", "bookmark.loaded": "success", "gallery.saved": "success", "postfx.lut-applied": "success", "gallery.not-found": "warning", "gallery.delete-failed": "warning", "gallery.save-failed": "warning", "flame.too-large": "warning", "flame.invalid-xml": "warning", "flame.no-flame-element": "warning", "flame.no-transforms": "warning", "flame.too-many-xforms": "warning", "flame.no-render-transforms": "warning", "flame.read-failed": "warning", "flame.drop-read-failed": "warning", "flame.parse-error": "warning", "flame.type-required": "warning", "flame.invalid-coef": "warning", "postfx.cube-read-failed": "warning", "palette.save-not-persisted": "warning", "palette.delete-not-persisted": "warning", "palette.export-ugr-alpha-lost": "warning", "palette.export-map-alpha-lost": "warning", "palette.export-hex-alpha-lost": "warning", "layer.max-reached": "warning", "layer.project-too-large": "warning", "layer.project-stamp-mismatch": "warning", "layer.keyframes-capped": "warning", "motion.kf-max-reached": "warning", "layer.layers-capped": "warning", "file.recents-unavailable": "warning", "postfx.cube-too-large": "warning", "postfx.cube-invalid": "warning", "postfx.lut-loaded-detail": "success", "postfx.drop-cube": "warning", "app.warning-prefixed": "warning", "state.save-file-too-large": "warning", "state.png-file-too-large": "warning", "state.read-file-failed": "warning", "deepzoom.orbit-truncated-simple": "warning", "app.uncaught-error": "warning", "worker.background-failed": "warning", "deepzoom.orbit-truncated-detailed": "warning", "share.url-too-long": "warning", "state.share-link-too-large": "warning", "state.share-link-rejected": "warning", "state.share-decode-failed": "warning", "state.share-apply-rolled-back": "warning", "state.share-apply-mixed-state": "warning", "motion.frame-skipped-timeout": "warning", "motion.frame-skipped-blank": "warning", "motion.frame-stale": "warning", "export.phys-size-capped": "warning", "export.size-capped": "warning", "export.memory-warning": "warning", "export.generic-failed": "warning", "export.svg-geometry-required": "warning", "export.svg-layers-omitted": "warning", "export.repeated-interruption": "warning", "export.svg-raster-pattern": "warning", "export.svg-dense-pattern": "warning"};
+const _I18N_TOAST_KINDS = {"tour.ui.complete": "success", "gpu.webgpu-failed": "warning", "gpu.selfcheck-gl": "warning", "gpu.selfcheck-wgpu": "warning", "gpu.custom-render-fail": "error", "state.share-copied": "success", "state.share-copy-failed": "warning", "report.copied": "success", "report.copy-failed": "warning", "state.png-restored": "success", "state.png-no-state": "warning", "state.png-bad-fragment": "warning", "state.png-read-failed": "warning", "state.drop-unsupported": "warning", "state.share-unknown-ft": "warning", "state.share-unknown-pat": "warning", "state.load-unknown-ft": "warning", "seed.invalid": "warning", "shader.unbounded-loop": "warning", "shader.huge-loop": "warning", "shader.3d-rejected": "warning", "shader.webgl2-unavailable": "warning", "shader.formula-empty": "warning", "shader.formula-applied": "success", "shader.formula-blank": "warning", "shader.basin-colouring-off": "warning", "export.svg-failed": "warning", "export.image-copied": "success", "state.load-failed": "warning", "state.save-success": "success", "autosave.restore-failed": "warning", "state.load-success": "success", "bookmark.not-found": "warning", "bookmark.save.failed": "warning", "bookmark.delete.failed": "warning", "bookmark.loaded": "success", "gallery.saved": "success", "postfx.lut-applied": "success", "gallery.not-found": "warning", "gallery.delete-failed": "warning", "gallery.save-failed": "warning", "flame.too-large": "warning", "flame.invalid-xml": "warning", "flame.no-flame-element": "warning", "flame.no-transforms": "warning", "flame.too-many-xforms": "warning", "flame.no-render-transforms": "warning", "flame.read-failed": "warning", "flame.drop-read-failed": "warning", "flame.parse-error": "warning", "flame.type-required": "warning", "flame.invalid-coef": "warning", "postfx.cube-read-failed": "warning", "palette.save-not-persisted": "warning", "palette.delete-not-persisted": "warning", "palette.export-ugr-alpha-lost": "warning", "palette.export-map-alpha-lost": "warning", "palette.export-hex-alpha-lost": "warning", "layer.max-reached": "warning", "layer.project-too-large": "warning", "layer.project-stamp-mismatch": "warning", "layer.keyframes-capped": "warning", "motion.kf-max-reached": "warning", "layer.layers-capped": "warning", "file.recents-unavailable": "warning", "postfx.cube-too-large": "warning", "postfx.cube-invalid": "warning", "postfx.lut-loaded-detail": "success", "postfx.drop-cube": "warning", "app.warning-prefixed": "warning", "state.save-file-too-large": "warning", "state.png-file-too-large": "warning", "state.read-file-failed": "warning", "deepzoom.orbit-truncated-simple": "warning", "app.uncaught-error": "warning", "worker.background-failed": "warning", "deepzoom.orbit-truncated-detailed": "warning", "share.url-too-long": "warning", "state.share-link-too-large": "warning", "state.share-link-rejected": "warning", "state.share-decode-failed": "warning", "state.share-apply-rolled-back": "warning", "state.share-apply-mixed-state": "warning", "motion.frame-skipped-timeout": "warning", "motion.frame-skipped-blank": "warning", "motion.frame-stale": "warning", "export.phys-size-capped": "warning", "export.size-capped": "warning", "export.memory-warning": "warning", "export.generic-failed": "warning", "export.svg-geometry-required": "warning", "export.svg-layers-omitted": "warning", "export.repeated-interruption": "warning", "export.svg-raster-pattern": "warning", "export.svg-dense-pattern": "warning"};
 const _i18nToastMessages = new Map();
 
 
@@ -25951,6 +25954,8 @@ en: {
 'tour.ui.guide.body':         'The wordmark reopens the getting-started guide: three moves to try and a one-minute video.',
 
 'gpu.webgpu-failed':          'The fast renderer hit an error, so this view switched to the standard one.',
+'gpu.selfcheck-gl':           'Your graphics card failed a startup accuracy check, so fractals now render on the CPU for this session. Slower, but correct.',
+'gpu.selfcheck-wgpu':         'WebGPU failed a startup accuracy check, so it is off for this session and WebGL2 renders instead.',
 'gpu.no-webgl2':              'Domain Coloring is rendering in slower compatibility mode in this browser.',
 'gpu.custom-shader-fail':     'Your custom formula did not compile, so z² is shown until you Apply a valid body.',
 'gpu.shader-fail':            '{fn} could not run on the graphics card, so it renders more slowly.',
@@ -27804,6 +27809,7 @@ const _WGPU_COLOR_MAPPING_REASONS = new Set(['Warp', 'Repeat', 'Phase', 'Colorin
 function _wgpuStatusText() {
 if (typeof navigator === 'undefined' || !navigator.gpu)
 return 'WebGPU: not supported in this browser';
+if (_gpuSelfCheck.wgpu === false) return 'WebGPU: off for this session, it failed a startup accuracy check (using WebGL2)';
 if (!_wgpuAvailable) return 'WebGPU: adapter unavailable (using WebGL2)';
 if (!S.useWebGPU) return 'WebGPU: ready (toggle to enable)';
 if (typeof S !== 'undefined' && !_wgpuSupportsType(S.fractalType))
@@ -27940,6 +27946,7 @@ try { scheduleRender(); } catch (_e) {_swallowed('_initWebGPU', _e);}
 if (typeof updateCoordBar === 'function') {
 try { updateCoordBar(); } catch (_e) {  }
 }
+_gpuSelfCheckWGPU();
 
 
 
@@ -28796,6 +28803,93 @@ return true;
 console.error('[Aeon] WebGPU Buddhabrot render failed:', e);
 return false;
 }
+}
+
+
+
+
+
+
+const _GSC_N = 16, _GSC_IT = 64;
+let _gpuSelfCheck = { gl: null, wgpu: null, ms: {}, startedAt: null };   
+let _glSelfCheckBad = false;
+const _GSC_VS = '#version 300 es\nvoid main(){vec2 p=vec2((gl_VertexID<<1)&2,gl_VertexID&2);gl_Position=vec4(p*2.0-1.0,0.0,1.0);}';
+const _GSC_FS = '#version 300 es\nprecision highp float;out vec4 o;void main(){vec2 c=vec2(-2.25,-1.5)+(floor(gl_FragCoord.xy)+0.5)*(3.0/16.0);' +
+'vec2 z=vec2(0.0);int i=0;for(;i<64;i++){float xx=z.x*z.x,yy=z.y*z.y;if(xx+yy>4.0)break;z=vec2(xx-yy+c.x,2.0*z.x*z.y+c.y);}o=vec4(float(i)/255.0,0.0,0.0,1.0);}';
+const _GSC_WGSL = '@group(0) @binding(0) var<storage, read_write> o: array<u32>;\n@compute @workgroup_size(16, 16)\n' +
+'fn main(@builtin(global_invocation_id) id: vec3<u32>) {\n  let c = vec2<f32>(-2.25, -1.5) + (vec2<f32>(id.xy) + 0.5) * (3.0 / 16.0);\n' +
+'  var z = vec2<f32>(0.0); var i = 0u;\n  loop { if (i >= 64u) { break; } let xx = z.x * z.x; let yy = z.y * z.y; if (xx + yy > 4.0) { break; }\n' +
+'    z = vec2<f32>(xx - yy + c.x, 2.0 * z.x * z.y + c.y); i = i + 1u; }\n  o[id.y * 16u + id.x] = i;\n}\n';
+function _gscCPU() {
+const f = Math.fround, step = f(3 / _GSC_N), out = new Uint8Array(_GSC_N * _GSC_N);
+for (let py = 0; py < _GSC_N; py++) for (let px = 0; px < _GSC_N; px++) {
+const cx = f(-2.25 + f((px + 0.5) * step)), cy = f(-1.5 + f((py + 0.5) * step));
+let x = 0, y = 0, i = 0;
+for (; i < _GSC_IT; i++) { const xx = f(x * x), yy = f(y * y); if (f(xx + yy) > 4) break; y = f(f(2 * f(x * y)) + cy); x = f(f(xx - yy) + cx); }
+out[py * _GSC_N + px] = i;
+}
+return out;
+}
+
+function _gscAgrees(gpu) {
+if (typeof window !== 'undefined' && window.__gpuSelfCheckForce === 'mismatch') gpu = gpu.map((v) => (v + 32) % _GSC_IT);
+const cpu = _gscCPU(); let ok = 0;
+for (let i = 0; i < cpu.length; i++) if (Math.abs(gpu[i] - cpu[i]) <= 1) ok++;
+return ok >= cpu.length * 0.9;
+}
+function _gscNote(key) {
+try { showToast(t(key), 'warning', 9000); } catch (e) { _swallowed('gpuSelfCheckNote', e); }
+}
+function _gpuSelfCheckGL() {
+if (_gpuSelfCheck.gl !== null) return;
+const t0 = performance.now(); let gpu = null, lose = null;
+_gpuSelfCheck.startedAt = t0;
+try {
+const c = document.createElement('canvas'); c.width = c.height = _GSC_N;
+const g = c.getContext('webgl2', { antialias: false, preserveDrawingBuffer: true });
+if (!g) return;   
+lose = g.getExtension('WEBGL_lose_context');
+const sh = (type, src) => { const s = g.createShader(type); g.shaderSource(s, src); g.compileShader(s); return s; };
+const p = g.createProgram(); g.attachShader(p, sh(g.VERTEX_SHADER, _GSC_VS)); g.attachShader(p, sh(g.FRAGMENT_SHADER, _GSC_FS)); g.linkProgram(p);
+
+if (g.getProgramParameter(p, g.LINK_STATUS)) {
+g.useProgram(p); g.viewport(0, 0, _GSC_N, _GSC_N); g.drawArrays(g.TRIANGLES, 0, 3);
+const px = new Uint8Array(_GSC_N * _GSC_N * 4); g.readPixels(0, 0, _GSC_N, _GSC_N, g.RGBA, g.UNSIGNED_BYTE, px);
+gpu = new Uint8Array(_GSC_N * _GSC_N); for (let i = 0; i < gpu.length; i++) gpu[i] = px[i * 4];
+}
+} catch (e) { _swallowed('gpuSelfCheckGL', e); }
+finally { try { if (lose) lose.loseContext(); } catch (_) {  } }
+if (!gpu) return;
+const ok = _gscAgrees(gpu);
+_gpuSelfCheck.gl = ok; _gpuSelfCheck.ms.gl = +(performance.now() - t0).toFixed(1);
+if (ok) return;
+_glSelfCheckBad = true;
+_gscNote('gpu.selfcheck-gl');
+scheduleRender();
+}
+async function _gpuSelfCheckWGPU() {
+if (!_wgpu || _gpuSelfCheck.wgpu !== null) return;
+const t0 = performance.now(), dev = _wgpu.device; let gpu = null;
+try {
+const pipe = dev.createComputePipeline({ layout: 'auto', compute: { module: dev.createShaderModule({ code: _GSC_WGSL }), entryPoint: 'main' } });
+const n = _GSC_N * _GSC_N * 4;
+const buf = dev.createBuffer({ size: n, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC });
+const rb = dev.createBuffer({ size: n, usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST });
+const enc = dev.createCommandEncoder(), pass = enc.beginComputePass();
+pass.setPipeline(pipe); pass.setBindGroup(0, dev.createBindGroup({ layout: pipe.getBindGroupLayout(0), entries: [{ binding: 0, resource: { buffer: buf } }] }));
+pass.dispatchWorkgroups(1); pass.end();
+enc.copyBufferToBuffer(buf, 0, rb, 0, n); dev.queue.submit([enc.finish()]);
+await rb.mapAsync(GPUMapMode.READ);
+gpu = Uint8Array.from(new Uint32Array(rb.getMappedRange().slice(0)));
+rb.unmap(); buf.destroy(); rb.destroy();
+} catch (e) { _swallowed('gpuSelfCheckWGPU', e); return; }
+const ok = _gscAgrees(gpu);
+_gpuSelfCheck.wgpu = ok; _gpuSelfCheck.ms.wgpu = +(performance.now() - t0).toFixed(1);
+if (ok) return;
+_wgpuDisableToggle();
+_gscNote('gpu.selfcheck-wgpu');
+
+try { dev.destroy(); } catch (e) { _swallowed('gpuSelfCheckWGPU', e); }
 }
 
 
@@ -51107,6 +51201,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.11.0',
+date:'2026-11-10',
+headline:'The app checks that your graphics card draws fractals correctly, and switches away from any graphics path that does not.',
+items:[
+'Once the first frame is up, the app draws a tiny test fractal on each graphics path in use and compares it with the same sums done on the CPU. A path that disagrees is switched off for the session: WebGPU gives way to WebGL2, and if WebGL2 itself draws wrong, escape-time fractals render on the CPU. A note says what happened. The check takes about 10 ms, runs entirely on your machine and sends nothing.',
+],
+},
+{
 version:'7.10.0',
 date:'2026-11-10',
 headline:'Strange attractors can be colored by how densely the orbit fills each spot.',
@@ -51163,15 +51265,6 @@ date:'2026-11-02',
 headline:'Newton Cayley shows the points that reach no root in their own color.',
 items:[
 'Starting points that Newton\'s method sends back and forth between 0 and 1 forever were drawn in the interior color, like points still settling at the edge of a basin. They now form a fourth basin with its own palette color, shaded like the three root basins by how quickly each point settles.',
-],
-},
-{
-version:'7.9.5',
-date:'2026-11-02',
-headline:'The vignette and opacity fields look the same with the inspector open.',
-items:[
-'With the inspector open, the Post-FX vignette now darkens the edges you can see as much as it does with the inspector folded. It used to be sized for the whole canvas, including the strips under the inspector and off the left edge, so the visible edges barely darkened.',
-'Opening the inspector no longer changes how an opacity field fades the art. On screen the field now uses the frame an export uses, so the art looks the same with the inspector open or folded.',
 ],
 },
 
