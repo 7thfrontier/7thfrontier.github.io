@@ -1,4 +1,4 @@
-Every suite counts its own passes, and an exported PNG names the engine that drew it · 2026-11-09
+An edited test must say why, and a test link must use a key the app reads · 2026-11-09
 
 - A maintenance release with no change you can see in AEON.
 
