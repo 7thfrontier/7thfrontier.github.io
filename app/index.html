@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-K/NNrEQWfA9ffzLrntWSZl6TtBy+1TWF49X9G0PlGKE=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-zMDXX0A+C4Dvo6GxoohtGOAsF2gLQSYz2jGQjUgueMg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4294,12 +4294,12 @@
 
 
 
-<!-- build: f2de28e47698 -->
+<!-- build: f8897aa85a1a -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.11.0
+ * AEON -- Universal Dynamics Reactor v7.11.1
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7465,7 +7465,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.11.0';
+const APP_VERSION='7.11.1';
 
 
 
@@ -7474,10 +7474,10 @@ const APP_VERSION='7.11.0';
 
 
 
-const MISSION_BUILD_HASH='f2de28e47698';
-const MISSION_GIT_SHA='7628d029d8875db9bdc13d3aad64db2ec5a14b7e';
+const MISSION_BUILD_HASH='f8897aa85a1a';
+const MISSION_GIT_SHA='42713cfcd7c67094a79f8f193fe4748743a05ad1';
 
-const MISSION_RENDER_HASH='896540892cd1';
+const MISSION_RENDER_HASH='b1a3b136d102';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11310,7 +11310,7 @@ if(_cwzMain!=null) _snap._attrCwz=_cwzMain;
 _cpuFracWorkerBusy=true;_cpuFracWorkerBusySince=Date.now();
 _armStuckWatchdog(()=>_cpuFracWorkerBusy, ()=>_cpuFracWorkerBusySince, _recoverCpuFracWorkerViaSchedule);
 const _lff=_liveFieldFrame(W);   
-_cpuFracWorker.postMessage({VTX:_lff?_lff.ox:0,VFW:_lff?_lff.rw:W,type:'render',seq,S:_snap,W,H,pal:_geoActivePal()});
+_cpuFracWorker.postMessage({VCX:_viewCenterPx(),VTX:_lff?_lff.ox:0,VFW:_lff?_lff.rw:W,type:'render',seq,S:_snap,W,H,pal:_geoActivePal()});
 updateCoordBar();return;
 }
 if(S.fractalType.startsWith('ifs_')){await renderIFS(t);return}
@@ -12549,7 +12549,7 @@ if(p.S && typeof window!=='undefined' && window.location && /[?&]debug=attractor
 
 if(typeof W==='number')p.W=W; if(typeof H==='number')p.H=H;
 p.pal=_geoActivePal();   
-{ const _f=_liveFieldFrame(p.W); p.VTX=_f?_f.ox:0; p.VFW=_f?_f.rw:p.W; }   
+{ const _f=_liveFieldFrame(p.W); p.VTX=_f?_f.ox:0; p.VFW=_f?_f.rw:p.W; p.VCX=_viewCenterPx(p.W); }   
 
 
 
