@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-PwXIf7m/KjwMLiT4hTFYVO9R3PWJWM7f8j/gRh7857I='; font-src 'self'; script-src 'self' 'sha256-zMDXX0A+C4Dvo6GxoohtGOAsF2gLQSYz2jGQjUgueMg=' 'sha256-2iSNP95DTxZpUiAxL7uV3i2oKqCqj+ta3cVnahyP8Hw='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-N3EJ9zA0M65SQILPQTs+esbK/KpQ4ophLB728ywKu8M=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -638,6 +638,8 @@
         body.vp-tile #cv-wrap{width:100%;margin-left:0}
         #cv-wrap.vp-snap{transition:none}
         html.boot-pending #cv-wrap{visibility:hidden}
+        html.boot-shell #app-shell,html.boot-shell #mobile-fab{visibility:hidden}
+        html.boot-shell:not(.boot-pending) #cv-wrap{visibility:visible}
         #cv-wrap{--vp-d:calc(var(--lp-cur) - var(--rp-cur));width:calc(100% + max(var(--lp-cur) - var(--rp-cur), var(--rp-cur) - var(--lp-cur)));height:100%;max-width:none;max-height:none;border-radius:0;overflow:hidden;position:relative;cursor:crosshair;background:var(--canvas-bg);transition:background var(--dur-langorous),margin-left var(--dur-slow) ease;flex-shrink:0;margin-left:calc(var(--lp-cur) - var(--rp-cur))}
         
         #cv{display:block;width:100%;height:100%;background:var(--cv-bg,var(--canvas-bg));transform:translate(var(--cv-dx,0),var(--cv-dy,0));touch-action:none}
@@ -2352,7 +2354,7 @@
 </head>
 <body data-app-mode="fractal" class="vp-tile">
 
-<script id="boot-tile">(function(){try{if(location.search.length>1||location.hash.length>1){var r=document.documentElement;r.classList.add('boot-pending');setTimeout(function(){r.classList.remove('boot-pending');},15000);}var c=null;try{c=localStorage.getItem('reactor.rp-collapsed');}catch(e){}if(c==='1'){var fold=function(){var rp=document.getElementById('right-panel');if(rp){rp.classList.add('rp-collapsed');return true;}return false;};if(!fold())new MutationObserver(function(_,o){if(fold())o.disconnect();}).observe(document.documentElement,{childList:true,subtree:true});}}catch(e){}})();</script>
+<script id="boot-tile">(function(){try{var d=document.documentElement;d.classList.add('boot-shell');setTimeout(function(){d.classList.remove('boot-shell');},15000);if(location.search.length>1||location.hash.length>1){var r=document.documentElement;r.classList.add('boot-pending');setTimeout(function(){r.classList.remove('boot-pending');},15000);}var c=null;try{c=localStorage.getItem('reactor.rp-collapsed');}catch(e){}if(c==='1'){var fold=function(){var rp=document.getElementById('right-panel');if(rp){rp.classList.add('rp-collapsed');return true;}return false;};if(!fold())new MutationObserver(function(_,o){if(fold())o.disconnect();}).observe(document.documentElement,{childList:true,subtree:true});}}catch(e){}})();</script>
 <svg class="ic-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><symbol id="ic-compass" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M10.6 5.4L9.1 9.1 5.4 10.6 6.9 6.9z"/></symbol><symbol id="ic-eye" viewBox="0 0 16 16"><path d="M1.5 8S3.9 3.6 8 3.6 14.5 8 14.5 8 12.1 12.4 8 12.4 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></symbol><symbol id="ic-star" viewBox="0 0 16 16"><path d="M8 1.6l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.6 3.9 13.9l1-4.5L1.5 6.3l4.6-.5z"/></symbol><symbol id="ic-home" viewBox="0 0 16 16"><path d="M2 8l6-5.5L14 8M3.8 7v6.5h3V10h2.4v3.5h3V7"/></symbol><symbol id="ic-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></symbol><symbol id="ic-minus" viewBox="0 0 16 16"><path d="M3 8h10"/></symbol><symbol id="ic-check" viewBox="0 0 16 16"><path d="M2.5 8l3.5 3.5 7.5-8"/></symbol><symbol id="ic-warn" viewBox="0 0 16 16"><path d="M8 2.2L14.2 13.3H1.8Z"/><path d="M8 6.4v3.4"/><circle cx="8" cy="11.6" r=".6" fill="currentColor"/></symbol><symbol id="ic-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2v4.3"/><circle cx="8" cy="4.9" r=".6" fill="currentColor"/></symbol><symbol id="ic-menu" viewBox="0 0 16 16"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/></symbol><symbol id="ic-close" viewBox="0 0 16 16"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></symbol><symbol id="ic-palette" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M2.5 4h11v8h-11zM6.2 4v8M9.8 4v8"/></symbol><symbol id="ic-grid" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M2.5 2.5h4.5v4.5h-4.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5h-4.5zM9 9h4.5v4.5H9z"/></symbol><symbol id="ic-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.3"/><path d="M10.2 10.2l3.6 3.6"/></symbol><symbol id="ic-chev-down" viewBox="0 0 16 16"><path d="M3.5 6l4.5 4.5L12.5 6"/></symbol><symbol id="ic-chev-up" viewBox="0 0 16 16"><path d="M3.5 10l4.5-4.5 4.5 4.5"/></symbol><symbol id="ic-pin" viewBox="0 0 16 16"><path d="M9.5 2.5l4 4-2.5 1L8.5 10l.5 3-6-6 3 .5L8.5 5z"/><path d="M5.5 10.5l-3 3"/></symbol><symbol id="ic-chev-right" viewBox="0 0 16 16"><path d="M6 3.5L10.5 8 6 12.5"/></symbol><symbol id="ic-chev-left" viewBox="0 0 16 16"><path d="M10 3.5L5.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-left" viewBox="0 0 16 16"><path d="M8.5 3.5L4 8l4.5 4.5M13 3.5L8.5 8l4.5 4.5"/></symbol><symbol id="ic-chev-dbl-right" viewBox="0 0 16 16"><path d="M3 3.5L7.5 8 3 12.5M7.5 3.5L12 8l-4.5 4.5"/></symbol><symbol id="ic-gear" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.3"/><circle cx="8" cy="8" r="4.6"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></symbol><symbol id="ic-dot" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.4" fill="currentColor" stroke="none"/></symbol><symbol id="ic-circle" viewBox="0 0 16 16"><circle cx="8" cy="8" r="4.6"/></symbol><symbol id="ic-reset" viewBox="0 0 16 16"><path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v3h3"/></symbol><symbol id="ic-redo" viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.6-3.7M13 2.5v3h-3"/></symbol><symbol id="ic-download" viewBox="0 0 16 16"><path d="M8 2v8M4.5 7L8 10.5 11.5 7M3 13.5h10"/></symbol><symbol id="ic-upload" viewBox="0 0 16 16"><path d="M8 10.5v-8M4.5 6L8 2.5 11.5 6M3 13.5h10"/></symbol><symbol id="ic-contrast" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"/></symbol><symbol id="ic-dice" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2.2"/><circle cx="5.6" cy="5.6" r=".8" fill="currentColor" stroke="none"/><circle cx="10.4" cy="10.4" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r=".8" fill="currentColor" stroke="none"/></symbol><symbol id="ic-sparkle" viewBox="0 0 16 16"><path d="M8 1.5c.5 3.6 2.9 6 6.5 6.5-3.6.5-6 2.9-6.5 6.5-.5-3.6-2.9-6-6.5-6.5 3.6-.5 6-2.9 6.5-6.5z"/></symbol><symbol id="ic-infinity" viewBox="0 0 16 16"><path d="M8 8c-1.2-1.8-2.3-3-3.7-3a3 3 0 0 0 0 6c1.4 0 2.5-1.2 3.7-3s2.3-3 3.7-3a3 3 0 0 1 0 6c-1.4 0-2.5-1.2-3.7-3z"/></symbol><symbol id="ic-diamond" viewBox="0 0 16 16"><path d="M8 1.8l6.2 6.2L8 14.2 1.8 8z"/><path d="M8 5.2L10.8 8 8 10.8 5.2 8z"/></symbol><symbol id="ic-circle-x" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 5.2l5.6 5.6M10.8 5.2l-5.6 5.6"/></symbol><symbol id="ic-nabla" viewBox="0 0 16 16"><path d="M2.5 3h11L8 13.5z"/></symbol><symbol id="ic-circle-plus" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4.8v6.4M4.8 8h6.4"/></symbol><symbol id="ic-option" viewBox="0 0 16 16"><path d="M2 4h3.5l5 8H14M9.5 4H14"/></symbol><symbol id="ic-asterisk" viewBox="0 0 16 16"><path d="M8 2.5v11M3.2 5.2l9.6 5.6M12.8 5.2L3.2 10.8"/></symbol><symbol id="ic-circle-equals" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5.2 6.6h5.6M5.2 9.4h5.6"/></symbol><symbol id="ic-arrows-down" viewBox="0 0 16 16"><path d="M5 2.5v9M2.5 9L5 11.5 7.5 9M11 2.5v9M8.5 9l2.5 2.5L13.5 9"/></symbol><symbol id="ic-swap-h" viewBox="0 0 16 16"><path d="M13.5 5h-11M5.5 2l-3 3 3 3M2.5 11h11M10.5 8l3 3-3 3"/></symbol></svg>
 <a id="skip-link" href="#cv">Skip to canvas</a>
 
@@ -4294,12 +4296,12 @@
 
 
 
-<!-- build: f8897aa85a1a -->
+<!-- build: 8aba791eaef5 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.11.1
+ * AEON -- Universal Dynamics Reactor v7.11.2
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7465,7 +7467,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.11.1';
+const APP_VERSION='7.11.2';
 
 
 
@@ -7474,10 +7476,10 @@ const APP_VERSION='7.11.1';
 
 
 
-const MISSION_BUILD_HASH='f8897aa85a1a';
-const MISSION_GIT_SHA='42713cfcd7c67094a79f8f193fe4748743a05ad1';
+const MISSION_BUILD_HASH='8aba791eaef5';
+const MISSION_GIT_SHA='2c687f0655a8beb362363032f75e05213940eb42';
 
-const MISSION_RENDER_HASH='b1a3b136d102';
+const MISSION_RENDER_HASH='85d8a022f0c5';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -51201,6 +51203,14 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 
 const WHATS_NEW=[
 {
+version:'7.11.2',
+date:'2026-11-11',
+headline:'On a slow computer, the toolbar and panels now stay hidden until the app is ready, so they never appear before the getting-started guide.',
+items:[
+'A computer slow to start the app could show the toolbar and panels for a couple of seconds before the getting-started guide, and their controls did nothing yet. They now stay hidden until the app is ready. If that takes longer than 15 seconds, they appear anyway.',
+],
+},
+{
 version:'7.11.0',
 date:'2026-11-10',
 headline:'The app checks that your graphics card draws fractals correctly, and switches away from any graphics path that does not.',
@@ -51257,14 +51267,6 @@ headline:'3D fractals keep their size in a portrait frame, and every renderer dr
 items:[
 'The 3D types sized the picture by the frame\'s height, so in a portrait frame the subject came out up to 1.8 times larger than in a square export of the same view, and at 9:16 some ran off both sides. They now size it by the short side, as the 2D families do. Square and landscape frames are unchanged.',
 'The GPU drew each pixel from its center while the CPU, WebGPU, deep-zoom and CPU export paths drew it from its corner, so a view moved half a pixel when it changed renderer and View Rotation turned half a pixel off center. Every path now draws from the pixel center.',
-],
-},
-{
-version:'7.9.6',
-date:'2026-11-02',
-headline:'Newton Cayley shows the points that reach no root in their own color.',
-items:[
-'Starting points that Newton\'s method sends back and forth between 0 and 1 forever were drawn in the interior color, like points still settling at the edge of a basin. They now form a fourth basin with its own palette color, shaded like the three root basins by how quickly each point settles.',
 ],
 },
 
@@ -51912,6 +51914,9 @@ if(typeof document!=='undefined' && document.readyState==='loading'){
 try{ _guideEarly(); }
 catch(_e){ _swallowed('_guideEarly', _e); if(_fs){ try{ _firstStepsClose(true); }catch(_e2){ _swallowed('_guideEarly', _e2); } } }
 }
+
+
+if(typeof document!=='undefined' && document.documentElement) document.documentElement.classList.remove('boot-shell');
 
 
 
