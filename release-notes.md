@@ -1,4 +1,4 @@
-A section edit also selects the suites that list sections through a bound path or a loop variable · 2026-11-13
+What's New also keeps a ### Internal subsection off a MINOR's card, and the release-reach bound holds the newest release · 2026-11-13
 
 - A maintenance release with no change you can see in AEON.
 
