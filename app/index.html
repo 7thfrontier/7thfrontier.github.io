@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-vMDPTXfefKI611NEH7FYlmf2vaJXY7ALRKTCPCTyX0w=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-1HtllNdYcmeRGTkWNlmX54QEB1Y0hFol7pGFUbnRj2k=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4296,12 +4296,12 @@
 
 
 
-<!-- build: 595a23138c54 -->
+<!-- build: 0743bd91402f -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.11.7
+ * AEON -- Universal Dynamics Reactor v7.11.8
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7467,7 +7467,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.11.7';
+const APP_VERSION='7.11.8';
 
 
 
@@ -7476,10 +7476,10 @@ const APP_VERSION='7.11.7';
 
 
 
-const MISSION_BUILD_HASH='595a23138c54';
-const MISSION_GIT_SHA='1c156d7d5eefd6bd55cd8caa00a22a00fe92a495';
+const MISSION_BUILD_HASH='0743bd91402f';
+const MISSION_GIT_SHA='154baf0e9bd3e83cbd691992149fdc9afb6f0e03';
 
-const MISSION_RENDER_HASH='85d8a022f0c5';
+const MISSION_RENDER_HASH='6b09c4a9de1d';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -58363,6 +58363,9 @@ _geoLastTs=_nowTs;
 const isCE = (typeof TIMED_PATTERNS !== 'undefined') &&
 TIMED_PATTERNS.has(S.pattern) &&
 S.pattern!=='kleinian' && S.pattern!=='dla' && S.pattern!=='fbm-landscape';
+
+
+if(isCE && !S.cePlay){ S.geoAnimate=false; animFrame=null; _geoLastTs=0; _syncAnimUI(); return; }
 if(isCE){
 
 
