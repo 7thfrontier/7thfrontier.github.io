@@ -1,4 +1,4 @@
-A MINOR release's What's New card is generated from its CHANGELOG section, and a PATCH release gets none · 2026-11-12
+A section edit also selects the suites that list sections through a bound path or a loop variable · 2026-11-13
 
 - A maintenance release with no change you can see in AEON.
 
