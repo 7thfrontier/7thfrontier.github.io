@@ -1,4 +1,4 @@
-What's New also keeps a ### Internal subsection off a MINOR's card, and the release-reach bound holds the newest release · 2026-11-13
+Five suites stop leaving scratch directories in TMPDIR · 2026-11-13
 
 - A maintenance release with no change you can see in AEON.
 
