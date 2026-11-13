@@ -1,4 +1,4 @@
-A section edit selects the suites that list every section, and the run-tests self-test stays out of the live hive · 2026-11-12
+A MINOR release's What's New card is generated from its CHANGELOG section, and a PATCH release gets none · 2026-11-12
 
 - A maintenance release with no change you can see in AEON.
 
