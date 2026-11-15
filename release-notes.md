@@ -1,4 +1,4 @@
-A section edit selects parity, a signalled suite ends at once and still clears its scratch, and each lint failure carries its own name · 2026-11-13
+The aeon2860 stall watcher samples every process below the suite and lists only real git · 2026-11-15
 
 - A maintenance release with no change you can see in AEON.
 
