@@ -5,7 +5,7 @@
     120
   ],
   "canvas": "1440x900",
-  "totalBytes": 748458,
+  "totalBytes": 748477,
   "entries": [
     {
       "mode": "fractal",
@@ -911,7 +911,7 @@
       "mode": "geometry",
       "type": "kleinian",
       "file": "geometry-kleinian.jpg",
-      "bytes": 1328
+      "bytes": 1347
     },
     {
       "mode": "geometry",

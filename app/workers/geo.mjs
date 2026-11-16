@@ -71,7 +71,7 @@ function dispatchGeometryDraw(c, bR){
 function _renderGeoWorker(c){
   var w = W, h = H, bR = Math.min(w, h) * 0.15;
   c.fillStyle = S.bgColor; c.fillRect(0, 0, w, h); c.save(); c.translate(w / 2, h / 2);
-  if (!isGeo3D()) c.rotate(S.geoRotation * DEG);
+  if (!isGeo3D()) c.rotate(-S.geoRotation * DEG);   
   c.scale(S.geoScale, S.geoScale);
   self.applyStrokeStyle(c, S.lineWeight * (Math.min(w, h) / CANVAS_SIZE)); self.wrapGeoFill(c);
   c.globalAlpha = S.strokeOpacity;

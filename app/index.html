@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-/I8g/Bl0brdJ1sE8UgcXwsTp6CJrFQ3r00eV9MiE93k=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-skUiKQOjmy/y1zy4o07iiUhA9IgZouBBcJ4wXnleqB4=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4296,12 +4296,12 @@
 
 
 
-<!-- build: 25d221af8c81 -->
+<!-- build: e9cce71c1661 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.11.10
+ * AEON -- Universal Dynamics Reactor v7.11.11
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7467,7 +7467,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.11.10';
+const APP_VERSION='7.11.11';
 
 
 
@@ -7476,10 +7476,10 @@ const APP_VERSION='7.11.10';
 
 
 
-const MISSION_BUILD_HASH='25d221af8c81';
-const MISSION_GIT_SHA='2255337bd061e651f1a364f00368659804f60916';
+const MISSION_BUILD_HASH='e9cce71c1661';
+const MISSION_GIT_SHA='ce110fcd7e455f397be49cafef67f32569c2894d';
 
-const MISSION_RENDER_HASH='6b09c4a9de1d';
+const MISSION_RENDER_HASH='5747fe7fed3a';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -8358,7 +8358,7 @@ exportPhysicalH:20,
 exportSupersample:1, 
 exportFractalCompose:'letterbox', 
 
-_v:2, 
+_v:3, 
 };
 
 
@@ -11766,7 +11766,7 @@ const c=ctx,w=W,h=H,bR=Math.min(w,h)*.15;
 if(typeof _exportTransparentAlpha!=='undefined' && _exportTransparentAlpha){c.clearRect(0,0,w,h);}
 else{c.fillStyle=S.bgColor;c.fillRect(0,0,w,h);}
 c.save();c.translate(w/2,h/2);
-if(!isGeo3D())c.rotate(S.geoRotation*DEG);
+if(!isGeo3D())c.rotate(-S.geoRotation*DEG);   
 c.scale(S.geoScale,S.geoScale);
 applyStrokeStyle(c,S.lineWeight*(Math.min(w,h)/CANVAS_SIZE));wrapGeoFill(c);
 c.globalAlpha=S.strokeOpacity;
@@ -16643,7 +16643,7 @@ function _blendToCSS(b){ return (b==='source-over'||!b) ? 'normal' : b; }
 function _svgLayerXformAttr(t, f){
 if(_layerXformIdentity(t)) return '';
 const s=(typeof t.scale==='number'&&t.scale>0)?t.scale:1;
-return ` transform="translate(${((t.x||0)*f.w).toFixed(2)},${((t.y||0)*f.h).toFixed(2)}) rotate(${(t.rot||0).toFixed(2)}) scale(${s.toFixed(4)})"`;
+return ` transform="translate(${((t.x||0)*f.w).toFixed(2)},${((t.y||0)*f.h).toFixed(2)}) rotate(${(-(t.rot||0)).toFixed(2)}) scale(${s.toFixed(4)})"`;   
 }
 
 
@@ -16688,7 +16688,7 @@ if(!groups||!groups.some(g=>/<(path|circle|line|polyline|polygon|ellipse|rect|te
 
 
 if(Math.max(0,...groups.map(g=>(g.match(/<(path|circle|line|polyline|polygon|ellipse|rect)\b/g)||[]).length))>_SVG_MAX_SHAPES) return {ok:false,reason:'dense'};
-const rot=isGeo3D()?'':`rotate(${S.geoRotation.toFixed(1)})`;
+const rot=isGeo3D()?'':`rotate(${(-S.geoRotation).toFixed(1)})`;   
 const inner=`<g transform="scale(${sc.toFixed(2)}) ${rot}">\n${groups.join('\n')}\n</g>`;
 return {ok:true,inner,bg:S.bgColor};
 }
@@ -16823,7 +16823,7 @@ closeExportModal();
 
 async function doSVGExport(){
 
-if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(() => doSVGExport())) return;
+if (_vectorExportBail(() => doSVGExport())) return;
 try {
 const f=_svgFrame();
 
@@ -16898,7 +16898,7 @@ const _ok=await _confirmDialog(
 {title:'Save current view only?', confirmLabel:'Save view only', cancelLabel:'Cancel', danger:false});
 if(!_ok) return;
 }
-const state={...S,_v:1,_ts:Date.now()};
+const state={...S,_v:_STATE_V_ROT_CCW,_ts:Date.now()};
 
 
 
@@ -18084,7 +18084,7 @@ function computeHyperbolic(opts){
   return {verts:vertBuf.buffer, ends:ends.buffer, count:renderPolys.length, effMaxLayers};
 }
 function computeKleinian(opts){
-  const iters=Math.min(20000, Math.max(64, opts.iters|0));
+  const iters=Math.min(320000, Math.max(64, opts.iters|0));   
   const seed=opts.seed|0;
   
   function cm(re, im){return {re, im}}
@@ -19146,7 +19146,7 @@ scheduleRender();
 
 
 if(_isGeo3DOr4D()){S.rotY-=dx*.01;S.rotX+=dy*.01;}   
-else{S.geoRotation=(S.geoRotation+dx*.35+360)%360;
+else{S.geoRotation=(S.geoRotation-dx*.35+360)%360;   
 _grSlider().value=S.geoRotation;   
 _grBadge().textContent=S.geoRotation.toFixed(1)+'°';}
 scheduleRender();
@@ -20511,6 +20511,9 @@ scheduleRender();
 _tourScheduleAdvance(stop);
 }
 function _tourResyncView(){
+
+
+if(typeof _resizeCanvasForAspect==='function')_resizeCanvasForAspect(S.mode==='fractal'&&VIEWPORT_ASPECT_TYPES.has(S.fractalType)?'viewport':'square');
 if(typeof updateInspectorSections==='function')updateInspectorSections();
 if(typeof updateRightPanelHeader==='function')updateRightPanelHeader();
 
@@ -26214,6 +26217,7 @@ en: {
 'export.size-capped':         'Export capped at {w}×{h} (32K canvas limit; aspect preserved)',
 'export.memory-warning':      'Estimated {peak} GB working canvas · may stall on machines with < {min} GB RAM',
 'export.generic-failed':      'Export failed: {error}',
+'export.state-changed':       'the picture changed while it was exporting. Nothing was saved; try again.',
 'export.completed':           'Exported {w}×{h} · {fname}',
 'export.svg-geometry-required': 'Geometry mode required for SVG export',
 'export.svg-layers-omitted':  '{n} non-vector {layerWord} omitted · a plotter SVG holds vector layers only.',
@@ -31618,7 +31622,7 @@ else if(e.key==='ArrowUp')S.rotX-=step;
 else S.rotX+=step;
 } else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){
 const deg=e.shiftKey?15:5;
-S.geoRotation=((S.geoRotation+(e.key==='ArrowRight'?deg:-deg))%360+360)%360;
+S.geoRotation=((S.geoRotation+(e.key==='ArrowRight'?-deg:deg))%360+360)%360;   
 const re=document.getElementById('geoRotation'),rb=document.getElementById('rotation-v');
 if(re)re.value=S.geoRotation;if(rb)rb.textContent=S.geoRotation.toFixed(1)+'°';
 } else {
@@ -38235,7 +38239,7 @@ const bandStr=Math.max(0, Math.min(1, +S.cxBandStrength||0.5));
 
 const layers=Math.max(1, Math.min(20, S.layers|0));
 const bandsPerOctave=layers*bandFreq;
-const viewRot=(+S.geoRotation||0)*Math.PI/180;
+const viewRot=-(+S.geoRotation||0)*Math.PI/180;   
 const cosV=Math.cos(viewRot), sinV=Math.sin(viewRot);
 
 
@@ -41524,6 +41528,9 @@ return { ok: true, value: out };
 }
 
 
+
+const _STATE_V_ROT_CCW = 3;
+
 function _noteDroppedFractalTypes(drops) {
 if (!drops || !drops.length || typeof showToast !== 'function') return;
 const ver = (typeof APP_VERSION !== 'undefined') ? APP_VERSION : '?';
@@ -41531,7 +41538,7 @@ showToast(t('state.load-unknown-ft', {ft: [...new Set(drops)].join(', '), ver}),
 }
 
 function _migrateState(raw, drops) {
-if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return { _v: 1 };
+if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return { _v: _STATE_V_ROT_CCW };
 if (_allowedStateKeys === null) {
 _allowedStateKeys = new Set(Object.keys(S));
 _allowedStateKeys.add('_v');
@@ -41677,7 +41684,8 @@ cleaned[k] = (v && typeof v === 'object' && !Array.isArray(v))
 }
 
 const v = (typeof raw._v === 'number' && raw._v >= 0 && raw._v <= 999) ? raw._v : 0;
-cleaned._v = v < 1 ? 1 : v;
+if (v < _STATE_V_ROT_CCW && typeof cleaned.geoRotation === 'number') cleaned.geoRotation = _flipRotDeg(cleaned.geoRotation);
+cleaned._v = v < _STATE_V_ROT_CCW ? _STATE_V_ROT_CCW : v;
 
 
 
@@ -41787,7 +41795,7 @@ function _buildShareSnap(){
 
 
 const _isAttr=(S.fractalType||'').startsWith('attractor_');
-return {v:4,mode:S.mode,ft:S.fractalType,cx:+S.centerX.toFixed(12),cy:+S.centerY.toFixed(12),
+return {v:_HASH_CURRENT_V,mode:S.mode,ft:S.fractalType,cx:+S.centerX.toFixed(12),cy:+S.centerY.toFixed(12),
 
 
 
@@ -42172,6 +42180,8 @@ function _shareProjectReason(){
 const omitted=[];
 if(typeof KEYFRAMES!=='undefined' && KEYFRAMES.length) omitted.push('motion keyframes');
 if(typeof COMP_LAYERS!=='undefined' && COMP_LAYERS.length>=2) omitted.push('compositor layers');
+
+else if(typeof _compositeLayerSet==='function' && _compositeLayerSet().length) omitted.push('the layer’s position, rotation, opacity, blend and transparent background');
 if(S.mode==='fractal' && S.fractalType==='fractal_flame') omitted.push('flame transforms');
 return omitted.length ? t('share.project-required',{features:omitted.join(', ')}) : '';
 }
@@ -42261,7 +42271,7 @@ const _HASH_MAX_BYTES = 64 * 1024;
 
 
 
-const _HASH_CURRENT_V = 4;
+const _HASH_CURRENT_V = 5;   
 const _HASH_SCHEMA = {
 v:    { type:'int',    min:1, max:9 },
 mode: { type:'enum',   values:['fractal','geometry'] },
@@ -42935,6 +42945,7 @@ const _RETIRED_PATTERNS_V5_1 = {
 
 const _HASH_MIGRATIONS = {
 
+5: snap => (snap.gr!=null ? { ...snap, gr:_flipRotDeg(snap.gr) } : snap),
 };
 
 
@@ -42944,14 +42955,31 @@ const _HASH_MIGRATIONS = {
 
 
 const _HASH_ADDITIVE_VERSIONS = new Set([2, 3, 4]);
+
+
+
+function _flipRotDeg(v){
+v=+v; if(!isFinite(v)) return 0;
+return (v>=0 && v<=360) ? (360-v)%360 : -v;
+}
+
+
+
+function _projectRotCcw(p){
+if(!p||typeof p!=='object'||(p.state&&typeof p.state._v==='number'&&p.state._v>=_STATE_V_ROT_CCW)) return p;
+const neg=(o,k)=>(o&&typeof o==='object'&&typeof o[k]==='number'&&o[k])?{...o,[k]:-o[k]}:o;
+return {...p,
+keyframes:Array.isArray(p.keyframes)?p.keyframes.map(k=>neg(k,'geoRotation')):p.keyframes,
+layers:Array.isArray(p.layers)?p.layers.map(l=>(l&&typeof l==='object'&&l.transform&&typeof l.transform==='object')?{...l,transform:neg(l.transform,'rot')}:l):p.layers};
+}
 function _migrateHash(snap){
 let v=snap.v??1;
 if(v>_HASH_CURRENT_V)
 throw new Error(`hash schema v${v} newer than runtime v${_HASH_CURRENT_V}`);
 while(v<_HASH_CURRENT_V){
 const m=_HASH_MIGRATIONS[v+1];
-if(!m)break;
-snap=m(snap); v++;
+if(m)snap=m(snap);   
+v++;
 }
 snap.v=_HASH_CURRENT_V;
 return snap;
@@ -43847,6 +43875,9 @@ if(typeof updateZoomUI==='function')updateZoomUI();
 
 
 if(typeof _clearFlameHandlesOverlay==='function')_clearFlameHandlesOverlay();
+
+
+if(typeof _resizeCanvasForAspect==='function')_resizeCanvasForAspect('square');
 document.getElementById('patternType').value=S.pattern;
 document.getElementById('layers').value=S.layers;document.getElementById('layers-v').textContent=S.layers;
 document.getElementById('symmetry').value=S.symmetry;document.getElementById('symmetry-v').textContent=S.symmetry;
@@ -44773,6 +44804,7 @@ opacityWarpFill:S.opacityWarpFill, opacityPhaseFill:S.opacityPhaseFill,
 
 
 opacityWarpAmt:S.opacityWarpAmt,
+_v:_STATE_V_ROT_CCW,   
 };
 
 
@@ -44975,7 +45007,9 @@ return false;
 }
 }
 if(bm.mode&&bm.mode!==S.mode)switchMode(bm.mode,document.getElementById('lp-tab-'+(bm.mode==='fractal'?'fractal':'geo')));
-S.centerX=bm.centerX;S.centerY=bm.centerY;S.zoom=bm.zoom;
+
+
+for(const _nk of ['centerX','centerY','zoom']){ const _nv=bm[_nk]; S[_nk]=(typeof _nv==='number'&&isFinite(_nv))?_nv:DS[_nk]; }
 if(typeof _syncCenterStrFromNumeric==='function')_syncCenterStrFromNumeric();   
 
 
@@ -45130,7 +45164,7 @@ if(bm.strokeOpacity!=null)S.strokeOpacity=bm.strokeOpacity;
 
 
 
-if(bm.geoRotation!=null)S.geoRotation=Math.max(-720,Math.min(720,bm.geoRotation));
+if(bm.geoRotation!=null)S.geoRotation=Math.max(-720,Math.min(720,(bm._v>=_STATE_V_ROT_CCW)?bm.geoRotation:_flipRotDeg(bm.geoRotation)));
 
 
 if(bm.geoScale!=null)S.geoScale=Math.max(0.2,Math.min(5,bm.geoScale));
@@ -45513,7 +45547,7 @@ const INSPIRE_GEO=[
 {pattern:'flower-of-life', pal:'aurora',      layers:4, rot:0},
 {pattern:'metatrons-cube', pal:'ultraviolet', layers:3, rot:0},
 {pattern:'sri-yantra',     pal:'gold',        layers:4, rot:0},
-{pattern:'mandala',        pal:'psyche',      layers:6, sym:8, rot:18},
+{pattern:'mandala',        pal:'psyche',      layers:6, sym:8, rot:342},
 {pattern:'seed-of-life',   pal:'nebula',      layers:3, rot:0},
 {pattern:'fruit-of-life',  pal:'cosmic',      layers:3, rot:0},
 {pattern:'tree-of-life',   pal:'emerald',     layers:3, rot:0},
@@ -45526,7 +45560,7 @@ const INSPIRE_GEO=[
 {pattern:'enneagram',      pal:'ruby',        layers:3, rot:0},
 
 {pattern:'girih',          pal:'sapphire',    layers:3, rot:0},
-{pattern:'girih',          pal:'gold',        layers:3, rot:18},
+{pattern:'girih',          pal:'gold',        layers:3, rot:342},
 {pattern:'truchet',        pal:'slate',       layers:8, rot:0},
 {pattern:'truchet',        pal:'arctic',      layers:12,rot:0},
 {pattern:'voronoi',        pal:'glacier',     layers:5, rot:0},
@@ -46850,7 +46884,7 @@ if(drag.is3D){
 S.rotY=drag.startRotY-drag.dx*.01;
 S.rotX=drag.startRotX+drag.dy*.01;
 }else{
-S.geoRotation=(drag.startRot+drag.dx*.5)%360;
+S.geoRotation=(drag.startRot-drag.dx*.5)%360;   
 if(S.geoRotation<0)S.geoRotation+=360;
 _grSlider().value=S.geoRotation;   
 _grBadge().textContent=S.geoRotation.toFixed(1)+'°';
@@ -47451,10 +47485,10 @@ blurb:"Circles inscribed in the gaps between circles, down to infinity, every cu
 preset:{pattern:'apollonian',pal:'plasma',layers:4,rot:0} },
 { title:"Eight-fold Mandala", mode:'geometry', tags:['symmetry'],
 blurb:"Radial symmetry turned meditative, the centered geometry common to a dozen traditions.",
-preset:{pattern:'mandala',pal:'psyche',layers:6,sym:8,rot:18} },
+preset:{pattern:'mandala',pal:'psyche',layers:6,sym:8,rot:342} },
 { title:"Girih Strapwork", mode:'geometry', tags:['Islamic','tiling'],
 blurb:"The strapwork tiling of medieval Islamic architecture, quasi-periodic centuries before Penrose.",
-preset:{pattern:'girih',pal:'gold',layers:3,rot:18} },
+preset:{pattern:'girih',pal:'gold',layers:3,rot:342} },
 { title:"Phyllotaxis Spiral", mode:'geometry', tags:['growth','golden ratio'],
 blurb:"The golden-angle spiral by which a sunflower packs its seeds with no gaps and no crowding.",
 preset:{pattern:'phyllotaxis',pal:'emerald',layers:5,rot:0} },
@@ -55379,7 +55413,8 @@ c.globalAlpha=S.strokeOpacity;
 function drawKleinian(c,bR){
 const R=bR*3;
 
-const stateKey='kl:'+_klStateHash();
+const iters=_klBudget(bR);
+const stateKey='kl:'+_klStateHash()+':'+iters;
 const cached=_workerComputeCache.get(stateKey);
 if(cached && cached.pts){
 _renderKleinianFromPoints(c, bR, cached.pts, cached.count, R);
@@ -55390,8 +55425,6 @@ if(typeof Worker!=='undefined' && !_geomJobsInFlight.has(stateKey)){
 
 
 
-const depth=Math.max(2,Math.min(6,S.layers||3));
-const iters=Math.min(20000, 1<<(depth+9));
 
 
 const muRe=(S.kleinianMuRe!=null)?+S.kleinianMuRe:1.5;
@@ -55456,9 +55489,7 @@ const matB=[cm(1,0), cm(0,0),      mu,      cm(1,0)];
 const Ai=mInv(matA), Bi=mInv(matB);
 const gens=[matA, matB, Ai, Bi];
 
-
-const depth=Math.max(2,Math.min(6,S.layers||3));
-const N=Math.min(20000, 1<<(depth+9));
+const N=iters;
 
 const pts=[];
 let z=cm(0,0);
@@ -55500,6 +55531,17 @@ c.restore();
 
 
 function _klMarkPx(bR){return 1.5*bR/(CANVAS_SIZE*0.15)}
+
+
+const _KL_MAX_MUL=16;
+function _klBudget(bR){
+
+const depth=Math.max(2,Math.min(6,S.layers||3));
+const base=Math.min(20000, 1<<(depth+9));
+const k=bR/(CANVAS_SIZE*0.15);
+const mul=Math.max(1,Math.min(_KL_MAX_MUL,k*k));
+return Math.round(base*mul);
+}
 
 
 function _renderKleinianFromPoints(c, bR, pts, count, R){
@@ -58031,10 +58073,10 @@ case 'geo-bloom':{
 
 const steps=[
 {layers:1,geoRotation:0,  geoScale:0.5, colorOffset:base.colorOffset},
-{layers:3,geoRotation:30, geoScale:0.75,colorOffset:(base.colorOffset+0.15)%1},
-{layers:5,geoRotation:60, geoScale:1,   colorOffset:(base.colorOffset+0.3)%1},
-{layers:7,geoRotation:90, geoScale:1.25,colorOffset:(base.colorOffset+0.5)%1},
-{layers:9,geoRotation:180,geoScale:1.5, colorOffset:(base.colorOffset+0.7)%1},
+{layers:3,geoRotation:-30, geoScale:0.75,colorOffset:(base.colorOffset+0.15)%1},
+{layers:5,geoRotation:-60, geoScale:1,   colorOffset:(base.colorOffset+0.3)%1},
+{layers:7,geoRotation:-90, geoScale:1.25,colorOffset:(base.colorOffset+0.5)%1},
+{layers:9,geoRotation:-180,geoScale:1.5, colorOffset:(base.colorOffset+0.7)%1},
 ];
 steps.forEach((s,i)=>{
 KEYFRAMES.push({...base,...s,dur:2.5,ease:'ease-in-out',label:'KF '+(i+2)});
@@ -59579,7 +59621,7 @@ function _drawLayerTransformed(ctx, canvas, t, dx, dy, dw, dh) {
 if (_layerXformIdentity(t)) { ctx.drawImage(canvas, dx, dy, dw, dh); return; }
 const cx = dx + dw / 2 + (t.x || 0) * dw, cy = dy + dh / 2 + (t.y || 0) * dh;
 const s = (typeof t.scale === 'number' && t.scale > 0) ? t.scale : 1;
-const r = ((t.rot || 0) * Math.PI) / 180;
+const r = -((t.rot || 0) * Math.PI) / 180;   
 ctx.save();
 ctx.translate(cx, cy);
 ctx.rotate(r);
@@ -60611,7 +60653,7 @@ _recompositeTransformOnly();
 function _layerMoveGeom(W2, H2) {
 const t = (COMP_LAYERS[_activeCompLayerIdx] && COMP_LAYERS[_activeCompLayerIdx].transform) || _LAYER_XFORM_DEFAULT;
 const s = (typeof t.scale === 'number' && t.scale > 0) ? t.scale : 1;
-const r = ((t.rot || 0) * Math.PI) / 180;
+const r = -((t.rot || 0) * Math.PI) / 180;   
 const cx = W2 / 2 + (t.x || 0) * W2, cy = H2 / 2 + (t.y || 0) * H2;
 
 
@@ -60682,7 +60724,7 @@ else {
 
 const t = layer.transform || _LAYER_XFORM_DEFAULT;
 const s = (typeof t.scale === 'number' && t.scale > 0) ? t.scale : 1;
-const r = -((t.rot || 0) * Math.PI) / 180;
+const r = ((t.rot || 0) * Math.PI) / 180;   
 const dx = p.x - g.cx, dy = p.y - g.cy;
 const lx = (dx * Math.cos(r) - dy * Math.sin(r)) / s, ly = (dx * Math.sin(r) + dy * Math.cos(r)) / s;
 if (Math.abs(lx) <= W2 / 2 && Math.abs(ly) <= H2 / 2) mode = 'move';
@@ -60713,7 +60755,7 @@ t.scale = Math.max(0.1, Math.min(3, (d.t0.scale || 1) * (d1 / d0)));
 } else if (d.mode === 'rotate') {
 const a0 = Math.atan2(d.startY - d.cy, d.startX - d.cx);
 const a1 = Math.atan2(p.y - d.cy, p.x - d.cx);
-let deg = (d.t0.rot || 0) + (a1 - a0) * 180 / Math.PI;
+let deg = (d.t0.rot || 0) - (a1 - a0) * 180 / Math.PI;   
 deg = ((deg + 180) % 360 + 360) % 360 - 180;   
 t.rot = Math.round(deg);
 }
@@ -61619,7 +61661,7 @@ applySnapshot(function applyFields(){
 
 
 
-const _ftDrops = [];
+const _ftDrops = []; project = _projectRotCcw(project);   
 const _pState = _migrateState(project.state, _ftDrops);
 Object.assign(S, _pState);
 
@@ -64603,7 +64645,7 @@ let _pfxOnArtP=false;
 
 
 
-try {
+let _turnRelease=null; try { _turnRelease=await _layerRenderAcquire(); const _stateAtStart=_exportStateKey();   
 
 
 
@@ -64611,7 +64653,7 @@ try {
 const _exVisP=(typeof _compositeLayerSet==='function'&&typeof _compositeLayersToExport==='function')?_compositeLayerSet():[];   
 if(_exVisP.length){
 status.textContent=t(_exVisP.length>1?'export.compositing-layers':'export.compositing-layer',{n:_exVisP.length});
-await _compositeLayersToExport(octx,W2,H2,_pfmtAlpha,signal);
+await _compositeLayersToExportHeld(octx,W2,H2,_pfmtAlpha,signal);
 } else {
 
 
@@ -64652,7 +64694,7 @@ const oc2=_trackCanvas(document.createElement('canvas'));oc2.width=W2;oc2.height
 const c=oc2.getContext('2d');const bR=Math.min(W2,H2)*.15;
 _exportBgFill(c,W2,H2,_pfmtAlpha);
 c.save();c.translate(W2/2,H2/2);
-if(!isGeo3D())c.rotate(S.geoRotation*DEG);
+if(!isGeo3D())c.rotate(-S.geoRotation*DEG);   
 c.scale(S.geoScale,S.geoScale);
 applyStrokeStyle(c,S.lineWeight*(Math.min(W2,H2)/CANVAS_SIZE));wrapGeoFill(c);
 c.globalAlpha=S.strokeOpacity;
@@ -64712,7 +64754,7 @@ finalCanvas=dc;finalW=W2_target;finalH=H2_target;
 }
 
 
-_checkAbort(signal);
+_checkAbort(signal);_exportStateTripwire(_stateAtStart);
 status.textContent='Encoding…';bar.style.setProperty('--progress','95%');await new Promise(r=>setTimeout(r,30));
 const _out=await _encodeStillExport(finalCanvas,finalW,finalH,_pfmt,bar,status,signal);
 bar.style.setProperty('--progress','100%');status.textContent='Done!';
@@ -64733,7 +64775,7 @@ bar.style.setProperty('--progress','0%');
 if (typeof showToast === 'function') showToast(t('export.generic-failed',{error:(err && err.message || err)}));
 }
 } finally {
-btn.disabled=false;btn.textContent='Export Again';
+if(_turnRelease)_turnRelease();btn.disabled=false;btn.textContent='Export Again';
 _hideExportCancel();
 
 
@@ -65203,7 +65245,7 @@ _exportAbortController=null;
 if(typeof _restoreBackgroundLoops==='function') _restoreBackgroundLoops(_dxLoopSnapshot);
 return;
 }
-try {
+let _turnRelease=null; try { _turnRelease=await _layerRenderAcquire(); const _stateAtStart=_exportStateKey();   
 const oc=_trackCanvas(document.createElement('canvas'));oc.width=W2;oc.height=H2;let octx=oc.getContext('2d');
 
 
@@ -65212,13 +65254,13 @@ const oc=_trackCanvas(document.createElement('canvas'));oc.width=W2;oc.height=H2
 const _exVis=(typeof _compositeLayerSet==='function'&&typeof _compositeLayersToExport==='function')?_compositeLayerSet():[];   
 if(_exVis.length){
 status.textContent=t(_exVis.length>1?'export.compositing-layers':'export.compositing-layer',{n:_exVis.length});
-await _compositeLayersToExport(octx,W2,H2,_fmt==='png'||_fmt==='webp'||_fmt==='gif',signal);
+await _compositeLayersToExportHeld(octx,W2,H2,_fmt==='png'||_fmt==='webp'||_fmt==='gif',signal);
 } else if(S.mode==='geometry'){
 _noteExportEngine('Canvas 2D'); const oW=W,oH=H;W=W2;H=H2;
 try{
 const oc2=_trackCanvas(document.createElement('canvas'));oc2.width=W2;oc2.height=H2;const c=oc2.getContext('2d');
 const bR=Math.min(W2,H2)*.15;_exportBgFill(c,W2,H2,_fmt==='png'||_fmt==='webp'||_fmt==='gif');
-c.save();c.translate(W2/2,H2/2);if(!isGeo3D())c.rotate(S.geoRotation*DEG);
+c.save();c.translate(W2/2,H2/2);if(!isGeo3D())c.rotate(-S.geoRotation*DEG);
 c.scale(S.geoScale,S.geoScale);
 applyStrokeStyle(c,S.lineWeight*(Math.min(W2,H2)/CANVAS_SIZE));wrapGeoFill(c);
 c.globalAlpha=S.strokeOpacity;
@@ -65466,7 +65508,7 @@ _exportBgFill(octx,W2,H2,_lbAlpha); octx.drawImage(_lbSub,Math.round((W2-_lbSub.
 }
 }
 if(_pfxAnyActive()&&!_pfxOnArt){status.textContent='Post-FX…';bar.style.setProperty('--progress','92%');await new Promise(r=>setTimeout(r,10));await applyPostFXAsync(octx,W2,H2,bar,status,signal);}
-bar.style.setProperty('--progress','100%');status.textContent='Encoding…';await new Promise(r=>setTimeout(r,30));
+_exportStateTripwire(_stateAtStart);bar.style.setProperty('--progress','100%');status.textContent='Encoding…';await new Promise(r=>setTimeout(r,30));
 const _out=await _encodeStillExport(oc,W2,H2,_fmt,bar,status,signal);
 status.textContent='Done!';btn.disabled=false;btn.textContent='Export Again';
 if(typeof showToast==='function')showToast(t('export.completed',{w:_out.w,h:_out.h,fname:_out.fname}),undefined,undefined,_exportToastThumb(oc));   
@@ -65484,7 +65526,7 @@ btn.disabled=false;btn.textContent='Retry Export';
 if (typeof showToast === 'function') showToast(t('export.generic-failed',{error:(err && err.message || err)}));
 }
 } finally {
-_hideExportCancel();
+if(_turnRelease)_turnRelease();_hideExportCancel();
 
 
 
@@ -65594,14 +65636,17 @@ this._paths.push(`<text x="${x.toFixed(2)}" y="${y.toFixed(2)}" fill="${isMono?'
 }
 
 
+function _vectorExportBail(retry){
+if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(retry)) return true;
+return typeof _exportBusyBail === 'function' && _exportBusyBail();
+}
+
+
 async function doSVGExportPrint(){
 
-if (typeof _deferDuringLayerSwap === 'function' && _deferDuringLayerSwap(() => doSVGExportPrint())) return;
 
 
-
-
-if(typeof _exportBusyBail==='function' && _exportBusyBail())return;
+if (_vectorExportBail(() => doSVGExportPrint())) return;
 
 
 
@@ -65630,6 +65675,7 @@ const _ar=pw/ph;
 const _vw=_ar>=1? vb*_ar : vb, _vh=_ar>=1? vb : vb/_ar;
 const _vx=(-_vw/2).toFixed(1), _vy=(-_vh/2).toFixed(1);
 const _vbAttr=`${_vx} ${_vy} ${_vw.toFixed(1)} ${_vh.toFixed(1)}`;
+const _frame={x:_vx, y:_vy, w:_vw.toFixed(1), h:_vh.toFixed(1)};   
 
 const isMono=_plotterPreset==='mono';
 const _x=(-vb/2).toFixed(0);
@@ -65653,14 +65699,11 @@ const svg=`<?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated by Reactor ${new Date().toISOString().slice(0,10)} · ${_cset.length}-layer composite · Preset: ${_plotterPreset} -->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="${_vbAttr}"
   width="${pw}mm" height="${ph}mm">
-${_bgRect}<defs><clipPath id="aeon-frame"><rect x="${_vx}" y="${_vy}" width="${_vw.toFixed(1)}" height="${_vh.toFixed(1)}"/></clipPath></defs>
-<g clip-path="url(#aeon-frame)">
+${_bgRect}${_svgFrameClip(_frame)}<g clip-path="url(#aeon-frame)">
 ${body}
 </g>
 </svg>`;
-const blob=new Blob([svg],{type:'image/svg+xml'});
-const url=URL.createObjectURL(blob);
-triggerDownload(url,`aeon-composite-${_cset.length}layers-${_plotterSize}.svg`);   
+_downloadSVG(svg,`aeon-composite-${_cset.length}layers-${_plotterSize}.svg`);
 closeExportModal();
 return;
 }
@@ -65688,15 +65731,12 @@ const svg=`<?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated by Reactor ${new Date().toISOString().slice(0,10)} · Pattern: ${S.pattern} · Preset: ${_plotterPreset} -->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="${_vbAttr}"
   width="${pw}mm" height="${ph}mm">
-${_bgRect}<defs><clipPath id="aeon-frame"><rect x="${_vx}" y="${_vy}" width="${_vw.toFixed(1)}" height="${_vh.toFixed(1)}"/></clipPath></defs>
-<g clip-path="url(#aeon-frame)">
+${_bgRect}${_svgFrameClip(_frame)}<g clip-path="url(#aeon-frame)">
 ${r.inner}
 </g>
 </svg>`;
-const blob=new Blob([svg],{type:'image/svg+xml'});
-const url=URL.createObjectURL(blob);
 const preset=isPlotter?'-plotter':isMono?'-mono':'';
-triggerDownload(url,`aeon-${S.pattern}${preset}-${_plotterSize}.svg`);   
+_downloadSVG(svg,`aeon-${S.pattern}${preset}-${_plotterSize}.svg`);
 closeExportModal();
 } catch (err) {
 console.error('doSVGExportPrint failed:', err);
@@ -65844,6 +65884,24 @@ window.addEventListener(ev,()=>{_densityLastInputMs=performance.now();_densityRe
 
 
 
+
+function _layerRenderAcquire(){
+let done=false;
+const release=()=>{ if(done)return; done=true; const next=_layerRenderWaiters.shift(); if(next)next(); else _layerRenderBusy=false; };   
+if(!_layerRenderBusy){ _layerRenderBusy=true; return Promise.resolve(release); }
+return new Promise((r)=>_layerRenderWaiters.push(r)).then(()=>release);
+}
+
+
+
+
+
+function _exportStateKey(){ const s=_layerSnapshot(); delete s.useWebGPU; return JSON.stringify(s); }
+function _exportStateTripwire(key){ if(_exportStateKey()!==key) throw new Error(t('export.state-changed')); }
+
+
+
+
 let _exportProofOk=false;   
 const _PROOF_LONG_PX=4096*4096, _PROOF_LONG_DENSITY_PX=2048*2048;
 const _PROOF_MAX_W=320, _PROOF_MAX_H=200;
@@ -65977,7 +66035,7 @@ _exportAbortController=new AbortController();
 const signal=_exportAbortController.signal;
 try{
 const screen=_exportProofScreen(p,r);
-const res=await _renderExportProof(p,kind,r,signal);
+const res=await _layerRenderLocked(()=>_renderExportProof(p,kind,r,signal));   
 if(res.refused){ pn.setAttribute('data-verdict','refused'); verdictEl.textContent=res.refused; return; }
 
 
