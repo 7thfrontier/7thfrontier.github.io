@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-skUiKQOjmy/y1zy4o07iiUhA9IgZouBBcJ4wXnleqB4=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-dIVaqxWYzQGysNHM807JWKoQgn6Gp3JY/rAYFsm0pm8=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4296,12 +4296,12 @@
 
 
 
-<!-- build: e9cce71c1661 -->
+<!-- build: 7e6fd75eb100 -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.11.11
+ * AEON -- Universal Dynamics Reactor v7.11.12
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7467,7 +7467,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.11.11';
+const APP_VERSION='7.11.12';
 
 
 
@@ -7476,10 +7476,10 @@ const APP_VERSION='7.11.11';
 
 
 
-const MISSION_BUILD_HASH='e9cce71c1661';
-const MISSION_GIT_SHA='ce110fcd7e455f397be49cafef67f32569c2894d';
+const MISSION_BUILD_HASH='7e6fd75eb100';
+const MISSION_GIT_SHA='a26fd9f89468e95cd5e14a68cfc943b80925cbbe';
 
-const MISSION_RENDER_HASH='5747fe7fed3a';
+const MISSION_RENDER_HASH='9ef1f9a14e10';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -41789,6 +41789,23 @@ if (v > -_ROT3D_TURN/2 && v <= _ROT3D_TURN/2) return v;
 const wrapped = ((v % _ROT3D_TURN) + _ROT3D_TURN) % _ROT3D_TURN;
 return wrapped > _ROT3D_TURN/2 ? wrapped - _ROT3D_TURN : wrapped;
 }
+
+
+const _LONE_LXF=[[-10,10],[-10,10],[0.01,100]];
+function _shareLoneLayerLook(){
+const set=(typeof _compositeLayerSet==='function')?_compositeLayerSet():[]; if(set.length!==1) return {};
+const l=set[0], t=l.transform, out={}, c=(v,lo,hi,d)=>Math.max(lo,Math.min(hi,(typeof v==='number'&&isFinite(v))?v:d));
+if(!_layerXformIdentity(t)) out.lxf=[+c(t.x,..._LONE_LXF[0],0).toFixed(4),+c(t.y,..._LONE_LXF[1],0).toFixed(4),+c(t.scale,..._LONE_LXF[2],1).toFixed(3),+((c(t.rot,-1e6,1e6,0)%360+540)%360-180).toFixed(2)];
+if(typeof l.opacity==='number' && l.opacity<1) out.lop=+Math.max(0,l.opacity).toFixed(3);
+if(_validBlend(l.blend)!=='source-over') out.lbl=l.blend;
+if(l.transparentBg) out.ltb=1; return out;
+}
+function _applyShareLoneLayerLook(s){
+const l=COMP_LAYERS[_activeCompLayerIdx]; if(!l||!s||(s.lxf==null&&s.lop==null&&s.lbl==null&&s.ltb==null)) return;
+if(s.lxf){ const k=(i)=>Math.max(_LONE_LXF[i][0],Math.min(_LONE_LXF[i][1],s.lxf[i])); l.transform=_sanitizeLayerXform({x:k(0),y:k(1),scale:k(2),rot:s.lxf[3]}); }
+if(s.lop!=null) l.opacity=s.lop; if(s.lbl!=null) l.blend=_validBlend(s.lbl);
+if(s.ltb) l.transparentBg=true; renderCompLayerList();
+}
 function _buildShareSnap(){
 
 
@@ -41802,6 +41819,7 @@ return {v:_HASH_CURRENT_V,mode:S.mode,ft:S.fractalType,cx:+S.centerX.toFixed(12)
 ...((S.zoom||1)>1e9 && typeof S.centerXStr==='string' ? {cxs:S.centerXStr,cys:S.centerYStr} : {}),
 z:+S.zoom.toFixed(6),jr:+S.juliaReal.toFixed(6),ji:+S.juliaImag.toFixed(6),
 ...((+S.viewRot||0)?{vrot:+(+S.viewRot).toFixed(2)}:{}),   
+..._shareLoneLayerLook(),
 
 
 
@@ -42180,8 +42198,6 @@ function _shareProjectReason(){
 const omitted=[];
 if(typeof KEYFRAMES!=='undefined' && KEYFRAMES.length) omitted.push('motion keyframes');
 if(typeof COMP_LAYERS!=='undefined' && COMP_LAYERS.length>=2) omitted.push('compositor layers');
-
-else if(typeof _compositeLayerSet==='function' && _compositeLayerSet().length) omitted.push('the layer’s position, rotation, opacity, blend and transparent background');
 if(S.mode==='fractal' && S.fractalType==='fractal_flame') omitted.push('flame transforms');
 return omitted.length ? t('share.project-required',{features:omitted.join(', ')}) : '';
 }
@@ -42281,6 +42297,10 @@ cy:   { type:'number', min:-1e30, max:1e30 },
 cxs:  { type:'string', maxLen:90 },   
 cys:  { type:'string', maxLen:90 },   
 vrot: { type:'number', min:-180,  max:180 },      
+lxf:  { type:'array',  length:4, item:{ type:'number', min:-180, max:180 } },   
+lop:  { type:'number', min:0, max:1 },                                          
+lbl:  { type:'enum',   values:()=>[...LAYER_BLEND_MODES] },                     
+ltb:  { type:'int',    min:0, max:1 },                                          
 z:    { type:'number', min:1e-6,  max:1e72 },     
 jr:   { type:'number', min:-2,    max:2 },        
 ji:   { type:'number', min:-2,    max:2 },        
@@ -43230,6 +43250,7 @@ if(parsed && typeof parsed.ca==='string'
 if(parsed.ca.length <= 256) parsed._unknownCa = parsed.ca; 
 delete parsed.ca;
 }
+if(parsed && parsed.lbl!=null && !LAYER_BLEND_MODES.has(parsed.lbl)) delete parsed.lbl;   
 
 
 
@@ -43987,6 +44008,7 @@ if(snap.cep!=null)S.cePlay=!!snap.cep;
 
 if(typeof _resumeGeoAnimFromRestore==='function')_resumeGeoAnimFromRestore();
 if(typeof _resetTransientViewStateForSingleView==='function')_resetTransientViewStateForSingleView();   
+_applyShareLoneLayerLook(snap);   
 }, {
 
 
