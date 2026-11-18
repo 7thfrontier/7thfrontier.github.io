@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.11.13</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.11.14</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.11.13</h2>
+    <h2>AEON · v7.11.14</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1163,18 +1163,19 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.11.13.</h2>
-    <p class="section-lede">Test browsers move to Chrome 157, Firefox 159 and WebKit 27.2 · 2026-11-17</p>
+    <h2 class="section-title">What's new<br>in 7.11.14.</h2>
+    <p class="section-lede">A layer stays where its sliders say, however it got there · 2026-11-18</p>
   </header>
   <ul class="prose changes">
-    <li>A maintenance release with no change you can see in AEON.</li>
+    <li><strong>A layer now stays where its sliders say, however it got there.</strong> 7.11.12 said a hand-edited share link could no longer open a layer off the canvas, and that was not yet true: a link, a drag of the move handle or an opened .aeon file could still put a layer's position past the X and Y sliders' ends or its size past the Scale slider's, while the sliders showed their ends. All of them now keep a layer within what the sliders show.</li>
+    <li><strong>A layer's Move, Scale and Rotate fields show the value the layer actually takes.</strong> Typing a number past a field's range, such as 400 in Rotate, and pressing Tab or Enter turned the layer only as far as the range allows (180) while the field went on reading 400. The field now changes to the value in use, and a field emptied and left goes back to it.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.11.13</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.11.14</p>
 </footer>
 
 <script>

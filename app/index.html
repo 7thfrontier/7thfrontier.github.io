@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-feqQqAU8kErvozpWFIEBSDPkPj8AC/dvlb08UZmdNk0=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-GMDbK+ONDE/F/Tfps9fVb5853k9r0ZrqNGORxzWutaw=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4296,12 +4296,12 @@
 
 
 
-<!-- build: 2161d4d5c2f0 -->
+<!-- build: 22406ade7b6e -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.11.13
+ * AEON -- Universal Dynamics Reactor v7.11.14
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7467,7 +7467,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.11.13';
+const APP_VERSION='7.11.14';
 
 
 
@@ -7476,10 +7476,10 @@ const APP_VERSION='7.11.13';
 
 
 
-const MISSION_BUILD_HASH='2161d4d5c2f0';
-const MISSION_GIT_SHA='33ee6b41892b5c83cbaff9304f98f6e109bb0064';
+const MISSION_BUILD_HASH='22406ade7b6e';
+const MISSION_GIT_SHA='2e085830c84f93045aacac55634cc865a7341ed9';
 
-const MISSION_RENDER_HASH='9ef1f9a14e10';
+const MISSION_RENDER_HASH='596bd68d0547';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -41791,18 +41791,17 @@ return wrapped > _ROT3D_TURN/2 ? wrapped - _ROT3D_TURN : wrapped;
 }
 
 
-const _LONE_LXF=[[-10,10],[-10,10],[0.01,100]];
 function _shareLoneLayerLook(){
 const set=(typeof _compositeLayerSet==='function')?_compositeLayerSet():[]; if(set.length!==1) return {};
 const l=set[0], t=l.transform, out={}, c=(v,lo,hi,d)=>Math.max(lo,Math.min(hi,(typeof v==='number'&&isFinite(v))?v:d));
-if(!_layerXformIdentity(t)) out.lxf=[+c(t.x,..._LONE_LXF[0],0).toFixed(4),+c(t.y,..._LONE_LXF[1],0).toFixed(4),+c(t.scale,..._LONE_LXF[2],1).toFixed(3),+((c(t.rot,-1e6,1e6,0)%360+540)%360-180).toFixed(2)];
+if(!_layerXformIdentity(t)) out.lxf=[+c(t.x,..._LAYER_XFORM_BOUNDS.x,0).toFixed(4),+c(t.y,..._LAYER_XFORM_BOUNDS.y,0).toFixed(4),+c(t.scale,..._LAYER_XFORM_BOUNDS.scale,1).toFixed(3),+((c(t.rot,-1e6,1e6,0)%360+540)%360-180).toFixed(2)];
 if(typeof l.opacity==='number' && l.opacity<1) out.lop=+Math.max(0,l.opacity).toFixed(3);
 if(_validBlend(l.blend)!=='source-over') out.lbl=l.blend;
 if(l.transparentBg) out.ltb=1; return out;
 }
 function _applyShareLoneLayerLook(s){
 const l=COMP_LAYERS[_activeCompLayerIdx]; if(!l||!s||(s.lxf==null&&s.lop==null&&s.lbl==null&&s.ltb==null)) return;
-if(s.lxf){ const k=(i)=>Math.max(_LONE_LXF[i][0],Math.min(_LONE_LXF[i][1],s.lxf[i])); l.transform=_sanitizeLayerXform({x:k(0),y:k(1),scale:k(2),rot:s.lxf[3]}); }
+if(s.lxf) l.transform=_sanitizeLayerXform({x:s.lxf[0],y:s.lxf[1],scale:s.lxf[2],rot:s.lxf[3]});
 if(s.lop!=null) l.opacity=s.lop; if(s.lbl!=null) l.blend=_validBlend(s.lbl);
 if(s.ltb) l.transparentBg=true; renderCompLayerList();
 }
@@ -46342,6 +46341,7 @@ case 'sb-seed-input':    updateSeed('sb-seed-input'); break;
 case 'project-file-input': importProjectFile(e.target); break;
 case 'pal-file-input':   importPaletteFile(e.target); break;
 case 'layer-blend-sel':  setLayerBlend(v); break;
+case 'layer-tx-n': case 'layer-ty-n': case 'layer-scale-n': case 'layer-rot-n': _syncLayerTransformBadges(e.target); break;
 
 
 case 'layer-live-composite': {
@@ -60467,6 +60467,8 @@ _pushLayerHist();
 
 const _LAYER_XFORM_DEFAULT = { x: 0, y: 0, scale: 1, rot: 0 };
 
+const _LAYER_XFORM_BOUNDS = { x: [-1, 1], y: [-1, 1], scale: [0.1, 3] }, _clampLayerXformField = (f, v) => { const b = _LAYER_XFORM_BOUNDS[f]; return b ? Math.max(b[0], Math.min(b[1], v)) : v; };
+
 
 
 
@@ -60510,7 +60512,7 @@ if (!t || typeof t !== 'object') return undefined;
 const num = (v, d) => (typeof v === 'number' && isFinite(v)) ? v : d;
 const x = num(t.x, 0), y = num(t.y, 0), scale = num(t.scale, 1), rot = num(t.rot, 0);
 if (x === 0 && y === 0 && scale === 1 && rot === 0) return undefined;
-return { x, y, scale: scale > 0 ? scale : 1, rot };
+return { x: _clampLayerXformField('x', x), y: _clampLayerXformField('y', y), scale: scale > 0 ? _clampLayerXformField('scale', scale) : 1, rot };
 }
 
 
@@ -60567,9 +60569,7 @@ if (!isFinite(v)) return;
 
 
 
-if (field === 'scale') v = Math.max(0.1, Math.min(3, v));
-else if (field === 'rot') v = Math.max(-180, Math.min(180, v));
-else v = Math.max(-1, Math.min(1, v));   
+v = field === 'rot' ? Math.max(-180, Math.min(180, v)) : _clampLayerXformField(field, v);
 t[field] = v;
 _syncLayerTransformBadges();
 _recompositeTransformOnly();
@@ -60602,11 +60602,11 @@ btn.classList.toggle('is-open', open);
 
 
 
-function _syncLayerTransformBadges() {
+function _syncLayerTransformBadges(committed) {
 const l = COMP_LAYERS[_activeCompLayerIdx];
 const t = (l && l.transform) || _LAYER_XFORM_DEFAULT;
 const ae = (typeof document !== 'undefined') ? document.activeElement : null;
-const put = (id, v) => { const e = document.getElementById(id); if (e && e !== ae) e.value = v; };
+const put = (id, v) => { const e = document.getElementById(id); if (e && (e !== ae || e === committed)) e.value = v; };   
 const scale = (typeof t.scale === 'number') ? t.scale : 1;
 put('layer-tx-sl', t.x || 0);        put('layer-tx-n', +(((t.x || 0) * 100).toFixed(1)));
 put('layer-ty-sl', t.y || 0);        put('layer-ty-n', +(((t.y || 0) * 100).toFixed(1)));
@@ -60768,12 +60768,12 @@ const W2 = cv.width, H2 = cv.height;
 const p = _layerMoveEventXY(e);
 const t = layer.transform;
 if (d.mode === 'move') {
-t.x = d.t0.x + (p.x - d.startX) / W2;
-t.y = d.t0.y + (p.y - d.startY) / H2;
+t.x = _clampLayerXformField('x', d.t0.x + (p.x - d.startX) / W2);
+t.y = _clampLayerXformField('y', d.t0.y + (p.y - d.startY) / H2);
 } else if (d.mode === 'scale') {
 const d0 = Math.hypot(d.startX - d.cx, d.startY - d.cy) || 1;
 const d1 = Math.hypot(p.x - d.cx, p.y - d.cy);
-t.scale = Math.max(0.1, Math.min(3, (d.t0.scale || 1) * (d1 / d0)));
+t.scale = _clampLayerXformField('scale', (d.t0.scale || 1) * (d1 / d0));
 } else if (d.mode === 'rotate') {
 const a0 = Math.atan2(d.startY - d.cy, d.startX - d.cx);
 const a1 = Math.atan2(p.y - d.cy, p.x - d.cx);
