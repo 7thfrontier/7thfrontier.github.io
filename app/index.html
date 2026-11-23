@@ -38,7 +38,7 @@
         `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors
         'none'` as an HTTP response header server-side.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-JSEIq+iHmU6sAhit891Rkq2QItUNckL+W3BDhPPEw7o=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; img-src 'self' data: blob:; style-src 'self' 'sha256-4k7GoJDT6U3ZDWN5g4XB2ADIcYgcIJ7SJKRLoSh8CGI='; font-src 'self'; script-src 'self' 'sha256-/fMwgFDEgjZBnoj/iW3XGODCrIOMVJ5aqZLZhCrh9Xk=' 'sha256-5WGcNAKD5oK/CRMHYKHYhhE3mv7faOBt5gNls6RJBd8='; connect-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; media-src 'self'">
     <title>AEON: Universal Dynamics Reactor</title>
     <!-- v5.2 launch: external font CDN removed for offline operation.
          The brand fonts (Fraunces, Inter Tight, EB Garamond) gracefully
@@ -4296,12 +4296,12 @@
 
 
 
-<!-- build: d71fcf97824e -->
+<!-- build: f0c56fca9e6e -->
 <script>
 'use strict';
 // BUILD:INLINE_SCRIPT_START
 /*
- * AEON -- Universal Dynamics Reactor v7.11.15
+ * AEON -- Universal Dynamics Reactor v7.11.16
  * Proprietary. See LICENSE for terms.
  */
 
@@ -7467,7 +7467,7 @@ return JSON.parse(JSON.stringify(v));
 };
 }
 
-const APP_VERSION='7.11.15';
+const APP_VERSION='7.11.16';
 
 
 
@@ -7476,10 +7476,10 @@ const APP_VERSION='7.11.15';
 
 
 
-const MISSION_BUILD_HASH='d71fcf97824e';
-const MISSION_GIT_SHA='ff3ac969195dec595a1c0133073b5792c57b8dc9';
+const MISSION_BUILD_HASH='f0c56fca9e6e';
+const MISSION_GIT_SHA='8dd9232048a2452d718fce9bec648a3794cbf639';
 
-const MISSION_RENDER_HASH='5c197acba32f';
+const MISSION_RENDER_HASH='987167693388';
 const _MBH_SENTINEL='__'+'BUILD_HASH'+'__';
 const _MGS_SENTINEL='__'+'GIT_SHA'+'__';
 function _missionBuildId(){
@@ -11059,7 +11059,7 @@ if (_2d && _2d.clearRect) _2d.clearRect(0, 0, cv.width, cv.height);
 cv.classList.remove('is-hidden');
 }
 } catch (_e) {  }
-glcv.classList.add('is-shown');
+tok++;glcv.classList.add('is-shown');   
 if(S.fractalType==='custom_3d'){
 renderFractal3DCustom();
 } else {
@@ -11121,7 +11121,7 @@ try{usedGPU=renderDeepZoomGL()}catch(err){console.warn('Deep zoom GL failed:', e
 }
 }
 if(usedGPU){
-glcv.classList.add('is-shown');
+tok++;glcv.classList.add('is-shown');   
 
 
 
@@ -11175,7 +11175,7 @@ if(S.fractalType==='formula'&&glReady){
 
 
 try { if(typeof cv!=='undefined' && cv){const _2d=cv.getContext('2d');if(_2d&&_2d.clearRect)_2d.clearRect(0,0,cv.width,cv.height);cv.classList.remove('is-hidden');} } catch(_e){_swallowed('renderFractal', _e);}
-glcv.classList.add('is-shown');renderFractalCustom();if(S.colorAlgo==='histogram')applyHistogramEQ();updateCoordBar();return
+tok++;glcv.classList.add('is-shown');renderFractalCustom();if(S.colorAlgo==='histogram')applyHistogramEQ();updateCoordBar();return   
 }
 
 const isBuddhab=S.fractalType==='buddhabrot'||S.fractalType==='buddhabrot_anti';
@@ -11194,7 +11194,7 @@ if(!isCPUOnly&&!GL_3D_TYPES.has(S.fractalType)&&glReady&&!_f64NeedsCpu()&&!_gscC
 
 
 try { if(typeof cv!=='undefined' && cv){const _2d=cv.getContext('2d');if(_2d&&_2d.clearRect)_2d.clearRect(0,0,cv.width,cv.height);cv.classList.remove('is-hidden');} } catch(_e){_swallowed('renderFractal', _e);}
-glcv.classList.add('is-shown');renderFractalGL(..._glGestureSize());
+tok++;glcv.classList.add('is-shown');renderFractalGL(..._glGestureSize());   
 
 if(S.colorAlgo==='histogram') applyHistogramEQ();
 updateCoordBar();drawMandelbrotFeatures();if(typeof drawOrbitOverlay==='function')drawOrbitOverlay();return
@@ -11209,9 +11209,12 @@ glcv.classList.remove('is-shown');
 if(typeof cv!=='undefined' && cv)cv.classList.remove('is-hidden');
 
 
-const req = ++_wgpuScreenReq;
+
+
+
+const req = ++_wgpuScreenReq, t0 = tok;
 const o = await _wgpuOwn('screen');
-if(req !== _wgpuScreenReq){ _wgpuDisown(o); return true; }
+if(req !== _wgpuScreenReq || t0 !== tok){ _wgpuDisown(o); return true; }
 let ok = false;
 try { ok = await kernel(); }
 finally { _wgpuDisown(o); }
@@ -51260,6 +51263,15 @@ const WHATS_NEW_AFTER_RELOAD_KEY='aeon-open-whats-new-after-reload';
 const WHATS_NEW=[
 {
 
+version:'7.11.16',
+date:'2026-11-23',
+headline:'Turning WebGPU off no longer leaves a WebGPU frame on screen.',
+items:[
+'A WebGPU render still waiting or drawing when a WebGL render followed, as when WebGPU was switched off mid-render, could finish afterwards and cover the WebGL picture with a frame from the engine just turned off, until the next render. The WebGL render now cancels any WebGPU frame still pending.',
+],
+},
+{
+
 version:'7.11.15',
 date:'2026-11-19',
 headline:'What\'s New lists every release with a change you would notice, small fixes included.',
@@ -51325,14 +51337,6 @@ date:'2026-11-10',
 headline:'The app checks that your graphics card draws fractals correctly, and switches away from any graphics path that does not.',
 items:[
 'Once the first frame is up, the app draws a tiny test fractal on each graphics path in use and compares it with the same sums done on the CPU. A path that disagrees is switched off for the session: WebGPU gives way to WebGL2, and if WebGL2 itself draws wrong, escape-time fractals render on the CPU. A note says what happened. The check takes about 10 ms, runs entirely on your machine and sends nothing.',
-],
-},
-{
-version:'7.10.0',
-date:'2026-11-10',
-headline:'Strange attractors can be colored by how densely the orbit fills each spot.',
-items:[
-'Attractor Parameters has a new Color by choice. Angle, the default, colors each point by its angle about the origin, as before. Density colors each point by how often the orbit lands there, so the dense core and the sparse halo take opposite ends of the palette. It works in the live view, in Animate emergence and in exports, and share links keep it.',
 ],
 },
 ];

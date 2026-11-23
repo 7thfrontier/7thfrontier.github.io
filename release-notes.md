@@ -1,5 +1,5 @@
-What's New lists every release with a change you would notice, small fixes included · 2026-11-19
+Turning WebGPU off no longer leaves a WebGPU frame on screen · 2026-11-23
 
-- **What's New lists every release with a change you would notice, small fixes included.** It used to skip the small fix releases, so it had stopped at 7.11.2: it now also shows 7.11.8, 7.11.11, 7.11.12 and 7.11.14, and the Application menu is marked unread whenever a new entry arrives. A release with only behind-the-scenes work adds no entry and no unread mark.
+- **Turning WebGPU off no longer leaves a WebGPU frame on screen.** A WebGPU render still waiting or drawing when a WebGL render followed, as when WebGPU was switched off mid-render, could finish afterwards and cover the WebGL picture with a frame from the engine just turned off, until the next render. The WebGL render now cancels any WebGPU frame still pending.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.
