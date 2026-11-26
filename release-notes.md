@@ -1,5 +1,7 @@
-The test browsers move to Chrome 157.0.8103.78, and a busy census no longer reads a slow test child as a hang · 2026-11-24
+The render status names the renderer that really drew the picture, and an opened .aeon layer turns to the angle its Rotate slider shows · 2026-11-25
 
-- A maintenance release with no change you can see in AEON.
+- **An opened .aeon file turns a layer to the angle its Rotate slider shows.** A layer saved at a rotation past the slider's range, such as 500 degrees, drew at 140 while the slider sat at its 180 end. It now opens at 140 with the slider reading 140. A layer saved at a size of 0 or less used to open at full size; it now opens at the smallest size the Scale slider allows.
+- **The render status no longer says "still refining" after the picture is finished.** A frame drawn in a background thread or on the processor kept that label until the next change; it now settles to its finished reading on its own, and a long reading stays on one line instead of pushing the readout onto two.
+- **The render status at the foot of the canvas names the renderer that really drew the picture, and says why when the processor takes over.** A graphics card that failed the startup accuracy check, or a browser without WebGL2, used to read as WebGL2 while the processor drew the picture; it now reads as the processor with the reason beside it. Types the processor always draws, such as Fractal Flame, now say so too, and a deep zoom the graphics card draws no longer reads as a background thread.
 
 © 2026 [7th Frontier, Inc.](https://www.7thfrontier.com/) All Rights Reserved.

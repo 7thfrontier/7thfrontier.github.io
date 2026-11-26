@@ -803,7 +803,7 @@ dd a, .footer-coda a { text-decoration: underline; text-underline-offset: 3px; }
 
 <section class="hero">
   <div class="hero-text">
-    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.11.17</p>
+    <p class="hero-eyebrow">An instrument for the mathematics of form · v7.12.0</p>
     <h1>Forms<span class="ampersand">&amp;</span>fractals.</h1>
     <p class="hero-tag">Mathematicians found every figure here, some of them centuries ago. AEON draws them as exactly as their proofs allow.</p>
     <div class="hero-cta-row">
@@ -1101,7 +1101,7 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
     <p class="section-lede">The technical details: file size, renderers, formats, accessibility and what we promise about it.</p>
   </header>
   <article class="spec-card">
-    <h2>AEON · v7.11.17</h2>
+    <h2>AEON · v7.12.0</h2>
     <dl class="spec-grid">
       <dt>Form factor</dt>
       <dd><em>One HTML file</em> · ~2.4 MB · ~62 KB bundled fonts · service worker for offline · © <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a></dd>
@@ -1163,18 +1163,20 @@ v<sub>t</sub> = D<sub>v</sub>∇²v + uv² − (F + k)v</code>
 <section class="section" id="changes">
   <header class="section-header">
     <span class="section-num">§ VIII</span>
-    <h2 class="section-title">What's new<br>in 7.11.17.</h2>
-    <p class="section-lede">The test browsers move to Chrome 157.0.8103.78, and a busy census no longer reads a slow test child as a hang · 2026-11-24</p>
+    <h2 class="section-title">What's new<br>in 7.12.0.</h2>
+    <p class="section-lede">The render status names the renderer that really drew the picture, and an opened .aeon layer turns to the angle its Rotate slider shows · 2026-11-25</p>
   </header>
   <ul class="prose changes">
-    <li>A maintenance release with no change you can see in AEON.</li>
+    <li><strong>An opened .aeon file turns a layer to the angle its Rotate slider shows.</strong> A layer saved at a rotation past the slider's range, such as 500 degrees, drew at 140 while the slider sat at its 180 end. It now opens at 140 with the slider reading 140. A layer saved at a size of 0 or less used to open at full size; it now opens at the smallest size the Scale slider allows.</li>
+    <li><strong>The render status no longer says &quot;still refining&quot; after the picture is finished.</strong> A frame drawn in a background thread or on the processor kept that label until the next change; it now settles to its finished reading on its own, and a long reading stays on one line instead of pushing the readout onto two.</li>
+    <li><strong>The render status at the foot of the canvas names the renderer that really drew the picture, and says why when the processor takes over.</strong> A graphics card that failed the startup accuracy check, or a browser without WebGL2, used to read as WebGL2 while the processor drew the picture; it now reads as the processor with the reason beside it. Types the processor always draws, such as Fractal Flame, now say so too, and a deep zoom the graphics card draws no longer reads as a background thread.</li>
   </ul>
 </section>
 
 <footer class="footer">
   <p class="footer-mark">✦</p>
   <p class="footer-coda">© 2026 <a href="https://www.7thfrontier.com/" target="_blank" rel="noopener">7th Frontier, Inc.</a> All Rights Reserved.</p>
-  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.11.17</p>
+  <p class="footer-meta">Self-contained · single file · zero dependencies · v7.12.0</p>
 </footer>
 
 <script>
