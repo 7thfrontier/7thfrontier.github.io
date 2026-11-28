@@ -140,6 +140,11 @@ self.onmessage = function(e){
     
     self.PALS = PALS;
     self.SOLIDS = SOLIDS;
+    
+    self._UP_TRI = d.upTri || {};
+    self._upSolids = new Map();
+    self._upGroups = {};
+    self._copySolids = new Map();
     self.LSYS_PRESETS = LSYS_PRESETS;
     self.GEO_3D_TYPES = GEO_3D_TYPES;
     self.CANVAS_SIZE = CANVAS_SIZE;
